@@ -1,17 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 
- public class CameraMovement : MonoBehaviour
+public class CameraMovement : MonoBehaviour
 {
-    public int Speed = 50;
-
-    void Update()
+    public GameObject player;   
+    private Vector3 offset;            
+    public float rotSpeed = 4.0f;
+    
+    void Start()
     {
-        float xAxisValue = Input.GetAxis("Horizontal") * Speed;
-        float zAxisValue = Input.GetAxis("Vertical") * Speed;
+        offset = transform.position - player.transform.position;
+    }
 
-        transform.position = new Vector3(transform.position.x + xAxisValue, transform.position.y, transform.position.z + zAxisValue);
+    void LateUpdate()
+    {
+
+        offset = Quaternion.AngleAxis(Input.GetAxis("Rotation") * rotSpeed, Vector3.up) * offset;
+        transform.position = player.transform.position + offset;
+        transform.LookAt(player.transform);
     }
 }
