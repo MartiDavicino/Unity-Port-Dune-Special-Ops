@@ -636,9 +636,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2843909369972686622, guid: 7645c76e7d7850c44950a64866e36fd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 27c7bfc35e3f8964b8332de957ead7c1, type: 2}
     - target: {fileID: 919132149155446097, guid: 7645c76e7d7850c44950a64866e36fd9, type: 3}
       propertyPath: m_Name
-      value: mc_idle_v3
+      value: Zhib
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7645c76e7d7850c44950a64866e36fd9, type: 3}
@@ -1221,8 +1225,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30a9363510c5e8341b77005f936bd410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 389318350}
-  rotSpeed: 3
+  player: {fileID: 1164201265}
+  rotSpeed: 1000
+  angle: 45
 --- !u!1 &1052820006
 GameObject:
   m_ObjectHideFlags: 0
