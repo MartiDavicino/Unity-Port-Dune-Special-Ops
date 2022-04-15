@@ -6,10 +6,17 @@ using System.Collections;
 
 public class CameraMovement : MonoBehaviour
 {
-    public GameObject player;   
-    private Vector3 offset;            
-    public float rotSpeed = 4.0f;
+
+    public GameObject player;  
     
+    public float rotSpeed;
+    public float angle;
+
+    private float remainingAngle;
+
+    private Vector3 offset;            
+    private bool rotatedOnce = false;
+
     void Start()
     {
         offset = transform.position - player.transform.position;
@@ -17,9 +24,26 @@ public class CameraMovement : MonoBehaviour
 
     void LateUpdate()
     {
+        if(!Input.GetKey(KeyCode.LeftShift))
+        {
+            if (Input.GetKeyDown("e"))
+                remainingAngle += angle;
 
-        offset = Quaternion.AngleAxis(Input.GetAxis("Rotation") * rotSpeed, Vector3.up) * offset;
-        transform.position = player.transform.position + offset;
-        transform.LookAt(player.transform);
+            if (Input.GetKeyDown("q"))
+                remainingAngle -= angle;
+
+            float newRemainingAngle = Mathf.MoveTowards(remainingAngle, 0, rotSpeed * Time.deltaTime);
+            float delta = remainingAngle - newRemainingAngle;
+            remainingAngle = newRemainingAngle;
+            offset = Quaternion.AngleAxis(delta, Vector3.up) * offset;
+            transform.position = player.transform.position + offset;
+            transform.LookAt(player.transform);
+        } else if (Input.GetKey(KeyCode.LeftShift))
+        {
+            offset = Quaternion.AngleAxis(Input.GetAxis("Rotation") * rotSpeed * 0.001f, Vector3.up) * offset;
+            transform.position = player.transform.position + offset;
+            transform.LookAt(player.transform);
+        }
+
     }
 }
