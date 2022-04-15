@@ -5,6 +5,8 @@ using UnityEngine;
 public class cameraaimmovement : MonoBehaviour
 {
     public float Speed = 0.5f;
+
+    private bool pressedOnce = false;
     //public float rotSpeed = 4.0f;
 
     void Update()
@@ -17,7 +19,22 @@ public class cameraaimmovement : MonoBehaviour
         transform.position += transform.forward * zAxisValue;
         transform.position += transform.up * yAxisValue;
         transform.position += transform.right * xAxisValue;
-        
-        //transform.Rotate(transform.up * Rotation);
+
+        if (Input.GetKeyDown("e") && !pressedOnce)
+        {
+            transform.Rotate(transform.up, 45.0f);
+            pressedOnce = true;
+        }
+
+        if (Input.GetKeyDown("q") && !pressedOnce)
+        {
+            transform.Rotate(transform.up, -45.0f);
+            pressedOnce = true;
+        }
+
+        if (!Input.GetKey("e") && !Input.GetKey("q"))
+            pressedOnce = false;
+
+
     }
 }
