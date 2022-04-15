@@ -17,6 +17,7 @@ public class cameraaimmovement : MonoBehaviour
         transform.position += transform.forward * zAxisValue;
         transform.position += transform.up * yAxisValue;
         transform.position += transform.right * xAxisValue;
+        
         //transform.Rotate(transform.up * Rotation);
     }
 }

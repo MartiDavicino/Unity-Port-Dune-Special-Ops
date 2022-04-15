@@ -47,16 +47,5 @@ public class characterwalkingscript : MonoBehaviour
                 zhibAnimator.SetTrigger("hasStopped");
             }
         }
-
-
-        //if(playerAgent.velocity != Vector3.zero)
-        //{
-        //    if(zhibAnimator != null)
-        //    {
-        //        zhibAnimator.SetTrigger("isWalking");
-        //    }
-        //} else if (playerAgent.velocity == Vector3.zero)
-        //{
-        //}
     }
 }
