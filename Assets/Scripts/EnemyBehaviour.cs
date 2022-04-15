@@ -16,8 +16,11 @@ public class EnemyBehaviour : MonoBehaviour
     enum state
     {
         SEEK, 
-        PATROL
+        PATROL,
+
     }
+
+    public EnemyType type = EnemyType.NONE;
 
     state currentState = state.PATROL;
 
@@ -27,20 +30,19 @@ public class EnemyBehaviour : MonoBehaviour
 
     public LayerMask whatIsGround, whatIsPlayer;
 
-    //Patrol
-    public Vector3 walkPoint;
-    bool walkPointSet;
-    public float walkPointRange;
+    [SerializeField] public Material enemyMaterial;
 
-    //Chasing
-    public Vector3 newScale = new Vector3(1.0f,1.2f,1.0f);
+    //Patrol
+    private Vector3 walkPoint;
+    bool walkPointSet;
+    private float walkPointRange;
 
     //Attacking
-    public float timeBetweenAttacks;
+    private float timeBetweenAttacks;
     bool alreadtAttacked;
 
     //States
-    public float sightRange, attackRange;
+    private float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
     private void Patroling()
@@ -112,7 +114,30 @@ public class EnemyBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
+        switch (type)
+        {
+            case EnemyType.HARKONNEN:
+                walkPointRange = 10.0f;
+                sightRange = 10.0f;
+                attackRange = 2.0f;                
+                break;
+
+            case EnemyType.SARDAUKAR:
+                walkPointRange = 10.0f;
+                sightRange = 15.0f;
+                attackRange = 2.0f;
+                break;
+
+            case EnemyType.MENTAT:
+                walkPointRange = 10.0f;
+                sightRange = 20.0f;
+                attackRange = 2.0f;
+                break;
+
+            default:
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -123,8 +148,21 @@ public class EnemyBehaviour : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerInSightRange && !playerInAttackRange) Chasing();
-        if (playerInSightRange && playerInAttackRange) Attacking();
+        if (!playerInSightRange && !playerInAttackRange)
+        {
+            enemyMaterial.color = Color.blue;
+            Patroling();
+        }
+        if (playerInSightRange && !playerInAttackRange)
+        {
+            enemyMaterial.color = Color.yellow;
+            Chasing();
+        }
+
+        if (playerInSightRange && playerInAttackRange)
+        {
+            enemyMaterial.color = Color.red;
+            Attacking();
+        }
     }
 }
