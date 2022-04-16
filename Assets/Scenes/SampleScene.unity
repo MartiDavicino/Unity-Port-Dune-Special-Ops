@@ -2304,6 +2304,27 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5.81, y: 19.99, z: 4.95}
   m_Center: {x: 0, y: 9.24, z: 0.77}
+--- !u!114 &1164201271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164201265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6590c8f39ce564c4eb7408f88559eb98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 963194227}
+  attackPoint: {fileID: 1164201269}
+  attackPointOffset: {x: 0.8, y: 2.3, z: 0}
+  maximumRange: 0
+  fireRate: 0
+  ammunition: 2
+  knifePrefab: {fileID: 2617614778244644471, guid: a2733bd1eb438aa4aa9f6a6b85ecec30, type: 3}
+  knifeVelocity: 20
+  soundRange: 0
 --- !u!1 &1547162356
 GameObject:
   m_ObjectHideFlags: 0
