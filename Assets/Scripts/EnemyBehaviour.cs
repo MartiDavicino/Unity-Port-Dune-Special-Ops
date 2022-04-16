@@ -98,19 +98,6 @@ public class EnemyBehaviour : MonoBehaviour
         alreadtAttacked = false;
     }
 
-    //int speed = 20;
-    //public GameObject player;
-    //Transform lastPlayerPos;
-    //public int minRetargetingDistance = 3;
-    //public int minSeekDistance = 100;
-
-    //List<Vector3> oldWaypoint = new List<Vector3>();
-    //List<Vector3> waypoints = new List<Vector3>();
-    //List<Vector3> finalPath = new List<Vector3>();
-    //int currentPathIndex = 1;
-
-
-    //public EnemyType type = EnemyType.NONE;
     // Start is called before the first frame update
     void Start()
     {

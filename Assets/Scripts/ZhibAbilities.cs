@@ -10,7 +10,6 @@ public class ZhibAbilities : MonoBehaviour
     public Transform attackPoint;
     public Vector3 attackPointOffset;
     private RaycastHit rayHit;
-
     private bool knifeThrown;
 
     //Ability Stats
@@ -33,6 +32,7 @@ public class ZhibAbilities : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
         knifeThrown = false;
 
         Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
@@ -46,7 +46,7 @@ public class ZhibAbilities : MonoBehaviour
                     if (!knifeThrown)
                     {
                         knifeThrown = true;
-
+                            
                         Vector3 spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
 
                         for (int i = 0; i < thrownKnifes.Length; i++)
@@ -63,20 +63,18 @@ public class ZhibAbilities : MonoBehaviour
                     }
                 }
             }
-        }
-
-            KnifeUpdate(thrownKnifes);
-        
+        }       
     }
 
-    void KnifeUpdate(GameObject[] thrownKnifes)
+
+    void OnCollisionEnter(Collision coll)
     {
-        for (int i = 0; i < thrownKnifes.Length; i++)
+        if (coll.collider.tag == "Knife")
         {
-            if (thrownKnifes[i] != null)
-            {
-                thrownKnifes[i].transform.position += thrownKnifes[i].transform.rotation * Vector3.forward * knifeVelocity * Time.deltaTime;
-            }
+            Destroy(coll.gameObject);
+            ammunition++;
         }
+
     }
+
 }
