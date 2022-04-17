@@ -610,6 +610,7 @@ GameObject:
   - component: {fileID: 306055992}
   - component: {fileID: 306055993}
   - component: {fileID: 306055994}
+  - component: {fileID: 306055995}
   m_Layer: 8
   m_Name: Harkonnen
   m_TagString: Enemy
@@ -779,6 +780,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &306055995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306055986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeccf2c6541356442bb21799f27ec0c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 17.64
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  visibleTargets: []
 --- !u!1 &328292903
 GameObject:
   m_ObjectHideFlags: 0
