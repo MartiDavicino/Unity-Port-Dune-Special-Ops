@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Wall
   - Knife
+  - Decoy
   layers:
   - Default
   - TransparentFX

@@ -11,40 +11,49 @@ public class characterwalkingscript : MonoBehaviour
 
     private Animator zhibAnimator;
 
+    private bool activeAbility;
+
     // Start is called before the first frame update
     void Start()
     {
         zhibAnimator = GetComponent<Animator>();
+        activeAbility = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButton(0))
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2))
+            activeAbility = !activeAbility;
+
+        if(!activeAbility)
         {
-
-            Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit meshHit;
-
-            if( Physics.Raycast(ray,out meshHit))
+            if (Input.GetMouseButton(0))
             {
-                if(meshHit.collider.tag == "Floor")
+
+                Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit meshHit;
+
+                if( Physics.Raycast(ray,out meshHit))
                 {
-                    playerAgent.SetDestination(meshHit.point);
-                    
-                    if (zhibAnimator != null)
+                    if(meshHit.collider.tag == "Floor")
                     {
-                        zhibAnimator.SetTrigger("isWalking");
+                        playerAgent.SetDestination(meshHit.point);
+                    
+                        if (zhibAnimator != null)
+                        {
+                            zhibAnimator.SetTrigger("isWalking");
+                        }
                     }
                 }
             }
-        }
         
-        if(playerAgent.remainingDistance <= playerAgent.stoppingDistance)
-        {
-            if (zhibAnimator != null)
+            if(playerAgent.remainingDistance <= playerAgent.stoppingDistance)
             {
-                zhibAnimator.SetTrigger("hasStopped");
+                if (zhibAnimator != null)
+                {
+                    zhibAnimator.SetTrigger("hasStopped");
+                }
             }
         }
     }

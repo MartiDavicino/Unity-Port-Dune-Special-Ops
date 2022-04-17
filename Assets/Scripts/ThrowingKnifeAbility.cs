@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class ZhibAbilities : MonoBehaviour
+public class ThrowingKnifeAbility : MonoBehaviour
 {
     //General Variables
     public Camera playerCamera;
@@ -14,8 +14,8 @@ public class ZhibAbilities : MonoBehaviour
 
     //Ability Stats
     public float maximumRange;
-    public float fireRate;
     public int ammunition;
+    public float fireRate;
 
     //Knife
     public GameObject knifePrefab;
