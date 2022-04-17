@@ -332,6 +332,8 @@ GameObject:
   - component: {fileID: 185445844}
   - component: {fileID: 185445843}
   - component: {fileID: 185445849}
+  - component: {fileID: 185445851}
+  - component: {fileID: 185445850}
   m_Layer: 8
   m_Name: Mentat
   m_TagString: Enemy
@@ -360,6 +362,8 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
+  foh: {fileID: 185445851}
+  fov: {fileID: 185445850}
   enemyMaterial: {fileID: 2100000, guid: 6a880219d74c3484fa87f31e42f7d966, type: 2}
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -480,6 +484,44 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &185445850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185445842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67fdbb92819f6534ab7924ee437d12e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 0
+  viewAngle: 0
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 128
+  visibleTargets: []
+--- !u!114 &185445851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185445842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeccf2c6541356442bb21799f27ec0c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 0
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  visibleTargets: []
 --- !u!1 &255656280
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,6 +782,8 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
+  foh: {fileID: 306055995}
+  fov: {fileID: 306055993}
   enemyMaterial: {fileID: 2100000, guid: f34d20674a3e12243a0d55aab1fcaf31, type: 2}
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -812,6 +856,8 @@ GameObject:
   - component: {fileID: 328292905}
   - component: {fileID: 328292904}
   - component: {fileID: 328292910}
+  - component: {fileID: 328292912}
+  - component: {fileID: 328292911}
   m_Layer: 8
   m_Name: Sardaukar
   m_TagString: Enemy
@@ -840,6 +886,8 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
+  foh: {fileID: 328292911}
+  fov: {fileID: 328292912}
   enemyMaterial: {fileID: 2100000, guid: 1ae6535d3e9c517468488147f75262f4, type: 2}
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -960,6 +1008,44 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &328292911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328292903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeccf2c6541356442bb21799f27ec0c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 0
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  visibleTargets: []
+--- !u!114 &328292912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328292903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67fdbb92819f6534ab7924ee437d12e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 0
+  viewAngle: 0
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 128
+  visibleTargets: []
 --- !u!1 &375034643
 GameObject:
   m_ObjectHideFlags: 0

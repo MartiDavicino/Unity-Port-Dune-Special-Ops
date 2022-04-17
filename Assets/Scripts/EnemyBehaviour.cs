@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 public enum EnemyType
 {
@@ -27,8 +28,14 @@ public class EnemyBehaviour : MonoBehaviour
     public NavMeshAgent agent;
 
     public Transform player;
+    private Transform placeholder1;
+    private Transform placeholder2;
+
 
     public LayerMask whatIsGround, whatIsPlayer;
+
+    public FieldOfHearing foh;
+    public FieldOfView fov;
 
     [SerializeField] public Material enemyMaterial;
 
@@ -44,6 +51,70 @@ public class EnemyBehaviour : MonoBehaviour
     //States
     private float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
+
+    bool checkSenses()
+    {
+        if(!foh.visibleTargets.Any() && fov.visibleTargets.Any())
+        {
+            player = fov.visibleTargets[0];
+            for (int i = 1; i < fov.visibleTargets.Count; i++)
+            {
+                if(Vector3.Distance(agent.transform.position,fov.visibleTargets[i].position) < Vector3.Distance(agent.transform.position, player.transform.position))
+                {
+                    player = fov.visibleTargets[i];
+                }
+            }
+            return true;
+        }
+        else if (foh.visibleTargets.Any() && !fov.visibleTargets.Any())
+        {
+            player = foh.visibleTargets[0];
+
+            for (int i = 1; i < foh.visibleTargets.Count; i++)
+            {
+                if (Vector3.Distance(agent.transform.position, foh.visibleTargets[i].position) < Vector3.Distance(agent.transform.position, player.transform.position))
+                {
+                    player = foh.visibleTargets[i];
+                }
+                
+            }
+            return true;
+        }
+        else if (foh.visibleTargets.Any() && fov.visibleTargets.Any())
+        {
+            placeholder1 = foh.visibleTargets[0];
+            placeholder2 = fov.visibleTargets[0];
+
+            for (int i = 1; i < foh.visibleTargets.Count; i++)
+            {
+                
+                if (Vector3.Distance(agent.transform.position, foh.visibleTargets[i].position) < Vector3.Distance(agent.transform.position, placeholder1.transform.position))
+                {
+                    placeholder1 = foh.visibleTargets[i];
+                }
+                
+            }
+            for (int i = 1; i < fov.visibleTargets.Count; i++)
+            {
+                if (Vector3.Distance(agent.transform.position, fov.visibleTargets[i].position) < Vector3.Distance(agent.transform.position, placeholder2.transform.position))
+                {
+                    placeholder2 = fov.visibleTargets[i];
+                }
+                
+            }
+            if (Vector3.Distance(agent.transform.position, placeholder1.transform.position) < Vector3.Distance(agent.transform.position, placeholder2.transform.position))
+            {
+                player = placeholder1;
+            }
+            else
+            {
+                player = placeholder2;
+            }
+            return true;
+        }
+        return false;
+
+    }
 
     private void Patroling()
     {
@@ -131,22 +202,22 @@ public class EnemyBehaviour : MonoBehaviour
     void Update()
     {
         //Check for sight and attack range
-
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+        checkSenses();
+        //playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange)
+        if (!checkSenses())
         {
             enemyMaterial.color = Color.blue;
             Patroling();
         }
-        if (playerInSightRange && !playerInAttackRange)
+        if (checkSenses() && !playerInAttackRange)
         {
             enemyMaterial.color = Color.yellow;
             Chasing();
         }
 
-        if (playerInSightRange && playerInAttackRange)
+        if (checkSenses() && playerInAttackRange)
         {
             enemyMaterial.color = Color.red;
             Attacking();
