@@ -17,13 +17,14 @@ public class characterwalkingscript : MonoBehaviour
     void Start()
     {
         zhibAnimator = GetComponent<Animator>();
+        playerAgent.stoppingDistance = 2;
         activeAbility = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Alpha3))
             activeAbility = !activeAbility;
 
         if(!activeAbility)
