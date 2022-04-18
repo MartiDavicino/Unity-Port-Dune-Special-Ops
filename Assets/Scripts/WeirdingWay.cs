@@ -34,7 +34,7 @@ public class WeirdingWay : MonoBehaviour
         zhibAnimator = GetComponent<Animator>();
         firstEnemyReached = false;
         enemyTargeted = false;
-        pulseRate = 0.5f;
+        pulseRate = 0.15f;
         killCount = 0;
     }
 
@@ -124,6 +124,7 @@ public class WeirdingWay : MonoBehaviour
             {
                 firstEnemyReached = false;
                 enemyTargeted = false;
+                killCount = 0;
             }
 
 
@@ -132,6 +133,7 @@ public class WeirdingWay : MonoBehaviour
         {
             firstEnemyReached = false;
             enemyTargeted = false;
+            killCount = 0;
         }
     }
 
