@@ -133,13 +133,13 @@ public class EnemyBehaviour : MonoBehaviour
     private void SearchWalkPoint()
     {
         //This are the waypoints thing
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
+        //float randomZ = Random.Range(-walkPointRange, walkPointRange);
+        //float randomX = Random.Range(-walkPointRange, walkPointRange);
 
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        //walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
-            walkPointSet = true;
+        //if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+        //    walkPointSet = true;
     }
     private void Chasing()
     {

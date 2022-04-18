@@ -11,6 +11,7 @@ public class ThrowingKnifeAbility : MonoBehaviour
     public Vector3 attackPointOffset;
     private RaycastHit rayHit;
     private bool knifeThrown;
+    private bool active;
 
     //Ability Stats
     public float maximumRange;
@@ -32,49 +33,56 @@ public class ThrowingKnifeAbility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
-        knifeThrown = false;
 
-        Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            active = !active;
 
-        if (Physics.Raycast(ray, out rayHit))
+        if (active)
         {
-            if (rayHit.collider.tag == "Enemy")
-            {
-                if (Input.GetKeyDown(KeyCode.Mouse0) && ammunition > 0)
-                {
-                    if (!knifeThrown)
-                    {
-                        knifeThrown = true;
-                            
-                        Vector3 spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
 
-                        for (int i = 0; i < thrownKnifes.Length; i++)
+            knifeThrown = false;
+
+            if (Input.GetKeyDown(KeyCode.Mouse0) && ammunition > 0)
+            {
+                Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out rayHit))
+                {
+                    if (rayHit.collider.tag == "Enemy")
+                    {
+
+                        if (!knifeThrown)
                         {
-                            if (thrownKnifes[i] == null)
+                            knifeThrown = true;
+
+                            Vector3 spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
+
+                            for (int i = 0; i < thrownKnifes.Length; i++)
                             {
-                                thrownKnifes[i] = Instantiate(knifePrefab, spawnPoint, attackPoint.rotation);
-                                thrownKnifes[i].transform.LookAt(rayHit.collider.gameObject.transform);
-                                break;
+                                if (thrownKnifes[i] == null)
+                                {
+                                    thrownKnifes[i] = Instantiate(knifePrefab, spawnPoint, attackPoint.rotation);
+                                    thrownKnifes[i].transform.LookAt(rayHit.collider.gameObject.transform);
+                                    break;
+                                }
                             }
+
+                            ammunition--;
                         }
- 
-                        ammunition--;
                     }
                 }
             }
-        }       
-    }
-
-
-    void OnCollisionEnter(Collision coll)
-    {
-        if (coll.collider.tag == "Knife")
-        {
-            Destroy(coll.gameObject);
-            ammunition++;
         }
 
-    }
 
+        void OnCollisionEnter(Collision coll)
+        {
+            if (coll.collider.tag == "Knife")
+            {
+                Destroy(coll.gameObject);
+                ammunition++;
+            }
+
+        }
+    }
 }

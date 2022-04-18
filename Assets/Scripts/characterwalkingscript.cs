@@ -17,6 +17,7 @@ public class characterwalkingscript : MonoBehaviour
     void Start()
     {
         zhibAnimator = GetComponent<Animator>();
+        playerAgent.stoppingDistance = 2;
         activeAbility = false;
     }
 
