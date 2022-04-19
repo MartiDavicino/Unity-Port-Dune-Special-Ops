@@ -46,6 +46,9 @@ public class characterwalkingscript : MonoBehaviour
             abilityActive = !abilityActive;
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha1) && !ability3Active)
+            Destroy(gameObject.GetComponent<LineRenderer>());
+
         if(!abilityActive)
         {
             if (Input.GetMouseButton(0))

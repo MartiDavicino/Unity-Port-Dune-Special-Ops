@@ -128,5 +128,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 6107221280181845270}
-  velocity: 20
-  hit: 0
+  velocity: 40

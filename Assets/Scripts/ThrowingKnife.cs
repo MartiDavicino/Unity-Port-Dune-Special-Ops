@@ -8,14 +8,14 @@ public class ThrowingKnife : MonoBehaviour
 
     public float velocity;
 
-    public bool hit;
+    private bool hit;
 
     private float pickUpRadius;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        hit = false;
     }
 
     // Update is called once per frame

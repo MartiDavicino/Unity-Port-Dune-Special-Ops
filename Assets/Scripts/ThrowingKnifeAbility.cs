@@ -11,13 +11,14 @@ public class ThrowingKnifeAbility : MonoBehaviour
 
     //General Variables
     public Camera playerCamera;
-    public NavMeshAgent agent;
+    private NavMeshAgent agent;
     public Transform attackPoint;
     public Vector3 attackPointOffset;
     private RaycastHit rayHit;
     private bool enemyOutOfRange;
     private Vector3 spawnPoint;
     private Animator zhibAnimator;
+    private bool addLineComponentOnce;
 
     //Ability Stats
     public float maximumRange;
@@ -31,9 +32,12 @@ public class ThrowingKnifeAbility : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        zhibAnimator = GetComponent<Animator>();
+        addLineComponentOnce = true;
         enemyOutOfRange = false;
         thrownKnifes = new GameObject[ammunition];
+
+        zhibAnimator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -42,6 +46,12 @@ public class ThrowingKnifeAbility : MonoBehaviour
 
         if (walkingScript.ability1Active)
         {
+            if (addLineComponentOnce)
+            {
+                addLineComponentOnce = false;
+                gameObject.AddComponent<LineRenderer>();
+            }
+
             gameObject.DrawCircle(maximumRange * 6, .05f);
 
             if (Input.GetKeyDown(KeyCode.Mouse0) && ammunition > 0)
@@ -81,6 +91,9 @@ public class ThrowingKnifeAbility : MonoBehaviour
                     }
                 }
             }
+        } else
+        {
+            addLineComponentOnce = true;
         }
 
 
