@@ -42,6 +42,7 @@ public class ThrowingKnifeAbility : MonoBehaviour
 
         if (walkingScript.ability1Active)
         {
+            gameObject.DrawCircle(maximumRange * 6, .05f);
 
             if (Input.GetKeyDown(KeyCode.Mouse0) && ammunition > 0)
             {
