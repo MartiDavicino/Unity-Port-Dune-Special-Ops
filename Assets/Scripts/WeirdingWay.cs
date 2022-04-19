@@ -68,7 +68,7 @@ public class WeirdingWay : MonoBehaviour
 
         } else {
 
-            if (agent.remainingDistance < 3 && enemyTargeted)
+            if (!agent.pathPending && agent.remainingDistance < 3 && enemyTargeted)
             {
                 agent.ResetPath();
                 firstEnemyReached = true;
@@ -124,8 +124,6 @@ public class WeirdingWay : MonoBehaviour
                 closestEnemyDistance = 0;
                 targetedEnemy = closestEnemy;
             
-
-
             }
             else
             {
