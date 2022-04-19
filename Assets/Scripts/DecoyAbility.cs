@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class DecoyAbility : MonoBehaviour
 {
+
+    public characterwalkingscript walkingScript;
+
     //General Variables
     public Camera playerCamera;
     public Transform attackPoint;
@@ -32,10 +35,7 @@ public class DecoyAbility : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            active = !active;
-
-        if(active)
+        if(walkingScript.ability2Active)
         {
             if (Input.GetKeyDown(KeyCode.Mouse0) && ammunition > 0)
             {
@@ -58,8 +58,6 @@ public class DecoyAbility : MonoBehaviour
             }
         }
     }
-
-
     void OnCollisionEnter(Collision coll)
     {
         if (coll.collider.tag == "Decoy")
@@ -67,6 +65,10 @@ public class DecoyAbility : MonoBehaviour
             Destroy(decoy);
             ammunition++;
         }
+    }
+    void OnGUI()
+    {
+        if (walkingScript.ability2Active) GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Decoy Active");
     }
 
 }

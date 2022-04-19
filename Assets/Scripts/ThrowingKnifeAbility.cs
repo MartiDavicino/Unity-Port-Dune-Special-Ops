@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class ThrowingKnifeAbility : MonoBehaviour
 {
+
+    public characterwalkingscript walkingScript;
+
     //General Variables
     public Camera playerCamera;
     public Transform attackPoint;
     public Vector3 attackPointOffset;
     private RaycastHit rayHit;
     private bool knifeThrown;
-    private bool active;
 
     //Ability Stats
     public float maximumRange;
@@ -34,10 +36,7 @@ public class ThrowingKnifeAbility : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            active = !active;
-
-        if (active)
+        if (walkingScript.ability1Active)
         {
 
             knifeThrown = false;
@@ -85,4 +84,9 @@ public class ThrowingKnifeAbility : MonoBehaviour
 
         }
     }
+    void OnGUI()
+    {
+        if (walkingScript.ability1Active) GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Throwing Knife Active");
+    }
+
 }

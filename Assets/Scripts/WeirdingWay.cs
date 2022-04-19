@@ -6,6 +6,8 @@ using UnityEngine;
 public class WeirdingWay : MonoBehaviour
 {
 
+    public characterwalkingscript walkingScript;
+
     public Camera playerCamera;
     public NavMeshAgent agent;
     public int maxKills;
@@ -21,7 +23,6 @@ public class WeirdingWay : MonoBehaviour
     private bool enemyTargeted;
     private bool firstEnemyReached;
     private int killCount;
-    private bool active;
     private Animator zhibAnimator;
 
     private float pulseRate; //In Seconds
@@ -41,11 +42,10 @@ public class WeirdingWay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            active = !active;
-
-        if (active)
+ 
+        if (walkingScript.ability3Active)
         {
+
             agent.ResetPath();
 
             if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -56,7 +56,8 @@ public class WeirdingWay : MonoBehaviour
                 {
                     if (rayHit.collider.tag == "Enemy")
                     {
-                        active = false;
+                        walkingScript.ability3Active = false;
+                        walkingScript.abilityActive = false;
                         enemyTargeted = true;
                         targetedEnemy = rayHit.collider.gameObject;
                         agent.SetDestination(rayHit.collider.gameObject.transform.position);
@@ -92,18 +93,20 @@ public class WeirdingWay : MonoBehaviour
     }
     void KillChain()
     {
-        if(killCount < maxKills)
+        Collider[] affectedEnemies = Physics.OverlapSphere(transform.position, killChainRange, whatIsEnemy);
+
+        if (affectedEnemies.Length != 0)
         {
+            if (killCount < maxKills)
+            {
             zhibAnimator.SetTrigger("hasStopped");
             transform.position = targetedEnemy.transform.position + (targetedEnemy.transform.rotation * attackPointOffset);
             transform.LookAt(targetedEnemy.transform);
             Destroy(targetedEnemy);
             killCount++;
 
-            Collider[] affectedEnemies = Physics.OverlapSphere(transform.position, killChainRange, whatIsEnemy);
             
-            if(affectedEnemies != null)
-            {
+            
                 for(int i = 0; i < affectedEnemies.Length; i++)
                 {
 
@@ -120,14 +123,16 @@ public class WeirdingWay : MonoBehaviour
                 }
                 closestEnemyDistance = 0;
                 targetedEnemy = closestEnemy;
-            } else
+            
+
+
+            }
+            else
             {
                 firstEnemyReached = false;
                 enemyTargeted = false;
                 killCount = 0;
             }
-
-
         }
         else
         {
@@ -146,5 +151,10 @@ public class WeirdingWay : MonoBehaviour
         distance.z = Mathf.Abs(transform.position.z - enemy.transform.position.z);
 
         return distance;
+    }
+
+    void OnGUI()
+    {
+        if (walkingScript.ability3Active) GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Weirding Way Active");
     }
 }
