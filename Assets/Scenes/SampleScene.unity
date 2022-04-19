@@ -16784,6 +16784,9 @@ MonoBehaviour:
   ammunition: 2
   fireRate: 0
   knifePrefab: {fileID: 8902590539744950886, guid: a2733bd1eb438aa4aa9f6a6b85ecec30, type: 3}
+  whatIsKnife:
+    serializedVersion: 2
+    m_Bits: 1024
   knifeVelocity: 20
   soundRange: 0
 --- !u!54 &1164201272
@@ -16821,6 +16824,9 @@ MonoBehaviour:
   maximumRange: 0
   ammunition: 1
   fireRate: 0
+  whatIsDecoy:
+    serializedVersion: 2
+    m_Bits: 1024
   decoyPrefab: {fileID: 7972253676922709312, guid: 2038e93e7de188149bcda1ef088e8b53, type: 3}
   decoyVelocity: 0
   effectRange: 20

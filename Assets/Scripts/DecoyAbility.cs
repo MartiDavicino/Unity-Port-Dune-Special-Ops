@@ -21,6 +21,7 @@ public class DecoyAbility : MonoBehaviour
     public float fireRate;
 
     //Decoy
+    public LayerMask whatIsDecoy;
     public GameObject decoyPrefab;
     public float decoyVelocity;
     public float effectRange;
@@ -57,14 +58,15 @@ public class DecoyAbility : MonoBehaviour
                 }
             }
         }
-    }
-    void OnCollisionEnter(Collision coll)
-    {
-        if (coll.collider.tag == "Decoy")
+
+        Collider[] pickableDecoys = Physics.OverlapSphere(transform.position, 3.0f, whatIsDecoy);
+
+        for (int i = 0; i < pickableDecoys.Length; i++)
         {
-            Destroy(decoy);
             ammunition++;
+            Destroy(pickableDecoys[i].gameObject);
         }
+
     }
     void OnGUI()
     {

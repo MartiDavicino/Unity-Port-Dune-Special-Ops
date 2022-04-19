@@ -22,6 +22,7 @@ public class ThrowingKnifeAbility : MonoBehaviour
 
     //Knife
     public GameObject knifePrefab;
+    public LayerMask whatIsKnife;
     private GameObject[] thrownKnifes;
     public float knifeVelocity;
     public float soundRange;
@@ -71,17 +72,16 @@ public class ThrowingKnifeAbility : MonoBehaviour
                     }
                 }
             }
+
+
         }
 
+        Collider[] pickableKnifes = Physics.OverlapSphere(transform.position, 3.0f, whatIsKnife);
 
-        void OnCollisionEnter(Collision coll)
+        for(int i = 0; i < pickableKnifes.Length; i++)
         {
-            if (coll.collider.tag == "Knife")
-            {
-                Destroy(coll.gameObject);
-                ammunition++;
-            }
-
+            Destroy(pickableKnifes[i].gameObject);
+            ammunition++;
         }
     }
     void OnGUI()

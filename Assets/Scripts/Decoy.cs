@@ -43,6 +43,8 @@ public class Decoy : MonoBehaviour
         if (coll.gameObject.tag == "Floor")
         {
             EmitSound();
+            transform.gameObject.layer = 10;
+
         }
     }
 

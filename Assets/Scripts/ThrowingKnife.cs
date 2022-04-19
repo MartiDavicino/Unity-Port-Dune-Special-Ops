@@ -51,6 +51,12 @@ public class ThrowingKnife : MonoBehaviour
             }
         }
 
+        if (coll.gameObject.tag == "Floor")
+        {
+            transform.gameObject.layer = 10;
+        }
+
+
         if (coll.gameObject.tag == "Wall")
         {
             hit = true;
