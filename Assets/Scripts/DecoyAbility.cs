@@ -26,6 +26,7 @@ public class DecoyAbility : MonoBehaviour
     public GameObject decoyPrefab;
     public float decoyVelocity;
     public float effectRange;
+    public Vector3 targetPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -60,7 +61,7 @@ public class DecoyAbility : MonoBehaviour
                         transform.LookAt(meshHit.point);
 
                         Vector3 spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
-
+                        targetPosition = meshHit.point;
                         decoy = Instantiate(decoyPrefab, spawnPoint, attackPoint.rotation);
 
                         ammunition--;

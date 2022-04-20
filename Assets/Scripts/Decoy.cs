@@ -12,29 +12,21 @@ public class Decoy : MonoBehaviour
 
     public LayerMask whatIsEnemy;
 
-    public float horizontalForce;
-    public float verticalForce;
-
-    private bool applyOnce;
-
     private NavMeshAgent agent;
 
     // Start is called before the first frame update
     void Start()
     {
-        applyOnce = true;
+        GameObject go = GameObject.Find("Zhib");
+        DecoyAbility decoyScript = go.GetComponent<DecoyAbility>();
 
+        ThrowBallAtTargetLocation(decoyScript.targetPosition, decoyScript.decoyVelocity);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (applyOnce)
-        {
-            rb.AddForce(transform.TransformDirection(Vector3.forward) * horizontalForce);
-            rb.AddForce(transform.TransformDirection(Vector3.up) * verticalForce);
-            applyOnce = false;
-        }
+
     }
 
     void OnCollisionEnter(Collision coll)
@@ -52,7 +44,7 @@ public class Decoy : MonoBehaviour
     {
         Collider[] affectedEnemies = Physics.OverlapSphere(transform.position, soundRange, whatIsEnemy);
 
-        for(int i = 0; i < affectedEnemies.Length; i++)
+        for (int i = 0; i < affectedEnemies.Length; i++)
         {
             agent = affectedEnemies[i].gameObject.GetComponent<NavMeshAgent>();
             agent.SetDestination(transform.position);
@@ -60,4 +52,33 @@ public class Decoy : MonoBehaviour
 
     }
 
+    public void ThrowBallAtTargetLocation(Vector3 targetLocation, float initialVelocity)
+    {
+        Vector3 direction = (targetLocation - transform.position).normalized;
+        float distance = Vector3.Distance(targetLocation, transform.position);
+
+        float firingElevationAngle = FiringElevationAngle(Physics.gravity.magnitude, distance, initialVelocity);
+        Vector3 elevation = Quaternion.AngleAxis(firingElevationAngle, transform.right) * transform.up;
+        float directionAngle = AngleBetweenAboutAxis(transform.forward, direction, transform.up);
+        Vector3 velocity = Quaternion.AngleAxis(directionAngle, transform.up) * elevation * initialVelocity;
+
+        // ballGameObject is object to be thrown
+        rb.AddForce(velocity, ForceMode.VelocityChange);
+    }
+
+    // Helper method to find angle between two points (v1 & v2) with respect to axis n
+    static float AngleBetweenAboutAxis(Vector3 v1, Vector3 v2, Vector3 n)
+    {
+        return Mathf.Atan2(
+            Vector3.Dot(n, Vector3.Cross(v1, v2)),
+            Vector3.Dot(v1, v2)) * Mathf.Rad2Deg;
+    }
+
+    // Helper method to find angle of elevation (ballistic trajectory) required to reach distance with initialVelocity
+    // Does not take wind resistance into consideration.
+    float FiringElevationAngle(float gravity, float distance, float initialVelocity)
+    {
+        float angle = 0.5f * Mathf.Asin((gravity * distance) / (initialVelocity * initialVelocity)) * Mathf.Rad2Deg;
+        return angle;
+    }
 }
