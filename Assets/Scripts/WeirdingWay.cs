@@ -11,6 +11,7 @@ public class WeirdingWay : MonoBehaviour
     public Camera playerCamera;
     public NavMeshAgent agent;
     public int maxKills;
+    public float killProximityRange;
     public float killChainRange;
     public LayerMask whatIsEnemy;
 
@@ -24,6 +25,7 @@ public class WeirdingWay : MonoBehaviour
     private bool firstEnemyReached;
     private int killCount;
     private Animator zhibAnimator;
+    private bool addLineComponentOnce;
 
     private float pulseRate; //In Seconds
     private float waitTimer;
@@ -33,6 +35,7 @@ public class WeirdingWay : MonoBehaviour
     void Start()
     {
         zhibAnimator = GetComponent<Animator>();
+        addLineComponentOnce = true;
         firstEnemyReached = false;
         enemyTargeted = false;
         pulseRate = 0.15f;
@@ -42,9 +45,19 @@ public class WeirdingWay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
- 
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            addLineComponentOnce = true;
+
         if (walkingScript.ability3Active)
         {
+            if(addLineComponentOnce)
+            {
+                addLineComponentOnce = false;
+                gameObject.AddComponent<LineRenderer>();
+            }
+
+
+            gameObject.DrawCircle(killProximityRange * 6, .05f);
 
             agent.ResetPath();
 
@@ -68,13 +81,15 @@ public class WeirdingWay : MonoBehaviour
 
         } else {
 
-            if (!agent.pathPending && agent.remainingDistance < 3 && enemyTargeted)
+            if (!agent.pathPending && agent.remainingDistance < killProximityRange && enemyTargeted)
             {
+                gameObject.DrawCircle(killChainRange * 6, .05f);
                 agent.ResetPath();
                 firstEnemyReached = true;
             }
 
         }
+
 
         if (firstEnemyReached) StartKillChain();
     }
@@ -129,14 +144,20 @@ public class WeirdingWay : MonoBehaviour
             {
                 firstEnemyReached = false;
                 enemyTargeted = false;
+                addLineComponentOnce = true;
                 killCount = 0;
+
+                Destroy(gameObject.GetComponent<LineRenderer>());
             }
         }
         else
         {
             firstEnemyReached = false;
             enemyTargeted = false;
+            addLineComponentOnce = true;
             killCount = 0;
+
+            Destroy(gameObject.GetComponent<LineRenderer>());
         }
     }
 

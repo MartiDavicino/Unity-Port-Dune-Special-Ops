@@ -14,6 +14,7 @@ public class DecoyAbility : MonoBehaviour
     public Vector3 attackPointOffset;
     private GameObject decoy;
     private bool active;
+    private bool addLineComponentOnce;
 
     //Ability Stats
     public float maximumRange;
@@ -29,6 +30,7 @@ public class DecoyAbility : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        addLineComponentOnce = true;
         active = false;
     }
 
@@ -38,6 +40,14 @@ public class DecoyAbility : MonoBehaviour
 
         if(walkingScript.ability2Active)
         {
+            if (addLineComponentOnce)
+            {
+                addLineComponentOnce = false;
+                gameObject.AddComponent<LineRenderer>();
+            }
+
+            gameObject.DrawCircle(maximumRange * 6, .05f);
+
             if (Input.GetKeyDown(KeyCode.Mouse0) && ammunition > 0)
             {
                 Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
@@ -57,6 +67,9 @@ public class DecoyAbility : MonoBehaviour
                     }
                 }
             }
+        } else
+        {
+            addLineComponentOnce = true;
         }
 
         Collider[] pickableDecoys = Physics.OverlapSphere(transform.position, 3.0f, whatIsDecoy);
