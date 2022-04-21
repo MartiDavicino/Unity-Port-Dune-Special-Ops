@@ -6,6 +6,7 @@ public class EnemyDetection : MonoBehaviour
 {
 	public float viewRadius;
 	public float hearingRadius;
+	private characterwalkingscript ws;
 
 	[Range(0, 360)]
 	public float viewAngle;
@@ -63,12 +64,15 @@ public class EnemyDetection : MonoBehaviour
 
 		for (int i = 0; i < targetsInHearingRadius.Length; i++)
 		{
+			GameObject parent = targetsInHearingRadius[i].gameObject;
 			Transform target = targetsInHearingRadius[i].transform;
 			Vector3 dirToTarget = (target.position - transform.position).normalized;
 
+			ws = parent.GetComponent<characterwalkingscript>();
+
 			float dstToTarget = Vector3.Distance(transform.position, target.position);
 
-			if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, targetMask))
+			if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, targetMask)&& ws.state !=PlayerState.CROUCH)
 			{
 				noisyTargets.Add(target);
 			}
