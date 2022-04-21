@@ -69,16 +69,15 @@ public class characterwalkingscript : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha3) && !ability1Active && !ability2Active)
                 Destroy(gameObject.GetComponent<LineRenderer>());
 
-            if(Input.GetKeyDown(KeyCode.X))
+            if(Input.GetKeyDown(KeyCode.LeftShift))
             {
-                if (state == PlayerState.WALKING)
-                {
-                    state = PlayerState.CROUCH;
-
-                }
-                if (state == PlayerState.CROUCH)
-                {
-                    state = PlayerState.WALKING;
+                switch(state){
+                    case  PlayerState.WALKING:
+                        state = PlayerState.CROUCH;
+                        break;
+                    case PlayerState.CROUCH:
+                        state = PlayerState.WALKING;
+                        break;
                 }
             }
 

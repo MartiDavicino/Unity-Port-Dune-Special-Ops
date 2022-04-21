@@ -34,8 +34,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     public LayerMask whatIsGround, whatIsPlayer;
 
-    public FieldOfHearing foh;
-    public FieldOfView fov;
+    public EnemyDetection enemyD;
 
     [SerializeField] public Material enemyMaterial;
 
@@ -54,51 +53,51 @@ public class EnemyBehaviour : MonoBehaviour
 
     bool checkSenses()
     {
-        if(!foh.visibleTargets.Any() && fov.visibleTargets.Any())
+        if(!enemyD.noisyTargets.Any() && enemyD.visibleTargets.Any())
         {
-            player = fov.visibleTargets[0];
-            for (int i = 1; i < fov.visibleTargets.Count; i++)
+            player = enemyD.visibleTargets[0];
+            for (int i = 1; i < enemyD.visibleTargets.Count; i++)
             {
-                if(Vector3.Distance(agent.transform.position,fov.visibleTargets[i].position) < Vector3.Distance(agent.transform.position, player.transform.position))
+                if(Vector3.Distance(agent.transform.position, enemyD.visibleTargets[i].position) < Vector3.Distance(agent.transform.position, player.transform.position))
                 {
-                    player = fov.visibleTargets[i];
+                    player = enemyD.visibleTargets[i];
                 }
             }
             return true;
         }
-        else if (foh.visibleTargets.Any() && !fov.visibleTargets.Any())
+        else if (enemyD.noisyTargets.Any() && !enemyD.visibleTargets.Any())
         {
-            player = foh.visibleTargets[0];
+            player = enemyD.noisyTargets[0];
 
-            for (int i = 1; i < foh.visibleTargets.Count; i++)
+            for (int i = 1; i < enemyD.noisyTargets.Count; i++)
             {
-                if (Vector3.Distance(agent.transform.position, foh.visibleTargets[i].position) < Vector3.Distance(agent.transform.position, player.transform.position))
+                if (Vector3.Distance(agent.transform.position, enemyD.noisyTargets[i].position) < Vector3.Distance(agent.transform.position, player.transform.position))
                 {
-                    player = foh.visibleTargets[i];
+                    player = enemyD.noisyTargets[i];
                 }
                 
             }
             return true;
         }
-        else if (foh.visibleTargets.Any() && fov.visibleTargets.Any())
+        else if (enemyD.noisyTargets.Any() && enemyD.visibleTargets.Any())
         {
-            placeholder1 = foh.visibleTargets[0];
-            placeholder2 = fov.visibleTargets[0];
+            placeholder1 = enemyD.noisyTargets[0];
+            placeholder2 = enemyD.visibleTargets[0];
 
-            for (int i = 1; i < foh.visibleTargets.Count; i++)
+            for (int i = 1; i < enemyD.noisyTargets.Count; i++)
             {
                 
-                if (Vector3.Distance(agent.transform.position, foh.visibleTargets[i].position) < Vector3.Distance(agent.transform.position, placeholder1.transform.position))
+                if (Vector3.Distance(agent.transform.position, enemyD.noisyTargets[i].position) < Vector3.Distance(agent.transform.position, placeholder1.transform.position))
                 {
-                    placeholder1 = foh.visibleTargets[i];
+                    placeholder1 = enemyD.noisyTargets[i];
                 }
                 
             }
-            for (int i = 1; i < fov.visibleTargets.Count; i++)
+            for (int i = 1; i < enemyD.visibleTargets.Count; i++)
             {
-                if (Vector3.Distance(agent.transform.position, fov.visibleTargets[i].position) < Vector3.Distance(agent.transform.position, placeholder2.transform.position))
+                if (Vector3.Distance(agent.transform.position, enemyD.visibleTargets[i].position) < Vector3.Distance(agent.transform.position, placeholder2.transform.position))
                 {
-                    placeholder2 = fov.visibleTargets[i];
+                    placeholder2 = enemyD.visibleTargets[i];
                 }
                 
             }
