@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum PlayerState
+{
+    WALKING,
+    RUNNING,
+    CROUCH,
+    NONE
+}
+
 public class characterwalkingscript : MonoBehaviour
 {
 
@@ -14,6 +22,8 @@ public class characterwalkingscript : MonoBehaviour
     public bool ability1Active;
     public bool ability2Active;
     public bool ability3Active;
+
+    public PlayerState state = PlayerState.WALKING;
 
     public bool abilityActive;
 
@@ -54,6 +64,19 @@ public class characterwalkingscript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha3) && !ability1Active && !ability2Active)
             Destroy(gameObject.GetComponent<LineRenderer>());
+
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            if (state == PlayerState.WALKING)
+            {
+                state = PlayerState.CROUCH;
+
+            }
+            if (state == PlayerState.CROUCH)
+            {
+                state = PlayerState.WALKING;
+            }
+        }
 
         if (!abilityActive)
         {
