@@ -127,10 +127,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8523fa9fe53b64eb9d42f2b2e099f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 4750820362725777968}
   soundRange: 20
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 256
-  horizontalForce: 500
-  verticalForce: 400
+  timeToTarget: 2
+  velocity: {x: 0, y: 0, z: 0}
+  currentPosition: {x: 0, y: 0, z: 0}
+  firingAngle: 60
+  gravity: 20

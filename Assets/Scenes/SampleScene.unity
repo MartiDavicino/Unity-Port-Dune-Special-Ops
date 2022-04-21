@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -17304,6 +17304,7 @@ MonoBehaviour:
   ability1Active: 0
   ability2Active: 0
   ability3Active: 0
+  state: 0
   abilityActive: 0
 --- !u!195 &1164201267
 NavMeshAgent:
@@ -17441,15 +17442,12 @@ MonoBehaviour:
   playerCamera: {fileID: 963194227}
   attackPoint: {fileID: 1164201269}
   attackPointOffset: {x: 0.8, y: 2.3, z: 0}
-  maximumRange: 10
+  maximumRange: 20
   ammunition: 1
-  fireRate: 0
   whatIsDecoy:
     serializedVersion: 2
     m_Bits: 1024
   decoyPrefab: {fileID: 7972253676922709312, guid: 2038e93e7de188149bcda1ef088e8b53, type: 3}
-  decoyVelocity: 10
-  effectRange: 10
   targetPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1170389519
 GameObject:

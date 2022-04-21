@@ -1,43 +1,62 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 
 public class Decoy : MonoBehaviour
 {
-    public Rigidbody rb;
+    private DecoyAbility decoyScript;
+    private NavMeshAgent agent;
 
     public float soundRange;
-
     public LayerMask whatIsEnemy;
 
-    private NavMeshAgent agent;
+    public float firingAngle = 45.0f;
+    public float gravity;
+
 
     // Start is called before the first frame update
     void Start()
     {
         GameObject go = GameObject.Find("Zhib");
-        DecoyAbility decoyScript = go.GetComponent<DecoyAbility>();
+        decoyScript = go.GetComponent<DecoyAbility>();
 
-        ThrowBallAtTargetLocation(decoyScript.targetPosition, decoyScript.decoyVelocity);
+        StartCoroutine(SimulateProjectile());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator SimulateProjectile()
     {
 
-    }
+        // Calculate distance to target
+        float target_Distance = Vector3.Distance(gameObject.transform.position, decoyScript.targetPosition);
 
-    void OnCollisionEnter(Collision coll)
-    {
+        // Calculate the velocity needed to throw the object to the target at specified angle.
+        float projectile_Velocity = target_Distance / (Mathf.Sin(2 * firingAngle * Mathf.Deg2Rad) / gravity);
 
-        if (coll.gameObject.tag == "Floor")
+        // Extract the X  Y componenent of the velocity
+        float Vx = Mathf.Sqrt(projectile_Velocity) * Mathf.Cos(firingAngle * Mathf.Deg2Rad);
+        float Vy = Mathf.Sqrt(projectile_Velocity) * 1.25f * Mathf.Sin(firingAngle * Mathf.Deg2Rad);
+
+        // Calculate flight time.
+        float flightDuration = target_Distance / Vx;
+
+        // Rotate projectile to face the target.
+        gameObject.transform.rotation = Quaternion.LookRotation(decoyScript.targetPosition - gameObject.transform.position);
+
+        float elapse_time = 0;
+
+        while (elapse_time < flightDuration - 0.3)
         {
-            EmitSound();
-            transform.gameObject.layer = 10;
+            gameObject.transform.Translate(0, (Vy - (gravity * elapse_time)) * Time.deltaTime, Vx * Time.deltaTime);
 
+            elapse_time += Time.deltaTime;
+
+            yield return null;
         }
+
+        EmitSound();
+
+        gameObject.layer = 10;
     }
 
     void EmitSound()
@@ -49,36 +68,5 @@ public class Decoy : MonoBehaviour
             agent = affectedEnemies[i].gameObject.GetComponent<NavMeshAgent>();
             agent.SetDestination(transform.position);
         }
-
-    }
-
-    public void ThrowBallAtTargetLocation(Vector3 targetLocation, float initialVelocity)
-    {
-        Vector3 direction = (targetLocation - transform.position).normalized;
-        float distance = Vector3.Distance(targetLocation, transform.position);
-
-        float firingElevationAngle = FiringElevationAngle(Physics.gravity.magnitude, distance, initialVelocity);
-        Vector3 elevation = Quaternion.AngleAxis(firingElevationAngle, transform.right) * transform.up;
-        float directionAngle = AngleBetweenAboutAxis(transform.forward, direction, transform.up);
-        Vector3 velocity = Quaternion.AngleAxis(directionAngle, transform.up) * elevation * initialVelocity;
-
-        // ballGameObject is object to be thrown
-        rb.AddForce(velocity, ForceMode.VelocityChange);
-    }
-
-    // Helper method to find angle between two points (v1 & v2) with respect to axis n
-    static float AngleBetweenAboutAxis(Vector3 v1, Vector3 v2, Vector3 n)
-    {
-        return Mathf.Atan2(
-            Vector3.Dot(n, Vector3.Cross(v1, v2)),
-            Vector3.Dot(v1, v2)) * Mathf.Rad2Deg;
-    }
-
-    // Helper method to find angle of elevation (ballistic trajectory) required to reach distance with initialVelocity
-    // Does not take wind resistance into consideration.
-    float FiringElevationAngle(float gravity, float distance, float initialVelocity)
-    {
-        float angle = 0.5f * Mathf.Asin((gravity * distance) / (initialVelocity * initialVelocity)) * Mathf.Rad2Deg;
-        return angle;
     }
 }

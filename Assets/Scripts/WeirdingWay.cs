@@ -166,7 +166,7 @@ public class WeirdingWay : MonoBehaviour
         Vector3 distance = new Vector3(0f,0f,0f);
 
         distance.x = Mathf.Abs(transform.position.x - enemy.transform.position.x);
-        distance.y = Mathf.Abs(transform.position.y - enemy.transform.position.z);
+        //distance.y = Mathf.Abs(transform.position.y - enemy.transform.position.z);
         distance.z = Mathf.Abs(transform.position.z - enemy.transform.position.z);
 
         return distance;

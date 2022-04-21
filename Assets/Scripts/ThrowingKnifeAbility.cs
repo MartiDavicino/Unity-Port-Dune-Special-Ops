@@ -146,7 +146,7 @@ public class ThrowingKnifeAbility : MonoBehaviour
         Vector3 distance = new Vector3(0f, 0f, 0f);
 
         distance.x = Mathf.Abs(transform.position.x - targetPos.x);
-        distance.y = Mathf.Abs(transform.position.y - targetPos.z);
+        //distance.y = Mathf.Abs(transform.position.y - targetPos.z);
         distance.z = Mathf.Abs(transform.position.z - targetPos.z);
 
         return distance;

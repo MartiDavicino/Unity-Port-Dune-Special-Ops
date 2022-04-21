@@ -12,6 +12,7 @@ public class DecoyAbility : MonoBehaviour
     public Camera playerCamera;
     public Transform attackPoint;
     public Vector3 attackPointOffset;
+
     private GameObject decoy;
     private bool active;
     private bool addLineComponentOnce;
@@ -19,13 +20,10 @@ public class DecoyAbility : MonoBehaviour
     //Ability Stats
     public float maximumRange;
     public int ammunition;
-    public float fireRate;
 
     //Decoy
     public LayerMask whatIsDecoy;
     public GameObject decoyPrefab;
-    public float decoyVelocity;
-    public float effectRange;
     public Vector3 targetPosition;
 
     // Start is called before the first frame update
@@ -56,6 +54,10 @@ public class DecoyAbility : MonoBehaviour
 
                 if (Physics.Raycast(ray, out meshHit))
                 {
+                    Vector3 tempDistance = CalculateAbsoluteDistance(meshHit.point);
+                    if (tempDistance.magnitude > maximumRange)
+                        return;
+
                     if (meshHit.collider.tag == "Floor")
                     {
                         transform.LookAt(meshHit.point);
@@ -82,9 +84,21 @@ public class DecoyAbility : MonoBehaviour
         }
 
     }
+
     void OnGUI()
     {
         if (walkingScript.ability2Active) GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Decoy Active");
+    }
+
+    Vector3 CalculateAbsoluteDistance(Vector3 targetPos)
+    {
+        Vector3 distance = new Vector3(0f, 0f, 0f);
+
+        distance.x = Mathf.Abs(transform.position.x - targetPos.x);
+        //distance.y = Mathf.Abs(transform.position.y - targetPos.z);
+        distance.z = Mathf.Abs(transform.position.z - targetPos.z);
+
+        return distance;
     }
 
 }
