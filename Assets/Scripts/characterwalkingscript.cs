@@ -19,7 +19,7 @@ public class characterwalkingscript : MonoBehaviour
     public NavMeshAgent playerAgent;
     public Camera playerCamera;
 
-    private Animator zhibAnimator;
+    private Animator animator;
 
     public bool ability1Active;
     public bool ability2Active;
@@ -32,7 +32,7 @@ public class characterwalkingscript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        zhibAnimator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
         playerAgent.stoppingDistance = 2;
         abilityActive = false;
     }
@@ -42,6 +42,7 @@ public class characterwalkingscript : MonoBehaviour
     {
         if (selectedCharacter)
         {
+
             if (Input.GetKeyDown(KeyCode.Alpha1) && (!abilityActive || ability1Active))
             {
                 ability1Active = !ability1Active;
@@ -95,9 +96,9 @@ public class characterwalkingscript : MonoBehaviour
                         {
                             playerAgent.SetDestination(meshHit.point);
                     
-                            if (zhibAnimator != null)
+                            if (animator != null)
                             {
-                                zhibAnimator.SetTrigger("isWalking");
+                                animator.SetTrigger("isWalking");
                             }
                         }
                     }
@@ -105,9 +106,9 @@ public class characterwalkingscript : MonoBehaviour
         
                 if(playerAgent.remainingDistance <= playerAgent.stoppingDistance)
                 {
-                    if (zhibAnimator != null)
+                    if (animator != null)
                     {
-                        zhibAnimator.SetTrigger("hasStopped");
+                        animator.SetTrigger("hasStopped");
                     }
                 }
             }
