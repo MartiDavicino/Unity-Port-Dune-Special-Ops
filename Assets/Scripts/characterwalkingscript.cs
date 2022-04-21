@@ -14,6 +14,8 @@ public enum PlayerState
 public class characterwalkingscript : MonoBehaviour
 {
 
+    public bool selectedCharacter;
+
     public NavMeshAgent playerAgent;
     public Camera playerCamera;
 
@@ -38,75 +40,82 @@ public class characterwalkingscript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && (!abilityActive || ability1Active))
+        if (selectedCharacter)
         {
-            ability1Active = !ability1Active;
-            abilityActive = !abilityActive;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2) && (!abilityActive || ability2Active))
-        {
-            ability2Active = !ability2Active;
-            abilityActive = !abilityActive;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3) && (!abilityActive || ability3Active))
-        {
-            ability3Active = !ability3Active;
-            abilityActive = !abilityActive;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !ability3Active && !ability2Active)
-            Destroy(gameObject.GetComponent<LineRenderer>());
-
-        if (Input.GetKeyDown(KeyCode.Alpha2) && !ability1Active && !ability3Active)
-            Destroy(gameObject.GetComponent<LineRenderer>());
-
-        if (Input.GetKeyDown(KeyCode.Alpha3) && !ability1Active && !ability2Active)
-            Destroy(gameObject.GetComponent<LineRenderer>());
-
-        if(Input.GetKeyDown(KeyCode.X))
-        {
-            if (state == PlayerState.WALKING)
+            if (Input.GetKeyDown(KeyCode.Alpha1) && (!abilityActive || ability1Active))
             {
-                state = PlayerState.CROUCH;
-
+                ability1Active = !ability1Active;
+                abilityActive = !abilityActive;
             }
-            if (state == PlayerState.CROUCH)
+
+            if (Input.GetKeyDown(KeyCode.Alpha2) && (!abilityActive || ability2Active))
             {
-                state = PlayerState.WALKING;
+                ability2Active = !ability2Active;
+                abilityActive = !abilityActive;
             }
-        }
 
-        if (!abilityActive)
-        {
-            if (Input.GetMouseButton(0))
+            if (Input.GetKeyDown(KeyCode.Alpha3) && (!abilityActive || ability3Active))
             {
+                ability3Active = !ability3Active;
+                abilityActive = !abilityActive;
+            }
 
-                Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-                RaycastHit meshHit;
+            if (Input.GetKeyDown(KeyCode.Alpha1) && !ability3Active && !ability2Active)
+                Destroy(gameObject.GetComponent<LineRenderer>());
 
-                if( Physics.Raycast(ray,out meshHit))
+            if (Input.GetKeyDown(KeyCode.Alpha2) && !ability1Active && !ability3Active)
+                Destroy(gameObject.GetComponent<LineRenderer>());
+
+            if (Input.GetKeyDown(KeyCode.Alpha3) && !ability1Active && !ability2Active)
+                Destroy(gameObject.GetComponent<LineRenderer>());
+
+            if(Input.GetKeyDown(KeyCode.X))
+            {
+                if (state == PlayerState.WALKING)
                 {
-                    if(meshHit.collider.tag == "Floor")
+                    state = PlayerState.CROUCH;
+
+                }
+                if (state == PlayerState.CROUCH)
+                {
+                    state = PlayerState.WALKING;
+                }
+            }
+
+            if (!abilityActive)
+            {
+                if (Input.GetMouseButton(0))
+                {
+
+                    Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit meshHit;
+
+                    if( Physics.Raycast(ray,out meshHit))
                     {
-                        playerAgent.SetDestination(meshHit.point);
-                    
-                        if (zhibAnimator != null)
+                        if(meshHit.collider.tag == "Floor")
                         {
-                            zhibAnimator.SetTrigger("isWalking");
+                            playerAgent.SetDestination(meshHit.point);
+                    
+                            if (zhibAnimator != null)
+                            {
+                                zhibAnimator.SetTrigger("isWalking");
+                            }
                         }
                     }
                 }
-            }
         
-            if(playerAgent.remainingDistance <= playerAgent.stoppingDistance)
-            {
-                if (zhibAnimator != null)
+                if(playerAgent.remainingDistance <= playerAgent.stoppingDistance)
                 {
-                    zhibAnimator.SetTrigger("hasStopped");
+                    if (zhibAnimator != null)
+                    {
+                        zhibAnimator.SetTrigger("hasStopped");
+                    }
                 }
             }
+        } else
+        {
+            if(gameObject.GetComponent<LineRenderer>() != null)
+                Destroy(gameObject.GetComponent<LineRenderer>());
         }
     }
 }

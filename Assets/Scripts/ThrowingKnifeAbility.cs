@@ -43,102 +43,113 @@ public class ThrowingKnifeAbility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (walkingScript.ability1Active)
+        if(walkingScript.selectedCharacter)
         {
-            if (addLineComponentOnce)
+            if (walkingScript.ability1Active)
             {
-                addLineComponentOnce = false;
-                gameObject.AddComponent<LineRenderer>();
-            }
-
-            gameObject.DrawCircle(maximumRange * 6, .05f);
-
-            if (Input.GetKeyDown(KeyCode.Mouse0) && ammunition > 0)
-            {
-                Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-
-                if (Physics.Raycast(ray, out rayHit))
+                if (addLineComponentOnce)
                 {
-                    if (rayHit.collider.tag == "Enemy")
+                    addLineComponentOnce = false;
+                    gameObject.AddComponent<LineRenderer>();
+                }
+
+                gameObject.DrawCircle(maximumRange * 6, .05f);
+
+                if (Input.GetKeyDown(KeyCode.Mouse0) && ammunition > 0)
+                {
+                    Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+
+                    if (Physics.Raycast(ray, out rayHit))
                     {
-                        Vector3 distance = CalculateAbsoluteDistance(rayHit.point);
-
-                        if (distance.magnitude >= maximumRange)
+                        if (rayHit.collider.tag == "Enemy")
                         {
-                            enemyOutOfRange = true;
-                            if (zhibAnimator != null)
-                            {
-                                zhibAnimator.SetTrigger("isWalking");
-                            }
-                            agent.SetDestination(rayHit.collider.gameObject.transform.position);
-                        } else
-                        {
-                            spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
+                            Vector3 distance = CalculateAbsoluteDistance(rayHit.point);
 
-                            for (int i = 0; i < thrownKnifes.Length; i++)
+                            if (distance.magnitude >= maximumRange)
                             {
-                                if (thrownKnifes[i] == null)
+                                enemyOutOfRange = true;
+                                if (zhibAnimator != null)
                                 {
-                                    thrownKnifes[i] = Instantiate(knifePrefab, spawnPoint, attackPoint.rotation);
-                                    thrownKnifes[i].transform.LookAt(rayHit.collider.gameObject.transform);
-                                    break;
+                                    zhibAnimator.SetTrigger("isWalking");
                                 }
-                            }
+                                agent.SetDestination(rayHit.collider.gameObject.transform.position);
+                            } else
+                            {
+                                spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
 
-                            ammunition--;
+                                for (int i = 0; i < thrownKnifes.Length; i++)
+                                {
+                                    if (thrownKnifes[i] == null)
+                                    {
+                                        thrownKnifes[i] = Instantiate(knifePrefab, spawnPoint, attackPoint.rotation);
+                                        thrownKnifes[i].transform.LookAt(rayHit.collider.gameObject.transform);
+                                        break;
+                                    }
+                                }
+
+                                ammunition--;
+                            }
                         }
                     }
                 }
+            } else
+            {
+                addLineComponentOnce = true;
+
+            }
+
+
+            Collider[] pickableKnifes = Physics.OverlapSphere(transform.position, 3.0f, whatIsKnife);
+
+            for(int i = 0; i < pickableKnifes.Length; i++)
+            {
+                Destroy(pickableKnifes[i].gameObject);
+                ammunition++;
             }
         } else
         {
             addLineComponentOnce = true;
-
         }
 
-
-        Collider[] pickableKnifes = Physics.OverlapSphere(transform.position, 3.0f, whatIsKnife);
-
-        for(int i = 0; i < pickableKnifes.Length; i++)
-        {
-            Destroy(pickableKnifes[i].gameObject);
-            ammunition++;
-        }
     }
 
     private void LateUpdate()
     {
-        if (enemyOutOfRange)
+        if(walkingScript.selectedCharacter)
         {
-            if (agent.remainingDistance <= maximumRange && !agent.pathPending)
+            if (enemyOutOfRange)
             {
-                if (zhibAnimator != null)
+                if (agent.remainingDistance <= maximumRange && !agent.pathPending)
                 {
-                    zhibAnimator.SetTrigger("hasStopped");
-                }
-                Vector3 spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
-
-                for (int i = 0; i < thrownKnifes.Length; i++)
-                {
-                    if (thrownKnifes[i] == null)
+                    if (zhibAnimator != null)
                     {
-                        thrownKnifes[i] = Instantiate(knifePrefab, spawnPoint, attackPoint.rotation);
-                        thrownKnifes[i].transform.LookAt(agent.destination);
-                        break;
+                        zhibAnimator.SetTrigger("hasStopped");
                     }
-                }
+                    Vector3 spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
 
-                agent.ResetPath();
-                ammunition--;
-                enemyOutOfRange = false;
+                    for (int i = 0; i < thrownKnifes.Length; i++)
+                    {
+                        if (thrownKnifes[i] == null)
+                        {
+                            thrownKnifes[i] = Instantiate(knifePrefab, spawnPoint, attackPoint.rotation);
+                            thrownKnifes[i].transform.LookAt(agent.destination);
+                            break;
+                        }
+                    }
+
+                    agent.ResetPath();
+                    ammunition--;
+                    enemyOutOfRange = false;
+                }
             }
         }
         
     }
+
     void OnGUI()
     {
-        if (walkingScript.ability1Active) GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Throwing Knife Active");
+        if(walkingScript.selectedCharacter)
+            if (walkingScript.ability1Active) GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Throwing Knife Active");
     }
 
     Vector3 CalculateAbsoluteDistance(Vector3 targetPos)

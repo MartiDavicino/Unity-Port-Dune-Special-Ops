@@ -45,53 +45,63 @@ public class WeirdingWay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            addLineComponentOnce = true;
-
-        if (walkingScript.ability3Active)
+        if(walkingScript.selectedCharacter)
         {
-            if(addLineComponentOnce)
+
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+                addLineComponentOnce = true;
+
+            if (walkingScript.ability3Active)
             {
-                addLineComponentOnce = false;
-                gameObject.AddComponent<LineRenderer>();
-            }
-
-
-            gameObject.DrawCircle(killProximityRange * 6, .05f);
-
-            agent.ResetPath();
-
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-
-                if (Physics.Raycast(ray, out rayHit))
+                if(addLineComponentOnce)
                 {
-                    if (rayHit.collider.tag == "Enemy")
+                    addLineComponentOnce = false;
+                    gameObject.AddComponent<LineRenderer>();
+                }
+
+
+                gameObject.DrawCircle(killProximityRange * 6, .05f);
+
+                agent.ResetPath();
+
+                if (Input.GetKeyDown(KeyCode.Mouse0))
+                {
+                    Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+
+                    if (Physics.Raycast(ray, out rayHit))
                     {
-                        walkingScript.ability3Active = false;
-                        walkingScript.abilityActive = false;
-                        enemyTargeted = true;
-                        targetedEnemy = rayHit.collider.gameObject;
-                        agent.SetDestination(rayHit.collider.gameObject.transform.position);
-                        zhibAnimator.SetTrigger("isWalking");
+                        if (rayHit.collider.tag == "Enemy")
+                        {
+                            walkingScript.ability3Active = false;
+                            walkingScript.abilityActive = false;
+                            enemyTargeted = true;
+                            targetedEnemy = rayHit.collider.gameObject;
+                            agent.SetDestination(rayHit.collider.gameObject.transform.position);
+                            zhibAnimator.SetTrigger("isWalking");
+                        }
                     }
                 }
+
+            } else {
+
+                if (!agent.pathPending && agent.remainingDistance < killProximityRange && enemyTargeted)
+                {
+                    gameObject.DrawCircle(killChainRange * 6, .05f);
+                    agent.ResetPath();
+                    firstEnemyReached = true;
+                }
+
             }
 
-        } else {
 
-            if (!agent.pathPending && agent.remainingDistance < killProximityRange && enemyTargeted)
-            {
-                gameObject.DrawCircle(killChainRange * 6, .05f);
-                agent.ResetPath();
-                firstEnemyReached = true;
-            }
-
+            if (firstEnemyReached) StartKillChain();
+        } else
+        {
+            firstEnemyReached = false;
+            enemyTargeted = false;
+            addLineComponentOnce = true;
+            killCount = 0;
         }
-
-
-        if (firstEnemyReached) StartKillChain();
     }
 
     void StartKillChain()
