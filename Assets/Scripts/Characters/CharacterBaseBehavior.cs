@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public enum PlayerState
 {
+    IDLE,
     WALKING,
     RUNNING,
     CROUCH,
@@ -25,7 +26,7 @@ public class CharacterBaseBehavior : MonoBehaviour
     public bool ability2Active;
     public bool ability3Active;
 
-    public PlayerState state = PlayerState.WALKING;
+    public PlayerState state = PlayerState.IDLE;
 
     public bool abilityActive;
 
@@ -72,17 +73,6 @@ public class CharacterBaseBehavior : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha3) && !ability1Active && !ability2Active)
                 Destroy(gameObject.GetComponent<LineRenderer>());
 
-            if(Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                switch(state){
-                    case  PlayerState.WALKING:
-                        state = PlayerState.CROUCH;
-                        break;
-                    case PlayerState.CROUCH:
-                        state = PlayerState.WALKING;
-                        break;
-                }
-            }
 
             if (!abilityActive)
             {
@@ -101,8 +91,7 @@ public class CharacterBaseBehavior : MonoBehaviour
 
                             if (animator != null)
                             {
-                                animator.ResetTrigger("hasStopped");
-                                animator.SetTrigger("isWalking");
+                                state = PlayerState.WALKING;
                             }
                         } else
                         {
@@ -111,14 +100,15 @@ public class CharacterBaseBehavior : MonoBehaviour
                     }
                 }
         
-                if(CalculateAbsoluteDistance(targetPosition).magnitude <= playerAgent.stoppingDistance)
+
+                if(Input.GetKey(KeyCode.LeftShift) && state != PlayerState.IDLE)
                 {
-                    if (animator != null)
-                    {
-                        animator.ResetTrigger("isWalking");
-                        animator.SetTrigger("hasStopped");
-                        playerAgent.ResetPath();
-                    }
+                    state = PlayerState.CROUCH;
+                }
+                
+                if (Input.GetKeyUp(KeyCode.LeftShift) && state != PlayerState.IDLE)
+                {
+                    state = PlayerState.WALKING;
                 }
             }
         } else
@@ -126,6 +116,21 @@ public class CharacterBaseBehavior : MonoBehaviour
             if(gameObject.GetComponent<LineRenderer>() != null)
                 Destroy(gameObject.GetComponent<LineRenderer>());
         }
+
+        if(targetPosition != Vector3.zero)
+        {
+            if(CalculateAbsoluteDistance(targetPosition).magnitude <= playerAgent.stoppingDistance)
+            {
+                if (animator != null)
+                {
+                    targetPosition = Vector3.zero;
+                    state = PlayerState.IDLE;
+                    playerAgent.ResetPath();
+                }
+            }
+        }
+        
+
     }
 
     Vector3 CalculateAbsoluteDistance(Vector3 targetPos)

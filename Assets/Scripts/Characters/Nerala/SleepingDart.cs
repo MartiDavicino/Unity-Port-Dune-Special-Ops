@@ -99,7 +99,7 @@ public class SleepingDart : MonoBehaviour
                 {
                     targetDistance = CalculateAbsoluteDistance(targetEnemy.transform.position);
 
-                    if (targetDistance.magnitude <= maximumRange && !agent.pathPending)
+                    if (targetDistance.magnitude <= maximumRange)
                     {
                         agent.ResetPath();
 
@@ -109,7 +109,7 @@ public class SleepingDart : MonoBehaviour
                             gameObject.transform.rotation *= Quaternion.Euler(0, 90, 0);
 
                             neralaAnimator.ResetTrigger("isWalking");
-                            //neralaAnimator.ResetTrigger("hasStopped");
+                            neralaAnimator.ResetTrigger("hasStopped");
                             neralaAnimator.SetTrigger("sleepingDart");
                         }
 
