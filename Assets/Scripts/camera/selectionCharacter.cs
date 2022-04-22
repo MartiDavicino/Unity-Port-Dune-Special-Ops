@@ -6,7 +6,6 @@ public class selectionCharacter : MonoBehaviour
 {
     
     private CameraMovement cameraScript;
-    private GameObject selectedCharacter;
 
     private HunterSeekerAbility hunterSeekerScript;
 
@@ -60,8 +59,5 @@ public class selectionCharacter : MonoBehaviour
             characterwalkingscript walkScript = temp.GetComponent<characterwalkingscript>();
             walkScript.selectedCharacter = false;
         }
-
-        //if (Input.GetKey(KeyCode.Z))
-        //
     }
 }
