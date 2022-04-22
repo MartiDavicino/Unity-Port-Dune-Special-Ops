@@ -46,10 +46,10 @@ public class HunterSeeker : MonoBehaviour
             HunterSeekerAbility hunterSeekerScript = go.GetComponent<HunterSeekerAbility>();
             hunterSeekerScript.seekerHunting = false;
 
-            characterwalkingscript walkScript = go.GetComponent<characterwalkingscript>();
-            walkScript.selectedCharacter = true;
-            walkScript.abilityActive = false;
-            walkScript.ability3Active = false;
+            CharacterBaseBehavior baseScript = go.GetComponent<CharacterBaseBehavior>();
+            baseScript.selectedCharacter = true;
+            baseScript.abilityActive = false;
+            baseScript.ability3Active = false;
 
             cameraScript.focusedPlayer = go;
 

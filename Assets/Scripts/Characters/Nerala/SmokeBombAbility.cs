@@ -6,7 +6,7 @@ using UnityEngine;
 public class SmokeBombAbility : MonoBehaviour
 {
 
-    public characterwalkingscript walkingScript;
+    public CharacterBaseBehavior baseScript;
 
     //General Variables
     public Camera playerCamera;
@@ -40,9 +40,9 @@ public class SmokeBombAbility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(walkingScript.selectedCharacter)
+        if(baseScript.selectedCharacter)
         {
-            if(walkingScript.ability2Active)
+            if(baseScript.ability2Active)
             {
                 if (addLineComponentOnce)
                 {
@@ -102,8 +102,8 @@ public class SmokeBombAbility : MonoBehaviour
 
     void OnGUI()
     {
-        if (walkingScript.selectedCharacter)
-            if (walkingScript.ability2Active)
+        if (baseScript.selectedCharacter)
+            if (baseScript.ability2Active)
                 GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Smoke Bomb Active");
     }
 

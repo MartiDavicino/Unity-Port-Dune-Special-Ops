@@ -6,7 +6,7 @@ using UnityEngine;
 public class WeirdingWay : MonoBehaviour
 {
 
-    public characterwalkingscript walkingScript;
+    public CharacterBaseBehavior baseScript;
 
     public Camera playerCamera;
     public NavMeshAgent agent;
@@ -45,13 +45,13 @@ public class WeirdingWay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(walkingScript.selectedCharacter)
+        if(baseScript.selectedCharacter)
         {
 
             if (Input.GetKeyDown(KeyCode.Alpha3))
                 addLineComponentOnce = true;
 
-            if (walkingScript.ability3Active)
+            if (baseScript.ability3Active)
             {
                 if(addLineComponentOnce)
                 {
@@ -72,8 +72,8 @@ public class WeirdingWay : MonoBehaviour
                     {
                         if (rayHit.collider.tag == "Enemy")
                         {
-                            walkingScript.ability3Active = false;
-                            walkingScript.abilityActive = false;
+                            baseScript.ability3Active = false;
+                            baseScript.abilityActive = false;
                             enemyTargeted = true;
                             targetedEnemy = rayHit.collider.gameObject;
                             agent.SetDestination(rayHit.collider.gameObject.transform.position);
@@ -184,6 +184,6 @@ public class WeirdingWay : MonoBehaviour
 
     void OnGUI()
     {
-        if (walkingScript.ability3Active) GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Weirding Way Active");
+        if (baseScript.ability3Active) GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Weirding Way Active");
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HunterSeekerAbility : MonoBehaviour
 {
-    public characterwalkingscript walkingScript;
+    public CharacterBaseBehavior baseScript;
 
     private Animator neralaAnimator;
 
@@ -27,9 +27,9 @@ public class HunterSeekerAbility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (walkingScript.selectedCharacter)
+        if (baseScript.selectedCharacter)
         {
-            if (walkingScript.ability3Active)
+            if (baseScript.ability3Active)
             {
                 if (addLineComponentOnce)
                 {
@@ -45,6 +45,10 @@ public class HunterSeekerAbility : MonoBehaviour
                     Instantiate(hunterSeekerPrefab, spawnPoint, gameObject.transform.rotation);
                     Destroy(gameObject.GetComponent<LineRenderer>());
                     seekerHunting = true;
+                    if (neralaAnimator != null)
+                    {
+                        neralaAnimator.SetTrigger("mosquito");
+                    }
                 }
             } else
             {
@@ -55,7 +59,7 @@ public class HunterSeekerAbility : MonoBehaviour
 
     void OnGUI()
     {
-        if (walkingScript.selectedCharacter)
-            if (walkingScript.ability3Active) GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Hunter Seeker Active");
+        if (baseScript.selectedCharacter)
+            if (baseScript.ability3Active) GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Hunter Seeker Active");
     }
 }

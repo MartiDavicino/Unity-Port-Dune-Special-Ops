@@ -11,7 +11,7 @@ public enum PlayerState
     NONE
 }
 
-public class characterwalkingscript : MonoBehaviour
+public class CharacterBaseBehavior : MonoBehaviour
 {
 
     public bool selectedCharacter;

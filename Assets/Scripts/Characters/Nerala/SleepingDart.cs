@@ -7,7 +7,7 @@ using UnityEngine;
 public class SleepingDart : MonoBehaviour
 {
 
-    public characterwalkingscript walkingScript;
+    public CharacterBaseBehavior baseScript;
 
     //General Variables
     public Camera playerCamera;
@@ -35,9 +35,9 @@ public class SleepingDart : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(walkingScript.selectedCharacter)
+        if(baseScript.selectedCharacter)
         {
-            if (walkingScript.ability1Active)
+            if (baseScript.ability1Active)
             {
                 if (addLineComponentOnce)
                 {
@@ -94,7 +94,7 @@ public class SleepingDart : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(walkingScript.selectedCharacter)
+        if(baseScript.selectedCharacter)
         {
             if (enemyOutOfRange)
             {
@@ -123,8 +123,8 @@ public class SleepingDart : MonoBehaviour
 
     void OnGUI()
     {
-        if(walkingScript.selectedCharacter)
-            if (walkingScript.ability1Active) GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Sleeping Dart Active");
+        if(baseScript.selectedCharacter)
+            if (baseScript.ability1Active) GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Sleeping Dart Active");
     }
 
     Vector3 CalculateAbsoluteDistance(Vector3 targetPos)

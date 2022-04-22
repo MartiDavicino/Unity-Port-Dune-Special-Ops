@@ -7,7 +7,7 @@ using UnityEngine;
 public class ThrowingKnifeAbility : MonoBehaviour
 {
 
-    public characterwalkingscript walkingScript;
+    public CharacterBaseBehavior baseScript;
 
     //General Variables
     public Camera playerCamera;
@@ -43,9 +43,9 @@ public class ThrowingKnifeAbility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(walkingScript.selectedCharacter)
+        if(baseScript.selectedCharacter)
         {
-            if (walkingScript.ability1Active)
+            if (baseScript.ability1Active)
             {
                 if (addLineComponentOnce)
                 {
@@ -115,7 +115,7 @@ public class ThrowingKnifeAbility : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(walkingScript.selectedCharacter)
+        if(baseScript.selectedCharacter)
         {
             if (enemyOutOfRange)
             {
@@ -148,8 +148,8 @@ public class ThrowingKnifeAbility : MonoBehaviour
 
     void OnGUI()
     {
-        if(walkingScript.selectedCharacter)
-            if (walkingScript.ability1Active) GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Throwing Knife Active");
+        if(baseScript.selectedCharacter)
+            if (baseScript.ability1Active) GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Throwing Knife Active");
     }
 
     Vector3 CalculateAbsoluteDistance(Vector3 targetPos)

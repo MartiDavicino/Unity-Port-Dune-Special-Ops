@@ -25,13 +25,13 @@ public class selectionCharacter : MonoBehaviour
 
             cameraScript.focusedPlayer = temp;
 
-            characterwalkingscript walkScript = temp.GetComponent<characterwalkingscript>();
-            walkScript.selectedCharacter = true;
+            CharacterBaseBehavior baseScript = temp.GetComponent<CharacterBaseBehavior>();
+            baseScript.selectedCharacter = true;
 
 
             temp = GameObject.Find("Nerala");
-            walkScript = temp.GetComponent<characterwalkingscript>();
-            walkScript.selectedCharacter = false;
+            baseScript = temp.GetComponent<CharacterBaseBehavior>();
+            baseScript.selectedCharacter = false;
         }
 
         if (Input.GetKey(KeyCode.X))
@@ -42,12 +42,12 @@ public class selectionCharacter : MonoBehaviour
 
             cameraScript.focusedPlayer = temp;
 
-            characterwalkingscript walkScript = temp.GetComponent<characterwalkingscript>();
-            walkScript.selectedCharacter = true;
+            CharacterBaseBehavior baseScript = temp.GetComponent<CharacterBaseBehavior>();
+            baseScript.selectedCharacter = true;
 
             temp = GameObject.Find("Zhib");
-            walkScript = temp.GetComponent<characterwalkingscript>();
-            walkScript.selectedCharacter = false;
+            baseScript = temp.GetComponent<CharacterBaseBehavior>();
+            baseScript.selectedCharacter = false;
         }
 
         if(cameraScript.focusedPlayer == GameObject.Find("Nerala") && hunterSeekerScript.seekerHunting)
@@ -56,8 +56,8 @@ public class selectionCharacter : MonoBehaviour
             cameraScript.focusedPlayer = temp;
 
             temp = GameObject.Find("Nerala");
-            characterwalkingscript walkScript = temp.GetComponent<characterwalkingscript>();
-            walkScript.selectedCharacter = false;
+            CharacterBaseBehavior baseScript = temp.GetComponent<CharacterBaseBehavior>();
+            baseScript.selectedCharacter = false;
         }
     }
 }

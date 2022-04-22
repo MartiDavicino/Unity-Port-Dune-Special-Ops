@@ -6,7 +6,7 @@ using UnityEngine;
 public class DecoyAbility : MonoBehaviour
 {
 
-    public characterwalkingscript walkingScript;
+    public CharacterBaseBehavior baseScript;
 
     //General Variables
     public Camera playerCamera;
@@ -36,9 +36,9 @@ public class DecoyAbility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(walkingScript.selectedCharacter)
+        if(baseScript.selectedCharacter)
         {
-            if(walkingScript.ability2Active)
+            if(baseScript.ability2Active)
             {
                 if (addLineComponentOnce)
                 {
@@ -92,8 +92,8 @@ public class DecoyAbility : MonoBehaviour
 
     void OnGUI()
     {
-        if (walkingScript.selectedCharacter)
-            if (walkingScript.ability2Active)
+        if (baseScript.selectedCharacter)
+            if (baseScript.ability2Active)
                 GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Decoy Active");
     }
 
@@ -102,7 +102,6 @@ public class DecoyAbility : MonoBehaviour
         Vector3 distance = new Vector3(0f, 0f, 0f);
 
         distance.x = Mathf.Abs(transform.position.x - targetPos.x);
-        //distance.y = Mathf.Abs(transform.position.y - targetPos.z);
         distance.z = Mathf.Abs(transform.position.z - targetPos.z);
 
         return distance;
