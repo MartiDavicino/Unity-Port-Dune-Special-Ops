@@ -29,6 +29,8 @@ public class CharacterBaseBehavior : MonoBehaviour
 
     public bool abilityActive;
 
+    private Vector3 targetPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -95,7 +97,8 @@ public class CharacterBaseBehavior : MonoBehaviour
                         if(meshHit.collider.tag == "Floor")
                         {
                             playerAgent.SetDestination(meshHit.point);
-                    
+                            targetPosition = meshHit.point;
+
                             if (animator != null)
                             {
                                 animator.SetTrigger("isWalking");
@@ -104,7 +107,7 @@ public class CharacterBaseBehavior : MonoBehaviour
                     }
                 }
         
-                if(playerAgent.remainingDistance <= playerAgent.stoppingDistance)
+                if(CalculateAbsoluteDistance(targetPosition).magnitude <= playerAgent.stoppingDistance)
                 {
                     if (animator != null)
                     {
@@ -117,5 +120,15 @@ public class CharacterBaseBehavior : MonoBehaviour
             if(gameObject.GetComponent<LineRenderer>() != null)
                 Destroy(gameObject.GetComponent<LineRenderer>());
         }
+    }
+
+    Vector3 CalculateAbsoluteDistance(Vector3 targetPos)
+    {
+        Vector3 distance = new Vector3(0f, 0f, 0f);
+
+        distance.x = Mathf.Abs(transform.position.x - targetPos.x);
+        distance.z = Mathf.Abs(transform.position.z - targetPos.z);
+
+        return distance;
     }
 }

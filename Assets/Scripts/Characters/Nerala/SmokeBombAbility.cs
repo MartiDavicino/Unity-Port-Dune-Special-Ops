@@ -99,14 +99,6 @@ public class SmokeBombAbility : MonoBehaviour
         }
 
     }
-
-    void OnGUI()
-    {
-        if (baseScript.selectedCharacter)
-            if (baseScript.ability2Active)
-                GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Smoke Bomb Active");
-    }
-
     Vector3 CalculateAbsoluteDistance(Vector3 targetPos)
     {
         Vector3 distance = new Vector3(0f, 0f, 0f);
@@ -115,6 +107,12 @@ public class SmokeBombAbility : MonoBehaviour
         distance.z = Mathf.Abs(transform.position.z - targetPos.z);
 
         return distance;
+    }
+    void OnGUI()
+    {
+        if (baseScript.selectedCharacter)
+            if (baseScript.ability2Active)
+                GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Smoke Bomb Active");
     }
 
 }
