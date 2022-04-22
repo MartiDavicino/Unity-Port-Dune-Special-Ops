@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class SmokeBomb : MonoBehaviour
 {
     private SmokeBombAbility smokeBombScript;
-    private NavMeshAgent agent;
 
     public LayerMask whatIsPlayer;
 
@@ -15,7 +14,7 @@ public class SmokeBomb : MonoBehaviour
 
     public float smokeRange;
 
-    private bool groundHit;
+    public bool groundHit;
 
     // Start is called before the first frame update
     void Start()
@@ -29,10 +28,10 @@ public class SmokeBomb : MonoBehaviour
 
         StartCoroutine(SimulateProjectile());
     }
-    void Update()
+    void LateUpdate()
     {
         
-        if(groundHit) ProduceSmoke();
+        //if(groundHit) ProduceSmoke();
     }
 
     IEnumerator SimulateProjectile()
@@ -70,13 +69,16 @@ public class SmokeBomb : MonoBehaviour
         //gameObject.layer = 10;
     }
 
-    void ProduceSmoke()
-    {
-        Collider[] affectedCharacters = Physics.OverlapSphere(transform.position, smokeRange, whatIsPlayer);
+    //void ProduceSmoke()
+    //{
+    //    Collider[] affectedCharacters = Physics.OverlapSphere(transform.position, smokeRange, whatIsPlayer);
 
-        for (int i = 0; i < affectedCharacters.Length; i++)
-        {
-            affectedCharacters[i].gameObject.layer = 11;
-        }
-    }
+    //    for (int i = 0; i < affectedCharacters.Length; i++)
+    //    {
+    //        affectedCharacters[i].gameObject.layer = 11;
+    //    }
+    //}
+
+   
+
 }

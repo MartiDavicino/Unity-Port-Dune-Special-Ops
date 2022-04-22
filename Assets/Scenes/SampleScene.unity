@@ -176,7 +176,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 17931620}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 3.84, y: 19.99, z: 3.8}
@@ -261,7 +261,7 @@ MonoBehaviour:
   whatIsDecoy:
     serializedVersion: 2
     m_Bits: 1024
-  smokeBombPrefab: {fileID: 7715715703547407272, guid: bc33ef73b8f26064eb26431a5934db85, type: 3}
+  smokeBombPrefab: {fileID: 6426780562200808130, guid: c912b95efd14955469b952f7fd99030f, type: 3}
   targetPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &33683007 stripped
 Transform:
@@ -15518,10 +15518,10 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1164201265}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.84, y: 19.99, z: 3.8}
+  m_Size: {x: 3.84, y: 19.99, z: 7}
   m_Center: {x: 0, y: 9.24, z: 0.15}
 --- !u!114 &1164201271
 MonoBehaviour:

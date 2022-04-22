@@ -10,6 +10,7 @@ TagManager:
   - Wall
   - Knife
   - Decoy
+  - SmokeBomb
   layers:
   - Default
   - TransparentFX

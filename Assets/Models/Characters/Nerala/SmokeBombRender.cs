@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CircularRangeRender : MonoBehaviour
+public class SmokeBombRender : MonoBehaviour
 {
 
     public float circleRadius;
 
     public int numSegments = 128;
+
+    public SphereCollider triggerZone;
 
     SmokeBomb smokeBomb;
 
@@ -19,6 +21,8 @@ public class CircularRangeRender : MonoBehaviour
 
         circleRadius = smokeBomb.smokeRange;
 
+        triggerZone.radius = circleRadius;
+
         gameObject.AddComponent<LineRenderer>();
         DoRenderer();
     }
@@ -27,7 +31,7 @@ public class CircularRangeRender : MonoBehaviour
         gameObject.transform.rotation = Quaternion.identity;
 
     }
-    public void DoRenderer()
+    void DoRenderer()
     {
         LineRenderer lineRenderer = gameObject.GetComponent<LineRenderer>();
         Color c1 = new Color(0.5f, 0.5f, 0.5f, 1);
@@ -42,11 +46,30 @@ public class CircularRangeRender : MonoBehaviour
 
         for (int i = 0; i < numSegments + 1; i++)
         {
-            float x = circleRadius * 1.75f * Mathf.Cos(theta);
-            float z = circleRadius * 1.75f * Mathf.Sin(theta);
+            float x = circleRadius * 1f * Mathf.Cos(theta);
+            float z = circleRadius * 1f * Mathf.Sin(theta);
             Vector3 pos = new Vector3(x, 0, z);
             lineRenderer.SetPosition(i, pos);
             theta += deltaTheta;
         }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "SmokeBomb")
+            return;
+
+        if (smokeBomb.groundHit)
+            if (other.gameObject.layer == 6)
+                other.gameObject.layer = 11;
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "SmokeBomb")
+            return;
+
+        if (smokeBomb.groundHit)
+            if (other.gameObject.layer == 11)
+                other.gameObject.layer = 6;
     }
 }
