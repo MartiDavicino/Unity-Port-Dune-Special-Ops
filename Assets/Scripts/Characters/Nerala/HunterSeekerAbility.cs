@@ -6,8 +6,6 @@ public class HunterSeekerAbility : MonoBehaviour
 {
     public CharacterBaseBehavior baseScript;
 
-    private Animator neralaAnimator;
-
     private bool addLineComponentOnce;
 
     public float spawnRange;
@@ -16,17 +14,24 @@ public class HunterSeekerAbility : MonoBehaviour
 
     public bool seekerHunting;
 
+    private bool hunterDeployed;
+
     // Start is called before the first frame update
     void Start()
     {
+        hunterDeployed = false;
         addLineComponentOnce = true;
-
-        neralaAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (hunterDeployed || baseScript.state == PlayerState.ABILITY1)
+        {
+            baseScript.state = PlayerState.IDLE;
+            hunterDeployed = false;
+        }
+
         if (baseScript.selectedCharacter)
         {
             if (baseScript.ability3Active)
@@ -44,11 +49,11 @@ public class HunterSeekerAbility : MonoBehaviour
                     Vector3 spawnPoint = gameObject.transform.position + gameObject.transform.forward * spawnRange + gameObject.transform.up * 1;
                     Instantiate(hunterSeekerPrefab, spawnPoint, gameObject.transform.rotation);
                     Destroy(gameObject.GetComponent<LineRenderer>());
+                    
                     seekerHunting = true;
-                    if (neralaAnimator != null)
-                    {
-                        neralaAnimator.SetTrigger("mosquito");
-                    }
+                    hunterDeployed = true;
+
+                    baseScript.state = PlayerState.ABILITY3;
                 }
             } else
             {

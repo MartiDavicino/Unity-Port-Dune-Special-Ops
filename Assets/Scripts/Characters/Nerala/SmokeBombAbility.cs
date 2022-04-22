@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class SmokeBombAbility : MonoBehaviour
 {
 
@@ -17,7 +16,7 @@ public class SmokeBombAbility : MonoBehaviour
     private bool active;
     private bool addLineComponentOnce;
 
-    private Animator neralaAnimator;
+    private bool bombThrown;
 
     //Ability Stats
     public float maximumRange;
@@ -31,8 +30,7 @@ public class SmokeBombAbility : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        neralaAnimator = GetComponent<Animator>();
-
+        bombThrown = false;
         addLineComponentOnce = true;
         active = false;
     }
@@ -40,7 +38,13 @@ public class SmokeBombAbility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(baseScript.selectedCharacter)
+        if (bombThrown || baseScript.state == PlayerState.ABILITY1)
+        {
+            baseScript.state = PlayerState.IDLE;
+            bombThrown = false;
+        }
+
+        if (baseScript.selectedCharacter)
         {
             if(baseScript.ability2Active)
             {
@@ -65,10 +69,9 @@ public class SmokeBombAbility : MonoBehaviour
 
                         if (meshHit.collider.tag == "Floor")
                         {
-                            if (neralaAnimator != null)
-                            {
-                                neralaAnimator.SetTrigger("smokeBomb");
-                            }
+
+                            baseScript.state = PlayerState.ABILITY2;
+                            bombThrown = true;
 
                             transform.LookAt(meshHit.point);
 

@@ -10,6 +10,9 @@ public enum PlayerState
     RUNNING,
     CROUCH,
     STEALTH_KILL,
+    ABILITY1,
+    ABILITY2,
+    ABILITY3,
     NONE
 }
 
@@ -111,6 +114,7 @@ public class CharacterBaseBehavior : MonoBehaviour
                     state = PlayerState.WALKING;
                 }
             }
+
         } else
         {
             if(gameObject.GetComponent<LineRenderer>() != null)

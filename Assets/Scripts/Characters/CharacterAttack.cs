@@ -14,8 +14,6 @@ public class CharacterAttack : MonoBehaviour
     private Vector3 distanceToTarget;
     private bool attacking;
 
-    private Animator animator;
-
     public float rangeToKill;
 
     // Start is called before the first frame update
@@ -25,7 +23,6 @@ public class CharacterAttack : MonoBehaviour
         playerCamera = Camera.main;
         baseScript = gameObject.GetComponent<CharacterBaseBehavior>();
         agent = gameObject.GetComponent<NavMeshAgent>();
-        animator = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
