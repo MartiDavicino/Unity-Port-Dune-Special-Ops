@@ -17,6 +17,9 @@ public class SleepingDart : MonoBehaviour
     private Animator neralaAnimator;
     private bool addLineComponentOnce;
 
+    private GameObject targetEnemy;
+    private Vector3 targetDistance;
+
     //Ability Stats
     public float maximumRange;
     public int ammunition;
@@ -53,25 +56,35 @@ public class SleepingDart : MonoBehaviour
 
                     if (Physics.Raycast(ray, out rayHit))
                     {
+                        targetEnemy = rayHit.collider.gameObject;
+
                         if (rayHit.collider.tag == "Enemy")
                         {
-                            Vector3 distance = CalculateAbsoluteDistance(rayHit.point);
+                            targetDistance = CalculateAbsoluteDistance(rayHit.point);
 
-                            if (distance.magnitude >= maximumRange)
+                            if (targetDistance.magnitude >= maximumRange)
                             {
                                 enemyOutOfRange = true;
-                                agent.SetDestination(rayHit.collider.gameObject.transform.position);
+                                agent.SetDestination(targetEnemy.transform.position);
+                                
+                                if (neralaAnimator != null)
+                                {
+                                    neralaAnimator.ResetTrigger("hasStopped");
+                                    neralaAnimator.SetTrigger("isWalking");
+                                }
                             } else
                             {
                                 if (neralaAnimator != null)
                                 {
-                                    gameObject.transform.LookAt(rayHit.collider.gameObject.transform);
+                                    gameObject.transform.LookAt(targetEnemy.transform);
                                     gameObject.transform.rotation *= Quaternion.Euler(0, 90, 0);
+
+                                    neralaAnimator.ResetTrigger("hasStopped");
                                     neralaAnimator.SetTrigger("sleepingDart");
                                 }
 
                                 // Set Sleepy Effect to Enemy 
-                                Material tempMaterial = rayHit.collider.gameObject.GetComponent<MeshRenderer>().material;
+                                Material tempMaterial = targetEnemy.GetComponent<MeshRenderer>().material;
                                 tempMaterial.color = Color.green;
                                 //
 
@@ -80,6 +93,36 @@ public class SleepingDart : MonoBehaviour
                         }
                     }
                 }
+
+
+                if (enemyOutOfRange)
+                {
+                    targetDistance = CalculateAbsoluteDistance(targetEnemy.transform.position);
+
+                    if (targetDistance.magnitude <= maximumRange && !agent.pathPending)
+                    {
+                        agent.ResetPath();
+
+                        if (neralaAnimator != null)
+                        {
+                            gameObject.transform.LookAt(targetEnemy.transform);
+                            gameObject.transform.rotation *= Quaternion.Euler(0, 90, 0);
+
+                            neralaAnimator.ResetTrigger("isWalking");
+                            //neralaAnimator.ResetTrigger("hasStopped");
+                            neralaAnimator.SetTrigger("sleepingDart");
+                        }
+
+                        // Set Sleepy Effect to Enemy 
+                        Material tempMaterial = targetEnemy.GetComponent<MeshRenderer>().material;
+                        tempMaterial.color = Color.green;
+                        //
+
+                        ammunition--;
+                        enemyOutOfRange = false;
+                    }
+                }
+
             } else
             {
                 addLineComponentOnce = true;
@@ -90,35 +133,6 @@ public class SleepingDart : MonoBehaviour
             addLineComponentOnce = true;
         }
 
-    }
-
-    private void LateUpdate()
-    {
-        if(baseScript.selectedCharacter)
-        {
-            if (enemyOutOfRange)
-            {
-                if (agent.remainingDistance <= maximumRange && !agent.pathPending)
-                {
-                    if (neralaAnimator != null)
-                    {
-                        gameObject.transform.LookAt(rayHit.collider.gameObject.transform);
-                        gameObject.transform.rotation *= Quaternion.Euler(0, 90, 0);
-                        neralaAnimator.SetTrigger("sleepingDart");
-                    }
-                    
-                    // Set Sleepy Effect to Enemy 
-                        Material tempMaterial = rayHit.collider.gameObject.GetComponent<MeshRenderer>().material;
-                        tempMaterial.color = Color.green;
-                    //
-
-                    agent.ResetPath();
-                    ammunition--;
-                    enemyOutOfRange = false;
-                }
-            }
-        }
-        
     }
 
     void OnGUI()
