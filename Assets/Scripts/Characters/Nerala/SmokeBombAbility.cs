@@ -17,6 +17,8 @@ public class SmokeBombAbility : MonoBehaviour
     private bool active;
     private bool addLineComponentOnce;
 
+    private Animator neralaAnimator;
+
     //Ability Stats
     public float maximumRange;
     public int ammunition;
@@ -29,6 +31,8 @@ public class SmokeBombAbility : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        neralaAnimator = GetComponent<Animator>();
+
         addLineComponentOnce = true;
         active = false;
     }
@@ -61,6 +65,11 @@ public class SmokeBombAbility : MonoBehaviour
 
                         if (meshHit.collider.tag == "Floor")
                         {
+                            if (neralaAnimator != null)
+                            {
+                                neralaAnimator.SetTrigger("smokeBomb");
+                            }
+
                             transform.LookAt(meshHit.point);
 
                             Vector3 spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
