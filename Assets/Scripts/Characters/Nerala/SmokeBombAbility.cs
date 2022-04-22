@@ -75,7 +75,7 @@ public class SmokeBombAbility : MonoBehaviour
                             Vector3 spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
                             targetPosition = meshHit.point;
                             
-                            smokeBomb = Instantiate(smokeBombPrefab, spawnPoint, Quaternion.identity);
+                            smokeBomb = Instantiate(smokeBombPrefab, spawnPoint, Quaternion.identity);  
 
                             ammunition--;
                         }

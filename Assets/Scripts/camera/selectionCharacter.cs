@@ -8,9 +8,12 @@ public class selectionCharacter : MonoBehaviour
     private CameraMovement cameraScript;
     private GameObject selectedCharacter;
 
+    private HunterSeekerAbility hunterSeekerScript;
+
     // Start is called before the first frame update
     void Start()
     {
+        
         cameraScript = gameObject.GetComponent<CameraMovement>();
     }
 
@@ -36,6 +39,8 @@ public class selectionCharacter : MonoBehaviour
         {
             GameObject temp = GameObject.Find("Nerala");
 
+            hunterSeekerScript = temp.GetComponent<HunterSeekerAbility>();
+
             cameraScript.focusedPlayer = temp;
 
             characterwalkingscript walkScript = temp.GetComponent<characterwalkingscript>();
@@ -46,7 +51,17 @@ public class selectionCharacter : MonoBehaviour
             walkScript.selectedCharacter = false;
         }
 
+        if(cameraScript.focusedPlayer == GameObject.Find("Nerala") && hunterSeekerScript.seekerHunting)
+        {
+            GameObject temp = GameObject.Find("HunterSeeker(Clone)");
+            cameraScript.focusedPlayer = temp;
+
+            temp = GameObject.Find("Nerala");
+            characterwalkingscript walkScript = temp.GetComponent<characterwalkingscript>();
+            walkScript.selectedCharacter = false;
+        }
+
         //if (Input.GetKey(KeyCode.Z))
-        //cameraScript.focusedPlayer = GameObject.Find("Zhib");
+        //
     }
 }
