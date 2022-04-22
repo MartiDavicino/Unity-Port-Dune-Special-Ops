@@ -48,30 +48,8 @@ public class CharacterAttack : MonoBehaviour
 
                             enemyTarget = rayHit.collider.gameObject;
 
-                            distanceToTarget = CalculateAbsoluteDistance(rayHit.point);
-
-                            if (distanceToTarget.magnitude >= rangeToKill)
-                            {
-                                if (animator != null)
-                                {
-                                    animator.ResetTrigger("hasStopped");
-                                    animator.SetTrigger("isWalking");
-                                }
-                                agent.SetDestination(rayHit.collider.gameObject.transform.position);
-                            }
-                            else
-                            {
-                                if (animator != null)
-                                {
-                                    animator.ResetTrigger("hasStopped");
-                                    animator.SetTrigger("sneakyKill");
-                                }
-                                Destroy(rayHit.collider.gameObject);
-                            }
-                        } else
-                        {
-                            attacking = false;
-                        }
+                            agent.SetDestination(rayHit.collider.gameObject.transform.position);
+                        } 
                     }
                 }
 
@@ -81,15 +59,20 @@ public class CharacterAttack : MonoBehaviour
 
                     if (distanceToTarget.magnitude <= rangeToKill)
                     {
-                        if (animator != null)
-                        {
-                            animator.ResetTrigger("isWalking");
-                            animator.SetTrigger("sneakyKill");
-                        }
+                        baseScript.state = PlayerState.STEALTH_KILL;
                         attacking = false;
                         Destroy(enemyTarget);
                     }
                 }
+
+            } else
+            {
+                if (attacking)
+                {
+                    baseScript.state = PlayerState.IDLE;
+                    agent.ResetPath();
+                }
+                attacking = false;
             }
         }
     }

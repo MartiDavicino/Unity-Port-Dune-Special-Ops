@@ -41,5 +41,23 @@ public class animStates : MonoBehaviour
 
             animator.SetTrigger("isCrouching");
         }
+
+        if (baseScript.state == PlayerState.STEALTH_KILL)
+        {
+            animator.ResetTrigger("hasStopped");
+            animator.ResetTrigger("isWalking");
+            animator.ResetTrigger("isCrouching");
+
+            animator.SetTrigger("sneakyKill");
+        }
+
+        //if (baseScript.state == PlayerState.STEALTH_KILL)
+        //{
+        //    animator.ResetTrigger("hasStopped");
+        //    animator.ResetTrigger("isWalking");
+        //    animator.ResetTrigger("isCrouching");
+
+        //    animator.SetTrigger("sneakyKill");
+        //}
     }
 }

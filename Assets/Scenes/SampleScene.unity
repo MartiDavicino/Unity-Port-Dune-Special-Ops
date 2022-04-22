@@ -292,6 +292,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeToKill: 2
+--- !u!114 &17931632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17931620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1fe729e707176c4eae612b9fc15218b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &33683007 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6500604180890974088, guid: 2eaaff481416b4e46a059d09fefea640, type: 3}

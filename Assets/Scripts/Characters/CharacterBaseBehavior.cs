@@ -9,6 +9,7 @@ public enum PlayerState
     WALKING,
     RUNNING,
     CROUCH,
+    STEALTH_KILL,
     NONE
 }
 
@@ -89,12 +90,11 @@ public class CharacterBaseBehavior : MonoBehaviour
                             playerAgent.SetDestination(meshHit.point);
                             targetPosition = meshHit.point;
 
-                            if (animator != null)
-                            {
-                                state = PlayerState.WALKING;
-                            }
+                            state = PlayerState.WALKING;
+                            
                         } else
                         {
+                            state = PlayerState.WALKING;
                             targetPosition = meshHit.point;
                         }
                     }
