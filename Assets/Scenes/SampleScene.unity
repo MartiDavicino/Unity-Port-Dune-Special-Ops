@@ -279,6 +279,19 @@ MonoBehaviour:
   spawnRange: 3
   hunterSeekerPrefab: {fileID: 3678424213461940499, guid: 409146c6d5af645e593e5c13ff089808, type: 3}
   seekerHunting: 0
+--- !u!114 &17931631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17931620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9659a8a70fc70794ea40ec416df403e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangeToKill: 2
 --- !u!4 &33683007 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6500604180890974088, guid: 2eaaff481416b4e46a059d09fefea640, type: 3}
@@ -15667,6 +15680,19 @@ MonoBehaviour:
     m_Bits: 1024
   decoyPrefab: {fileID: 7972253676922709312, guid: 2038e93e7de188149bcda1ef088e8b53, type: 3}
   targetPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &1164201277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164201265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9659a8a70fc70794ea40ec416df403e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangeToKill: 2
 --- !u!4 &1232978884 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6500604180890974088, guid: 2eaaff481416b4e46a059d09fefea640, type: 3}

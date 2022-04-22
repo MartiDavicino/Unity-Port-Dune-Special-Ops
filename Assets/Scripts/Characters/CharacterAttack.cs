@@ -54,12 +54,18 @@ public class CharacterAttack : MonoBehaviour
                             {
                                 if (animator != null)
                                 {
+                                    animator.ResetTrigger("hasStopped");
                                     animator.SetTrigger("isWalking");
                                 }
                                 agent.SetDestination(rayHit.collider.gameObject.transform.position);
                             }
                             else
                             {
+                                if (animator != null)
+                                {
+                                    animator.ResetTrigger("hasStopped");
+                                    animator.SetTrigger("sneakyKill");
+                                }
                                 Destroy(rayHit.collider.gameObject);
                             }
                         } else
@@ -75,6 +81,11 @@ public class CharacterAttack : MonoBehaviour
 
                     if (distanceToTarget.magnitude <= rangeToKill)
                     {
+                        if (animator != null)
+                        {
+                            animator.ResetTrigger("isWalking");
+                            animator.SetTrigger("sneakyKill");
+                        }
                         attacking = false;
                         Destroy(enemyTarget);
                     }

@@ -101,8 +101,12 @@ public class CharacterBaseBehavior : MonoBehaviour
 
                             if (animator != null)
                             {
+                                animator.ResetTrigger("hasStopped");
                                 animator.SetTrigger("isWalking");
                             }
+                        } else
+                        {
+                            targetPosition = meshHit.point;
                         }
                     }
                 }
@@ -111,7 +115,9 @@ public class CharacterBaseBehavior : MonoBehaviour
                 {
                     if (animator != null)
                     {
+                        animator.ResetTrigger("isWalking");
                         animator.SetTrigger("hasStopped");
+                        playerAgent.ResetPath();
                     }
                 }
             }
