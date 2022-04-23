@@ -12,18 +12,20 @@ public enum EnemyType
     NONE,
 }
 
+public enum state
+{
+    SEEK,
+    PATROL,
+
+}
+
 public class EnemyBehaviour : MonoBehaviour
 {
-    enum state
-    {
-        SEEK, 
-        PATROL,
-
-    }
+   
 
     public EnemyType type = EnemyType.NONE;
 
-    state currentState = state.PATROL;
+    public state currentState = state.PATROL;
 
     public NavMeshAgent agent;
 
@@ -117,12 +119,15 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Patroling()
     {
+        currentState = state.PATROL;
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
             agent.SetDestination(walkPoint);
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
+
+        enemyD.timer = 0;
 
         //WalkPoint reached
         if (distanceToWalkPoint.magnitude < 1f)
@@ -143,6 +148,7 @@ public class EnemyBehaviour : MonoBehaviour
     private void Chasing()
     {
         //transform.localScale += newScale;
+        currentState = state.SEEK;
         agent.SetDestination(player.position);
     }
 

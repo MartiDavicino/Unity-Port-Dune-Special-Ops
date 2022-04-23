@@ -2,11 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum DecState
+{
+	STILL,
+	SEEKING,
+	FOUND,
+	NONE
+}
+
 public class EnemyDetection : MonoBehaviour
 {
+
+
 	public float viewRadius;
 	public float hearingRadius;
 	private CharacterBaseBehavior baseScript;
+	public float timer = 0.0f;
+	public float delay = 3.0f;
+	public float proportion = 0.2f;
+	public DecState state = DecState.STILL;
 
 	[Range(0, 360)]
 	public float viewAngle;
@@ -51,11 +65,25 @@ public class EnemyDetection : MonoBehaviour
 
 				if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask) )
 				{
-					visibleTargets.Add(target);
+					StartCoroutine(WaitAndAddToList(delay, target,visibleTargets));
 				}
 			}
 		}
 	}
+
+	IEnumerator WaitAndAddToList(float delay,Transform target,List<Transform>targets)
+    {
+		state = DecState.SEEKING;
+		while (timer < delay)
+        {
+			timer += proportion;
+			yield return new WaitForEndOfFrame();
+        }
+
+		targets.Add(target);
+		state = DecState.FOUND;
+
+    }
 
 	void FindNoisyTargets()
 	{
@@ -74,7 +102,7 @@ public class EnemyDetection : MonoBehaviour
 
 			if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, targetMask)&& baseScript.state !=PlayerState.CROUCH)
 			{
-				noisyTargets.Add(target);
+				StartCoroutine(WaitAndAddToList(delay, target, noisyTargets));
 			}
 
 		}
