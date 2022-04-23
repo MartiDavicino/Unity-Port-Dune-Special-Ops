@@ -38,13 +38,13 @@ public class SleepingDart : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(hasShot || baseScript.state == PlayerState.ABILITY1)
+        if (hasShot || baseScript.state == PlayerState.ABILITY1)
         {
             baseScript.state = PlayerState.IDLE;
             hasShot = false;
         }
 
-        if(baseScript.selectedCharacter)
+        if (baseScript.selectedCharacter)
         {
             if (baseScript.ability1Active)
             {
@@ -121,7 +121,6 @@ public class SleepingDart : MonoBehaviour
                     }
                 }
 
-
             } else
             {
                 addLineComponentOnce = true;
@@ -132,7 +131,6 @@ public class SleepingDart : MonoBehaviour
         }
 
     }
-
     void OnGUI()
     {
         if(baseScript.selectedCharacter)

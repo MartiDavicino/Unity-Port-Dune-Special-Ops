@@ -102,7 +102,6 @@ public class CharacterBaseBehavior : MonoBehaviour
                         }
                     }
                 }
-        
 
                 if(Input.GetKey(KeyCode.LeftShift) && state != PlayerState.IDLE)
                 {

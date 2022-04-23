@@ -26,7 +26,7 @@ public class HunterSeekerAbility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (hunterDeployed || baseScript.state == PlayerState.ABILITY1)
+        if (hunterDeployed || baseScript.state == PlayerState.ABILITY3)
         {
             baseScript.state = PlayerState.IDLE;
             hunterDeployed = false;

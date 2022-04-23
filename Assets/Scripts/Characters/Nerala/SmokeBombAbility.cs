@@ -38,7 +38,7 @@ public class SmokeBombAbility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (bombThrown || baseScript.state == PlayerState.ABILITY1)
+        if (bombThrown || baseScript.state == PlayerState.ABILITY2)
         {
             baseScript.state = PlayerState.IDLE;
             bombThrown = false;

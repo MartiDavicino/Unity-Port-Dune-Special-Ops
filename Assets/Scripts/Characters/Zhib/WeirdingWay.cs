@@ -30,6 +30,7 @@ public class WeirdingWay : MonoBehaviour
     private float pulseRate; //In Seconds
     private float waitTimer;
 
+    private Collider[] affectedEnemies;
 
     // Start is called before the first frame update
     void Start()
@@ -93,8 +94,12 @@ public class WeirdingWay : MonoBehaviour
 
             }
 
+            if (firstEnemyReached)
+            {
+                affectedEnemies = Physics.OverlapSphere(transform.position, killChainRange, whatIsEnemy);
+                StartKillChain();
+            }
 
-            if (firstEnemyReached) StartKillChain();
         } else
         {
             firstEnemyReached = false;
@@ -118,24 +123,22 @@ public class WeirdingWay : MonoBehaviour
     }
     void KillChain()
     {
-        Collider[] affectedEnemies = Physics.OverlapSphere(transform.position, killChainRange, whatIsEnemy);
-
-        if (affectedEnemies.Length != 0)
+        if (killCount < maxKills)
         {
-            if (killCount < maxKills)
-            {
             zhibAnimator.SetTrigger("hasStopped");
             transform.position = targetedEnemy.transform.position + (targetedEnemy.transform.rotation * attackPointOffset);
             transform.LookAt(targetedEnemy.transform);
             Destroy(targetedEnemy);
             killCount++;
 
-            
-            
-                for(int i = 0; i < affectedEnemies.Length; i++)
+            affectedEnemies = Physics.OverlapSphere(transform.position, killChainRange, whatIsEnemy);
+
+            if (affectedEnemies.Length > 1)
+            {
+                for (int i = 0; i < affectedEnemies.Length; i++)
                 {
 
-                    if(affectedEnemies[i].gameObject != targetedEnemy)
+                    if (affectedEnemies[i].gameObject != targetedEnemy)
                     {
                         Vector3 distance = CalculateAbsoluteDistance(affectedEnemies[i].gameObject);
 
@@ -148,7 +151,6 @@ public class WeirdingWay : MonoBehaviour
                 }
                 closestEnemyDistance = 0;
                 targetedEnemy = closestEnemy;
-            
             }
             else
             {
