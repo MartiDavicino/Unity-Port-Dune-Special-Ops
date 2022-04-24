@@ -13,18 +13,24 @@ public class DetectionMeter : MonoBehaviour
     public EnemyBehaviour enemyB;
 
     public float percent;
+
+    private Camera playerCamera;
+
     // Start is called before the first frame update
     void Start()
     {
         percent = 0.0f;
         bar.fillAmount = percent;
         bar.color = Color.green;
-
+        playerCamera = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        transform.LookAt(playerCamera.transform);
+
         if(enemyD.state == DecState.SEEKING)
         {
             percent = enemyD.timer / enemyD.delay;
@@ -35,6 +41,7 @@ public class DetectionMeter : MonoBehaviour
         
             bar.color = Color.yellow;
             bar.fillAmount = percent ;
+
         }
         else if(enemyD.state == DecState.FOUND)
         {

@@ -25,15 +25,15 @@ public class CharacterBaseBehavior : MonoBehaviour
     public NavMeshAgent playerAgent;
     public Camera playerCamera;
 
-    private Animator animator;
+    public int playerHealth;
 
+    private Animator animator;
     public bool ability1Active;
     public bool ability2Active;
     public bool ability3Active;
-
     public PlayerState state = PlayerState.IDLE;
-
     public bool abilityActive;
+
 
     private Vector3 targetPosition;
 
@@ -137,6 +137,14 @@ public class CharacterBaseBehavior : MonoBehaviour
 
     }
 
+    void OnGUI()
+    {
+        if (selectedCharacter)
+        {
+            GUI.Box(new Rect(5, 5, 50, 25), "Health");
+            GUI.Box(new Rect(62, 5, 20, 25), playerHealth.ToString());
+        }
+    }
     Vector3 CalculateAbsoluteDistance(Vector3 targetPos)
     {
         Vector3 distance = new Vector3(0f, 0f, 0f);

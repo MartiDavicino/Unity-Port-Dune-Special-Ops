@@ -82,8 +82,7 @@ public class EnemyDetection : MonoBehaviour
 
 		targets.Add(target);
 		state = DecState.FOUND;
-
-    }
+	}
 
 	void FindNoisyTargets()
 	{
@@ -100,7 +99,7 @@ public class EnemyDetection : MonoBehaviour
 
 			float dstToTarget = Vector3.Distance(transform.position, target.position);
 
-			if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, targetMask)&& baseScript.state !=PlayerState.CROUCH)
+			if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, targetMask)&& baseScript.state != PlayerState.CROUCH)
 			{
 				StartCoroutine(WaitAndAddToList(delay, target, noisyTargets));
 			}

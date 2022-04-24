@@ -33,6 +33,9 @@ public class EnemyBehaviour : MonoBehaviour
     private Transform placeholder1;
     private Transform placeholder2;
 
+    private CharacterBaseBehavior targetPlayer;
+
+    private float elapse_time = 0;
 
     public LayerMask whatIsGround, whatIsPlayer;
 
@@ -46,11 +49,10 @@ public class EnemyBehaviour : MonoBehaviour
     private float walkPointRange;
 
     //Attacking
-    private float timeBetweenAttacks;
-    bool alreadtAttacked;
+    public float timeBetweenAttacks;
 
     //States
-    private float sightRange, attackRange;
+    public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
     bool checkSenses()
@@ -132,6 +134,7 @@ public class EnemyBehaviour : MonoBehaviour
         //WalkPoint reached
         if (distanceToWalkPoint.magnitude < 1f)
             walkPointSet = false;
+
     }
 
     private void SearchWalkPoint()
@@ -147,31 +150,20 @@ public class EnemyBehaviour : MonoBehaviour
     }
     private void Chasing()
     {
-        //transform.localScale += newScale;
-        currentState = state.SEEK;
         agent.SetDestination(player.position);
     }
 
     private void Attacking()
     {
-        agent.SetDestination(transform.position);
 
-        transform.LookAt(player);
-
-        if(!alreadtAttacked)
+        while (elapse_time < timeBetweenAttacks)
         {
-            //Attack Code Here
-
-            //
-
-            alreadtAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            elapse_time += Time.deltaTime;
+            return;
         }
-    }
 
-    private void ResetAttack()
-    {
-        alreadtAttacked = false;
+        elapse_time = 0;
+        if(targetPlayer.playerHealth > 0) targetPlayer.playerHealth--;
     }
 
     // Start is called before the first frame update
@@ -219,12 +211,16 @@ public class EnemyBehaviour : MonoBehaviour
         if (checkSenses() && !playerInAttackRange)
         {
             enemyMaterial.color = Color.yellow;
+            targetPlayer = player.gameObject.GetComponent<CharacterBaseBehavior>();
             Chasing();
         }
 
         if (checkSenses() && playerInAttackRange)
         {
+            
+            agent.ResetPath();
             enemyMaterial.color = Color.red;
+            targetPlayer = player.gameObject.GetComponent<CharacterBaseBehavior>();
             Attacking();
         }
     }
