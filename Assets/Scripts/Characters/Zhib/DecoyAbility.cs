@@ -16,6 +16,7 @@ public class DecoyAbility : MonoBehaviour
     private GameObject decoy;
     private bool active;
     private bool addLineComponentOnce;
+    private bool decoyThrown;
 
     //Ability Stats
     public float maximumRange;
@@ -29,6 +30,7 @@ public class DecoyAbility : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        decoyThrown = false;
         addLineComponentOnce = true;
         active = false;
     }
@@ -36,7 +38,14 @@ public class DecoyAbility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(baseScript.selectedCharacter)
+
+        if (decoyThrown || baseScript.state == PlayerState.ABILITY2)
+        {
+            baseScript.state = PlayerState.IDLE;
+            decoyThrown = false;
+        }
+
+        if (baseScript.selectedCharacter)
         {
             if(baseScript.ability2Active)
             {
@@ -50,6 +59,7 @@ public class DecoyAbility : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Mouse0) && ammunition > 0)
                 {
+
                     Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
                     RaycastHit meshHit;
 
@@ -61,6 +71,9 @@ public class DecoyAbility : MonoBehaviour
 
                         if (meshHit.collider.tag == "Floor")
                         {
+                            decoyThrown = true;
+                            baseScript.state = PlayerState.ABILITY2;
+
                             transform.LookAt(meshHit.point);
 
                             Vector3 spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);

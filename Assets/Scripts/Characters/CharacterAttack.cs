@@ -13,7 +13,7 @@ public class CharacterAttack : MonoBehaviour
     private GameObject enemyTarget;
     private Vector3 distanceToTarget;
     private bool attacking;
-
+    private bool hasAttacked;
     public float rangeToKill;
 
     // Start is called before the first frame update
@@ -28,8 +28,13 @@ public class CharacterAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if(baseScript.selectedCharacter)
+        if (hasAttacked || baseScript.state == PlayerState.STEALTH_KILL)
+        {
+            baseScript.state = PlayerState.IDLE;
+            hasAttacked = false;
+        }
+
+        if (baseScript.selectedCharacter)
         {
             if(!baseScript.abilityActive)
             {
@@ -56,6 +61,7 @@ public class CharacterAttack : MonoBehaviour
 
                     if (distanceToTarget.magnitude <= rangeToKill)
                     {
+                        hasAttacked = true;
                         baseScript.state = PlayerState.STEALTH_KILL;
                         attacking = false;
                         Destroy(enemyTarget);
@@ -69,6 +75,8 @@ public class CharacterAttack : MonoBehaviour
                     baseScript.state = PlayerState.IDLE;
                     agent.ResetPath();
                 }
+
+                hasAttacked = false;
                 attacking = false;
             }
         }

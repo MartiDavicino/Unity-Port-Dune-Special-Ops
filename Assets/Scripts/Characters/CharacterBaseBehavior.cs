@@ -13,6 +13,7 @@ public enum PlayerState
     ABILITY1,
     ABILITY2,
     ABILITY3,
+    ABILITY3_1,
     NONE
 }
 

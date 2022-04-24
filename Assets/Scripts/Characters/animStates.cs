@@ -77,5 +77,15 @@ public class animStates : MonoBehaviour
 
             animator.SetTrigger("ability3");
         }
+
+        if (baseScript.state == PlayerState.ABILITY3_1)
+        {
+            animator.ResetTrigger("hasStopped");
+            animator.ResetTrigger("isWalking");
+            animator.ResetTrigger("isCrouching");
+            animator.ResetTrigger("ability3");
+
+            animator.SetTrigger("ability3.1");
+        }
     }
 }

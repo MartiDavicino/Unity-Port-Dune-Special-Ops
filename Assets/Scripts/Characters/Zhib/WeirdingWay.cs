@@ -24,8 +24,10 @@ public class WeirdingWay : MonoBehaviour
     private bool enemyTargeted;
     private bool firstEnemyReached;
     private int killCount;
-    private Animator zhibAnimator;
     private bool addLineComponentOnce;
+    private bool destroyLineComponentOnce;
+    private bool hasEnded;
+    private bool goingToAttack;
 
     private float pulseRate; //In Seconds
     private float waitTimer;
@@ -35,35 +37,35 @@ public class WeirdingWay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        zhibAnimator = GetComponent<Animator>();
+        destroyLineComponentOnce = true;
+        goingToAttack = false;
+        hasEnded = false;
         addLineComponentOnce = true;
         firstEnemyReached = false;
         enemyTargeted = false;
         pulseRate = 0.15f;
         killCount = 0;
+        agent.ResetPath();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(baseScript.selectedCharacter)
+
+        if (baseScript.selectedCharacter)
         {
 
-            if (Input.GetKeyDown(KeyCode.Alpha3))
+            if (Input.GetKeyDown(KeyCode.Alpha3) && !goingToAttack)
                 addLineComponentOnce = true;
 
-            if (baseScript.ability3Active)
+            if (baseScript.ability3Active && !hasEnded)
             {
                 if(addLineComponentOnce)
                 {
                     addLineComponentOnce = false;
                     gameObject.AddComponent<LineRenderer>();
+                    gameObject.DrawCircle(killProximityRange * 6, .05f);
                 }
-
-
-                gameObject.DrawCircle(killProximityRange * 6, .05f);
-
-                agent.ResetPath();
 
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
@@ -73,42 +75,63 @@ public class WeirdingWay : MonoBehaviour
                     {
                         if (rayHit.collider.tag == "Enemy")
                         {
-                            baseScript.ability3Active = false;
-                            baseScript.abilityActive = false;
+                            goingToAttack = true;
                             enemyTargeted = true;
+                            destroyLineComponentOnce = true;
                             targetedEnemy = rayHit.collider.gameObject;
                             agent.SetDestination(rayHit.collider.gameObject.transform.position);
-                            zhibAnimator.SetTrigger("isWalking");
+                            baseScript.state = PlayerState.WALKING;
                         }
                     }
                 }
 
-            } else {
+            }
 
-                if (!agent.pathPending && agent.remainingDistance < killProximityRange && enemyTargeted)
-                {
-                    gameObject.DrawCircle(killChainRange * 6, .05f);
-                    agent.ResetPath();
-                    firstEnemyReached = true;
-                }
+            if (goingToAttack && destroyLineComponentOnce)
+            {
+                Destroy(gameObject.GetComponent<LineRenderer>());
+                destroyLineComponentOnce = false;
+            }
 
+            if (!agent.pathPending && agent.remainingDistance < killProximityRange && enemyTargeted && goingToAttack)
+            {
+                gameObject.AddComponent<LineRenderer>();
+                gameObject.DrawCircle(killChainRange * 6, .05f);
+                agent.ResetPath();
+                firstEnemyReached = true;
             }
 
             if (firstEnemyReached)
             {
+                goingToAttack = false;
+
                 affectedEnemies = Physics.OverlapSphere(transform.position, killChainRange, whatIsEnemy);
                 StartKillChain();
             }
 
         } else
         {
+            goingToAttack = false;
+
             firstEnemyReached = false;
             enemyTargeted = false;
             addLineComponentOnce = true;
             killCount = 0;
         }
+
+   
     }
 
+    void LateUpdate()
+    {
+        if (hasEnded || baseScript.state == PlayerState.ABILITY3_1)
+        {
+            baseScript.state = PlayerState.IDLE;
+            gameObject.DrawCircle(killProximityRange * 6, .05f);
+            hasEnded = false;
+
+        }
+    }
     void StartKillChain()
     {
         if(waitTimer >= pulseRate)
@@ -125,7 +148,7 @@ public class WeirdingWay : MonoBehaviour
     {
         if (killCount < maxKills)
         {
-            zhibAnimator.SetTrigger("hasStopped");
+            baseScript.state = PlayerState.IDLE;
             transform.position = targetedEnemy.transform.position + (targetedEnemy.transform.rotation * attackPointOffset);
             transform.LookAt(targetedEnemy.transform);
             Destroy(targetedEnemy);
@@ -154,22 +177,25 @@ public class WeirdingWay : MonoBehaviour
             }
             else
             {
+
+                baseScript.state = PlayerState.ABILITY3_1;
+
                 firstEnemyReached = false;
                 enemyTargeted = false;
-                addLineComponentOnce = true;
                 killCount = 0;
 
-                Destroy(gameObject.GetComponent<LineRenderer>());
             }
         }
         else
         {
+            hasEnded = true;
+
+            baseScript.state = PlayerState.ABILITY3_1;
+
             firstEnemyReached = false;
             enemyTargeted = false;
-            addLineComponentOnce = true;
             killCount = 0;
 
-            Destroy(gameObject.GetComponent<LineRenderer>());
         }
     }
 
@@ -178,7 +204,6 @@ public class WeirdingWay : MonoBehaviour
         Vector3 distance = new Vector3(0f,0f,0f);
 
         distance.x = Mathf.Abs(transform.position.x - enemy.transform.position.x);
-        //distance.y = Mathf.Abs(transform.position.y - enemy.transform.position.z);
         distance.z = Mathf.Abs(transform.position.z - enemy.transform.position.z);
 
         return distance;

@@ -17,7 +17,6 @@ public class ThrowingKnifeAbility : MonoBehaviour
     private RaycastHit rayHit;
     private bool enemyOutOfRange;
     private Vector3 spawnPoint;
-    private Animator zhibAnimator;
     private bool addLineComponentOnce;
 
     //Ability Stats
@@ -25,6 +24,7 @@ public class ThrowingKnifeAbility : MonoBehaviour
     public int ammunition;
 
     //Knife
+    private bool hasShot;
     public GameObject knifePrefab;
     public LayerMask whatIsKnife;
     private GameObject[] thrownKnifes;
@@ -32,18 +32,25 @@ public class ThrowingKnifeAbility : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        hasShot = false;
+
         addLineComponentOnce = true;
         enemyOutOfRange = false;
         thrownKnifes = new GameObject[ammunition];
 
-        zhibAnimator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(baseScript.selectedCharacter)
+        if (hasShot || baseScript.state == PlayerState.ABILITY1)
+        {
+            baseScript.state = PlayerState.IDLE;
+            hasShot = false;
+        }
+
+        if (baseScript.selectedCharacter)
         {
             if (baseScript.ability1Active)
             {
@@ -68,10 +75,7 @@ public class ThrowingKnifeAbility : MonoBehaviour
                             if (distance.magnitude >= maximumRange)
                             {
                                 enemyOutOfRange = true;
-                                if (zhibAnimator != null)
-                                {
-                                    zhibAnimator.SetTrigger("isWalking");
-                                }
+                                baseScript.state = PlayerState.WALKING;
                                 agent.SetDestination(rayHit.collider.gameObject.transform.position);
                             } else
                             {
@@ -87,6 +91,8 @@ public class ThrowingKnifeAbility : MonoBehaviour
                                     }
                                 }
 
+                                baseScript.state = PlayerState.ABILITY1;
+                                hasShot = true;
                                 ammunition--;
                             }
                         }
@@ -121,10 +127,6 @@ public class ThrowingKnifeAbility : MonoBehaviour
             {
                 if (agent.remainingDistance <= maximumRange && !agent.pathPending)
                 {
-                    if (zhibAnimator != null)
-                    {
-                        zhibAnimator.SetTrigger("hasStopped");
-                    }
                     Vector3 spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
 
                     for (int i = 0; i < thrownKnifes.Length; i++)
@@ -138,6 +140,8 @@ public class ThrowingKnifeAbility : MonoBehaviour
                     }
 
                     agent.ResetPath();
+                    baseScript.state = PlayerState.ABILITY1;
+                    hasShot = true;
                     ammunition--;
                     enemyOutOfRange = false;
                 }
