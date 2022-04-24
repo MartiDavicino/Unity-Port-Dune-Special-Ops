@@ -43,15 +43,10 @@ public class DetectionMeter : MonoBehaviour
             bar.fillAmount = percent ;
 
         }
-        else if(enemyD.state == DecState.FOUND)
+        
+        if(enemyD.state == DecState.FOUND)
         {
             bar.color = Color.red;
-        }
-        if(enemyD.state == DecState.STILL)
-        {
-            percent = 0.0f;
-            bar.fillAmount = percent;
-            bar.color = Color.green;
         }
     }
 }

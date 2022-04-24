@@ -34,25 +34,58 @@ public class EnemyDetection : MonoBehaviour
 
 	void Start()
 	{
-		StartCoroutine("FindTargetsWithDelay", .2f);
+		//StartCoroutine("FindTargetsWithDelay");
+		
 	}
 
+    void Update()
+    {
+		FindTargetsWithDelay();
+	}
 
-	IEnumerator FindTargetsWithDelay(float delay)
+    void FindTargetsWithDelay()
 	{
-		while (true)
+		bool playerInView = FindVisibleTargets();
+		bool playerHeard = FindNoisyTargets();
+
+		if (!playerInView && !playerHeard)
+			TargetsNotFound();
+	}
+	void TargetsNotFound()
+	{
+		if (timer > 0)
 		{
-			yield return new WaitForSeconds(delay);
-			FindVisibleTargets();
-			FindNoisyTargets();
+			state = DecState.SEEKING;
+			timer -= proportion * Time.deltaTime;
+		} else if (timer < 0f)
+        {
+			timer = 0f;
+			state = DecState.STILL;
 		}
 	}
+	void WaitAndAddToList(float delay,Transform target,List<Transform>targets)
+    {
+		state = DecState.SEEKING;
+		
+		timer += proportion * Time.deltaTime;
 
-	void FindVisibleTargets()
+		if(timer >= delay)
+        {
+			timer = delay;
+			targets.Add(target);
+			state = DecState.FOUND;
+        }
+	}
+
+
+	bool FindVisibleTargets()
 	{
+		bool playerInView = false;
+
 		visibleTargets.Clear();
 		Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
-	
+
+		
 
 		for (int i = 0; i < targetsInViewRadius.Length; i++)
 		{
@@ -65,29 +98,24 @@ public class EnemyDetection : MonoBehaviour
 
 				if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask) )
 				{
-					StartCoroutine(WaitAndAddToList(delay, target,visibleTargets));
+					WaitAndAddToList(delay, target,visibleTargets);
+					playerInView = true;
 				}
 			}
 		}
+
+		return playerInView;
 	}
 
-	IEnumerator WaitAndAddToList(float delay,Transform target,List<Transform>targets)
-    {
-		state = DecState.SEEKING;
-		while (timer < delay)
-        {
-			timer += proportion;
-			yield return new WaitForEndOfFrame();
-        }
-
-		targets.Add(target);
-		state = DecState.FOUND;
-	}
-
-	void FindNoisyTargets()
+	bool FindNoisyTargets()
 	{
+		bool playerHeard = false;
+
 		noisyTargets.Clear();
 		Collider[] targetsInHearingRadius = Physics.OverlapSphere(transform.position, hearingRadius, targetMask);
+
+		if (targetsInHearingRadius.Length > 0)
+			playerHeard = true;
 
 		for (int i = 0; i < targetsInHearingRadius.Length; i++)
 		{
@@ -101,13 +129,12 @@ public class EnemyDetection : MonoBehaviour
 
 			if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, targetMask)&& baseScript.state != PlayerState.CROUCH)
 			{
-				StartCoroutine(WaitAndAddToList(delay, target, noisyTargets));
-			}
-
+				WaitAndAddToList(delay, target, noisyTargets);
+			} 
 		}
+
+		return playerHeard;
 	}
-
-
 	public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
 	{
 		if (!angleIsGlobal)

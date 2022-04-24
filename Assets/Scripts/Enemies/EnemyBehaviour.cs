@@ -12,20 +12,11 @@ public enum EnemyType
     NONE,
 }
 
-public enum state
-{
-    SEEK,
-    PATROL,
-
-}
-
 public class EnemyBehaviour : MonoBehaviour
 {
    
 
     public EnemyType type = EnemyType.NONE;
-
-    public state currentState = state.PATROL;
 
     public NavMeshAgent agent;
 
@@ -52,9 +43,8 @@ public class EnemyBehaviour : MonoBehaviour
     public float timeBetweenAttacks;
 
     //States
-    public float sightRange, attackRange;
+    private float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
-
     bool checkSenses()
     {
         if(!enemyD.noisyTargets.Any() && enemyD.visibleTargets.Any())
@@ -121,7 +111,6 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Patroling()
     {
-        currentState = state.PATROL;
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
@@ -129,7 +118,7 @@ public class EnemyBehaviour : MonoBehaviour
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
-        enemyD.timer = 0;
+        //enemyD.timer = 0;
 
         //WalkPoint reached
         if (distanceToWalkPoint.magnitude < 1f)
@@ -175,19 +164,19 @@ public class EnemyBehaviour : MonoBehaviour
             case EnemyType.HARKONNEN:
                 walkPointRange = 10.0f;
                 sightRange = 10.0f;
-                attackRange = 2.0f;                
+                attackRange = 1.0f;                
                 break;
 
             case EnemyType.SARDAUKAR:
                 walkPointRange = 10.0f;
                 sightRange = 15.0f;
-                attackRange = 2.0f;
+                attackRange = 1.0f;
                 break;
 
             case EnemyType.MENTAT:
                 walkPointRange = 10.0f;
                 sightRange = 20.0f;
-                attackRange = 2.0f;
+                attackRange = 1.0f;
                 break;
 
             default:
@@ -198,26 +187,26 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Check for sight and attack range
-        checkSenses();
+        //Check for sight and hear range
+        bool detected = checkSenses();
+
         //playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!checkSenses())
+        if (!detected)
         {
             enemyMaterial.color = Color.blue;
             Patroling();
         }
-        if (checkSenses() && !playerInAttackRange)
+        if (detected && !playerInAttackRange)
         {
             enemyMaterial.color = Color.yellow;
             targetPlayer = player.gameObject.GetComponent<CharacterBaseBehavior>();
             Chasing();
         }
 
-        if (checkSenses() && playerInAttackRange)
+        if (detected && playerInAttackRange)
         {
-            
             agent.ResetPath();
             enemyMaterial.color = Color.red;
             targetPlayer = player.gameObject.GetComponent<CharacterBaseBehavior>();
