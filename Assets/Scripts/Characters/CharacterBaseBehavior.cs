@@ -104,7 +104,7 @@ public class CharacterBaseBehavior : MonoBehaviour
                     }
                 }
 
-                if(Input.GetKey(KeyCode.LeftShift))
+                if(Input.GetKey(KeyCode.LeftShift) && state != PlayerState.IDLE)
                 {
                     state = PlayerState.CROUCH;
                 }
