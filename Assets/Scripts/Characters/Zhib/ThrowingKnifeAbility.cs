@@ -29,6 +29,8 @@ public class ThrowingKnifeAbility : MonoBehaviour
     public LayerMask whatIsKnife;
     private GameObject[] thrownKnifes;
 
+    private GameObject targetEnemy;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -70,13 +72,15 @@ public class ThrowingKnifeAbility : MonoBehaviour
                     {
                         if (rayHit.collider.tag == "Enemy")
                         {
+                            targetEnemy = rayHit.collider.gameObject;
+
                             Vector3 distance = CalculateAbsoluteDistance(rayHit.point);
 
                             if (distance.magnitude >= maximumRange)
                             {
                                 enemyOutOfRange = true;
                                 baseScript.state = PlayerState.WALKING;
-                                agent.SetDestination(rayHit.collider.gameObject.transform.position);
+                                agent.SetDestination(targetEnemy.transform.position);
                             } else
                             {
                                 spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
@@ -86,11 +90,13 @@ public class ThrowingKnifeAbility : MonoBehaviour
                                     if (thrownKnifes[i] == null)
                                     {
                                         thrownKnifes[i] = Instantiate(knifePrefab, spawnPoint, attackPoint.rotation);
-                                        thrownKnifes[i].transform.LookAt(rayHit.collider.gameObject.transform);
+                                        thrownKnifes[i].transform.LookAt(targetEnemy.transform);
                                         break;
                                     }
                                 }
 
+
+                                gameObject.transform.LookAt(targetEnemy.transform);
                                 baseScript.state = PlayerState.ABILITY1;
                                 hasShot = true;
                                 ammunition--;
@@ -98,12 +104,36 @@ public class ThrowingKnifeAbility : MonoBehaviour
                         }
                     }
                 }
+
+                if (enemyOutOfRange)
+                {
+                    if (agent.remainingDistance <= maximumRange && !agent.pathPending)
+                    {
+                        Vector3 spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
+
+                        for (int i = 0; i < thrownKnifes.Length; i++)
+                        {
+                            if (thrownKnifes[i] == null)
+                            {
+                                thrownKnifes[i] = Instantiate(knifePrefab, spawnPoint, attackPoint.rotation);
+                                thrownKnifes[i].transform.LookAt(targetEnemy.transform);
+                                break;
+                            }
+                        }
+
+                        agent.ResetPath();
+                        gameObject.transform.LookAt(targetEnemy.transform);
+                        baseScript.state = PlayerState.ABILITY1;
+                        hasShot = true;
+                        ammunition--;
+                        enemyOutOfRange = false;
+                    }
+                }
             } else
             {
                 addLineComponentOnce = true;
 
             }
-
 
             Collider[] pickableKnifes = Physics.OverlapSphere(transform.position, 3.0f, whatIsKnife);
 
@@ -117,37 +147,6 @@ public class ThrowingKnifeAbility : MonoBehaviour
             addLineComponentOnce = true;
         }
 
-    }
-
-    private void LateUpdate()
-    {
-        if(baseScript.selectedCharacter)
-        {
-            if (enemyOutOfRange)
-            {
-                if (agent.remainingDistance <= maximumRange && !agent.pathPending)
-                {
-                    Vector3 spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
-
-                    for (int i = 0; i < thrownKnifes.Length; i++)
-                    {
-                        if (thrownKnifes[i] == null)
-                        {
-                            thrownKnifes[i] = Instantiate(knifePrefab, spawnPoint, attackPoint.rotation);
-                            thrownKnifes[i].transform.LookAt(agent.destination);
-                            break;
-                        }
-                    }
-
-                    agent.ResetPath();
-                    baseScript.state = PlayerState.ABILITY1;
-                    hasShot = true;
-                    ammunition--;
-                    enemyOutOfRange = false;
-                }
-            }
-        }
-        
     }
 
     void OnGUI()
