@@ -12,6 +12,14 @@ public enum EnemyType
     NONE,
 }
 
+public enum EnemyState
+{
+    IDLE,
+    WALKING,
+    ATTACKING,
+    DEAD,
+    NONE
+}
 public class EnemyBehaviour : MonoBehaviour
 {
    
@@ -27,6 +35,8 @@ public class EnemyBehaviour : MonoBehaviour
     private CharacterBaseBehavior targetPlayer;
 
     private float elapse_time = 0;
+
+    public EnemyState state;
 
     public LayerMask whatIsGround, whatIsPlayer;
 
@@ -116,15 +126,18 @@ public class EnemyBehaviour : MonoBehaviour
         if (walkPointSet)
             agent.SetDestination(walkPoint);
 
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-        //enemyD.timer = 0;
+        Vector3 distanceToWalkPoint = transform.position - agent.destination;
 
         //WalkPoint reached
         if (distanceToWalkPoint.magnitude < 1f)
+        {
             walkPointSet = false;
+            state = EnemyState.IDLE;
+        }
 
     }
+
+
 
     private void SearchWalkPoint()
     {
@@ -140,10 +153,12 @@ public class EnemyBehaviour : MonoBehaviour
     private void Chasing()
     {
         agent.SetDestination(player.position);
+        state = EnemyState.WALKING;
     }
 
     private void Attacking()
     {
+        state = EnemyState.IDLE;
 
         while (elapse_time < timeBetweenAttacks)
         {
@@ -152,7 +167,11 @@ public class EnemyBehaviour : MonoBehaviour
         }
 
         elapse_time = 0;
-        if(targetPlayer.playerHealth > 0) targetPlayer.playerHealth--;
+        if (targetPlayer.playerHealth > 0)
+        {
+            state = EnemyState.ATTACKING;
+            targetPlayer.playerHealth--;
+        }
     }
 
     // Start is called before the first frame update
@@ -164,7 +183,7 @@ public class EnemyBehaviour : MonoBehaviour
             case EnemyType.HARKONNEN:
                 walkPointRange = 10.0f;
                 sightRange = 10.0f;
-                attackRange = 1.0f;                
+                attackRange = 3.0f;                
                 break;
 
             case EnemyType.SARDAUKAR:

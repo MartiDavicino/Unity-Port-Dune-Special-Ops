@@ -8,9 +8,9 @@ public class DetectionMeter : MonoBehaviour
     [SerializeField]
     private Image bar;
 
-    public EnemyDetection enemyD;
+    private EnemyDetection enemyD;
 
-    public EnemyBehaviour enemyB;
+    private EnemyBehaviour enemyB;
 
     public float percent;
 
@@ -19,6 +19,9 @@ public class DetectionMeter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        enemyD = gameObject.GetComponentInParent<EnemyDetection>();
+        enemyB = gameObject.GetComponentInParent<EnemyBehaviour>();
+
         percent = 0.0f;
         bar.fillAmount = percent;
         bar.color = Color.green;

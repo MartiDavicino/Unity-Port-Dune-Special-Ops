@@ -32,12 +32,6 @@ public class EnemyDetection : MonoBehaviour
 	public List<Transform> noisyTargets = new List<Transform>();
 	[HideInInspector]
 
-	void Start()
-	{
-		//StartCoroutine("FindTargetsWithDelay");
-		
-	}
-
     void Update()
     {
 		FindTargetsWithDelay();
