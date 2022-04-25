@@ -27,11 +27,13 @@ public class selectionCharacter : MonoBehaviour
 
             CharacterBaseBehavior baseScript = temp.GetComponent<CharacterBaseBehavior>();
             baseScript.selectedCharacter = true;
+            baseScript.allSelected = false;
 
 
             temp = GameObject.Find("Nerala");
             baseScript = temp.GetComponent<CharacterBaseBehavior>();
             baseScript.selectedCharacter = false;
+            baseScript.allSelected = false;
         }
 
         if (Input.GetKey(KeyCode.X))
@@ -44,13 +46,27 @@ public class selectionCharacter : MonoBehaviour
 
             CharacterBaseBehavior baseScript = temp.GetComponent<CharacterBaseBehavior>();
             baseScript.selectedCharacter = true;
+            baseScript.allSelected = false;
 
             temp = GameObject.Find("Zhib");
             baseScript = temp.GetComponent<CharacterBaseBehavior>();
             baseScript.selectedCharacter = false;
+            baseScript.allSelected = false;
+
         }
 
-        if(cameraScript.focusedPlayer == GameObject.Find("Nerala") && hunterSeekerScript.seekerHunting)
+        if (Input.GetKey(KeyCode.C))
+        {
+            GameObject temp = GameObject.Find("Nerala");
+            CharacterBaseBehavior baseScript = temp.GetComponent<CharacterBaseBehavior>();
+            baseScript.allSelected = true;
+
+            temp = GameObject.Find("Zhib");
+            baseScript = temp.GetComponent<CharacterBaseBehavior>();
+            baseScript.allSelected = true;
+        }
+
+            if (cameraScript.focusedPlayer == GameObject.Find("Nerala") && hunterSeekerScript.seekerHunting)
         {
             GameObject temp = GameObject.Find("HunterSeeker(Clone)");
             cameraScript.focusedPlayer = temp;

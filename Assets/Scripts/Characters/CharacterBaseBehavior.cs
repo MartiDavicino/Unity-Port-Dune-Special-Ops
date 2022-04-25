@@ -34,7 +34,7 @@ public class CharacterBaseBehavior : MonoBehaviour
     public PlayerState state = PlayerState.IDLE;
     public bool abilityActive;
 
-    private bool allSelected;
+    public bool allSelected;
 
     private Vector3 targetPosition;
 
