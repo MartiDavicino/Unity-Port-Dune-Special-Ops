@@ -89,12 +89,16 @@ public class DecoyAbility : MonoBehaviour
                 addLineComponentOnce = true;
             }
 
-            Collider[] pickableDecoys = Physics.OverlapSphere(transform.position, 3.0f, whatIsDecoy);
+            Collider[] pickables = Physics.OverlapSphere(transform.position, 3.0f, whatIsDecoy);
 
-            for (int i = 0; i < pickableDecoys.Length; i++)
+            for (int i = 0; i < pickables.Length; i++)
             {
-                ammunition++;
-                Destroy(pickableDecoys[i].gameObject);
+                if (pickables[i].gameObject.tag == "Decoy")
+                {
+                    Destroy(pickables[i].gameObject);
+                    ammunition++;
+
+                }
             }
         } else
         {

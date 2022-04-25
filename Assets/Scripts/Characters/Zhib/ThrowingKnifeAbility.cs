@@ -95,7 +95,6 @@ public class ThrowingKnifeAbility : MonoBehaviour
                                     }
                                 }
 
-
                                 gameObject.transform.LookAt(targetEnemy.transform);
                                 baseScript.state = PlayerState.ABILITY1;
                                 hasShot = true;
@@ -135,12 +134,16 @@ public class ThrowingKnifeAbility : MonoBehaviour
 
             }
 
-            Collider[] pickableKnifes = Physics.OverlapSphere(transform.position, 3.0f, whatIsKnife);
+            Collider[] pickables = Physics.OverlapSphere(transform.position, 3.0f, whatIsKnife);
 
-            for(int i = 0; i < pickableKnifes.Length; i++)
+            for(int i = 0; i < pickables.Length; i++)
             {
-                Destroy(pickableKnifes[i].gameObject);
-                ammunition++;
+                if(pickables[i].gameObject.tag == "Knife")
+                {
+                    Destroy(pickables[i].gameObject);
+                    ammunition++;
+
+                }
             }
         } else
         {

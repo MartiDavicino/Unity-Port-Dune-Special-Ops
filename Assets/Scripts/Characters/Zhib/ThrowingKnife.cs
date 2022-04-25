@@ -21,7 +21,27 @@ public class ThrowingKnife : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!hit) transform.position += transform.rotation * Vector3.forward * velocity * Time.deltaTime;
+        if (!hit)
+        {
+            transform.position += transform.rotation * Vector3.forward * velocity * Time.deltaTime;
+
+            RaycastHit rayHit;
+
+            if ((Physics.Raycast(transform.position, -Vector3.up, out rayHit, 10f)))
+            {
+
+                if (rayHit.distance > 2.5f)
+                {
+                    transform.position = new Vector3(transform.position.x, transform.position.y + 2.5f - rayHit.distance, transform.position.z);
+                } else if(rayHit.distance < 2.5f)
+                {
+                    transform.position = new Vector3(transform.position.x, transform.position.y + 2.5f - rayHit.distance, transform.position.z);
+                }
+
+            }
+        }
+
+
     }
 
     void OnCollisionEnter(Collision coll)
@@ -29,11 +49,12 @@ public class ThrowingKnife : MonoBehaviour
 
         if (coll.gameObject.tag == "Enemy")
         {
+            if(hit) Destroy(coll.gameObject);
+
             hit = true;
 
             rb.useGravity = true;
 
-            Destroy(coll.gameObject);
 
             RaycastHit rayHit;
 

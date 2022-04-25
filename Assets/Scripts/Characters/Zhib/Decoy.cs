@@ -14,12 +14,15 @@ public class Decoy : MonoBehaviour
     public float firingAngle = 45.0f;
     public float gravity;
 
+    private bool emmitSoundOnce;
 
     // Start is called before the first frame update
     void Start()
     {
         GameObject go = GameObject.Find("Zhib");
         decoyScript = go.GetComponent<DecoyAbility>();
+
+        emmitSoundOnce = true;
 
         StartCoroutine(SimulateProjectile());
     }
@@ -54,17 +57,43 @@ public class Decoy : MonoBehaviour
             yield return null;
         }
 
-        EmitSound();
 
         gameObject.layer = 10;
     }
 
+    void Update()
+    {
+        if (gameObject.layer == 10)
+            if (emmitSoundOnce)
+            {
+                EmitSound();
+                emmitSoundOnce = false;
+            }
+        ResetNearEnemies();
+    }
+
+    void ResetNearEnemies()
+    {
+        Collider[] affectedEnemies = Physics.OverlapSphere(transform.position, 2f, whatIsEnemy);
+
+        for (int i = 0; i < affectedEnemies.Length; i++)
+        {
+            agent = affectedEnemies[i].gameObject.GetComponent<NavMeshAgent>();
+            agent.ResetPath();
+
+            EnemyBehaviour eB = affectedEnemies[i].gameObject.GetComponent<EnemyBehaviour>();
+            eB.state = EnemyState.IDLE;
+        }
+    }
     void EmitSound()
     {
         Collider[] affectedEnemies = Physics.OverlapSphere(transform.position, soundRange, whatIsEnemy);
 
         for (int i = 0; i < affectedEnemies.Length; i++)
         {
+            EnemyBehaviour eB = affectedEnemies[i].gameObject.GetComponent<EnemyBehaviour>();
+            eB.state = EnemyState.WALKING;
+
             agent = affectedEnemies[i].gameObject.GetComponent<NavMeshAgent>();
             agent.SetDestination(transform.position);
         }
