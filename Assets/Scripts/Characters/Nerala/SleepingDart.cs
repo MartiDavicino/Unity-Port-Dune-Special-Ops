@@ -20,7 +20,6 @@ public class SleepingDart : MonoBehaviour
     private Vector3 targetDistance;
 
     //Ability Stats
-    public float sightDebuffMultiplier;
     public float maximumRange;
     public int ammunition;
 
@@ -83,10 +82,8 @@ public class SleepingDart : MonoBehaviour
                                 baseScript.state = PlayerState.ABILITY1;
 
                                 // Set Sleepy Effect to Enemy 
-                                EnemyDetection eD = targetEnemy.GetComponent<EnemyDetection>();
-                                eD.multiplierHolder *= sightDebuffMultiplier;
-                                    Material tempMaterial = targetEnemy.GetComponent<MeshRenderer>().material;
-                                    tempMaterial.color = Color.green;
+                                Material tempMaterial = targetEnemy.GetComponent<MeshRenderer>().material;
+                                tempMaterial.color = Color.green;
                                 //
 
                                 hasShot = true;
