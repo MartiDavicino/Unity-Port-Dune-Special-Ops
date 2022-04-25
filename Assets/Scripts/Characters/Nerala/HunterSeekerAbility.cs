@@ -42,7 +42,7 @@ public class HunterSeekerAbility : MonoBehaviour
                     gameObject.AddComponent<LineRenderer>();
                 }
 
-                if(!seekerHunting) gameObject.DrawCircle(spawnRange * 6, .05f);
+                if(!seekerHunting) gameObject.DrawCircle(spawnRange * 10, .05f);
 
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {

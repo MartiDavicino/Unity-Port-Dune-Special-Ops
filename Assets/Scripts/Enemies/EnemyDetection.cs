@@ -113,6 +113,8 @@ public class EnemyDetection : MonoBehaviour
 	{
 		bool playerHeard = false;
 
+		sightMultiplier = 1f;
+
 		noisyTargets.Clear();
 		Collider[] targetsInHearingRadius = Physics.OverlapSphere(transform.position, hearingRadius, targetMask);
 

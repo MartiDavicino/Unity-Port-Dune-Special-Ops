@@ -126,12 +126,14 @@ public class EnemyBehaviour : MonoBehaviour
         if (walkPointSet)
             agent.SetDestination(walkPoint);
 
+
         Vector3 distanceToWalkPoint = transform.position - agent.destination;
 
         //WalkPoint reached
-        if (distanceToWalkPoint.magnitude < 1f)
+        if (distanceToWalkPoint.magnitude < 1.5f)
         {
             walkPointSet = false;
+            agent.ResetPath();
             state = EnemyState.IDLE;
         }
 
@@ -142,6 +144,7 @@ public class EnemyBehaviour : MonoBehaviour
     private void SearchWalkPoint()
     {
         //This are the waypoints thing
+        //walkPointRange = 1f;
         //float randomZ = Random.Range(-walkPointRange, walkPointRange);
         //float randomX = Random.Range(-walkPointRange, walkPointRange);
 

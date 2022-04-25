@@ -30,12 +30,14 @@ public class ThrowingKnife : MonoBehaviour
             if ((Physics.Raycast(transform.position, -Vector3.up, out rayHit, 10f)))
             {
 
-                if (rayHit.distance > 2.5f)
+                float desiredDistance = 1.5f;
+
+                if (rayHit.distance > desiredDistance)
                 {
-                    transform.position = new Vector3(transform.position.x, transform.position.y + 2.5f - rayHit.distance, transform.position.z);
-                } else if(rayHit.distance < 2.5f)
+                    transform.position = new Vector3(transform.position.x, transform.position.y + desiredDistance - rayHit.distance, transform.position.z);
+                } else if(rayHit.distance < desiredDistance)
                 {
-                    transform.position = new Vector3(transform.position.x, transform.position.y + 2.5f - rayHit.distance, transform.position.z);
+                    transform.position = new Vector3(transform.position.x, transform.position.y + desiredDistance - rayHit.distance, transform.position.z);
                 }
 
             }
@@ -49,12 +51,11 @@ public class ThrowingKnife : MonoBehaviour
 
         if (coll.gameObject.tag == "Enemy")
         {
-            if(hit) Destroy(coll.gameObject);
+            if(gameObject.layer != 10) Destroy(coll.gameObject);
 
             hit = true;
 
             rb.useGravity = true;
-
 
             RaycastHit rayHit;
 
