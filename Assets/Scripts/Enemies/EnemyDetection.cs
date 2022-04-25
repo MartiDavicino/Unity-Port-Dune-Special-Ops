@@ -12,7 +12,8 @@ public enum DecState
 
 public class EnemyDetection : MonoBehaviour
 {
-
+	public float sightMultiplier;
+	public float multiplierHolder;
 
 	public float viewRadius;
 	public float hearingRadius;
@@ -30,8 +31,11 @@ public class EnemyDetection : MonoBehaviour
 
 	public List<Transform> visibleTargets = new List<Transform>();
 	public List<Transform> noisyTargets = new List<Transform>();
-	[HideInInspector]
-
+    [HideInInspector]
+    void Start()
+    {
+		multiplierHolder = sightMultiplier;
+	}
     void Update()
     {
 		FindTargetsWithDelay();
@@ -61,7 +65,7 @@ public class EnemyDetection : MonoBehaviour
     {
 		state = DecState.SEEKING;
 		
-		timer += proportion * Time.deltaTime;
+		timer += proportion * sightMultiplier * Time.deltaTime;
 
 		if(timer >= delay)
         {
@@ -69,12 +73,15 @@ public class EnemyDetection : MonoBehaviour
 			targets.Add(target);
 			state = DecState.FOUND;
         }
+
 	}
 
 
 	bool FindVisibleTargets()
 	{
 		bool playerInView = false;
+		
+		sightMultiplier = 1f;
 
 		visibleTargets.Clear();
 		Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
@@ -92,6 +99,7 @@ public class EnemyDetection : MonoBehaviour
 
 				if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask) )
 				{
+					sightMultiplier = multiplierHolder;
 					WaitAndAddToList(delay, target,visibleTargets);
 					playerInView = true;
 				}
