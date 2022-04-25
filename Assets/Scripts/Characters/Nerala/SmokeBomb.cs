@@ -66,19 +66,10 @@ public class SmokeBomb : MonoBehaviour
 
         groundHit = true;
 
-        //gameObject.layer = 10;
+        gameObject.layer = 10;
     }
 
-    //void ProduceSmoke()
-    //{
-    //    Collider[] affectedCharacters = Physics.OverlapSphere(transform.position, smokeRange, whatIsPlayer);
-
-    //    for (int i = 0; i < affectedCharacters.Length; i++)
-    //    {
-    //        affectedCharacters[i].gameObject.layer = 11;
-    //    }
-    //}
-
+   
    
 
 }

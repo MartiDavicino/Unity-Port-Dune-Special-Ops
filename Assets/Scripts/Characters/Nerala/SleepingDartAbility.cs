@@ -86,8 +86,7 @@ public class SleepingDartAbility : MonoBehaviour
                                 EnemyDetection eD = targetEnemy.GetComponent<EnemyDetection>();
                                 eD.multiplierHolder *= sightDebuffMultiplier;
 
-                                    Material tempMaterial = targetEnemy.GetComponent<MeshRenderer>().material;
-                                    tempMaterial.color = Color.green;
+ 
                                 //
 
                                 hasShot = true;
@@ -116,8 +115,6 @@ public class SleepingDartAbility : MonoBehaviour
                         EnemyDetection eD = targetEnemy.GetComponent<EnemyDetection>();
                         eD.multiplierHolder *= sightDebuffMultiplier;
 
-                        Material tempMaterial = targetEnemy.GetComponent<MeshRenderer>().material;
-                        tempMaterial.color = Color.green;
                         //
 
                         hasShot = true;

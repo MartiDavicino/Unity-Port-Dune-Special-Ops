@@ -42,7 +42,6 @@ public class EnemyBehaviour : MonoBehaviour
 
     public EnemyDetection enemyD;
 
-    [SerializeField] public Material enemyMaterial;
 
     //Patrol
     private Vector3 walkPoint;
@@ -217,12 +216,10 @@ public class EnemyBehaviour : MonoBehaviour
 
         if (!detected)
         {
-            enemyMaterial.color = Color.blue;
             Patroling();
         }
         if (detected && !playerInAttackRange)
         {
-            enemyMaterial.color = Color.yellow;
             targetPlayer = player.gameObject.GetComponent<CharacterBaseBehavior>();
             Chasing();
         }
@@ -230,7 +227,6 @@ public class EnemyBehaviour : MonoBehaviour
         if (detected && playerInAttackRange)
         {
             agent.ResetPath();
-            enemyMaterial.color = Color.red;
             targetPlayer = player.gameObject.GetComponent<CharacterBaseBehavior>();
             Attacking();
         }

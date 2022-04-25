@@ -23,7 +23,7 @@ public class SmokeBombAbility : MonoBehaviour
     public int ammunition;
 
     //Decoy
-    public LayerMask whatIsDecoy;
+    public LayerMask whatIsSmokeBomb;
     public GameObject smokeBombPrefab;
     public Vector3 targetPosition;
 
@@ -80,7 +80,7 @@ public class SmokeBombAbility : MonoBehaviour
                             
                             smokeBomb = Instantiate(smokeBombPrefab, spawnPoint, Quaternion.identity);  
 
-                            ammunition--;
+                            //ammunition--;
                         }
                     }
                 }
@@ -89,13 +89,17 @@ public class SmokeBombAbility : MonoBehaviour
                 addLineComponentOnce = true;
             }
 
-            Collider[] pickableDecoys = Physics.OverlapSphere(transform.position, 3.0f, whatIsDecoy);
+            //Collider[] pickables = Physics.OverlapSphere(transform.position, 3.0f, whatIsSmokeBomb);
 
-            for (int i = 0; i < pickableDecoys.Length; i++)
-            {
-                ammunition++;
-                Destroy(pickableDecoys[i].gameObject);
-            }
+            //for (int i = 0; i < pickables.Length; i++)
+            //{
+            //    if(pickables[i].gameObject.tag == "SmokeBomb")
+            //    {
+            //        Destroy(pickables[i].gameObject);
+            //        ammunition++;
+            //    }
+            //}
+
         } else
         {
             addLineComponentOnce = true;

@@ -479,9 +479,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 716233281998640737}
-  m_LocalRotation: {x: -0, y: -0.99666053, z: -0, w: 0.08165659}
+  m_LocalRotation: {x: 0, y: -0.99666023, z: 0, w: 0.0816602}
   m_LocalPosition: {x: 7.988, y: 5.84, z: 12.883}
-  m_LocalScale: {x: 0.24655719, y: 0.24655715, z: 0.24655719}
+  m_LocalScale: {x: 0.2465572, y: 0.24655715, z: 0.2465572}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9082519780024179781}
@@ -518,7 +518,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 7.5, z: 2.5}
+  m_Size: {x: 5, y: 7.5, z: 2.45}
   m_Center: {x: 0.03, y: 3.6, z: 0.3}
 --- !u!33 &374356984102618181
 MeshFilter:
@@ -548,7 +548,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 31511d3813b45c947a3131c4e25733b3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -642,7 +642,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   enemyD: {fileID: 374356984102618189}
-  enemyMaterial: {fileID: 2100000, guid: 31511d3813b45c947a3131c4e25733b3, type: 2}
+  enemyMaterial: {fileID: 0}
   timeBetweenAttacks: 1
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -1337,7 +1337,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31511d3813b45c947a3131c4e25733b3, type: 2}
+  - {fileID: 2100000, guid: 270d8ea48641a9f4d8668cc840e4f35f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

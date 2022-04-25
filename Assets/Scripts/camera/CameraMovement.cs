@@ -14,12 +14,12 @@ public class CameraMovement : MonoBehaviour
 
     private float remainingAngle;
 
-    private Vector3 offset;            
+    public Vector3 offset;            
     private bool rotatedOnce = false;
 
     void Start()
     {
-        offset = transform.position - focusedPlayer.transform.position;
+        transform.position = transform.position + offset;
     }
 
     void LateUpdate()
