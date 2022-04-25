@@ -34,12 +34,14 @@ public class CharacterBaseBehavior : MonoBehaviour
     public PlayerState state = PlayerState.IDLE;
     public bool abilityActive;
 
+    private bool allSelected;
 
     private Vector3 targetPosition;
 
     // Start is called before the first frame update
     void Start()
     {
+        allSelected = false;
         animator = GetComponent<Animator>();
         playerAgent.stoppingDistance = 2;
         abilityActive = false;
@@ -48,7 +50,40 @@ public class CharacterBaseBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (selectedCharacter)
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
+
+        if (Input.GetKeyDown(KeyCode.C))
+            allSelected = !allSelected;
+
+        if (allSelected && playerHealth != 0)
+        {
+            if (Input.GetMouseButton(0))
+            {
+
+                Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit meshHit;
+
+                if (Physics.Raycast(ray, out meshHit))
+                {
+                    if (meshHit.collider.tag == "Floor")
+                    {
+                        playerAgent.SetDestination(meshHit.point);
+                        targetPosition = meshHit.point;
+
+                        state = PlayerState.WALKING;
+
+                    }
+                    else
+                    {
+                        state = PlayerState.WALKING;
+                        targetPosition = meshHit.point;
+                    }
+                }
+            }
+        }
+
+        if (selectedCharacter && !allSelected && playerHealth != 0)
         {
 
             if (Input.GetKeyDown(KeyCode.Alpha1) && (!abilityActive || ability1Active))
@@ -133,17 +168,26 @@ public class CharacterBaseBehavior : MonoBehaviour
                 }
             }
         }
-        
-
     }
 
     void OnGUI()
     {
         if (selectedCharacter)
         {
-            GUI.Box(new Rect(5, 5, 50, 25), "Health");
-            GUI.Box(new Rect(62, 5, 20, 25), playerHealth.ToString());
+            if (playerHealth != 0)
+            {
+            
+                    GUI.Box(new Rect(5, 5, 50, 25), "Health");
+                    GUI.Box(new Rect(62, 5, 20, 25), playerHealth.ToString());
+            } else
+            {
+                GUI.Box(new Rect(Screen.width /2, (Screen.height/2) - 25, 150, 25), "This Character Died");
+            }
         }
+
+        if (allSelected)
+            GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Moving Both Characters");
+
     }
     Vector3 CalculateAbsoluteDistance(Vector3 targetPos)
     {

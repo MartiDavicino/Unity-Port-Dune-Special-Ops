@@ -162,6 +162,8 @@ public class EnemyBehaviour : MonoBehaviour
     {
         state = EnemyState.IDLE;
 
+        transform.LookAt(targetPlayer.transform);
+
         while (elapse_time < timeBetweenAttacks)
         {
             elapse_time += Time.deltaTime;
