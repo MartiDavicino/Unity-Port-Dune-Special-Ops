@@ -22,17 +22,17 @@ public class ShowText : MonoBehaviour
             showText = true;
             GameObject go = GameObject.Find("playercamera");
 
-            if(go.name == "Nerala")
-            {
-                GeneralManager manager = go.GetComponent<GeneralManager>();
+            GeneralManager manager = go.GetComponent<GeneralManager>();
 
-                if(nextObjective != ActiveQuest.NONE && manager.neralaUnlocked)
+            if (other.gameObject.name == "Nerala" && manager.neralaUnlocked)
+            {
+                if(nextObjective != ActiveQuest.NONE)
                 {
                     QuestManager qManager = go.GetComponent<QuestManager>();
                     qManager.activeQuest = nextObjective;
                     Destroy(gameObject);
                 }
-            } else
+            } else if (other.gameObject.name != "Nerala")
             {
                 if (nextObjective != ActiveQuest.NONE)
                 {

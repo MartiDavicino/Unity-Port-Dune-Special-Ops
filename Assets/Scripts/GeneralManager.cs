@@ -100,7 +100,6 @@ public class GeneralManager : MonoBehaviour
                 }
             }
 
-
             if(!allSelected)
             {
                 switch (selectedCharacter.name)
@@ -139,8 +138,6 @@ public class GeneralManager : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
-
-        
     }
 
     void OnGUI()
