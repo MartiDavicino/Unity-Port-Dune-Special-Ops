@@ -179,7 +179,7 @@ public class CharacterBaseBehavior : MonoBehaviour
         }
 
         if (allSelected)
-            GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Moving Both Characters");
+            GUI.Box(new Rect(5, Screen.height - 30, 150, 25), "Moving Both Characters");
 
     }
     Vector3 CalculateAbsoluteDistance(Vector3 targetPos)

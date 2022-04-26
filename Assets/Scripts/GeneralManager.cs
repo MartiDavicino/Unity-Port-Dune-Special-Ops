@@ -141,7 +141,6 @@ public class GeneralManager : MonoBehaviour
     void OnGUI()
     {
         if(gameLost)
-            GUI.Box(new Rect(Screen.width/2, Screen.height/2, 250, 30), "Press 'R' to restart");
-
+            GUI.Box(new Rect(Screen.width/2 - 125, Screen.height/2, 250, 30), "Press 'R' to restart");
     }
 }
