@@ -22,11 +22,24 @@ public class ShowText : MonoBehaviour
             showText = true;
             GameObject go = GameObject.Find("playercamera");
 
-            if(nextObjective != ActiveQuest.NONE)
+            if(go.name == "Nerala")
             {
-                QuestManager qManager = go.GetComponent<QuestManager>();
-                qManager.activeQuest = nextObjective;
-                Destroy(gameObject);
+                GeneralManager manager = go.GetComponent<GeneralManager>();
+
+                if(nextObjective != ActiveQuest.NONE && manager.neralaUnlocked)
+                {
+                    QuestManager qManager = go.GetComponent<QuestManager>();
+                    qManager.activeQuest = nextObjective;
+                    Destroy(gameObject);
+                }
+            } else
+            {
+                if (nextObjective != ActiveQuest.NONE)
+                {
+                    QuestManager qManager = go.GetComponent<QuestManager>();
+                    qManager.activeQuest = nextObjective;
+                    Destroy(gameObject);
+                }
             }
         }
     }

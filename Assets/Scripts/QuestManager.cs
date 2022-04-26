@@ -40,6 +40,7 @@ public class QuestManager : MonoBehaviour
                 break;
             case ActiveQuest.GET_TO_BASE:
                 GUI.Box(new Rect(Screen.width - width - offset, 0 + offset, width, height), "Current Objective:\nGet to the Base");
+                manager.neralaUnlocked = true;
                 break;
             case ActiveQuest.FIND_OTHER:
                 GUI.Box(new Rect(Screen.width - width - offset, 0 + offset, width, height), "Current Objective:\nFind another way to enter");

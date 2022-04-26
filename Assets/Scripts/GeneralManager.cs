@@ -10,6 +10,7 @@ public class GeneralManager : MonoBehaviour
 
     public GameObject nerala;
     private CharacterBaseBehavior neralaBase;
+    public bool neralaUnlocked;
 
     private GameObject hunterSeeker;
     private HunterSeekerAbility hunterSeekerBase;
@@ -30,6 +31,7 @@ public class GeneralManager : MonoBehaviour
         neralaBase = nerala.GetComponent<CharacterBaseBehavior>();
         hunterSeekerBase = nerala.GetComponent<HunterSeekerAbility>();
         hunterSeekerActive = false;
+        neralaUnlocked = false;
 
         cameraScript = gameObject.GetComponent<CameraMovement>();
 
@@ -41,7 +43,10 @@ public class GeneralManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!gameLost)
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
+
+        if (!gameLost)
         {
             if (zhibBase.playerHealth == 0)
             {
@@ -64,13 +69,13 @@ public class GeneralManager : MonoBehaviour
                 allSelected = false;
             }
 
-            if (Input.GetKey(KeyCode.X) && !hunterSeekerActive)
+            if (Input.GetKey(KeyCode.X) && !hunterSeekerActive && neralaUnlocked)
             {
                 selectedCharacter = nerala;
                 allSelected = false;
             }
 
-            if (Input.GetKey(KeyCode.C) && !hunterSeekerActive)
+            if (Input.GetKey(KeyCode.C) && !hunterSeekerActive && neralaUnlocked)
             {
                 allSelected = true;
                 zhibBase.allSelected = true;
