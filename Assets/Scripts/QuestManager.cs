@@ -9,6 +9,7 @@ public enum ActiveQuest
     FIND_OTHER,
     WATER_TANK,
     REACH_RABBAN,
+    WIN,
     NONE,
 }
 public class QuestManager : MonoBehaviour
@@ -20,11 +21,15 @@ public class QuestManager : MonoBehaviour
     private float height;
     private float offset;
 
+    private GeneralManager manager;
+
     void Start()
     {
         width = 200f;
         height = 40f;
         offset = 5f;
+
+        manager = GetComponent<GeneralManager>();
     }
     void OnGUI()
     {
@@ -44,6 +49,9 @@ public class QuestManager : MonoBehaviour
                 break;
             case ActiveQuest.REACH_RABBAN:
                 GUI.Box(new Rect(Screen.width - width - offset, 0 + offset, width, height + 15), "Current Objective:\nInfiltrate the base\nand kill Rabban");
+                break;
+            case ActiveQuest.WIN:
+                manager.gameLost = true;
                 break;
             case ActiveQuest.NONE:
                 break;
