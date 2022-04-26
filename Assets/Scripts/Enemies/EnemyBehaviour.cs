@@ -59,6 +59,9 @@ public class EnemyBehaviour : MonoBehaviour
         if(!enemyD.noisyTargets.Any() && enemyD.visibleTargets.Any())
         {
             player = enemyD.visibleTargets[0];
+            if (player == null) return false;
+
+
             for (int i = 1; i < enemyD.visibleTargets.Count; i++)
             {
                 if(Vector3.Distance(agent.transform.position, enemyD.visibleTargets[i].position) < Vector3.Distance(agent.transform.position, player.transform.position))
@@ -71,6 +74,7 @@ public class EnemyBehaviour : MonoBehaviour
         else if (enemyD.noisyTargets.Any() && !enemyD.visibleTargets.Any())
         {
             player = enemyD.noisyTargets[0];
+            if (player == null) return false;
 
             for (int i = 1; i < enemyD.noisyTargets.Count; i++)
             {
@@ -85,7 +89,10 @@ public class EnemyBehaviour : MonoBehaviour
         else if (enemyD.noisyTargets.Any() && enemyD.visibleTargets.Any())
         {
             placeholder1 = enemyD.noisyTargets[0];
+            if (placeholder1 == null) return false;
+
             placeholder2 = enemyD.visibleTargets[0];
+            if (placeholder2 == null) return false;
 
             for (int i = 1; i < enemyD.noisyTargets.Count; i++)
             {

@@ -56,7 +56,7 @@ public class CharacterBaseBehavior : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
             allSelected = !allSelected;
 
-        if (allSelected && playerHealth != 0)
+        if (allSelected)
         {
             if (Input.GetMouseButton(0))
             {
@@ -83,7 +83,7 @@ public class CharacterBaseBehavior : MonoBehaviour
             }
         }
 
-        if (selectedCharacter && !allSelected && playerHealth != 0)
+        if (selectedCharacter && !allSelected)
         {
 
             if (Input.GetKeyDown(KeyCode.Alpha1) && (!abilityActive || ability1Active))
@@ -174,15 +174,8 @@ public class CharacterBaseBehavior : MonoBehaviour
     {
         if (selectedCharacter)
         {
-            if (playerHealth != 0)
-            {
-            
-                    GUI.Box(new Rect(5, 5, 50, 25), "Health");
-                    GUI.Box(new Rect(62, 5, 20, 25), playerHealth.ToString());
-            } else
-            {
-                GUI.Box(new Rect(Screen.width /2, (Screen.height/2) - 25, 150, 25), "This Character Died");
-            }
+            GUI.Box(new Rect(5, 5, 50, 25), "Health");
+            GUI.Box(new Rect(62, 5, 20, 25), playerHealth.ToString());
         }
 
         if (allSelected)

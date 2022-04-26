@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8523fa9fe53b64eb9d42f2b2e099f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundRange: 20
+  soundRange: 10
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 256

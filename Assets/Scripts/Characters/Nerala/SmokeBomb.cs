@@ -31,7 +31,7 @@ public class SmokeBomb : MonoBehaviour
     void LateUpdate()
     {
         
-        //if(groundHit) ProduceSmoke();
+        if(groundHit) ProduceSmoke();
     }
 
     IEnumerator SimulateProjectile()
@@ -69,7 +69,15 @@ public class SmokeBomb : MonoBehaviour
         gameObject.layer = 10;
     }
 
-   
-   
+    void ProduceSmoke()
+    {
+        Collider[] affectedCharacters = Physics.OverlapSphere(transform.position, smokeRange, whatIsPlayer);
+
+        for (int i = 0; i < affectedCharacters.Length; i++)
+        {
+            affectedCharacters[i].gameObject.layer = 11;
+        }
+    }
+
 
 }
