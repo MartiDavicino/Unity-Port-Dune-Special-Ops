@@ -1487,9 +1487,10 @@ GameObject:
   - component: {fileID: 8672128565203201544}
   - component: {fileID: 8672128565203201545}
   - component: {fileID: 8672128565203201558}
+  - component: {fileID: 1983282172}
   m_Layer: 6
   m_Name: Nerala
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1501,7 +1502,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8401745661872752719}
-  m_LocalRotation: {x: -0, y: 0.7504778, z: -0, w: 0.6608957}
+  m_LocalRotation: {x: 0, y: 0.7504802, z: 0, w: 0.66089296}
   m_LocalPosition: {x: 95.4, y: 0.013000011, z: 5.4}
   m_LocalScale: {x: 0.09291277, y: 0.09291277, z: 0.09291277}
   m_ConstrainProportionsScale: 0
@@ -1685,6 +1686,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1fe729e707176c4eae612b9fc15218b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1983282172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8401745661872752719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ba5f3f02ac213f46899549f30ad0956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerAgent: {fileID: 8672128565203201548}
+  playerCamera: {fileID: 0}
+  appearOffset: {x: 0, y: 0, z: 2}
 --- !u!1 &8460098701719083031
 GameObject:
   m_ObjectHideFlags: 0

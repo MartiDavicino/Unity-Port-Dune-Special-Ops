@@ -11,6 +11,7 @@ TagManager:
   - Knife
   - Decoy
   - SmokeBomb
+  - NeralaPassive
   layers:
   - Default
   - TransparentFX
