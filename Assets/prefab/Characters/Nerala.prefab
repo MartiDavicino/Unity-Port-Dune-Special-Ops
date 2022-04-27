@@ -1480,14 +1480,14 @@ GameObject:
   - component: {fileID: 8672128565203201550}
   - component: {fileID: 8672128565203201537}
   - component: {fileID: 8672128565203201536}
-  - component: {fileID: 8672128565203201539}
+  - component: {fileID: 8672128565203201558}
   - component: {fileID: 8672128565203201548}
+  - component: {fileID: 8672128565203201539}
+  - component: {fileID: 8672128565203201545}
+  - component: {fileID: 1983282172}
   - component: {fileID: 8672128565203201549}
   - component: {fileID: 8672128565203201547}
   - component: {fileID: 8672128565203201544}
-  - component: {fileID: 8672128565203201545}
-  - component: {fileID: 8672128565203201558}
-  - component: {fileID: 1983282172}
   m_Layer: 6
   m_Name: Nerala
   m_TagString: Player
@@ -1561,7 +1561,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8672128565203201539
+--- !u!114 &8672128565203201558
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1570,19 +1570,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8401745661872752719}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 889a20a3f0f5a0e4081538b5346691a2, type: 3}
+  m_Script: {fileID: 11500000, guid: b1fe729e707176c4eae612b9fc15218b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedCharacter: 0
-  playerAgent: {fileID: 8672128565203201548}
-  playerCamera: {fileID: 0}
-  playerHealth: 2
-  ability1Active: 0
-  ability2Active: 0
-  ability3Active: 0
-  state: 0
-  abilityActive: 0
-  allSelected: 0
 --- !u!195 &8672128565203201548
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1605,7 +1595,7 @@ NavMeshAgent:
   m_BaseOffset: -0.01
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &8672128565203201549
+--- !u!114 &8672128565203201539
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1614,53 +1604,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8401745661872752719}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 480d0c9309e617647be941d1c9e2e0ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 889a20a3f0f5a0e4081538b5346691a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseScript: {fileID: 8672128565203201539}
-  playerCamera: {fileID: 0}
-  sightDebuffMultiplier: 0.2
-  maximumRange: 15
-  ammunition: 100
---- !u!114 &8672128565203201547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8401745661872752719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b1b4703de51ae340be542ac72826235, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseScript: {fileID: 8672128565203201539}
-  playerCamera: {fileID: 0}
-  attackPoint: {fileID: 9210757919227417333}
-  attackPointOffset: {x: 0.8, y: 2.3, z: 0}
-  maximumRange: 15
-  ammunition: 1
-  whatIsSmokeBomb:
-    serializedVersion: 2
-    m_Bits: 1024
-  smokeBombPrefab: {fileID: 6426780562200808130, guid: c912b95efd14955469b952f7fd99030f, type: 3}
-  targetPosition: {x: 0, y: 0, z: 0}
---- !u!114 &8672128565203201544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8401745661872752719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2765d360d4334b2db258bba0eb4536d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseScript: {fileID: 8672128565203201539}
-  spawnRange: 3
-  hunterSeekerPrefab: {fileID: 3678424213461940499, guid: 409146c6d5af645e593e5c13ff089808, type: 3}
-  seekerHunting: 0
+  selectedCharacter: 0
+  allSelected: 0
+  playerHealth: 2
+  movementSpeed: 10
+  abilityActive: 0
+  ability1Active: 0
+  ability2Active: 0
+  ability3Active: 0
+  state: 0
 --- !u!114 &8672128565203201545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1674,18 +1629,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeToKill: 2
---- !u!114 &8672128565203201558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8401745661872752719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1fe729e707176c4eae612b9fc15218b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1983282172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1698,9 +1641,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba5f3f02ac213f46899549f30ad0956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAgent: {fileID: 8672128565203201548}
-  playerCamera: {fileID: 0}
-  appearOffset: {x: 0, y: 0, z: 2}
+--- !u!114 &8672128565203201549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8401745661872752719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480d0c9309e617647be941d1c9e2e0ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sightDebuffMultiplier: 0.2
+  maximumRange: 15
+  cooldown: 0
+  ammunition: 100
+--- !u!114 &8672128565203201547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8401745661872752719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b1b4703de51ae340be542ac72826235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maximumRange: 15
+  smokeRange: 0
+  ammunition: 1
+  smokeBombPrefab: {fileID: 6426780562200808130, guid: c912b95efd14955469b952f7fd99030f, type: 3}
+  whatIsSmokeBomb:
+    serializedVersion: 2
+    m_Bits: 1024
+  targetPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &8672128565203201544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8401745661872752719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2765d360d4334b2db258bba0eb4536d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hunterSeekerVelocity: 15
+  countdownTime: 0
+  hunterSeekerPrefab: {fileID: 3678424213461940499, guid: 409146c6d5af645e593e5c13ff089808, type: 3}
+  seekerHunting: 0
 --- !u!1 &8460098701719083031
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,10 +22,10 @@ public class DecoyRender : MonoBehaviour
 
         gameObject.AddComponent<LineRenderer>();
         
-        gameObject.DrawCircle(circleRadius, .05f);
     }
     void Update()
     {
+        gameObject.DrawCircleScaled(circleRadius, 0.05f, transform.localScale);
         gameObject.transform.rotation = Quaternion.identity;
 
     }

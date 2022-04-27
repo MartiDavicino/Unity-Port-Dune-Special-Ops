@@ -5,34 +5,31 @@ using UnityEngine;
 public class SmokeBombAbility : MonoBehaviour
 {
 
-    public CharacterBaseBehavior baseScript;
-
     //General Variables
-    public Camera playerCamera;
-    public Transform attackPoint;
-    public Vector3 attackPointOffset;
-
-    private GameObject smokeBomb;
-    private bool active;
+    private CharacterBaseBehavior baseScript;
+    private Camera playerCamera;
+    private Vector3 attackPointOffset;
     private bool addLineComponentOnce;
-
     private bool bombThrown;
 
     //Ability Stats
     public float maximumRange;
+    public float smokeEffectRange;
     public int ammunition;
 
     //Decoy
-    public LayerMask whatIsSmokeBomb;
     public GameObject smokeBombPrefab;
-    public Vector3 targetPosition;
+    public LayerMask whatIsSmokeBomb;
+    [HideInInspector] public Vector3 targetPosition;
 
     // Start is called before the first frame update
     void Start()
     {
+        attackPointOffset = new Vector3(0.8f, 1.5f, 0f);
+        baseScript = GetComponent<CharacterBaseBehavior>();
+        playerCamera = Camera.main;
         bombThrown = false;
         addLineComponentOnce = true;
-        active = false;
     }
 
     // Update is called once per frame
@@ -54,7 +51,7 @@ public class SmokeBombAbility : MonoBehaviour
                     gameObject.AddComponent<LineRenderer>();
                 }
 
-                gameObject.DrawCircle(maximumRange * 10, .05f);
+                gameObject.DrawCircleScaled(maximumRange, 0.05f, transform.localScale);
 
                 if (Input.GetKeyDown(KeyCode.Mouse0) && ammunition > 0)
                 {
@@ -75,12 +72,10 @@ public class SmokeBombAbility : MonoBehaviour
 
                             transform.LookAt(meshHit.point);
 
-                            Vector3 spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
+                            Vector3 spawnPoint = transform.position + (transform.rotation * attackPointOffset);
                             targetPosition = meshHit.point;
                             
-                            smokeBomb = Instantiate(smokeBombPrefab, spawnPoint, Quaternion.identity);  
-
-                            //ammunition--;
+                            Instantiate(smokeBombPrefab, spawnPoint, Quaternion.identity);  
                         }
                     }
                 }
@@ -88,18 +83,6 @@ public class SmokeBombAbility : MonoBehaviour
             {
                 addLineComponentOnce = true;
             }
-
-            //Collider[] pickables = Physics.OverlapSphere(transform.position, 3.0f, whatIsSmokeBomb);
-
-            //for (int i = 0; i < pickables.Length; i++)
-            //{
-            //    if(pickables[i].gameObject.tag == "SmokeBomb")
-            //    {
-            //        Destroy(pickables[i].gameObject);
-            //        ammunition++;
-            //    }
-            //}
-
         } else
         {
             addLineComponentOnce = true;

@@ -5,7 +5,10 @@ using UnityEngine.AI;
 
 public class HunterSeeker : MonoBehaviour
 {
-    public NavMeshAgent playerAgent;
+    private NavMeshAgent playerAgent;
+
+    private GameObject nerala;
+    private HunterSeekerAbility baseScript;
 
     private Camera playerCamera;
     private CameraMovement cameraScript;
@@ -14,6 +17,11 @@ public class HunterSeeker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerAgent = GetComponent<NavMeshAgent>();
+
+        nerala = GameObject.Find("Nerala");
+        baseScript = nerala.GetComponent<HunterSeekerAbility>();
+        playerAgent.speed = baseScript.hunterSeekerVelocity;
         playerCamera = Camera.main;
         cameraScript = playerCamera.GetComponent<CameraMovement>();
     }

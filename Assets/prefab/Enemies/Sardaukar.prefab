@@ -614,10 +614,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   enemyD: {fileID: 4278868393632840210}
+  patrolPoints:
+  - {x: 112.89, y: 0.24, z: 23.13}
+  - {x: 115.15, y: 0.24, z: 10.77}
+  visitedPoints: []
+  affectedByDecoy: 0
   timeBetweenAttacks: 1.5
   playerInSightRange: 0
   playerInAttackRange: 0
-  needlePrefab: {fileID: 0}
+  needlePrefab: {fileID: 7972253676922709312, guid: 08e29585e2f739b4f90a8f38c5dec8e1, type: 3}
 --- !u!114 &4278868393632840210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -638,10 +643,8 @@ MonoBehaviour:
   delay: 3
   proportion: 1
   state: 0
+  debug: 0
   lDrawer: {fileID: 7099466878704545428}
-  theta: 2.02
-  thethaScale: 1.03
-  lambdaScale: 0.01
   viewAngle: 60
   targetMask:
     serializedVersion: 2

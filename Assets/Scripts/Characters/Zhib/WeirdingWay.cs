@@ -70,7 +70,8 @@ public class WeirdingWay : MonoBehaviour
                 {
                     addLineComponentOnce = false;
                     gameObject.AddComponent<LineRenderer>();
-                    gameObject.DrawCircle(killProximityRange * 10, .05f);
+
+                    gameObject.DrawCircleScaled(killProximityRange, 0.05f, transform.localScale);
                 }
 
                 if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -110,7 +111,8 @@ public class WeirdingWay : MonoBehaviour
             if (!agent.pathPending && agent.remainingDistance < killProximityRange && enemyTargeted && goingToAttack)
             {
                 gameObject.AddComponent<LineRenderer>();
-                gameObject.DrawCircle(killChainRange * 10, .05f);
+                gameObject.DrawCircleScaled(killProximityRange, 0.05f, transform.localScale);
+
                 agent.ResetPath();
                 firstEnemyReached = true;
             }
@@ -141,7 +143,7 @@ public class WeirdingWay : MonoBehaviour
         if (hasEnded || baseScript.state == PlayerState.ABILITY3_1)
         {
             baseScript.state = PlayerState.IDLE;
-            gameObject.DrawCircle(killProximityRange * 10, .05f);
+            gameObject.DrawCircleScaled(killProximityRange, 0.05f, transform.localScale);
             hasEnded = false;
 
         }

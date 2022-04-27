@@ -7,10 +7,9 @@ using UnityEngine;
 public class SleepingDartAbility : MonoBehaviour
 {
 
-    public CharacterBaseBehavior baseScript;
-
     //General Variables
-    public Camera playerCamera;
+    private CharacterBaseBehavior baseScript;
+    private Camera playerCamera;
     private NavMeshAgent agent;
     private RaycastHit rayHit;
     private bool enemyOutOfRange;
@@ -22,6 +21,7 @@ public class SleepingDartAbility : MonoBehaviour
     //Ability Stats
     public float sightDebuffMultiplier;
     public float maximumRange;
+    public float cooldown;
     public int ammunition;
 
     private bool hasShot;
@@ -29,6 +29,9 @@ public class SleepingDartAbility : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        baseScript = GetComponent<CharacterBaseBehavior>();
+        playerCamera = Camera.main;
+
         hasShot = false;
         addLineComponentOnce = true;
         enemyOutOfRange = false;
@@ -55,7 +58,7 @@ public class SleepingDartAbility : MonoBehaviour
                     gameObject.AddComponent<LineRenderer>();
                 }
 
-                gameObject.DrawCircle(maximumRange * 10, .05f);
+                gameObject.DrawCircleScaled(maximumRange, 0.05f, transform.localScale);
 
                 if (Input.GetKeyDown(KeyCode.Mouse0) && ammunition > 0)
                 {

@@ -21,14 +21,18 @@ public class SmokeBombRender : MonoBehaviour
 
         circleRadius = smokeBomb.smokeRange;
 
-        triggerZone.radius = circleRadius;
+        //triggerZone.radius = circleRadius / transform.localScale;
+
 
         gameObject.AddComponent<LineRenderer>();
 
-        gameObject.DrawCircle(circleRadius, .05f);
+
     }
+    
+
     void Update()
     {
+        gameObject.DrawCircleScaled(circleRadius, 0.05f, transform.localScale);
         gameObject.transform.rotation = Quaternion.identity;
 
     }

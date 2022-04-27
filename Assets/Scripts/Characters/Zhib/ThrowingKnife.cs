@@ -6,15 +6,20 @@ public class ThrowingKnife : MonoBehaviour
 {
     private Rigidbody rb;
 
-    public float velocity;
+    private float velocity;
 
     private bool hit;
+
+    private GameObject zhib;
+    private ThrowingKnifeAbility baseScript;
 
     // Start is called before the first frame update
     void Start()
     {
+        zhib = GameObject.Find("Zhib");
+        baseScript = zhib.GetComponent<ThrowingKnifeAbility>();
+        velocity = baseScript.knifeVelocity;
         hit = false;
-
         rb = GetComponent<Rigidbody>();
     }
 

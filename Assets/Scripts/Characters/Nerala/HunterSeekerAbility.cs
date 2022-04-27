@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class HunterSeekerAbility : MonoBehaviour
 {
-    public CharacterBaseBehavior baseScript;
+    private CharacterBaseBehavior baseScript;
 
     private bool addLineComponentOnce;
 
-    public float spawnRange;
+    private float spawnRange;
+
+    public float hunterSeekerVelocity;
+
+    public float countdownTime;
 
     public GameObject hunterSeekerPrefab;
 
-    public bool seekerHunting;
+    [HideInInspector] public bool seekerHunting;
 
     private bool hunterDeployed;
 
     // Start is called before the first frame update
     void Start()
     {
+        baseScript = GetComponent<CharacterBaseBehavior>();
+        spawnRange = 3f;
         hunterDeployed = false;
         addLineComponentOnce = true;
     }
@@ -42,7 +48,7 @@ public class HunterSeekerAbility : MonoBehaviour
                     gameObject.AddComponent<LineRenderer>();
                 }
 
-                if(!seekerHunting) gameObject.DrawCircle(spawnRange * 10, .05f);
+                if (!seekerHunting) gameObject.DrawCircleScaled(spawnRange, 0.05f, transform.localScale);
 
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {

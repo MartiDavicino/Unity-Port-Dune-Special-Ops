@@ -29,6 +29,7 @@ public class ThrowingKnifeAbility : MonoBehaviour
 
     //Knife
     private bool hasShot;
+    public float knifeVelocity;
     public GameObject knifePrefab;
     public LayerMask whatIsKnife;
     private GameObject[] thrownKnifes;
@@ -70,7 +71,7 @@ public class ThrowingKnifeAbility : MonoBehaviour
                     gameObject.AddComponent<LineRenderer>();
                 }
 
-                gameObject.DrawCircle(maximumRange, .05f);
+                gameObject.DrawCircleScaled(maximumRange, 0.05f, transform.localScale);
 
                 if (Input.GetKeyDown(KeyCode.Mouse0) && ammunition > 0)
                 {

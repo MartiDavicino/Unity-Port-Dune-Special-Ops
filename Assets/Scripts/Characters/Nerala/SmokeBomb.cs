@@ -12,7 +12,7 @@ public class SmokeBomb : MonoBehaviour
     public float firingAngle = 45.0f;
     public float gravity;
 
-    public float smokeRange;
+    [HideInInspector] public float smokeRange;
 
     public bool groundHit;
 
@@ -23,17 +23,11 @@ public class SmokeBomb : MonoBehaviour
 
         GameObject go = GameObject.Find("Nerala");
         smokeBombScript = go.GetComponent<SmokeBombAbility>();
-
+        smokeRange = smokeBombScript.smokeEffectRange;
         groundHit = false;
 
         StartCoroutine(SimulateProjectile());
     }
-    void LateUpdate()
-    {
-        
-        //if(groundHit) ProduceSmoke();
-    }
-
     IEnumerator SimulateProjectile()
     {
 
@@ -67,16 +61,6 @@ public class SmokeBomb : MonoBehaviour
         groundHit = true;
 
         gameObject.layer = 10;
-    }
-
-    void ProduceSmoke()
-    {
-        Collider[] affectedCharacters = Physics.OverlapSphere(transform.position, smokeRange, whatIsPlayer);
-
-        for (int i = 0; i < affectedCharacters.Length; i++)
-        {
-            affectedCharacters[i].gameObject.layer = 11;
-        }
     }
 
 

@@ -60,7 +60,7 @@ public class DecoyAbility : MonoBehaviour
                     gameObject.AddComponent<LineRenderer>();
                 }
 
-                gameObject.DrawCircle(maximumRange, .05f);
+                gameObject.DrawCircleScaled(maximumRange, 0.05f, transform.localScale);
 
                 if (Input.GetKeyDown(KeyCode.Mouse0) && ammunition > 0)
                 {

@@ -5,18 +5,23 @@ using UnityEngine;
 
 public class NeralaPassive : MonoBehaviour
 {
-    public NavMeshAgent playerAgent;
-    public Camera playerCamera;
+    private NavMeshAgent playerAgent;
+    private Camera playerCamera;
 
     private CharacterBaseBehavior baseScript;
 
     private GameObject passiveCube;
 
-    public Vector3 appearOffset;
+    private Vector3 appearOffset;
 
     private bool goingTo;
     void Start()
     {
+        playerAgent = GetComponent<NavMeshAgent>();
+        playerCamera = Camera.main;
+
+        appearOffset = new Vector3(0f, 0f, 2f);
+
         goingTo = false;
         baseScript = GetComponent<CharacterBaseBehavior>();
     }
