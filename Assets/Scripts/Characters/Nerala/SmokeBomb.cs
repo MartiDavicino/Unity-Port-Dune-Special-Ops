@@ -5,14 +5,16 @@ using UnityEngine.AI;
 
 public class SmokeBomb : MonoBehaviour
 {
+
     private SmokeBombAbility smokeBombScript;
 
     public LayerMask whatIsPlayer;
-
     public float firingAngle = 45.0f;
     public float gravity;
 
     [HideInInspector] public float smokeRange;
+    private float timeOfEffect;
+    private float elapse_time;
 
     public bool groundHit;
 
@@ -24,9 +26,25 @@ public class SmokeBomb : MonoBehaviour
         GameObject go = GameObject.Find("Nerala");
         smokeBombScript = go.GetComponent<SmokeBombAbility>();
         smokeRange = smokeBombScript.smokeEffectRange;
+        timeOfEffect = smokeBombScript.timeOfEffect;
+        elapse_time = 0f;
         groundHit = false;
 
         StartCoroutine(SimulateProjectile());
+    }
+
+    void Update()
+    {
+        if(groundHit)
+        {
+            while (elapse_time < timeOfEffect)
+            {
+                elapse_time += Time.deltaTime;
+                return;
+            }
+
+            Destroy(gameObject);
+        }
     }
 
     void LateUpdate()
@@ -70,8 +88,6 @@ public class SmokeBomb : MonoBehaviour
         }
 
         groundHit = true;
-
-        gameObject.layer = 10;
     }
 
 

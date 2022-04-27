@@ -15,6 +15,7 @@ public class SmokeBombAbility : MonoBehaviour
     //Ability Stats
     public float maximumRange;
     public float smokeEffectRange;
+    public float timeOfEffect;
     public int ammunition;
 
     //Decoy
@@ -75,7 +76,9 @@ public class SmokeBombAbility : MonoBehaviour
                             Vector3 spawnPoint = transform.position + (transform.rotation * attackPointOffset);
                             targetPosition = meshHit.point;
                             
-                            Instantiate(smokeBombPrefab, spawnPoint, Quaternion.identity);  
+                            Instantiate(smokeBombPrefab, spawnPoint, Quaternion.identity);
+
+                            ammunition--;
                         }
                     }
                 }
@@ -102,7 +105,11 @@ public class SmokeBombAbility : MonoBehaviour
     {
         if (baseScript.selectedCharacter)
             if (baseScript.ability2Active)
+            {
                 GUI.Box(new Rect(5, Screen.height - 30, 150, 25), "Smoke Bomb Active");
+                GUI.Box(new Rect(160, Screen.height - 30, 150, 25), "Remaining Bombs:");
+                GUI.Box(new Rect(315, Screen.height - 30, 30, 25), ammunition.ToString());
+            }
     }
 
 }

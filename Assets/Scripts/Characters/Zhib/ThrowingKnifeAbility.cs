@@ -163,8 +163,13 @@ public class ThrowingKnifeAbility : MonoBehaviour
 
     void OnGUI()
     {
-        if(baseScript.selectedCharacter)
-            if (baseScript.ability1Active) GUI.Box(new Rect(5, Screen.height - 30, 150, 25), "Throwing Knife Active");
+        if (baseScript.selectedCharacter)
+            if (baseScript.ability1Active)
+            {
+                GUI.Box(new Rect(5, Screen.height - 30, 150, 25), "Throwing Knife Active");
+                GUI.Box(new Rect(160, Screen.height - 30, 150, 25), "Remaining Knifes:");
+                GUI.Box(new Rect(315, Screen.height - 30, 30, 25), ammunition.ToString());
+            }
     }
 
     Vector3 CalculateAbsoluteDistance(Vector3 targetPos)
