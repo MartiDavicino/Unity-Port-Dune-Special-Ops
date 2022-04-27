@@ -1611,6 +1611,7 @@ MonoBehaviour:
   allSelected: 0
   playerHealth: 2
   movementSpeed: 10
+  invisible: 0
   abilityActive: 0
   ability1Active: 0
   ability2Active: 0
@@ -1670,7 +1671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maximumRange: 15
-  smokeRange: 0
+  smokeEffectRange: 5
   ammunition: 1
   smokeBombPrefab: {fileID: 6426780562200808130, guid: c912b95efd14955469b952f7fd99030f, type: 3}
   whatIsSmokeBomb:

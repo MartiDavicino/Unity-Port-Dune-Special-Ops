@@ -13,16 +13,23 @@ public enum DecState
 public class EnemyDetection : MonoBehaviour
 {
 	public float sightMultiplier;
-	public float multiplierHolder;
+	[HideInInspector] public float multiplierHolder;
 
 	public float viewRadius;
+	[Range(0, 360)]
+	public float viewAngle;
+
 	public float hearingRadius;
+
 	private CharacterBaseBehavior baseScript;
-	public float timer = 0.0f;
-	public float delay = 3.0f;
-	public float proportion = 0.2f;
-	public DecState state = DecState.STILL;
-	public bool debug = false;
+
+	[HideInInspector] public float timer = 0.0f;
+	public float secondsToDetect;
+	private float proportion;
+
+	[HideInInspector] public DecState state = DecState.STILL;
+	[HideInInspector] public bool debug = false;
+
 	private bool once = true;
 
 	public VisualDebug visual;
@@ -31,20 +38,15 @@ public class EnemyDetection : MonoBehaviour
 	private Vector3 angle1;
 	private Vector3 angle2;
 		
-
-	[Range(0, 360)]
-	public float viewAngle;
-
 	public LayerMask targetMask;
 	public LayerMask obstacleMask;
 
-	public List<Transform> visibleTargets = new List<Transform>();
-	public List<Transform> noisyTargets = new List<Transform>();
-    [HideInInspector]
+	[HideInInspector] public List<Transform> visibleTargets = new List<Transform>();
+	[HideInInspector] public List<Transform> noisyTargets = new List<Transform>();
     void Start()
     {
 		multiplierHolder = sightMultiplier;
-
+		proportion = 1f;
 	}
     void Update()
     {
@@ -130,7 +132,7 @@ public class EnemyDetection : MonoBehaviour
 					if(!cB.invisible)
                     {
 						sightMultiplier = multiplierHolder;
-						WaitAndAddToList(delay, target,visibleTargets);
+						WaitAndAddToList(secondsToDetect, target,visibleTargets);
 						playerInView = true;
                     }
 				}
@@ -164,7 +166,7 @@ public class EnemyDetection : MonoBehaviour
 
 			if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, targetMask)&& baseScript.state != PlayerState.CROUCH)
 			{
-				WaitAndAddToList(delay, target, noisyTargets);
+				WaitAndAddToList(secondsToDetect, target, noisyTargets);
 			} 
 		}
 

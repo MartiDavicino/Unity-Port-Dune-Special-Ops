@@ -22,50 +22,105 @@ public enum EnemyState
 }
 public class EnemyBehaviour : MonoBehaviour
 {
-   
+    //General
+    [HideInInspector] public NavMeshAgent agent;
+    [HideInInspector] public Transform player;
+    [HideInInspector] public EnemyState state;
 
-    public EnemyType type = EnemyType.NONE;
-
-    public NavMeshAgent agent;
-
-    public Transform player;
     private Transform placeholder1;
     private Transform placeholder2;
 
     private CharacterBaseBehavior targetPlayer;
+    private EnemyDetection enemyD;
 
     private float elapse_time = 0;
 
-    public EnemyState state;
-
-    public LayerMask whatIsGround, whatIsPlayer;
-
-    public EnemyDetection enemyD;
-
-
-    //Patrol
-    public List<Vector3> patrolPoints;
-    public List<Vector3> visitedPoints;
-    private Vector3 walkPoint;
-    bool walkPointSet;
-    private float walkPointRange;
-    private int patrolIterator;
-    [HideInInspector] public bool affectedByDecoy;
+    public float movementSpeed;
 
     //Attacking
     public float timeBetweenAttacks;
 
+    //Patrol
+    [HideInInspector] public List<Vector3> visitedPoints;
+    [HideInInspector] public bool affectedByDecoy;
+    public List<Vector3> patrolPoints;
+
+    private Vector3 walkPoint;
+    private bool walkPointSet;
+    private int patrolIterator;
+
     //States
-    private float sightRange, attackRange;
-    public bool playerInSightRange, playerInAttackRange;
+    private float attackRange;
+    [HideInInspector] public bool playerInSightRange, playerInAttackRange;
+
+    public EnemyType type = EnemyType.NONE;
+    public LayerMask whatIsGround, whatIsPlayer;
 
     //Sardaukar
-    private float rangeAttackRange;
-    private int ammunition;
     private bool playerInRanged;
     private GameObject needle;
+    [Header("- Only if Sardaukar -")]
+    public float rangeAttackRange;
+    public int ammunition;
     public GameObject needlePrefab;
 
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = movementSpeed;
+
+        patrolIterator = 0;
+        affectedByDecoy = false;
+        state = EnemyState.IDLE;
+        enemyD = GetComponent<EnemyDetection>();
+
+        switch (type)
+        {
+            case EnemyType.HARKONNEN:
+                attackRange = 2.0f;                
+                break;
+
+            case EnemyType.SARDAUKAR:
+                attackRange = 2.0f;
+                break;
+
+            case EnemyType.MENTAT:
+                attackRange = 2.0f;
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //Check for sight and hear range
+        bool detected = checkSenses();
+
+        //playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+
+        if (!detected)
+        {
+            Patroling();
+        }
+        if (detected && !playerInAttackRange)
+        {
+            targetPlayer = player.gameObject.GetComponent<CharacterBaseBehavior>();
+            Chasing();
+        }
+
+        if (detected && playerInAttackRange)
+        {
+            agent.ResetPath();
+            targetPlayer = player.gameObject.GetComponent<CharacterBaseBehavior>();
+            Attacking();
+        }
+    }
     bool checkSenses()
     {
         if(!enemyD.noisyTargets.Any() && enemyD.visibleTargets.Any())
@@ -157,9 +212,6 @@ public class EnemyBehaviour : MonoBehaviour
             agent.ResetPath();
         }
     }
-
-
-
     private void SearchWalkPoint()
     {
         bool visited = false;
@@ -257,65 +309,5 @@ public class EnemyBehaviour : MonoBehaviour
         needle.transform.LookAt(targetPlayer.transform);
 
         ammunition--;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        patrolIterator = 0;
-        affectedByDecoy = false;
-
-        switch (type)
-        {
-            case EnemyType.HARKONNEN:
-                walkPointRange = 10.0f;
-                sightRange = 10.0f;
-                attackRange = 3.0f;                
-                break;
-
-            case EnemyType.SARDAUKAR:
-                walkPointRange = 10.0f;
-                sightRange = 15.0f;
-                attackRange = 1.0f;
-                rangeAttackRange = 7.0f;
-                ammunition = 2;
-                break;
-
-            case EnemyType.MENTAT:
-                walkPointRange = 10.0f;
-                sightRange = 20.0f;
-                attackRange = 1.0f;
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //Check for sight and hear range
-        bool detected = checkSenses();
-
-        //playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-
-        if (!detected)
-        {
-            Patroling();
-        }
-        if (detected && !playerInAttackRange)
-        {
-            targetPlayer = player.gameObject.GetComponent<CharacterBaseBehavior>();
-            Chasing();
-        }
-
-        if (detected && playerInAttackRange)
-        {
-            agent.ResetPath();
-            targetPlayer = player.gameObject.GetComponent<CharacterBaseBehavior>();
-            Attacking();
-        }
     }
 }

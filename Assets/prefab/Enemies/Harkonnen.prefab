@@ -555,9 +555,9 @@ GameObject:
   - component: {fileID: 374356984102618181}
   - component: {fileID: 374356984102618180}
   - component: {fileID: 374356984102618187}
-  - component: {fileID: 374356984102618189}
-  - component: {fileID: 374356984102618188}
   - component: {fileID: 374356984102618191}
+  - component: {fileID: 374356984102618188}
+  - component: {fileID: 374356984102618189}
   - component: {fileID: 374356984102618184}
   m_Layer: 8
   m_Name: Harkonnen
@@ -686,68 +686,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &374356984102618189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 716233281998640737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a7b33bc98d117c4095311ede6ab5402, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sightMultiplier: 3
-  multiplierHolder: 0
-  viewRadius: 15
-  hearingRadius: 7.5
-  timer: 0
-  delay: 3
-  proportion: 1
-  state: 0
-  debug: 0
-  visual: {fileID: 1213589239}
-  hear: {fileID: 1333869942}
-  viewAngle: 60
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 64
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 128
-  visibleTargets: []
-  noisyTargets: []
---- !u!114 &374356984102618188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 716233281998640737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d535f114eeba2d4e9c17986184feaf0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  agent: {fileID: 374356984102618191}
-  player: {fileID: 196824455201623259}
-  state: 0
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 8
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 64
-  enemyD: {fileID: 374356984102618189}
-  patrolPoints: []
-  visitedPoints: []
-  affectedByDecoy: 0
-  timeBetweenAttacks: 1
-  playerInSightRange: 0
-  playerInAttackRange: 0
-  needlePrefab: {fileID: 0}
 --- !u!195 &374356984102618191
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -770,6 +708,69 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &374356984102618188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 716233281998640737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d535f114eeba2d4e9c17986184feaf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 374356984102618191}
+  player: {fileID: 196824455201623259}
+  state: 0
+  movementSpeed: 5
+  timeBetweenAttacks: 1
+  visitedPoints: []
+  affectedByDecoy: 0
+  patrolPoints: []
+  playerInSightRange: 0
+  playerInAttackRange: 0
+  type: 0
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 64
+  rangeAttackRange: 0
+  ammunition: 0
+  needlePrefab: {fileID: 0}
+--- !u!114 &374356984102618189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 716233281998640737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a7b33bc98d117c4095311ede6ab5402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sightMultiplier: 1.5
+  multiplierHolder: 0
+  viewRadius: 15
+  viewAngle: 60
+  hearingRadius: 7.5
+  timer: 0
+  secondsToDetect: 3
+  state: 0
+  debug: 0
+  visual: {fileID: 1213589239}
+  hear: {fileID: 1333869942}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 128
+  visibleTargets: []
+  noisyTargets: []
 --- !u!114 &374356984102618184
 MonoBehaviour:
   m_ObjectHideFlags: 0
