@@ -30,8 +30,6 @@ public class EnemyDetection : MonoBehaviour
 	[HideInInspector] public DecState state = DecState.STILL;
 	[HideInInspector] public bool debug = false;
 
-	private bool once = true;
-
 	public VisualDebug visual;
 	public hearingDebug hear;
 

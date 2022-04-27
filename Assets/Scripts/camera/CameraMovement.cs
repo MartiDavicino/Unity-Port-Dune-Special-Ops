@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
 
 
 public class CameraMovement : MonoBehaviour
@@ -16,7 +15,6 @@ public class CameraMovement : MonoBehaviour
     private float remainingAngle;
 
     public Vector3 offset;            
-    private bool rotatedOnce = false;
 
     private GeneralManager manager;
     void Start()
