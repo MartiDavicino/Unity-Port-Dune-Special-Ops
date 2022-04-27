@@ -102,7 +102,7 @@ public class SmokeBombAbility : MonoBehaviour
     {
         if (baseScript.selectedCharacter)
             if (baseScript.ability2Active)
-                GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Smoke Bomb Active");
+                GUI.Box(new Rect(5, Screen.height - 30, 150, 25), "Smoke Bomb Active");
     }
 
 }

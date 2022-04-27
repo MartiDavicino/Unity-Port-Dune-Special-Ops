@@ -21,7 +21,7 @@ public class CharacterBaseBehavior : MonoBehaviour
 {
 
     [HideInInspector] public bool selectedCharacter;
-    public bool allSelected;
+    [HideInInspector] public bool allSelected;
 
     private NavMeshAgent playerAgent;
     private Camera playerCamera;
@@ -29,7 +29,7 @@ public class CharacterBaseBehavior : MonoBehaviour
     public int playerHealth;
     public float movementSpeed;
 
-    public bool invisible;
+    [HideInInspector] public bool invisible;
 
     [HideInInspector] public bool abilityActive;
     [HideInInspector] public bool ability1Active;

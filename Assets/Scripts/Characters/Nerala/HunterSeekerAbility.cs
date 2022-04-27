@@ -5,26 +5,23 @@ using UnityEngine;
 public class HunterSeekerAbility : MonoBehaviour
 {
     private CharacterBaseBehavior baseScript;
-
     private bool addLineComponentOnce;
-
     private float spawnRange;
+    private bool hunterDeployed;
 
     public float hunterSeekerVelocity;
-
     public float countdownTime;
 
     public GameObject hunterSeekerPrefab;
 
     [HideInInspector] public bool seekerHunting;
 
-    private bool hunterDeployed;
-
     // Start is called before the first frame update
     void Start()
     {
         baseScript = GetComponent<CharacterBaseBehavior>();
         spawnRange = 3f;
+
         hunterDeployed = false;
         addLineComponentOnce = true;
     }
@@ -71,6 +68,6 @@ public class HunterSeekerAbility : MonoBehaviour
     void OnGUI()
     {
         if (baseScript.selectedCharacter)
-            if (baseScript.ability3Active) GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Hunter Seeker Active");
+            if (baseScript.ability3Active) GUI.Box(new Rect(5, Screen.height - 30, 150, 25), "Hunter Seeker Active");
     }
 }

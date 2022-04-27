@@ -20885,6 +20885,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6868864155876820118, guid: accfd97eb2e459148b32990af20731dc, type: 3}
+      propertyPath: cooldown
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: accfd97eb2e459148b32990af20731dc, type: 3}
 --- !u!1001 &8647725505630343541
@@ -20970,6 +20974,10 @@ PrefabInstance:
     - target: {fileID: 8401745661872752719, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: m_Name
       value: Nerala
+      objectReference: {fileID: 0}
+    - target: {fileID: 8672128565203201549, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
+      propertyPath: cooldown
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9210757919227417333, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: m_RootOrder

@@ -10,6 +10,11 @@ public class HunterSeeker : MonoBehaviour
     private GameObject nerala;
     private HunterSeekerAbility baseScript;
 
+    private float countdownTime;
+    private float elapse_time;
+
+    private CharacterBaseBehavior chBaseScript;
+
     private Camera playerCamera;
     private CameraMovement cameraScript;
     public LayerMask whatIsEnemy;
@@ -21,6 +26,8 @@ public class HunterSeeker : MonoBehaviour
 
         nerala = GameObject.Find("Nerala");
         baseScript = nerala.GetComponent<HunterSeekerAbility>();
+        countdownTime = baseScript.countdownTime;
+        elapse_time = 0f;
         playerAgent.speed = baseScript.hunterSeekerVelocity;
         playerCamera = Camera.main;
         cameraScript = playerCamera.GetComponent<CameraMovement>();
@@ -49,20 +56,41 @@ public class HunterSeeker : MonoBehaviour
 
         for (int i = 0; i < killableEnemy.Length; i++)
         {
-            GameObject go = GameObject.Find("Nerala");
+            baseScript.seekerHunting = false;
 
-            HunterSeekerAbility hunterSeekerScript = go.GetComponent<HunterSeekerAbility>();
-            hunterSeekerScript.seekerHunting = false;
+            chBaseScript = nerala.GetComponent<CharacterBaseBehavior>();
+            chBaseScript.selectedCharacter = true;
+            chBaseScript.abilityActive = false;
+            chBaseScript.ability3Active = false;
 
-            CharacterBaseBehavior baseScript = go.GetComponent<CharacterBaseBehavior>();
-            baseScript.selectedCharacter = true;
-            baseScript.abilityActive = false;
-            baseScript.ability3Active = false;
-
-            cameraScript.focusedPlayer = go;
+            cameraScript.focusedPlayer = nerala;
 
             Destroy(killableEnemy[i].gameObject);
             Destroy(gameObject);
         }
+
+        while (elapse_time < countdownTime)
+        {
+            elapse_time += Time.deltaTime;
+            return;
+        }
+
+        baseScript = nerala.GetComponent<HunterSeekerAbility>();
+        baseScript.seekerHunting = false;
+
+        chBaseScript = nerala.GetComponent<CharacterBaseBehavior>();
+        chBaseScript.selectedCharacter = true;
+        chBaseScript.abilityActive = false;
+        chBaseScript.ability3Active = false;
+
+        cameraScript.focusedPlayer = nerala;
+
+        Destroy(gameObject);
+    }
+
+    void OnGUI()
+    {
+        GUI.Box(new Rect(5, Screen.height - 30, 150, 25), "Remaining Fly Time:");
+        GUI.Box(new Rect(160, Screen.height - 30, 40, 25), (countdownTime - elapse_time).ToString("F2"));
     }
 }

@@ -21,7 +21,11 @@ public class SleepingDartAbility : MonoBehaviour
     //Ability Stats
     public float sightDebuffMultiplier;
     public float maximumRange;
+
     public float cooldown;
+    private bool onCooldown;
+    private float elapse_time;
+
     public int ammunition;
 
     private bool hasShot;
@@ -31,6 +35,9 @@ public class SleepingDartAbility : MonoBehaviour
     {
         baseScript = GetComponent<CharacterBaseBehavior>();
         playerCamera = Camera.main;
+
+        onCooldown = false;
+        elapse_time = 0f;
 
         hasShot = false;
         addLineComponentOnce = true;
@@ -50,7 +57,7 @@ public class SleepingDartAbility : MonoBehaviour
 
         if (baseScript.selectedCharacter)
         {
-            if (baseScript.ability1Active)
+            if (baseScript.ability1Active && !onCooldown)
             {
                 if (addLineComponentOnce)
                 {
@@ -93,7 +100,7 @@ public class SleepingDartAbility : MonoBehaviour
                                 //
 
                                 hasShot = true;
-
+                                onCooldown = true;
                                 ammunition--;
                             }
                         }
@@ -121,6 +128,7 @@ public class SleepingDartAbility : MonoBehaviour
                         //
 
                         hasShot = true;
+                        onCooldown = true;
 
                         ammunition--;
                         enemyOutOfRange = false;
@@ -138,11 +146,28 @@ public class SleepingDartAbility : MonoBehaviour
             addLineComponentOnce = true;
         }
 
+        if (onCooldown)
+        {
+            while (elapse_time < cooldown)
+            {
+                elapse_time += Time.deltaTime;
+                return;
+            }
+
+            elapse_time = 0;
+            onCooldown = false;
+        }
     }
     void OnGUI()
     {
-        if(baseScript.selectedCharacter)
-            if (baseScript.ability1Active) GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Sleeping Dart Active");
+        if (baseScript.selectedCharacter)
+            if (baseScript.ability1Active)
+            {
+                GUI.Box(new Rect(5, Screen.height - 30, 150, 25), "Sleeping Dart Active");
+
+                if (onCooldown)
+                    GUI.Box(new Rect(160, Screen.height - 30, 40, 25), (cooldown - elapse_time).ToString("F2"));
+            }
     }
 
     Vector3 CalculateAbsoluteDistance(Vector3 targetPos)

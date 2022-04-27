@@ -17,13 +17,18 @@ public class DecoyAbility : MonoBehaviour
 
     //Ability Stats
     public float maximumRange;
-    private int ammunition;
-    public float cooldown;
 
     //Decoy
     public float effectRange;
+
+    public float cooldown;
+    private bool onCooldown;
+    private float elapse_time;
+    private bool startTimer;
+
     public GameObject decoyPrefab;
     public LayerMask whatIsDecoy;
+
     [HideInInspector] public Vector3 targetPosition;
 
     // Start is called before the first frame update
@@ -31,10 +36,11 @@ public class DecoyAbility : MonoBehaviour
     {
         baseScript = GetComponent<CharacterBaseBehavior>();
 
-        ammunition = 1;
-
         playerCamera = Camera.main;
         attackPointOffset = new Vector3(0.8f, 1.5f, 0);
+
+        elapse_time = 0f;
+        startTimer = false;
 
         decoyThrown = false;
         addLineComponentOnce = true;
@@ -52,7 +58,7 @@ public class DecoyAbility : MonoBehaviour
 
         if (baseScript.selectedCharacter)
         {
-            if(baseScript.ability2Active)
+            if(baseScript.ability2Active && !onCooldown)
             {
                 if (addLineComponentOnce)
                 {
@@ -62,7 +68,7 @@ public class DecoyAbility : MonoBehaviour
 
                 gameObject.DrawCircleScaled(maximumRange, 0.05f, transform.localScale);
 
-                if (Input.GetKeyDown(KeyCode.Mouse0) && ammunition > 0)
+                if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
 
                     Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
@@ -85,7 +91,8 @@ public class DecoyAbility : MonoBehaviour
                             targetPosition = meshHit.point;
                             Instantiate(decoyPrefab, spawnPoint, transform.rotation);
 
-                            ammunition--;
+                            onCooldown = true;
+
                         }
                     }
                 }
@@ -101,8 +108,7 @@ public class DecoyAbility : MonoBehaviour
                 if (pickables[i].gameObject.tag == "Decoy")
                 {
                     Destroy(pickables[i].gameObject);
-                    ammunition++;
-
+                    startTimer = true;
                 }
             }
         } else
@@ -110,13 +116,33 @@ public class DecoyAbility : MonoBehaviour
             addLineComponentOnce = true;
         }
 
+        if(onCooldown)
+        {
+            if(startTimer)
+            {
+                while (elapse_time < cooldown)
+                {
+                    elapse_time += Time.deltaTime;
+                    return;
+                }
+
+                elapse_time = 0;
+                onCooldown = false;
+                startTimer = false;
+            }
+        }
     }
 
     void OnGUI()
     {
         if (baseScript.selectedCharacter)
             if (baseScript.ability2Active)
-                GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Decoy Active");
+            {
+                GUI.Box(new Rect(5, Screen.height - 30, 150, 25), "Decoy Active");
+
+                if(onCooldown)
+                    GUI.Box(new Rect(160, Screen.height - 30, 40, 25), (cooldown - elapse_time).ToString("F2"));
+            }
     }
 
     Vector3 CalculateAbsoluteDistance(Vector3 targetPos)

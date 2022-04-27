@@ -227,6 +227,6 @@ public class WeirdingWay : MonoBehaviour
 
     void OnGUI()
     {
-        if (baseScript.ability3Active) GUI.Box(new Rect(0, Screen.height - 25, 150, 25), "Weirding Way Active");
+        if (baseScript.ability3Active) GUI.Box(new Rect(5, Screen.height - 30, 150, 25), "Weirding Way Active");
     }
 }
