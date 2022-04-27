@@ -7,17 +7,21 @@ using UnityEngine;
 public class ThrowingKnifeAbility : MonoBehaviour
 {
 
-    public CharacterBaseBehavior baseScript;
+    private CharacterBaseBehavior baseScript;
 
     //General Variables
-    public Camera playerCamera;
+    private Camera playerCamera;
     private NavMeshAgent agent;
-    public Transform attackPoint;
-    public Vector3 attackPointOffset;
-    private RaycastHit rayHit;
-    private bool enemyOutOfRange;
+
     private Vector3 spawnPoint;
+    private Vector3 attackPointOffset;
+
+    private RaycastHit rayHit;
+
+    private bool enemyOutOfRange;
     private bool addLineComponentOnce;
+
+    private GameObject targetEnemy;
 
     //Ability Stats
     public float maximumRange;
@@ -29,11 +33,15 @@ public class ThrowingKnifeAbility : MonoBehaviour
     public LayerMask whatIsKnife;
     private GameObject[] thrownKnifes;
 
-    private GameObject targetEnemy;
 
     // Start is called before the first frame update
     void Start()
     {
+        baseScript = GetComponent<CharacterBaseBehavior>();
+        playerCamera = Camera.main;
+
+        attackPointOffset = new Vector3(0.8f, 1.5f, 0);
+
         hasShot = false;
 
         addLineComponentOnce = true;
@@ -62,7 +70,7 @@ public class ThrowingKnifeAbility : MonoBehaviour
                     gameObject.AddComponent<LineRenderer>();
                 }
 
-                gameObject.DrawCircle(maximumRange * 10, .05f);
+                gameObject.DrawCircle(maximumRange, .05f);
 
                 if (Input.GetKeyDown(KeyCode.Mouse0) && ammunition > 0)
                 {
@@ -83,13 +91,13 @@ public class ThrowingKnifeAbility : MonoBehaviour
                                 agent.SetDestination(targetEnemy.transform.position);
                             } else
                             {
-                                spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
+                                spawnPoint = transform.position + (transform.rotation * attackPointOffset);
 
                                 for (int i = 0; i < thrownKnifes.Length; i++)
                                 {
                                     if (thrownKnifes[i] == null)
                                     {
-                                        thrownKnifes[i] = Instantiate(knifePrefab, spawnPoint, attackPoint.rotation);
+                                        thrownKnifes[i] = Instantiate(knifePrefab, spawnPoint, transform.rotation);
                                         thrownKnifes[i].transform.LookAt(targetEnemy.transform);
                                         break;
                                     }
@@ -108,13 +116,13 @@ public class ThrowingKnifeAbility : MonoBehaviour
                 {
                     if (agent.remainingDistance <= maximumRange && !agent.pathPending)
                     {
-                        Vector3 spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
+                        Vector3 spawnPoint = transform.position + (transform.rotation * attackPointOffset);
 
                         for (int i = 0; i < thrownKnifes.Length; i++)
                         {
                             if (thrownKnifes[i] == null)
                             {
-                                thrownKnifes[i] = Instantiate(knifePrefab, spawnPoint, attackPoint.rotation);
+                                thrownKnifes[i] = Instantiate(knifePrefab, spawnPoint, transform.rotation);
                                 thrownKnifes[i].transform.LookAt(targetEnemy.transform);
                                 break;
                             }

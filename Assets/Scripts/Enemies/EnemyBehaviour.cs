@@ -50,6 +50,7 @@ public class EnemyBehaviour : MonoBehaviour
     bool walkPointSet;
     private float walkPointRange;
     private int patrolIterator;
+    [HideInInspector] public bool affectedByDecoy;
 
     //Attacking
     public float timeBetweenAttacks;
@@ -140,7 +141,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (!walkPointSet) SearchWalkPoint();
 
-        if (walkPointSet)
+        if (walkPointSet && !affectedByDecoy)
         {
             agent.SetDestination(walkPoint);
             state = EnemyState.WALKING;
@@ -193,6 +194,7 @@ public class EnemyBehaviour : MonoBehaviour
     private void Chasing()
     {
         patrolIterator = 0;
+        affectedByDecoy = false;
 
         if (type == EnemyType.SARDAUKAR)
         {
@@ -261,6 +263,7 @@ public class EnemyBehaviour : MonoBehaviour
     void Start()
     {
         patrolIterator = 0;
+        affectedByDecoy = false;
 
         switch (type)
         {

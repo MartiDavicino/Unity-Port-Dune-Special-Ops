@@ -20,27 +20,33 @@ public enum PlayerState
 public class CharacterBaseBehavior : MonoBehaviour
 {
 
-    public bool selectedCharacter;
+    [HideInInspector] public bool selectedCharacter;
+    public bool allSelected;
 
-    public NavMeshAgent playerAgent;
-    public Camera playerCamera;
+    private NavMeshAgent playerAgent;
+    private Camera playerCamera;
 
     public int playerHealth;
+    public float movementSpeed;
+
+    [HideInInspector] public bool abilityActive;
+    [HideInInspector] public bool ability1Active;
+    [HideInInspector] public bool ability2Active;
+    [HideInInspector] public bool ability3Active;
 
     private Animator animator;
-    public bool ability1Active;
-    public bool ability2Active;
-    public bool ability3Active;
-    public PlayerState state = PlayerState.IDLE;
-    public bool abilityActive;
-
-    public bool allSelected;
+    [HideInInspector] public PlayerState state = PlayerState.IDLE;
 
     private Vector3 targetPosition;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerAgent = GetComponent<NavMeshAgent>();
+        playerAgent.speed = movementSpeed;
+
+        playerCamera = Camera.main;
+
         allSelected = false;
         animator = GetComponent<Animator>();
         playerAgent.stoppingDistance = 2;

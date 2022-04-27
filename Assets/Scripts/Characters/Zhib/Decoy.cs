@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.AI;
 using UnityEngine;
 
@@ -16,11 +17,15 @@ public class Decoy : MonoBehaviour
 
     private bool emmitSoundOnce;
 
+    private List<GameObject> resetedEnemies = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
         GameObject go = GameObject.Find("Zhib");
         decoyScript = go.GetComponent<DecoyAbility>();
+
+        soundRange = decoyScript.effectRange;
 
         emmitSoundOnce = true;
 
@@ -76,15 +81,34 @@ public class Decoy : MonoBehaviour
     {
         Collider[] affectedEnemies = Physics.OverlapSphere(transform.position, 2f, whatIsEnemy);
 
-        for (int i = 0; i < affectedEnemies.Length; i++)
+        bool reseted = false;
+        
+        for(int j = 0; j < affectedEnemies.Length; j++)
         {
-            agent = affectedEnemies[i].gameObject.GetComponent<NavMeshAgent>();
-            agent.ResetPath();
+            for (int i = 0; i < resetedEnemies.Count; i++)
+            {
+                if (resetedEnemies[i] == affectedEnemies[j].gameObject)
+                {
+                    reseted = true;
+                }
+            }
 
-            EnemyBehaviour eB = affectedEnemies[i].gameObject.GetComponent<EnemyBehaviour>();
-            eB.state = EnemyState.IDLE;
+            if(!reseted)
+            {
+                resetedEnemies.Add(affectedEnemies[j].gameObject);
+                agent = affectedEnemies[j].gameObject.GetComponent<NavMeshAgent>();
+                agent.ResetPath();
+
+                EnemyBehaviour eB = affectedEnemies[j].gameObject.GetComponent<EnemyBehaviour>();
+                eB.state = EnemyState.IDLE;
+                eB.affectedByDecoy = false;
+            }
+
+            reseted = false;
         }
+        
     }
+
     void EmitSound()
     {
         Collider[] affectedEnemies = Physics.OverlapSphere(transform.position, soundRange, whatIsEnemy);
@@ -96,6 +120,7 @@ public class Decoy : MonoBehaviour
 
             agent = affectedEnemies[i].gameObject.GetComponent<NavMeshAgent>();
             agent.SetDestination(transform.position);
+            eB.affectedByDecoy = true;
         }
     }
 }

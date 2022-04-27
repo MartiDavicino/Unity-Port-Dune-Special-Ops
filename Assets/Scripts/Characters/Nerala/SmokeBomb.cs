@@ -31,7 +31,7 @@ public class SmokeBomb : MonoBehaviour
     void LateUpdate()
     {
         
-        if(groundHit) ProduceSmoke();
+        //if(groundHit) ProduceSmoke();
     }
 
     IEnumerator SimulateProjectile()

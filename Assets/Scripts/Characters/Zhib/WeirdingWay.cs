@@ -6,16 +6,16 @@ using UnityEngine;
 public class WeirdingWay : MonoBehaviour
 {
 
-    public CharacterBaseBehavior baseScript;
+    private CharacterBaseBehavior baseScript;
+    private Camera playerCamera;
+    private NavMeshAgent agent;
 
-    public Camera playerCamera;
-    public NavMeshAgent agent;
     public int maxKills;
     public float killProximityRange;
     public float killChainRange;
     public LayerMask whatIsEnemy;
 
-    public Vector3 attackPointOffset;
+    private Vector3 attackPointOffset;
 
     private RaycastHit rayHit;
     private GameObject targetedEnemy;
@@ -37,6 +37,10 @@ public class WeirdingWay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        baseScript = GetComponent<CharacterBaseBehavior>();
+        agent = GetComponent<NavMeshAgent>();
+        playerCamera = Camera.main;
+
         destroyLineComponentOnce = true;
         goingToAttack = false;
         hasEnded = false;
@@ -46,6 +50,8 @@ public class WeirdingWay : MonoBehaviour
         pulseRate = 0.15f;
         killCount = 0;
         agent.ResetPath();
+
+        attackPointOffset = new Vector3(0.8f, 2.3f, 0f);
     }
 
     // Update is called once per frame

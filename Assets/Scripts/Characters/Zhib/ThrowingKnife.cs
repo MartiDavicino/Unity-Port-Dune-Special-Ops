@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class ThrowingKnife : MonoBehaviour
 {
-    public Rigidbody rb;
+    private Rigidbody rb;
 
     public float velocity;
 
     private bool hit;
 
-    private float pickUpRadius;
-
     // Start is called before the first frame update
     void Start()
     {
         hit = false;
+
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame

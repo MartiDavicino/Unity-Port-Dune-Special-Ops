@@ -6,33 +6,38 @@ using UnityEngine;
 public class DecoyAbility : MonoBehaviour
 {
 
-    public CharacterBaseBehavior baseScript;
+    private CharacterBaseBehavior baseScript;
 
     //General Variables
-    public Camera playerCamera;
-    public Transform attackPoint;
-    public Vector3 attackPointOffset;
+    private Camera playerCamera;
+    private Vector3 attackPointOffset;
 
-    private GameObject decoy;
-    private bool active;
-    private bool addLineComponentOnce;
     private bool decoyThrown;
+    private bool addLineComponentOnce;
 
     //Ability Stats
     public float maximumRange;
-    public int ammunition;
+    private int ammunition;
+    public float cooldown;
 
     //Decoy
-    public LayerMask whatIsDecoy;
+    public float effectRange;
     public GameObject decoyPrefab;
-    public Vector3 targetPosition;
+    public LayerMask whatIsDecoy;
+    [HideInInspector] public Vector3 targetPosition;
 
     // Start is called before the first frame update
     void Start()
     {
+        baseScript = GetComponent<CharacterBaseBehavior>();
+
+        ammunition = 1;
+
+        playerCamera = Camera.main;
+        attackPointOffset = new Vector3(0.8f, 1.5f, 0);
+
         decoyThrown = false;
         addLineComponentOnce = true;
-        active = false;
     }
 
     // Update is called once per frame
@@ -55,7 +60,7 @@ public class DecoyAbility : MonoBehaviour
                     gameObject.AddComponent<LineRenderer>();
                 }
 
-                gameObject.DrawCircle(maximumRange * 10, .05f);
+                gameObject.DrawCircle(maximumRange, .05f);
 
                 if (Input.GetKeyDown(KeyCode.Mouse0) && ammunition > 0)
                 {
@@ -76,9 +81,9 @@ public class DecoyAbility : MonoBehaviour
 
                             transform.LookAt(meshHit.point);
 
-                            Vector3 spawnPoint = attackPoint.position + (attackPoint.rotation * attackPointOffset);
+                            Vector3 spawnPoint = transform.position + (transform.rotation * attackPointOffset);
                             targetPosition = meshHit.point;
-                            decoy = Instantiate(decoyPrefab, spawnPoint, attackPoint.rotation);
+                            Instantiate(decoyPrefab, spawnPoint, transform.rotation);
 
                             ammunition--;
                         }

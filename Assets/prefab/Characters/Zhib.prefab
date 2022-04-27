@@ -1336,13 +1336,13 @@ GameObject:
   - component: {fileID: 6868864155876820114}
   - component: {fileID: 6868864155876820124}
   - component: {fileID: 6868864155876820126}
-  - component: {fileID: 6868864155876820120}
-  - component: {fileID: 6868864155876820121}
-  - component: {fileID: 6868864155876820125}
-  - component: {fileID: 6868864155876820113}
-  - component: {fileID: 6868864155876820118}
-  - component: {fileID: 6868864155876820119}
   - component: {fileID: 6022001404598500245}
+  - component: {fileID: 6868864155876820121}
+  - component: {fileID: 6868864155876820120}
+  - component: {fileID: 6868864155876820119}
+  - component: {fileID: 6868864155876820125}
+  - component: {fileID: 6868864155876820118}
+  - component: {fileID: 6868864155876820113}
   m_Layer: 6
   m_Name: Zhib
   m_TagString: Player
@@ -1419,7 +1419,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &6868864155876820120
+--- !u!114 &6022001404598500245
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1428,19 +1428,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6022001404598500244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 889a20a3f0f5a0e4081538b5346691a2, type: 3}
+  m_Script: {fileID: 11500000, guid: b1fe729e707176c4eae612b9fc15218b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedCharacter: 1
-  playerAgent: {fileID: 6868864155876820121}
-  playerCamera: {fileID: 0}
-  playerHealth: 3
-  ability1Active: 0
-  ability2Active: 0
-  ability3Active: 0
-  state: 0
-  abilityActive: 0
-  allSelected: 0
 --- !u!195 &6868864155876820121
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1463,6 +1453,40 @@ NavMeshAgent:
   m_BaseOffset: -0.01
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &6868864155876820120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6022001404598500244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 889a20a3f0f5a0e4081538b5346691a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedCharacter: 1
+  allSelected: 0
+  playerHealth: 3
+  movementSpeed: 0
+  abilityActive: 0
+  ability1Active: 0
+  ability2Active: 0
+  ability3Active: 0
+  state: 0
+--- !u!114 &6868864155876820119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6022001404598500244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9659a8a70fc70794ea40ec416df403e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangeToKill: 2
 --- !u!114 &6868864155876820125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1475,38 +1499,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6590c8f39ce564c4eb7408f88559eb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseScript: {fileID: 6868864155876820120}
-  playerCamera: {fileID: 0}
-  attackPoint: {fileID: 6402327512114749742}
-  attackPointOffset: {x: 0.8, y: 2.3, z: 0}
   maximumRange: 15
   ammunition: 2
   knifePrefab: {fileID: 8902590539744950886, guid: a2733bd1eb438aa4aa9f6a6b85ecec30, type: 3}
   whatIsKnife:
     serializedVersion: 2
     m_Bits: 1024
---- !u!114 &6868864155876820113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6022001404598500244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4889eddf1be7634da59efdb28c0336c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseScript: {fileID: 6868864155876820120}
-  playerCamera: {fileID: 0}
-  agent: {fileID: 6868864155876820121}
-  maxKills: 5
-  killProximityRange: 3
-  killChainRange: 7
-  whatIsEnemy:
-    serializedVersion: 2
-    m_Bits: 256
-  attackPointOffset: {x: 0.8, y: 2.3, z: 0}
 --- !u!114 &6868864155876820118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1530,7 +1528,7 @@ MonoBehaviour:
     m_Bits: 1024
   decoyPrefab: {fileID: 7972253676922709312, guid: 2038e93e7de188149bcda1ef088e8b53, type: 3}
   targetPosition: {x: 0, y: 0, z: 0}
---- !u!114 &6868864155876820119
+--- !u!114 &6868864155876820113
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1539,22 +1537,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 6022001404598500244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9659a8a70fc70794ea40ec416df403e9, type: 3}
+  m_Script: {fileID: 11500000, guid: c4889eddf1be7634da59efdb28c0336c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rangeToKill: 2
---- !u!114 &6022001404598500245
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6022001404598500244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1fe729e707176c4eae612b9fc15218b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  baseScript: {fileID: 6868864155876820120}
+  playerCamera: {fileID: 0}
+  agent: {fileID: 6868864155876820121}
+  maxKills: 5
+  killProximityRange: 3
+  killChainRange: 7
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 256
+  attackPointOffset: {x: 0.8, y: 2.3, z: 0}
 --- !u!1 &6488871487136115159
 GameObject:
   m_ObjectHideFlags: 0
