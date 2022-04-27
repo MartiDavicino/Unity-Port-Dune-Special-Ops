@@ -44,9 +44,12 @@ public class EnemyBehaviour : MonoBehaviour
 
 
     //Patrol
+    public List<Vector3> patrolPoints;
+    public List<Vector3> visitedPoints;
     private Vector3 walkPoint;
     bool walkPointSet;
     private float walkPointRange;
+    private int patrolIterator;
 
     //Attacking
     public float timeBetweenAttacks;
@@ -138,7 +141,10 @@ public class EnemyBehaviour : MonoBehaviour
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
+        {
             agent.SetDestination(walkPoint);
+            state = EnemyState.WALKING;
+        }
 
 
         Vector3 distanceToWalkPoint = transform.position - agent.destination;
@@ -148,27 +154,46 @@ public class EnemyBehaviour : MonoBehaviour
         {
             walkPointSet = false;
             agent.ResetPath();
-            state = EnemyState.IDLE;
         }
-
     }
 
 
 
     private void SearchWalkPoint()
     {
-        //This are the waypoints thing
-        //walkPointRange = 1f;
-        //float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        //float randomX = Random.Range(-walkPointRange, walkPointRange);
+        bool visited = false;
 
-        //walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        if (patrolPoints.Count == 0) return;
 
-        //if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
-        //    walkPointSet = true;
+        if (visitedPoints.Count == patrolPoints.Count)
+            visitedPoints.Clear();
+
+        for (int i = 0; i < visitedPoints.Count || visitedPoints == null; i++)
+        {
+            if(visitedPoints[i] == patrolPoints[patrolIterator])
+            {
+                visited = true;
+            }
+        }
+
+        if (!visited)
+        {
+            if(patrolIterator < patrolPoints.Count)
+            {
+                visitedPoints.Add(patrolPoints[patrolIterator]);
+                walkPoint = patrolPoints[patrolIterator];
+                walkPointSet = true;
+                patrolIterator++;
+            } else
+            {
+                patrolIterator = 0;
+            }
+        }
     }
     private void Chasing()
     {
+        patrolIterator = 0;
+
         if (type == EnemyType.SARDAUKAR)
         {
             agent.SetDestination(player.position);
@@ -235,6 +260,7 @@ public class EnemyBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        patrolIterator = 0;
 
         switch (type)
         {
