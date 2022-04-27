@@ -54,6 +54,14 @@ public class EnemyBehaviour : MonoBehaviour
     //States
     private float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
+
+    //Sardaukar
+    private float rangeAttackRange;
+    private int ammunition;
+    private bool playerInRanged;
+    private GameObject needle;
+    public GameObject needlePrefab;
+
     bool checkSenses()
     {
         if(!enemyD.noisyTargets.Any() && enemyD.visibleTargets.Any())
@@ -161,8 +169,24 @@ public class EnemyBehaviour : MonoBehaviour
     }
     private void Chasing()
     {
-        agent.SetDestination(player.position);
-        state = EnemyState.WALKING;
+        if (type == EnemyType.SARDAUKAR)
+        {
+            agent.SetDestination(player.position);
+            state = EnemyState.WALKING;
+
+            if (agent.remainingDistance <= rangeAttackRange && !agent.pathPending && ammunition > 0)
+            {
+                agent.ResetPath();
+                RangeAttacking();
+            }
+
+        }
+
+        if (type == EnemyType.HARKONNEN)
+        {
+            agent.SetDestination(player.position);
+            state = EnemyState.WALKING;
+        }
     }
 
     private void Attacking()
@@ -185,6 +209,29 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
+    private void RangeAttacking()
+    {
+        state = EnemyState.IDLE;
+
+        transform.LookAt(targetPlayer.transform);
+
+        while (elapse_time < timeBetweenAttacks)
+        {
+            elapse_time += Time.deltaTime;
+            return;
+        }
+
+        elapse_time = 0;
+
+        state = EnemyState.ATTACKING;
+        Vector3 offset = new Vector3(0.8f, 1.0f, 0f);
+        Vector3 spawnPoint =  transform.position + (transform.rotation * offset);
+        needle = Instantiate(needlePrefab, spawnPoint, transform.rotation);
+        needle.transform.LookAt(targetPlayer.transform);
+
+        ammunition--;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -201,6 +248,8 @@ public class EnemyBehaviour : MonoBehaviour
                 walkPointRange = 10.0f;
                 sightRange = 15.0f;
                 attackRange = 1.0f;
+                rangeAttackRange = 7.0f;
+                ammunition = 2;
                 break;
 
             case EnemyType.MENTAT:
