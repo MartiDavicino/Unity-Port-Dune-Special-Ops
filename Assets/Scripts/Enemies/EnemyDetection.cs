@@ -17,8 +17,6 @@ public class EnemyDetection : MonoBehaviour
 
 	public float viewRadius;
 	public float hearingRadius;
-	private float hearWorld;
-	private float viewWorld;
 	private CharacterBaseBehavior baseScript;
 	public float timer = 0.0f;
 	public float delay = 3.0f;
@@ -26,9 +24,13 @@ public class EnemyDetection : MonoBehaviour
 	public DecState state = DecState.STILL;
 	public bool debug = false;
 	private bool once = true;
-	
-	public LineRenderer lDrawer;
-	
+
+	public VisualDebug visual;
+	public hearingDebug hear;
+
+	private Vector3 angle1;
+	private Vector3 angle2;
+		
 
 	[Range(0, 360)]
 	public float viewAngle;
@@ -42,25 +44,25 @@ public class EnemyDetection : MonoBehaviour
     void Start()
     {
 		multiplierHolder = sightMultiplier;
+
 	}
     void Update()
     {
+		angle1 = DirFromAngle(-viewAngle / 2, false);
+		angle2 = DirFromAngle(viewAngle / 2, false);
 		FindTargetsWithDelay();
+
 		if(debug)
         {
-			if(once)
-            {
-				gameObject.AddComponent<LineRenderer>();
-				lDrawer = gameObject.GetComponent<LineRenderer>();
-				once = false;
-			}
-			gameObject.DrawCircle(hearingRadius,0.05f);
+			hear.DebugDraw();
+			visual.DebugDraw();
 		}
 		else if(!debug)
         {
-			Destroy(gameObject.GetComponent<LineRenderer>());
-			once = true;
-        }
+			hear.DebugDelete();
+			visual.DebugDelete();
+
+		}
 		if (Input.GetKeyDown(KeyCode.F10))
 			debug = !debug;
 		
