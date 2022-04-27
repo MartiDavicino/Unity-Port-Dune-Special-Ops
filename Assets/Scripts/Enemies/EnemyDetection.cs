@@ -80,7 +80,11 @@ public class EnemyDetection : MonoBehaviour
 	}
 	void TargetsNotFound()
 	{
-		if (timer > 0)
+		if (timer > 0 && timer < secondsToDetect / 2)
+		{
+			state = DecState.STILL;
+			timer -= proportion * Time.deltaTime;
+		} else if (timer >= timer / 2 && timer < secondsToDetect)
 		{
 			state = DecState.SEEKING;
 			timer -= proportion * Time.deltaTime;
@@ -92,16 +96,25 @@ public class EnemyDetection : MonoBehaviour
 	}
 	void WaitAndAddToList(float delay,Transform target,List<Transform>targets)
     {
-		state = DecState.SEEKING;
 		
 		timer += proportion * sightMultiplier * Time.deltaTime;
 
-		if(timer >= delay)
+		if (timer > 0 && timer < secondsToDetect / 2)
+		{
+			state = DecState.STILL;
+		}
+		else if (timer >= timer / 2 && timer < secondsToDetect)
+		{
+			state = DecState.SEEKING;
+		}
+
+		if (timer >= delay)
         {
 			timer = delay;
 			targets.Add(target);
 			state = DecState.FOUND;
         }
+
 
 	}
 

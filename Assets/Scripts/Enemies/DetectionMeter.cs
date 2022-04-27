@@ -34,7 +34,21 @@ public class DetectionMeter : MonoBehaviour
 
         transform.LookAt(playerCamera.transform);
 
-        if(enemyD.state == DecState.SEEKING)
+        if (enemyD.timer == 0) return;
+
+        if (enemyD.state == DecState.STILL)
+        {
+            percent = enemyD.timer / enemyD.secondsToDetect;
+            if (percent >= 1.0f)
+            {
+                percent = 1.0f;
+            }
+
+            bar.color = Color.green;
+            bar.fillAmount = percent;
+        }
+
+        if (enemyD.state == DecState.SEEKING)
         {
             percent = enemyD.timer / enemyD.secondsToDetect;
             if (percent >= 1.0f)
@@ -44,7 +58,6 @@ public class DetectionMeter : MonoBehaviour
         
             bar.color = Color.yellow;
             bar.fillAmount = percent ;
-
         }
         
         if(enemyD.state == DecState.FOUND)
