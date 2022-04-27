@@ -126,9 +126,13 @@ public class EnemyDetection : MonoBehaviour
 
 				if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask) )
 				{
-					sightMultiplier = multiplierHolder;
-					WaitAndAddToList(delay, target,visibleTargets);
-					playerInView = true;
+					CharacterBaseBehavior cB = targetsInViewRadius[i].gameObject.GetComponent<CharacterBaseBehavior>();
+					if(!cB.invisible)
+                    {
+						sightMultiplier = multiplierHolder;
+						WaitAndAddToList(delay, target,visibleTargets);
+						playerInView = true;
+                    }
 				}
 			}
 		}

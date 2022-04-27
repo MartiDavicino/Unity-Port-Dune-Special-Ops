@@ -28,6 +28,17 @@ public class SmokeBomb : MonoBehaviour
 
         StartCoroutine(SimulateProjectile());
     }
+
+    void LateUpdate()
+    {
+        Collider[] affectedCharacters = Physics.OverlapSphere(transform.position, smokeRange, whatIsPlayer);
+        
+        for(int i = 0; i < affectedCharacters.Length; i++)
+        {
+            CharacterBaseBehavior cB = affectedCharacters[i].gameObject.GetComponent<CharacterBaseBehavior>();
+            cB.invisible = true;
+        }
+    }
     IEnumerator SimulateProjectile()
     {
 

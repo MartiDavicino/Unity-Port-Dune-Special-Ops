@@ -29,6 +29,8 @@ public class CharacterBaseBehavior : MonoBehaviour
     public int playerHealth;
     public float movementSpeed;
 
+    public bool invisible;
+
     [HideInInspector] public bool abilityActive;
     [HideInInspector] public bool ability1Active;
     [HideInInspector] public bool ability2Active;
@@ -46,6 +48,8 @@ public class CharacterBaseBehavior : MonoBehaviour
         playerAgent.speed = movementSpeed;
 
         playerCamera = Camera.main;
+
+        invisible = false;
 
         allSelected = false;
         animator = GetComponent<Animator>();
@@ -170,6 +174,10 @@ public class CharacterBaseBehavior : MonoBehaviour
         }
     }
 
+    void LateUpdate()
+    {
+        invisible = false;
+    }
     void OnGUI()
     {
         if (selectedCharacter)
