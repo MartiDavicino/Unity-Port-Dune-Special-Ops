@@ -34,5 +34,4 @@ public class EnemyDetectionEditor : Editor
             Handles.DrawLine(editor.transform.position, noisyTarget.position);
         }
     }
-
 }

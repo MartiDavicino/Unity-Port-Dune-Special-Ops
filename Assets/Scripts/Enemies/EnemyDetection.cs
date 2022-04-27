@@ -17,11 +17,18 @@ public class EnemyDetection : MonoBehaviour
 
 	public float viewRadius;
 	public float hearingRadius;
+	private float hearWorld;
+	private float viewWorld;
 	private CharacterBaseBehavior baseScript;
 	public float timer = 0.0f;
 	public float delay = 3.0f;
 	public float proportion = 0.2f;
 	public DecState state = DecState.STILL;
+	public bool debug = false;
+	private bool once = true;
+	
+	public LineRenderer lDrawer;
+	
 
 	[Range(0, 360)]
 	public float viewAngle;
@@ -39,6 +46,24 @@ public class EnemyDetection : MonoBehaviour
     void Update()
     {
 		FindTargetsWithDelay();
+		if(debug)
+        {
+			if(once)
+            {
+				gameObject.AddComponent<LineRenderer>();
+				lDrawer = gameObject.GetComponent<LineRenderer>();
+				once = false;
+			}
+			gameObject.DrawCircle(hearingRadius,0.05f);
+		}
+		else if(!debug)
+        {
+			Destroy(gameObject.GetComponent<LineRenderer>());
+			once = true;
+        }
+		if (Input.GetKeyDown(KeyCode.F10))
+			debug = !debug;
+		
 	}
 
     void FindTargetsWithDelay()
@@ -148,3 +173,4 @@ public class EnemyDetection : MonoBehaviour
 		return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
 	}
 }
+
