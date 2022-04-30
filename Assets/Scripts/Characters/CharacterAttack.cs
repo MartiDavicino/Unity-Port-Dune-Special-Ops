@@ -10,6 +10,9 @@ public class CharacterAttack : MonoBehaviour
     private NavMeshAgent agent;
     private Camera playerCamera;
 
+    // private EnemyBehaviour enemyscript;
+    // public EnemyState targetState;
+
     private GameObject enemyTarget;
     private Vector3 distanceToTarget;
     private bool attacking;
@@ -23,6 +26,8 @@ public class CharacterAttack : MonoBehaviour
         playerCamera = Camera.main;
         baseScript = gameObject.GetComponent<CharacterBaseBehavior>();
         agent = gameObject.GetComponent<NavMeshAgent>();
+        //targetState = EnemyState.ATTACKING;
+        
     }
 
     // Update is called once per frame
@@ -49,7 +54,6 @@ public class CharacterAttack : MonoBehaviour
                             attacking = true;
 
                             enemyTarget = rayHit.collider.gameObject;
-
                             agent.SetDestination(rayHit.collider.gameObject.transform.position);
                         } 
                     }
@@ -65,6 +69,11 @@ public class CharacterAttack : MonoBehaviour
                         baseScript.state = PlayerState.STEALTH_KILL;
                         attacking = false;
                         Destroy(enemyTarget);
+                        
+                        // enemyscript = enemyTarget.GetComponent<EnemyBehaviour>();
+                        //     if (enemyscript.state == targetState) {  //testing
+                        //         baseScript.playerHealth = baseScript.playerHealth - 1;
+                        //     }  //testing
                     }
                 }
 
