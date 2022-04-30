@@ -723,7 +723,7 @@ MonoBehaviour:
   agent: {fileID: 374356984102618191}
   player: {fileID: 196824455201623259}
   state: 0
-  movementSpeed: 5
+  movementSpeed: 7.5
   timeBetweenAttacks: 1
   visitedPoints: []
   affectedByDecoy: 0
