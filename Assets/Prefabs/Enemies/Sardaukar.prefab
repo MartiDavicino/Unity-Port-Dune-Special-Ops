@@ -735,10 +735,10 @@ MonoBehaviour:
   sightMultiplier: 2
   multiplierHolder: 0
   viewRadius: 15
-  viewAngle: 60
+  viewAngle: 95
   hearingRadius: 7.5
   timer: 0
-  secondsToDetect: 3
+  secondsToDetect: 2.5
   state: 0
   debug: 0
   visual: {fileID: 1067296739}

@@ -755,7 +755,7 @@ MonoBehaviour:
   sightMultiplier: 1.5
   multiplierHolder: 0
   viewRadius: 15
-  viewAngle: 60
+  viewAngle: 90
   hearingRadius: 7.5
   timer: 0
   secondsToDetect: 3

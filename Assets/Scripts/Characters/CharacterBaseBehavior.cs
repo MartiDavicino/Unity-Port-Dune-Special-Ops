@@ -41,6 +41,8 @@ public class CharacterBaseBehavior : MonoBehaviour
 
     private Vector3 targetPosition;
 
+    private bool crouching = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -76,7 +78,6 @@ public class CharacterBaseBehavior : MonoBehaviour
                         targetPosition = meshHit.point;
 
                         state = PlayerState.WALKING;
-
                     }
                     else
                     {
@@ -117,6 +118,13 @@ public class CharacterBaseBehavior : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha3) && !ability1Active && !ability2Active)
                 Destroy(gameObject.GetComponent<LineRenderer>());
 
+            if (Input.GetKeyDown(KeyCode.LeftShift)/* && state != PlayerState.IDLE*/)
+            {
+                crouching = !crouching;
+                if(crouching && state == PlayerState.IDLE) { state = PlayerState.CROUCH; }
+                else if (state == PlayerState.CROUCH) { state = PlayerState.IDLE; }
+            }
+
 
             if (!abilityActive)
             {
@@ -133,25 +141,25 @@ public class CharacterBaseBehavior : MonoBehaviour
                             playerAgent.SetDestination(meshHit.point);
                             targetPosition = meshHit.point;
 
-                            state = PlayerState.WALKING;
-                            
+                            if (crouching) { state = PlayerState.CROUCH; }
+                            else { state = PlayerState.WALKING; }
+
                         } else
                         {
-                            state = PlayerState.WALKING;
+                            if (crouching) { state = PlayerState.CROUCH; }
+                            else { state = PlayerState.WALKING; }
+                            
                             targetPosition = meshHit.point;
                         }
                     }
                 }
 
-                if(Input.GetKey(KeyCode.LeftShift) && state != PlayerState.IDLE)
-                {
-                    state = PlayerState.CROUCH;
-                }
                 
-                if (Input.GetKeyUp(KeyCode.LeftShift) && state != PlayerState.IDLE)
-                {
-                    state = PlayerState.WALKING;
-                }
+                
+                //if (Input.GetKeyUp(KeyCode.LeftShift) && state != PlayerState.IDLE)
+                //{
+                //    state = PlayerState.WALKING;
+                //}
             }
 
         } else
@@ -167,7 +175,8 @@ public class CharacterBaseBehavior : MonoBehaviour
                 if (animator != null)
                 {
                     targetPosition = Vector3.zero;
-                    state = PlayerState.IDLE;
+                    if (crouching) { state = PlayerState.CROUCH; }
+                    else { state = PlayerState.IDLE; }
                     playerAgent.ResetPath();
                 }
             }
@@ -177,6 +186,11 @@ public class CharacterBaseBehavior : MonoBehaviour
     void LateUpdate()
     {
         invisible = false;
+
+        if (state==PlayerState.CROUCH) { movementSpeed = 5.0f; }
+        else { movementSpeed = 7.5f; }
+
+        playerAgent.speed = movementSpeed;
     }
     void OnGUI()
     {
