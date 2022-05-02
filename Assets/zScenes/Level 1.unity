@@ -8559,9 +8559,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 70
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -8607,7 +8607,7 @@ MonoBehaviour:
   focusedPlayer: {fileID: 919132148783968830}
   rotSpeed: 1000
   angle: 45
-  offset: {x: 0, y: 14, z: -12}
+  offset: {x: 0, y: 16, z: -12}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10214,11 +10214,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[0].x
-      value: 169
+      value: 170
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[0].y
@@ -10226,11 +10226,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[0].z
-      value: -46
+      value: -66
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[1].x
-      value: 176
+      value: 181
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[1].y
@@ -10238,11 +10238,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[1].z
-      value: -45
+      value: -69
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[2].x
-      value: 182
+      value: 175
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[2].y
@@ -10250,11 +10250,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[2].z
-      value: -68
+      value: -45
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[3].x
-      value: 174
+      value: 161
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[3].y
@@ -10262,6 +10262,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[3].z
+      value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: patrolPoints.Array.data[4].x
+      value: 174
+      objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: patrolPoints.Array.data[4].y
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: patrolPoints.Array.data[4].z
       value: -57
       objectReference: {fileID: 0}
     - target: {fileID: 716233281998640737, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
@@ -13397,7 +13409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[0].x
-      value: 182
+      value: 165
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[0].y
@@ -13405,11 +13417,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[0].z
-      value: -68
+      value: -46
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[1].x
-      value: 174
+      value: 161
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[1].y
@@ -13417,11 +13429,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[1].z
-      value: -57
+      value: -60
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[2].x
-      value: 169
+      value: 182
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[2].y
@@ -13429,7 +13441,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[2].z
-      value: -46
+      value: -59
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[3].x
@@ -23801,7 +23813,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6402327512114749742, guid: accfd97eb2e459148b32990af20731dc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 98.31
+      value: 182.1
       objectReference: {fileID: 0}
     - target: {fileID: 6402327512114749742, guid: accfd97eb2e459148b32990af20731dc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -23809,7 +23821,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6402327512114749742, guid: accfd97eb2e459148b32990af20731dc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12
+      value: -80.6
       objectReference: {fileID: 0}
     - target: {fileID: 6402327512114749742, guid: accfd97eb2e459148b32990af20731dc, type: 3}
       propertyPath: m_LocalRotation.w
