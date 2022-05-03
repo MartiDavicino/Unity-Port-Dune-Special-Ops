@@ -14,20 +14,27 @@ public class CameraMovement : MonoBehaviour
 
     private float remainingAngle;
 
-    public Vector3 offset;            
+    public Vector3 offset;
+
+    public float scrollSpeed;
+
+    private Camera playerCamera;
 
     private GeneralManager manager;
     void Start()
     {
         transform.position = transform.position + offset;
-        manager = gameObject.GetComponent<GeneralManager>();
+        manager = GetComponent<GeneralManager>();
+        playerCamera = GetComponent<Camera>();
     }
 
     void LateUpdate()
     {
         if(!manager.gameLost)
         {
-            if(!Input.GetKey(KeyCode.LeftShift))
+            playerCamera.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
+
+            if (!Input.GetKey(KeyCode.LeftShift))
             {
                 if (Input.GetKeyDown("e"))
                     remainingAngle += angle;
