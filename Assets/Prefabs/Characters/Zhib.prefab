@@ -1467,8 +1467,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedCharacter: 1
   allSelected: 0
+  hunterSeeking: 0
   playerHealth: 3
-  movementSpeed: 10
+  movementSpeed: 7.5
   invisible: 0
   abilityActive: 0
   ability1Active: 0
@@ -1500,7 +1501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6590c8f39ce564c4eb7408f88559eb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumRange: 10
+  maximumRange: 12.5
   ammunition: 2
   knifeVelocity: 40
   knifePrefab: {fileID: 8902590539744950886, guid: a2733bd1eb438aa4aa9f6a6b85ecec30, type: 3}
@@ -1520,8 +1521,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maximumRange: 10
-  cooldown: 0
-  effectRange: 5
+  effectRange: 10
+  cooldown: 3
   decoyPrefab: {fileID: 7972253676922709312, guid: 2038e93e7de188149bcda1ef088e8b53, type: 3}
   whatIsDecoy:
     serializedVersion: 2
@@ -1541,7 +1542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxKills: 5
   killProximityRange: 3
-  killChainRange: 7
+  killChainRange: 5
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 256
@@ -1570,7 +1571,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6488871487136115159}
   m_LocalRotation: {x: 0.00000008125062, y: -0.000000009060842, z: 5.456969e-10, w: 1}
-  m_LocalPosition: {x: -70.4, y: -0.1, z: -22}
+  m_LocalPosition: {x: -2183, y: -0.1, z: 664}
   m_LocalScale: {x: 0.009307318, y: 0.009307318, z: 0.009307317}
   m_ConstrainProportionsScale: 0
   m_Children: []

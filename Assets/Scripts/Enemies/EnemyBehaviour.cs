@@ -37,8 +37,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     private float elapse_time = 0;
 
-    public float movementSpeed;
-    public float patrolingSpeed = 1.5f;
+    public float patrolingSpeed;
 
     //Attacking
     public float timeBetweenAttacks;
@@ -73,7 +72,6 @@ public class EnemyBehaviour : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.speed = movementSpeed;
 
         patrolIterator = 0;
         affectedByDecoy = false;

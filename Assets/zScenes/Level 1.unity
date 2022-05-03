@@ -24022,14 +24022,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1432156808499863894, guid: accfd97eb2e459148b32990af20731dc, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -2183
-      objectReference: {fileID: 0}
-    - target: {fileID: 1432156808499863894, guid: accfd97eb2e459148b32990af20731dc, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 664
-      objectReference: {fileID: 0}
     - target: {fileID: 6022001404598500244, guid: accfd97eb2e459148b32990af20731dc, type: 3}
       propertyPath: m_Name
       value: Zhib
@@ -24077,30 +24069,6 @@ PrefabInstance:
     - target: {fileID: 6402327512114749742, guid: accfd97eb2e459148b32990af20731dc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6868864155876820113, guid: accfd97eb2e459148b32990af20731dc, type: 3}
-      propertyPath: killChainRange
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6868864155876820118, guid: accfd97eb2e459148b32990af20731dc, type: 3}
-      propertyPath: cooldown
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6868864155876820118, guid: accfd97eb2e459148b32990af20731dc, type: 3}
-      propertyPath: effectRange
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6868864155876820120, guid: accfd97eb2e459148b32990af20731dc, type: 3}
-      propertyPath: movementSpeed
-      value: 7.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6868864155876820125, guid: accfd97eb2e459148b32990af20731dc, type: 3}
-      propertyPath: maximumRange
-      value: 12.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6868864155876820125, guid: accfd97eb2e459148b32990af20731dc, type: 3}
-      propertyPath: knifeVelocity
-      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: accfd97eb2e459148b32990af20731dc, type: 3}
