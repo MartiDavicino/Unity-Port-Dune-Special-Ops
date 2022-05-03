@@ -10,11 +10,10 @@ public class HunterSeekerAbility : MonoBehaviour
     private bool hunterDeployed;
 
     public float hunterSeekerVelocity;
+    public float hunterSeekerMaxRange;
     public float countdownTime;
 
     public GameObject hunterSeekerPrefab;
-
-    [HideInInspector] public bool seekerHunting;
 
     // Start is called before the first frame update
     void Start()
@@ -45,15 +44,15 @@ public class HunterSeekerAbility : MonoBehaviour
                     gameObject.AddComponent<LineRenderer>();
                 }
 
-                if (!seekerHunting) gameObject.DrawCircleScaled(spawnRange, 0.05f, transform.localScale);
+                gameObject.DrawCircleScaled(spawnRange, 0.05f, transform.localScale);
 
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
                     Vector3 spawnPoint = gameObject.transform.position + gameObject.transform.forward * spawnRange + gameObject.transform.up * 1;
                     Instantiate(hunterSeekerPrefab, spawnPoint, gameObject.transform.rotation);
-                    Destroy(gameObject.GetComponent<LineRenderer>());
-                    
-                    seekerHunting = true;
+
+                    baseScript.hunterSeeking = true;
+
                     hunterDeployed = true;
 
                     baseScript.state = PlayerState.ABILITY3;
@@ -63,6 +62,9 @@ public class HunterSeekerAbility : MonoBehaviour
                 addLineComponentOnce = true;
             }
         }
+
+        if (baseScript.hunterSeeking) gameObject.DrawCircleScaled(hunterSeekerMaxRange, 0.05f, transform.localScale);
+
     }
 
     void OnGUI()

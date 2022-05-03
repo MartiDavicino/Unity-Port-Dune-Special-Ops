@@ -56,32 +56,35 @@ public class HunterSeeker : MonoBehaviour
 
         for (int i = 0; i < killableEnemy.Length; i++)
         {
-            baseScript.seekerHunting = false;
 
             chBaseScript = nerala.GetComponent<CharacterBaseBehavior>();
             chBaseScript.selectedCharacter = true;
+            chBaseScript.hunterSeeking = false;
             chBaseScript.abilityActive = false;
             chBaseScript.ability3Active = false;
+
+            Destroy(nerala.GetComponent<LineRenderer>());
 
             cameraScript.focusedPlayer = nerala;
 
             Destroy(killableEnemy[i].gameObject);
             Destroy(gameObject);
+            break;
         }
 
         while (elapse_time < countdownTime)
         {
             elapse_time += Time.deltaTime;
-            return;
+            if(CalculateAbsoluteDistance(nerala.transform.position).magnitude < baseScript.hunterSeekerMaxRange) return;
         }
-
-        baseScript = nerala.GetComponent<HunterSeekerAbility>();
-        baseScript.seekerHunting = false;
 
         chBaseScript = nerala.GetComponent<CharacterBaseBehavior>();
         chBaseScript.selectedCharacter = true;
+        chBaseScript.hunterSeeking = false;
         chBaseScript.abilityActive = false;
         chBaseScript.ability3Active = false;
+
+        Destroy(nerala.GetComponent<LineRenderer>());
 
         cameraScript.focusedPlayer = nerala;
 
@@ -92,5 +95,15 @@ public class HunterSeeker : MonoBehaviour
     {
         GUI.Box(new Rect(5, Screen.height - 30, 150, 25), "Remaining Fly Time:");
         GUI.Box(new Rect(160, Screen.height - 30, 40, 25), (countdownTime - elapse_time).ToString("F2"));
+    }
+
+    Vector3 CalculateAbsoluteDistance(Vector3 targetPos)
+    {
+        Vector3 distance = new Vector3(0f, 0f, 0f);
+
+        distance.x = Mathf.Abs(transform.position.x - targetPos.x);
+        distance.z = Mathf.Abs(transform.position.z - targetPos.z);
+
+        return distance;
     }
 }

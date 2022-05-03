@@ -22,6 +22,7 @@ public class CharacterBaseBehavior : MonoBehaviour
 
     [HideInInspector] public bool selectedCharacter;
     [HideInInspector] public bool allSelected;
+    [HideInInspector] public bool hunterSeeking;
 
     private NavMeshAgent playerAgent;
     private Camera playerCamera;
@@ -54,6 +55,7 @@ public class CharacterBaseBehavior : MonoBehaviour
         invisible = false;
 
         allSelected = false;
+        hunterSeeking = false;
         animator = GetComponent<Animator>();
         playerAgent.stoppingDistance = 2;
         abilityActive = false;
@@ -153,18 +155,11 @@ public class CharacterBaseBehavior : MonoBehaviour
                         }
                     }
                 }
-
-                
-                
-                //if (Input.GetKeyUp(KeyCode.LeftShift) && state != PlayerState.IDLE)
-                //{
-                //    state = PlayerState.WALKING;
-                //}
             }
 
         } else
         {
-            if(gameObject.GetComponent<LineRenderer>() != null)
+            if(gameObject.GetComponent<LineRenderer>() != null && !hunterSeeking)
                 Destroy(gameObject.GetComponent<LineRenderer>());
         }
 
