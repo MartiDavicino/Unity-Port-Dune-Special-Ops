@@ -32,10 +32,13 @@ public class EnemyBehaviour : MonoBehaviour
 
     private CharacterBaseBehavior targetPlayer;
     private EnemyDetection enemyD;
+    public float chasingSpeed = 8.0f;
+    
 
     private float elapse_time = 0;
 
     public float movementSpeed;
+    public float patrolingSpeed = 1.5f;
 
     //Attacking
     public float timeBetweenAttacks;
@@ -79,15 +82,15 @@ public class EnemyBehaviour : MonoBehaviour
         switch (type)
         {
             case EnemyType.HARKONNEN:
-                attackRange = 2.0f;                
+                attackRange = 2.5f;                
                 break;
 
             case EnemyType.SARDAUKAR:
-                attackRange = 2.0f;
+                attackRange = 2.5f;
                 break;
 
             case EnemyType.MENTAT:
-                attackRange = 2.0f;
+                attackRange = 2.5f;
                 break;
 
             default:
@@ -204,6 +207,7 @@ public class EnemyBehaviour : MonoBehaviour
 
 
         Vector3 distanceToWalkPoint = transform.position - agent.destination;
+        agent.speed = patrolingSpeed;
 
         //WalkPoint reached
         if (distanceToWalkPoint.magnitude < 1.5f)
@@ -252,6 +256,8 @@ public class EnemyBehaviour : MonoBehaviour
         {
             agent.SetDestination(player.position);
             state = EnemyState.WALKING;
+            agent.speed = chasingSpeed;
+
 
             if (agent.remainingDistance <= rangeAttackRange && !agent.pathPending && ammunition > 0)
             {
@@ -265,6 +271,8 @@ public class EnemyBehaviour : MonoBehaviour
         {
             agent.SetDestination(player.position);
             state = EnemyState.WALKING;
+            agent.speed = chasingSpeed;
+
         }
     }
 
@@ -281,6 +289,7 @@ public class EnemyBehaviour : MonoBehaviour
         }
 
         elapse_time = 0;
+
         if (targetPlayer.playerHealth > 0)
         {
             state = EnemyState.ATTACKING;
