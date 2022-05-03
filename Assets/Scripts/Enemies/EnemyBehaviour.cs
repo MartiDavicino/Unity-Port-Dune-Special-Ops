@@ -42,6 +42,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     //Attacking
     public float timeBetweenAttacks;
+    public float timeBetweenPatrolPoints;
 
     //Patrol
     [HideInInspector] public List<Vector3> visitedPoints;
@@ -220,10 +221,18 @@ public class EnemyBehaviour : MonoBehaviour
     {
         bool visited = false;
 
+
         if (patrolPoints.Count == 0) return;
+
 
         if (visitedPoints.Count == patrolPoints.Count)
             visitedPoints.Clear();
+        else
+            while (elapse_time < timeBetweenPatrolPoints && timeBetweenPatrolPoints > 0f)
+            {
+                elapse_time += Time.deltaTime;
+                return;
+            }
 
         for (int i = 0; i < visitedPoints.Count || visitedPoints == null; i++)
         {
@@ -235,6 +244,7 @@ public class EnemyBehaviour : MonoBehaviour
 
         if (!visited)
         {
+            elapse_time = 0;
             if(patrolIterator < patrolPoints.Count)
             {
                 visitedPoints.Add(patrolPoints[patrolIterator]);

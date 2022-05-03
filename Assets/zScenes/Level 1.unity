@@ -8760,6 +8760,7 @@ MonoBehaviour:
   rotSpeed: 1000
   angle: 45
   offset: {x: 0, y: 16, z: -12}
+  scrollSpeed: 15
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23880,6 +23881,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: timeBetweenPatrolPoints
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[0].x
       value: 226
       objectReference: {fileID: 0}
@@ -24189,7 +24194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8672128565203201544, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: hunterSeekerMaxRange
-      value: 15
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8672128565203201547, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: ammunition
