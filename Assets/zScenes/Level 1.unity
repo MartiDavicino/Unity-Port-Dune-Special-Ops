@@ -411,6 +411,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[3].z
       value: -12.4
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -568,6 +572,10 @@ PrefabInstance:
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[5].z
       value: -54
+      objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
@@ -960,6 +968,10 @@ PrefabInstance:
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[3].z
       value: -52
+      objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
@@ -1438,6 +1450,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[3].z
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -1668,6 +1684,10 @@ PrefabInstance:
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[3].z
       value: -56
+      objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
@@ -2334,6 +2354,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[3].z
       value: -12.4
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -2841,6 +2865,10 @@ PrefabInstance:
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[3].z
       value: -56
+      objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
@@ -3963,6 +3991,10 @@ PrefabInstance:
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[3].z
       value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
@@ -5188,6 +5220,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[3].z
       value: -12.4
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -5336,6 +5372,10 @@ PrefabInstance:
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[3].z
       value: -12.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
@@ -5714,6 +5754,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[5].z
       value: -54
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -5965,6 +6009,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[3].z
       value: -12.4
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -6145,6 +6193,10 @@ PrefabInstance:
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[3].z
       value: -68
+      objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
@@ -6949,6 +7001,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[3].z
       value: -12.4
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -7322,6 +7378,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[3].z
       value: -56
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -7508,6 +7568,18 @@ PrefabInstance:
     - target: {fileID: 4008469697949108057, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
       propertyPath: m_Name
       value: Sardaukar (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.x
+      value: 1126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.y
+      value: 2063.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.z
+      value: 983
       objectReference: {fileID: 0}
     - target: {fileID: 4278868393632840208, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
       propertyPath: m_Acceleration
@@ -7903,6 +7975,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[5].z
       value: -54
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -8158,6 +8234,10 @@ PrefabInstance:
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[3].z
       value: -43
+      objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
@@ -8507,6 +8587,10 @@ PrefabInstance:
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[3].z
       value: -88
+      objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
@@ -9341,6 +9425,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sardaukar (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.x
+      value: 1126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.y
+      value: 2063.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.z
+      value: 983
+      objectReference: {fileID: 0}
     - target: {fileID: 4278868393632840208, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -10052,6 +10148,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[4].z
       value: -117
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -10694,6 +10794,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[4].z
       value: -57
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -10989,6 +11093,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[3].z
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -11190,6 +11298,10 @@ PrefabInstance:
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[5].z
       value: -54
+      objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
@@ -11421,6 +11533,10 @@ PrefabInstance:
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[5].z
       value: -54
+      objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
@@ -11824,6 +11940,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[3].z
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -12081,6 +12201,10 @@ PrefabInstance:
     - target: {fileID: 374356984102618188, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: patrolPoints.Array.data[3].z
       value: -56
+      objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
       objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
@@ -13078,6 +13202,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sardaukar (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.x
+      value: 1126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.y
+      value: 2063.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.z
+      value: 983
+      objectReference: {fileID: 0}
     - target: {fileID: 4278868393632840208, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -13982,6 +14118,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[3].z
       value: -45
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -14764,6 +14904,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[3].z
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -15047,6 +15191,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[3].z
       value: -56
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -15179,6 +15327,18 @@ PrefabInstance:
     - target: {fileID: 4008469697949108057, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
       propertyPath: m_Name
       value: Sardaukar (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.x
+      value: 1126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.y
+      value: 2063.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.z
+      value: 983
       objectReference: {fileID: 0}
     - target: {fileID: 4278868393632840208, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
       propertyPath: m_Acceleration
@@ -22146,6 +22306,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[5].z
       value: -54
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -22766,6 +22930,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sardaukar (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.x
+      value: 1126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.y
+      value: 2063.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.z
+      value: 983
+      objectReference: {fileID: 0}
     - target: {fileID: 4278868393632840208, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -23013,6 +23189,18 @@ PrefabInstance:
     - target: {fileID: 4008469697949108057, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
       propertyPath: m_Name
       value: Sardaukar (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.x
+      value: 1126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.y
+      value: 2063.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840207, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: m_Size.z
+      value: 983
       objectReference: {fileID: 0}
     - target: {fileID: 4278868393632840208, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
       propertyPath: m_Acceleration
@@ -24360,6 +24548,10 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[3].z
       value: -12.4
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618190, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Size.z
+      value: 3.67
+      objectReference: {fileID: 0}
     - target: {fileID: 374356984102618191, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Acceleration
       value: 100
@@ -24501,6 +24693,10 @@ PrefabInstance:
     - target: {fileID: 6402327512114749742, guid: accfd97eb2e459148b32990af20731dc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6868864155876820118, guid: accfd97eb2e459148b32990af20731dc, type: 3}
+      propertyPath: effectRange
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: accfd97eb2e459148b32990af20731dc, type: 3}
