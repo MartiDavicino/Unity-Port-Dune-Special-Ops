@@ -28,6 +28,13 @@ public class CharacterBaseBehavior : MonoBehaviour
     private Camera playerCamera;
 
     public int playerHealth;
+
+    [HideInInspector] public bool hit;
+    private Transform child;
+    private Material currentMaterial;
+    private Material materialHolder;
+    private float elapse_time;
+
     public float movementSpeed;
 
     [HideInInspector] public bool invisible;
@@ -59,11 +66,18 @@ public class CharacterBaseBehavior : MonoBehaviour
         animator = GetComponent<Animator>();
         playerAgent.stoppingDistance = 2;
         abilityActive = false;
+
+        child = transform.Find(name + "_low");
+        materialHolder = child.gameObject.GetComponent<Renderer>().material;
+        elapse_time = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (hit) PlayerHit();
+
         if (allSelected)
         {
             if (Input.GetMouseButton(0))
@@ -207,5 +221,21 @@ public class CharacterBaseBehavior : MonoBehaviour
         distance.z = Mathf.Abs(transform.position.z - targetPos.z);
 
         return distance;
+    }
+
+    void PlayerHit()
+    {
+        child.gameObject.GetComponent<Renderer>().material = Resources.Load(name + "hit", typeof(Material)) as Material;
+
+        while (elapse_time < 0.5f)
+        {
+            elapse_time += Time.deltaTime;
+            return;
+        }
+
+        elapse_time = 0;
+
+        hit = false;
+        child.gameObject.GetComponent<Renderer>().material = materialHolder;
     }
 }

@@ -1131,7 +1131,7 @@ GameObject:
   - component: {fileID: 590141791530180358}
   - component: {fileID: 2062701054649271406}
   m_Layer: 0
-  m_Name: low_poly
+  m_Name: Nerala_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1609,7 +1609,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedCharacter: 0
   allSelected: 0
+  hunterSeeking: 0
   playerHealth: 2
+  hit: 0
   movementSpeed: 10
   invisible: 0
   abilityActive: 0
@@ -1656,7 +1658,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sightDebuffMultiplier: 0.2
   maximumRange: 15
-  cooldown: 0
+  cooldown: 3
   ammunition: 100
 --- !u!114 &8672128565203201547
 MonoBehaviour:
@@ -1672,7 +1674,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maximumRange: 15
   smokeEffectRange: 5
-  ammunition: 1
+  timeOfEffect: 4
+  ammunition: 2
   smokeBombPrefab: {fileID: 6426780562200808130, guid: c912b95efd14955469b952f7fd99030f, type: 3}
   whatIsSmokeBomb:
     serializedVersion: 2
@@ -1691,9 +1694,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hunterSeekerVelocity: 15
-  countdownTime: 0
+  hunterSeekerMaxRange: 50
+  countdownTime: 10
   hunterSeekerPrefab: {fileID: 3678424213461940499, guid: 409146c6d5af645e593e5c13ff089808, type: 3}
-  seekerHunting: 0
 --- !u!1 &8460098701719083031
 GameObject:
   m_ObjectHideFlags: 0

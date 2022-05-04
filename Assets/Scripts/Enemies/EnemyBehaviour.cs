@@ -30,13 +30,13 @@ public class EnemyBehaviour : MonoBehaviour
     private Transform placeholder1;
     private Transform placeholder2;
 
-    private CharacterBaseBehavior targetPlayer;
+    private CharacterBaseBehavior targetPlayerScript;
     private EnemyDetection enemyD;
-    public float chasingSpeed = 8.0f;
     
 
     private float elapse_time = 0;
 
+    public float chasingSpeed;
     public float patrolingSpeed;
 
     //Attacking
@@ -103,7 +103,6 @@ public class EnemyBehaviour : MonoBehaviour
         //Check for sight and hear range
         bool detected = checkSenses();
 
-        //playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
         if (!detected)
@@ -112,14 +111,14 @@ public class EnemyBehaviour : MonoBehaviour
         }
         if (detected && !playerInAttackRange)
         {
-            targetPlayer = player.gameObject.GetComponent<CharacterBaseBehavior>();
+            targetPlayerScript = player.gameObject.GetComponent<CharacterBaseBehavior>();
             Chasing();
         }
 
         if (detected && playerInAttackRange)
         {
             agent.ResetPath();
-            targetPlayer = player.gameObject.GetComponent<CharacterBaseBehavior>();
+            targetPlayerScript = player.gameObject.GetComponent<CharacterBaseBehavior>();
             Attacking();
         }
     }
@@ -286,9 +285,17 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Attacking()
     {
+
+        if (targetPlayerScript.playerHealth > 0 && state == EnemyState.WALKING)
+        {
+            state = EnemyState.ATTACKING;
+            targetPlayerScript.playerHealth--;
+            targetPlayerScript.hit = true;
+        }
+
         state = EnemyState.IDLE;
 
-        transform.LookAt(targetPlayer.transform);
+        transform.LookAt(targetPlayerScript.transform);
 
         while (elapse_time < timeBetweenAttacks)
         {
@@ -298,10 +305,11 @@ public class EnemyBehaviour : MonoBehaviour
 
         elapse_time = 0;
 
-        if (targetPlayer.playerHealth > 0)
+        if (targetPlayerScript.playerHealth > 0)
         {
             state = EnemyState.ATTACKING;
-            targetPlayer.playerHealth--;
+            targetPlayerScript.playerHealth--;
+            targetPlayerScript.hit = true;
         }
     }
 
@@ -309,7 +317,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         state = EnemyState.IDLE;
 
-        transform.LookAt(targetPlayer.transform);
+        transform.LookAt(targetPlayerScript.transform);
 
         while (elapse_time < timeBetweenAttacks)
         {
@@ -323,7 +331,7 @@ public class EnemyBehaviour : MonoBehaviour
         Vector3 offset = new Vector3(0.8f, 1.0f, 0f);
         Vector3 spawnPoint =  transform.position + (transform.rotation * offset);
         needle = Instantiate(needlePrefab, spawnPoint, transform.rotation);
-        needle.transform.LookAt(targetPlayer.transform);
+        needle.transform.LookAt(targetPlayerScript.transform);
 
         ammunition--;
     }

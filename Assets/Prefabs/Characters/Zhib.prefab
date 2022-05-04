@@ -1469,6 +1469,7 @@ MonoBehaviour:
   allSelected: 0
   hunterSeeking: 0
   playerHealth: 3
+  hit: 0
   movementSpeed: 7.5
   invisible: 0
   abilityActive: 0
@@ -1557,7 +1558,7 @@ GameObject:
   - component: {fileID: 1432156808499863894}
   - component: {fileID: 8340533165822071195}
   m_Layer: 0
-  m_Name: zhib_low
+  m_Name: Zhib_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
