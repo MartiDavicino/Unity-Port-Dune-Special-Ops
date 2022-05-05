@@ -55,6 +55,7 @@ public class DetectionMeter : MonoBehaviour
             {
                 percent = 1.0f;
             }
+
         
             bar.color = Color.yellow;
             bar.fillAmount = percent ;

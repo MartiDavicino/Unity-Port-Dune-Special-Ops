@@ -95,7 +95,7 @@ public class EnemyDetection : MonoBehaviour
 	void WaitAndAddToList(float delay,Transform target,List<Transform>targets)
     {
 		
-		timer += proportion * sightMultiplier * Time.deltaTime;
+		timer += proportion  * Time.deltaTime;
 
 		if (timer > 0 && timer < secondsToDetect / 2)
 		{
