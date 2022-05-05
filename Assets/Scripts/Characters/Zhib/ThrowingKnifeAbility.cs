@@ -151,8 +151,8 @@ public class ThrowingKnifeAbility : MonoBehaviour
                 {
                     Destroy(pickables[i].gameObject);
                     //ammunition++; TESTING
-
                 }
+
             }
         } else
         {

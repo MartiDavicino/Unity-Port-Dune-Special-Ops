@@ -51,6 +51,10 @@ public class CharacterBaseBehavior : MonoBehaviour
 
     private bool crouching = false;
 
+    public LayerMask whatIsSpice;
+
+    [HideInInspector] public int playerSpice;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -70,6 +74,7 @@ public class CharacterBaseBehavior : MonoBehaviour
         child = transform.Find(name + "_low");
         materialHolder = child.gameObject.GetComponent<Renderer>().material;
         elapse_time = 0;
+        playerSpice = 0;
     }
 
     // Update is called once per frame
@@ -190,6 +195,18 @@ public class CharacterBaseBehavior : MonoBehaviour
                 }
             }
         }
+
+        Collider[] pickables = Physics.OverlapSphere(transform.position, 3.0f, whatIsSpice);
+
+        for (int i = 0; i < pickables.Length; i++)
+        {
+            if (pickables[i].gameObject.tag == "SpiceSpot")
+            {
+                Destroy(pickables[i].gameObject);
+                playerSpice += 1000;
+            }
+
+        }
     }
 
     void LateUpdate()
@@ -210,7 +227,7 @@ public class CharacterBaseBehavior : MonoBehaviour
         }
 
         if (allSelected)
-            GUI.Box(new Rect(5, Screen.height - 30, 150, 25), "Moving Both Characters");
+        { GUI.Box(new Rect(5, Screen.height - 30, 150, 25), "Moving Both Characters"); }
 
     }
     Vector3 CalculateAbsoluteDistance(Vector3 targetPos)
