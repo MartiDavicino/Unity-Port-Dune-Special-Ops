@@ -1477,6 +1477,10 @@ MonoBehaviour:
   ability2Active: 0
   ability3Active: 0
   state: 0
+  whatIsSpice:
+    serializedVersion: 2
+    m_Bits: 0
+  playerSpice: 0
 --- !u!114 &6868864155876820119
 MonoBehaviour:
   m_ObjectHideFlags: 0
