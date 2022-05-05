@@ -15,6 +15,9 @@ public class NeralaPassive : MonoBehaviour
     private Vector3 appearOffset;
 
     private bool goingTo;
+    private bool isUp;
+    private string name;
+
     void Start()
     {
         playerAgent = GetComponent<NavMeshAgent>();
@@ -24,6 +27,7 @@ public class NeralaPassive : MonoBehaviour
 
         goingTo = false;
         baseScript = GetComponent<CharacterBaseBehavior>();
+        isUp = false;
     }
 
     // Update is called once per frame
@@ -46,6 +50,7 @@ public class NeralaPassive : MonoBehaviour
                         playerAgent.SetDestination(meshHit.point);
                         goingTo = true;
 
+                        name = meshHit.collider.gameObject.name;
                     } else
                     {
                         goingTo = false;
@@ -55,13 +60,34 @@ public class NeralaPassive : MonoBehaviour
 
             if(goingTo && playerAgent.remainingDistance < 1.5f && !playerAgent.pathPending)
             {
-
-                appearOffset = new Vector3(253f, 8.5f, -67.57f);
+                if(name== "NeralaPassiveSpot")
+                {
+                    if (isUp)
+                    {
+                        appearOffset = new Vector3(251f, 0.24f, -64.5f);
+                    }
+                    else
+                    {
+                        appearOffset = new Vector3(253f, 8.5f, -67.57f);
+                    }
+                }
+                else
+                {
+                    if (isUp)
+                    {
+                        appearOffset = new Vector3(198f, 0.24f, -78.5f);
+                    }
+                    else
+                    {
+                        appearOffset = new Vector3(195f, 8.12f, -79.5f);
+                    }
+                }
                 playerAgent.Warp(appearOffset);
                 playerAgent.ResetPath();
                 baseScript.state = PlayerState.IDLE;
 
                 goingTo = false;
+                isUp = !isUp;
             }
 
         }

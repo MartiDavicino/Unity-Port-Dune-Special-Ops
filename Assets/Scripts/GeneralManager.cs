@@ -33,7 +33,6 @@ public class GeneralManager : MonoBehaviour
         neralaBase = nerala.GetComponent<CharacterBaseBehavior>();
         hunterSeekerBase = nerala.GetComponent<HunterSeekerAbility>();
         hunterSeekerActive = false;
-        neralaUnlocked = false;
 
         cameraScript = gameObject.GetComponent<CameraMovement>();
 
