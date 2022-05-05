@@ -60,7 +60,6 @@ public class WeirdingWay : MonoBehaviour
 
         if (baseScript.selectedCharacter)
         {
-
             if (Input.GetKeyDown(KeyCode.Alpha3) && !goingToAttack)
                 addLineComponentOnce = true;
 
