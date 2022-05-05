@@ -701,8 +701,10 @@ MonoBehaviour:
   agent: {fileID: 4278868393632840208}
   player: {fileID: 4389638955010416099}
   state: 0
-  movementSpeed: 8
+  chasingSpeed: 0
+  patrolingSpeed: 0
   timeBetweenAttacks: 1.5
+  timeBetweenPatrolPoints: 0
   visitedPoints: []
   affectedByDecoy: 0
   patrolPoints:
@@ -733,7 +735,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sightMultiplier: 2
+  distanceMultiplier: 0
+  maxDistanceMultiplier: 0
+  maxMultiplier: 5
   multiplierHolder: 0
+  data: {fileID: 4278868393632840211}
   viewRadius: 15
   viewAngle: 95
   hearingRadius: 7.5

@@ -213,6 +213,7 @@ public class CharacterBaseBehavior : MonoBehaviour
             GUI.Box(new Rect(5, Screen.height - 30, 150, 25), "Moving Both Characters");
 
     }
+
     Vector3 CalculateAbsoluteDistance(Vector3 targetPos)
     {
         Vector3 distance = new Vector3(0f, 0f, 0f);
