@@ -55,6 +55,14 @@ public class CharacterBaseBehavior : MonoBehaviour
 
     [HideInInspector] public int playerSpice;
 
+    private int spiceTotal;
+
+    public int ultimateCost;
+
+    private bool notAvailable;
+
+    private float timer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,11 +83,16 @@ public class CharacterBaseBehavior : MonoBehaviour
         materialHolder = child.gameObject.GetComponent<Renderer>().material;
         elapse_time = 0;
         playerSpice = 0;
+
+        notAvailable = false;
+
+        timer = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
+        spiceTotal = GameObject.Find("playercamera").GetComponent<GeneralManager>().totalSpice;
 
         if (hit) PlayerHit();
 
@@ -126,8 +139,17 @@ public class CharacterBaseBehavior : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Alpha3) && (!abilityActive || ability3Active))
             {
-                ability3Active = !ability3Active;
-                abilityActive = !abilityActive;
+
+                if (spiceTotal < ultimateCost)
+                {
+                    timer = 3.0f;
+                    notAvailable = true;
+                }
+                else
+                {
+                    ability3Active = !ability3Active;
+                    abilityActive = !abilityActive;
+                }       
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1) && !ability3Active && !ability2Active)
@@ -228,7 +250,18 @@ public class CharacterBaseBehavior : MonoBehaviour
 
         if (allSelected)
         { GUI.Box(new Rect(5, Screen.height - 30, 150, 25), "Moving Both Characters"); }
-
+        if (notAvailable)
+        {
+            if (timer <= 0f)
+            {
+                notAvailable = false;
+            }
+            else
+            {
+                timer -= Time.deltaTime;
+                GUI.Box(new Rect(5, 75, 150, 25), "Not enough spice");
+            }
+        }
     }
 
     Vector3 CalculateAbsoluteDistance(Vector3 targetPos)
