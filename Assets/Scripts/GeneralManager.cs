@@ -16,6 +16,9 @@ public class GeneralManager : MonoBehaviour
     private HunterSeekerAbility hunterSeekerBase;
     private bool hunterSeekerActive;
 
+    public GameObject omozra;
+    private CharacterBaseBehavior omozraBase;
+
     private GameObject selectedCharacter;
     private bool allSelected;
 
@@ -33,6 +36,8 @@ public class GeneralManager : MonoBehaviour
         neralaBase = nerala.GetComponent<CharacterBaseBehavior>();
         hunterSeekerBase = nerala.GetComponent<HunterSeekerAbility>();
         hunterSeekerActive = false;
+
+        omozraBase = omozra.GetComponent<CharacterBaseBehavior>();
 
         cameraScript = gameObject.GetComponent<CameraMovement>();
 
@@ -52,13 +57,22 @@ public class GeneralManager : MonoBehaviour
             if (zhibBase.playerHealth == 0)
             {
                 Destroy(zhib);
-                selectedCharacter = nerala;
+                if (nerala != null) selectedCharacter = nerala;
+                if (omozra != null) selectedCharacter = omozra;
             }
 
             if (neralaBase.playerHealth == 0)
             {
                 Destroy(nerala);
-                selectedCharacter = zhib;
+                if (zhib != null) selectedCharacter = zhib;
+                if (omozra != null) selectedCharacter = omozra;
+            }
+
+            if (neralaBase.playerHealth == 0)
+            {
+                Destroy(omozra);
+                if (zhib != null) selectedCharacter = zhib;
+                if (nerala != null) selectedCharacter = nerala;
             }
 
             if (zhibBase.playerHealth == 0 && neralaBase.playerHealth == 0)
@@ -76,11 +90,18 @@ public class GeneralManager : MonoBehaviour
                 allSelected = false;
             }
 
-            if (Input.GetKey(KeyCode.C) && !hunterSeekerActive && neralaUnlocked)
+            if (Input.GetKey(KeyCode.C) && !hunterSeekerActive)
+            {
+                selectedCharacter = omozra;
+                allSelected = false;
+            }
+
+            if (Input.GetKey(KeyCode.V) && !hunterSeekerActive && neralaUnlocked)
             {
                 allSelected = true;
                 zhibBase.allSelected = true;
                 neralaBase.allSelected = true;
+                omozraBase.allSelected = true;
             }
 
 
@@ -91,9 +112,9 @@ public class GeneralManager : MonoBehaviour
             }
 
 
-            if(selectedCharacter == nerala)
+            if (selectedCharacter == nerala)
             {
-                if(GameObject.Find("HunterSeeker(Clone)") != null)
+                if (GameObject.Find("HunterSeeker(Clone)") != null)
                 {
                     hunterSeeker = GameObject.Find("HunterSeeker(Clone)");
                     selectedCharacter = hunterSeeker;
@@ -101,7 +122,7 @@ public class GeneralManager : MonoBehaviour
                 }
             }
 
-            if(!allSelected)
+            if (!allSelected)
             {
                 switch (selectedCharacter.name)
                 {
@@ -111,10 +132,27 @@ public class GeneralManager : MonoBehaviour
 
                         neralaBase.selectedCharacter = false;
                         neralaBase.allSelected = false;
+
+                        omozraBase.selectedCharacter = false;
+                        omozraBase.allSelected = false;
                         break;
 
                     case "Nerala":
                         neralaBase.selectedCharacter = true;
+                        neralaBase.allSelected = false;
+
+                        zhibBase.selectedCharacter = false;
+                        zhibBase.allSelected = false;
+
+                        omozraBase.selectedCharacter = false;
+                        omozraBase.allSelected = false;
+                        break;
+
+                    case "Omozra":
+                        omozraBase.selectedCharacter = true;
+                        omozraBase.allSelected = false;
+
+                        neralaBase.selectedCharacter = false;
                         neralaBase.allSelected = false;
 
                         zhibBase.selectedCharacter = false;
@@ -127,26 +165,30 @@ public class GeneralManager : MonoBehaviour
 
                         zhibBase.selectedCharacter = false;
                         zhibBase.allSelected = false;
+
+                        omozraBase.selectedCharacter = false;
+                        omozraBase.allSelected = false;
                         break;
                 }
             }
 
             cameraScript.focusedPlayer = selectedCharacter;
-        } else
+        }
+        else
         {
-            if(Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.R))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
 
-        totalSpice = zhibBase.playerSpice + neralaBase.playerSpice;
+        totalSpice = zhibBase.playerSpice + neralaBase.playerSpice + omozraBase.playerSpice;
     }
 
     void OnGUI()
     {
-        if(gameLost)
-            GUI.Box(new Rect(Screen.width/2 - 125, Screen.height/2, 250, 30), "Press 'R' to restart");
+        if (gameLost)
+            GUI.Box(new Rect(Screen.width / 2 - 125, Screen.height / 2, 250, 30), "Press 'R' to restart");
         GUI.Box(new Rect(5, 40, 50, 25), "Spice");
         GUI.Box(new Rect(62, 40, 40, 25), totalSpice.ToString());
     }
