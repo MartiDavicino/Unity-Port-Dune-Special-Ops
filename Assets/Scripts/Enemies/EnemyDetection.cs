@@ -13,7 +13,11 @@ public enum DecState
 public class EnemyDetection : MonoBehaviour
 {
 	public float sightMultiplier;
+	public float distanceMultiplier;
+	public float maxDistanceMultiplier;
+	public float maxMultiplier = 5.0f;
 	[HideInInspector] public float multiplierHolder;
+	public EnemyBehaviour data;
 
 	public float viewRadius;
 	[Range(0, 360)]
@@ -45,6 +49,10 @@ public class EnemyDetection : MonoBehaviour
     {
 		multiplierHolder = sightMultiplier;
 		proportion = 1f;
+
+		distanceMultiplier = 1f;
+		maxDistanceMultiplier = 1f;
+
 	}
     void Update()
     {
@@ -67,6 +75,13 @@ public class EnemyDetection : MonoBehaviour
 			debug = !debug;
 		
 	}
+	
+	void CalculateMultiplier()
+    {
+		
+		distanceMultiplier = viewRadius * maxDistanceMultiplier / CalculateAbsoluteDistance(data.player.transform.position).magnitude;
+
+    }
 
     void FindTargetsWithDelay()
 	{
@@ -94,8 +109,11 @@ public class EnemyDetection : MonoBehaviour
 	}
 	void WaitAndAddToList(float delay,Transform target,List<Transform>targets)
     {
-		
-		timer += proportion * sightMultiplier * Time.deltaTime;
+
+		CalculateMultiplier();
+
+
+		timer += proportion * distanceMultiplier * sightMultiplier * Time.deltaTime;
 
 		if (timer > 0 && timer < secondsToDetect / 2)
 		{
@@ -191,5 +209,16 @@ public class EnemyDetection : MonoBehaviour
 		}
 		return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
 	}
+
+	Vector3 CalculateAbsoluteDistance(Vector3 targetPos)
+	{
+		Vector3 distance = new Vector3(0f, 0f, 0f);
+
+		distance.x = Mathf.Abs(transform.position.x - targetPos.x);
+		distance.z = Mathf.Abs(transform.position.z - targetPos.z);
+
+		return distance;
+	}
+
 }
 
