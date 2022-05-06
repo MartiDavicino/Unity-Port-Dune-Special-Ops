@@ -106,10 +106,10 @@ public class ÑamÑamAbility : MonoBehaviour
             omozraÑamScript.onCooldown = true;
 
             if(omozra.GetComponent<LineRenderer>() != null)
-            {
-                omozraÑamScript.addLineComponentOnce = true;
                 Destroy(omozra.GetComponent<LineRenderer>());
-            }
+            
+            
+            omozraÑamScript.addLineComponentOnce = true;
 
             cll.isTrigger = false;
         }
