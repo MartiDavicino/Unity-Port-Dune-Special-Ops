@@ -41,7 +41,7 @@ public class CharacterBaseBehavior : MonoBehaviour
 
     [HideInInspector] public bool abilityActive;
     [HideInInspector] public bool ability1Active;
-    [HideInInspector] public bool ability2Active;
+     public bool ability2Active;
     [HideInInspector] public bool ability3Active;
 
     private Animator animator;
@@ -153,13 +153,16 @@ public class CharacterBaseBehavior : MonoBehaviour
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1) && !ability3Active && !ability2Active)
-                Destroy(gameObject.GetComponent<LineRenderer>());
+                if(gameObject.GetComponent<LineRenderer>() != null)
+                    Destroy(gameObject.GetComponent<LineRenderer>());
 
             if (Input.GetKeyDown(KeyCode.Alpha2) && !ability1Active && !ability3Active)
-                Destroy(gameObject.GetComponent<LineRenderer>());
+                if (gameObject.GetComponent<LineRenderer>() != null)
+                    Destroy(gameObject.GetComponent<LineRenderer>());
 
             if (Input.GetKeyDown(KeyCode.Alpha3) && !ability1Active && !ability2Active)
-                Destroy(gameObject.GetComponent<LineRenderer>());
+                if (gameObject.GetComponent<LineRenderer>() != null)
+                    Destroy(gameObject.GetComponent<LineRenderer>());
 
             if (Input.GetKeyDown(KeyCode.LeftShift)/* && state != PlayerState.IDLE*/)
             {

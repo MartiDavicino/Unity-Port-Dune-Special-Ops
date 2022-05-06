@@ -28,6 +28,8 @@ public class GeneralManager : MonoBehaviour
 
     [HideInInspector] public int totalSpice;
 
+    
+
     // Start is called before the first frame update
     void Start()
     {
