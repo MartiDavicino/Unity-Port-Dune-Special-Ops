@@ -18,6 +18,9 @@ public class OmozraLetsGoAbility : MonoBehaviour
     [HideInInspector] public GameObject targetCharacter;
     [HideInInspector] public Vector3 targetPosition;
 
+    [HideInInspector] public bool characterChosen;
+    [HideInInspector] public bool locationChosen;
+
     private bool characterOutOfRange;
 
     [HideInInspector] public bool characterEaten;
@@ -38,6 +41,9 @@ public class OmozraLetsGoAbility : MonoBehaviour
         playerCamera = Camera.main;
 
         addLineComponentOnce = true;
+
+        characterChosen = false;
+        locationChosen = false;
 
         characterOutOfRange = false;
 
@@ -64,7 +70,7 @@ public class OmozraLetsGoAbility : MonoBehaviour
                 if (gameObject.GetComponent<LineRenderer>() != null)
                     gameObject.DrawCircleScaled(maximumRange, 0.05f, transform.localScale);
 
-                if (Input.GetKeyDown(KeyCode.Mouse0) && !onCooldown)
+                if (Input.GetKeyDown(KeyCode.Mouse0) && !onCooldown && !characterChosen)
                 {
                     Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
 
@@ -73,6 +79,8 @@ public class OmozraLetsGoAbility : MonoBehaviour
                         if (rayHit.collider.tag == "Player")
                         {
                             targetCharacter = rayHit.collider.gameObject;
+
+                            characterChosen = true;
 
                             Vector3 distance = CalculateAbsoluteDistance(rayHit.point);
 
@@ -95,14 +103,16 @@ public class OmozraLetsGoAbility : MonoBehaviour
                 {
                     Vector3 distance = CalculateAbsoluteDistance(rayHit.point);
 
+
                     if (distance.magnitude <= maximumRange)
                     {
                         sadiqScript.ability3Active = true;
                         agent.ResetPath();
                     }
                 }
-            } else if (baseScript.ability3Active && characterEaten)
+            } else if (baseScript.ability3Active && characterEaten && !locationChosen)
             {
+
                 if (addLineComponentOnce)
                 {
                     addLineComponentOnce = false;

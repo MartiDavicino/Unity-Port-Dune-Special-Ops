@@ -59,6 +59,8 @@ public class LetsGoAbility : MonoBehaviour
 
             if (phase1)
             {
+                omozraLetsGoScript.characterChosen = true;
+
                 while (elapse_time < 1.2f)
                 {
                     elapse_time += Time.deltaTime;
@@ -109,6 +111,9 @@ public class LetsGoAbility : MonoBehaviour
 
             if(pukePhase)
             {
+                omozraLetsGoScript.characterChosen = false;
+                omozraLetsGoScript.locationChosen = true;
+
                 transform.position = targetPos;
 
                 baseScript.state = SadiqState.SPITTING;
@@ -146,6 +151,8 @@ public class LetsGoAbility : MonoBehaviour
                 omozraLetsGoScript.addLineComponentOnce = true;
 
                 cll.isTrigger = false;
+
+                omozraLetsGoScript.locationChosen = false;
             }
         }
     }
