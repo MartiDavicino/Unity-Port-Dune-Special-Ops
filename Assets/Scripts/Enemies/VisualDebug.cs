@@ -12,7 +12,7 @@ public class VisualDebug : MonoBehaviour
     // Start is called before the first frame update
     public void DebugDraw()
     {
-        if (once)
+        if (once && gameObject.GetComponent<LineRenderer>() == null)
         {
             gameObject.AddComponent<LineRenderer>();
             lDrawer = gameObject.GetComponent<LineRenderer>();
@@ -23,7 +23,10 @@ public class VisualDebug : MonoBehaviour
 
     public void DebugDelete()
     {
-        Destroy(gameObject.GetComponent<LineRenderer>());
-        once = true;
+        if (gameObject.GetComponent<LineRenderer>() != null)
+        {
+            Destroy(gameObject.GetComponent<LineRenderer>());
+            once = true;
+        }
     }
 }

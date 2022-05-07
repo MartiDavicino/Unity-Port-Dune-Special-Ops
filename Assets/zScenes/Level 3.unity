@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -733,6 +733,7 @@ MonoBehaviour:
   nerala: {fileID: 1628739175}
   neralaUnlocked: 1
   omozra: {fileID: 4475807426259986333}
+  omozraUnlocked: 0
   gameLost: 0
   totalSpice: 0
 --- !u!114 &963194231
@@ -7975,6 +7976,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19eff5447e31068418e861d964d515a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPos: {x: 0, y: 0, z: 0}
+  elapse_time: 0
+  pukePhase: 0
 --- !u!1 &921391925351122284
 GameObject:
   m_ObjectHideFlags: 0
@@ -30351,42 +30355,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7468465412830655946, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
   m_PrefabInstance: {fileID: 6464937720950542935}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4475807426259986342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4475807426259986333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41fedff627795a04588096bb67b11a03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseScript: {fileID: 0}
-  addLineComponentOnce: 0
-  targetEnemy: {fileID: 0}
-  maximumRange: 20
-  cooldown: 10
-  onCooldown: 0
---- !u!114 &4475807426259986343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4475807426259986333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1afb2601185e4d45ba182687b824366, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseScript: {fileID: 0}
-  addLineComponentOnce: 0
-  targetCharacter: {fileID: 0}
-  maximumRange: 20
-  cooldown: 10
-  onCooldown: 0
 --- !u!4 &4482876240764222625
 Transform:
   m_ObjectHideFlags: 0
@@ -41505,49 +41473,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2531757979946751366, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2531757979946751366, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3102281679794523229, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3102281679794523229, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6687921649775398796, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
-      propertyPath: m_Name
-      value: Omozra_low
-      objectReference: {fileID: 0}
     - target: {fileID: 7468465412830655946, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
       propertyPath: m_Name
       value: Omozra
-      objectReference: {fileID: 0}
-    - target: {fileID: 7738372082402153348, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
-      propertyPath: m_Size.y
-      value: 16.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7738372082402153348, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
-      propertyPath: m_Center.y
-      value: -1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 7738372082402153349, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: fdbb094b9e1696145b3ba3dbb84d9ebf, type: 2}
-    - target: {fileID: 7738372082402153350, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
-      propertyPath: ultimateCost
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7738372082402153353, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
-      propertyPath: m_BaseOffset
-      value: 10.46
       objectReference: {fileID: 0}
     - target: {fileID: 7849353130830442352, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
       propertyPath: m_RootOrder

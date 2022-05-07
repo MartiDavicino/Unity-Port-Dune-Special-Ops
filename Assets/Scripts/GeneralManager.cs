@@ -18,6 +18,7 @@ public class GeneralManager : MonoBehaviour
 
     public GameObject omozra;
     private CharacterBaseBehavior omozraBase;
+    public bool omozraUnlocked;
 
     private GameObject selectedCharacter;
     private bool allSelected;
@@ -59,8 +60,8 @@ public class GeneralManager : MonoBehaviour
             if (zhibBase.playerHealth == 0)
             {
                 Destroy(zhib);
-                if (nerala != null) selectedCharacter = nerala;
-                if (omozra != null) selectedCharacter = omozra;
+                if (nerala != null && neralaUnlocked) selectedCharacter = nerala;
+                if (omozra != null && omozraUnlocked) selectedCharacter = omozra;
             }
 
             if (neralaBase.playerHealth == 0)
@@ -92,13 +93,13 @@ public class GeneralManager : MonoBehaviour
                 allSelected = false;
             }
 
-            if (Input.GetKey(KeyCode.C) && !hunterSeekerActive)
+            if (Input.GetKey(KeyCode.C) && !hunterSeekerActive && omozraUnlocked)
             {
                 selectedCharacter = omozra;
                 allSelected = false;
             }
 
-            if (Input.GetKey(KeyCode.V) && !hunterSeekerActive && neralaUnlocked)
+            if (Input.GetKey(KeyCode.V) && !hunterSeekerActive && neralaUnlocked && omozraUnlocked)
             {
                 allSelected = true;
                 zhibBase.allSelected = true;

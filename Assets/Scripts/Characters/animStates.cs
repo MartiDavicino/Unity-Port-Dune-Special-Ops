@@ -38,8 +38,18 @@ public class animStates : MonoBehaviour
         {
             animator.ResetTrigger("hasStopped");
             animator.ResetTrigger("isWalking");
+            animator.ResetTrigger("isRunning");
 
             animator.SetTrigger("isCrouching");
+        }
+
+        if (baseScript.state == PlayerState.RUNNING)
+        {
+            animator.ResetTrigger("hasStopped");
+            animator.ResetTrigger("isCrouching");
+            animator.ResetTrigger("isWalking");
+
+            animator.SetTrigger("isRunning");
         }
 
         if (baseScript.state == PlayerState.STEALTH_KILL)
@@ -47,6 +57,7 @@ public class animStates : MonoBehaviour
             animator.ResetTrigger("hasStopped");
             animator.ResetTrigger("isWalking");
             animator.ResetTrigger("isCrouching");
+            animator.ResetTrigger("isRunning");
 
             animator.SetTrigger("sneakyKill");
         }
@@ -56,6 +67,7 @@ public class animStates : MonoBehaviour
             animator.ResetTrigger("hasStopped");
             animator.ResetTrigger("isWalking");
             animator.ResetTrigger("isCrouching");
+            animator.ResetTrigger("isRunning");
 
             animator.SetTrigger("ability1");
         }
@@ -65,6 +77,7 @@ public class animStates : MonoBehaviour
             animator.ResetTrigger("hasStopped");
             animator.ResetTrigger("isWalking");
             animator.ResetTrigger("isCrouching");
+            animator.ResetTrigger("isRunning");
 
             animator.SetTrigger("ability2");
         }
@@ -74,6 +87,7 @@ public class animStates : MonoBehaviour
             animator.ResetTrigger("hasStopped");
             animator.ResetTrigger("isWalking");
             animator.ResetTrigger("isCrouching");
+            animator.ResetTrigger("isRunning");
 
             animator.SetTrigger("ability3");
         }
@@ -83,6 +97,7 @@ public class animStates : MonoBehaviour
             animator.ResetTrigger("hasStopped");
             animator.ResetTrigger("isWalking");
             animator.ResetTrigger("isCrouching");
+            animator.ResetTrigger("isRunning");
             animator.ResetTrigger("ability3");
 
             animator.SetTrigger("ability3.1");
