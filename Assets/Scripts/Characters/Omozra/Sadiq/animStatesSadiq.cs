@@ -20,7 +20,13 @@ public class animStatesSadiq : MonoBehaviour
     {
         if (baseScript.state == SadiqState.IDLE)
         {
-             animator.SetTrigger("isIdle");
+            animator.ResetTrigger("isDevouring");
+            animator.ResetTrigger("backToGround");
+            animator.ResetTrigger("outOfGround");
+            animator.ResetTrigger("isDevouring");
+            animator.ResetTrigger("isSpitting");
+
+            animator.SetTrigger("isIdle");
         }
 
         if (baseScript.state == SadiqState.COMINGOUT)
@@ -47,6 +53,9 @@ public class animStatesSadiq : MonoBehaviour
         if (baseScript.state == SadiqState.SPITTING)
         {
             animator.ResetTrigger("isIdle");
+            animator.ResetTrigger("isDevouring");
+            animator.ResetTrigger("backToGround");
+
 
             animator.SetTrigger("isSpitting");
         }
