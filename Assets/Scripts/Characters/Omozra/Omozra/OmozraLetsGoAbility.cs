@@ -84,6 +84,7 @@ public class OmozraLetsGoAbility : MonoBehaviour
                             }
                             else
                             {
+                                agent.ResetPath();
                                 sadiqScript.ability3Active = true;
                             }
                         }
@@ -92,9 +93,12 @@ public class OmozraLetsGoAbility : MonoBehaviour
 
                 if (characterOutOfRange)
                 {
-                    if (agent.remainingDistance <= maximumRange && !agent.pathPending)
+                    Vector3 distance = CalculateAbsoluteDistance(rayHit.point);
+
+                    if (distance.magnitude <= maximumRange)
                     {
                         sadiqScript.ability3Active = true;
+                        agent.ResetPath();
                     }
                 }
             } else if (baseScript.ability3Active && characterEaten)
@@ -124,10 +128,11 @@ public class OmozraLetsGoAbility : MonoBehaviour
                             {
                                 characterOutOfRange = true;
                                 baseScript.state = PlayerState.WALKING;
-                                agent.SetDestination(rayHit.collider.gameObject.transform.position);
+                                agent.SetDestination(rayHit.point);
                             }
                             else
                             {
+                                agent.ResetPath();
                                 LetsGoAbility sadiqLetsGo = sadiq.GetComponent<LetsGoAbility>();
                                 sadiqLetsGo.pukePhase = true;
                                 sadiqLetsGo.elapse_time = 0f;
@@ -139,8 +144,11 @@ public class OmozraLetsGoAbility : MonoBehaviour
 
                 if (characterOutOfRange)
                 {
-                    if (agent.remainingDistance <= maximumRange && !agent.pathPending)
+                    Vector3 distance = CalculateAbsoluteDistance(targetPosition);
+
+                    if (distance.magnitude <= maximumRange)
                     {
+                        agent.ResetPath();
                         LetsGoAbility sadiqLetsGo = sadiq.GetComponent<LetsGoAbility>();
                         sadiqLetsGo.pukePhase = true;
                         sadiqLetsGo.elapse_time = 0f;
@@ -176,7 +184,10 @@ public class OmozraLetsGoAbility : MonoBehaviour
             if (baseScript.ability3Active)
             {
                 GUI.Box(new Rect(5, Screen.height - 30, 150, 25), "Let's Go Active");
-            
+                
+                if (!characterEaten && !onCooldown) GUI.Box(new Rect(160, Screen.height - 30, 150, 25), "Select Character");
+                if (characterEaten && !onCooldown) GUI.Box(new Rect(160, Screen.height - 30, 150, 25), "Select Location");
+
                 if (onCooldown)
                     GUI.Box(new Rect(160, Screen.height - 30, 40, 25), (cooldown - elapse_time).ToString("F2"));
             }
