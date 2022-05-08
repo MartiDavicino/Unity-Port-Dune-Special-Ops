@@ -73,6 +73,8 @@ public class EnemyDetection : MonoBehaviour
 		}
 		if (Input.GetKeyDown(KeyCode.F10))
 			debug = !debug;
+
+		
 		
 	}
 	
@@ -80,7 +82,8 @@ public class EnemyDetection : MonoBehaviour
     {
 		
 		distanceMultiplier = viewRadius * maxDistanceMultiplier / CalculateAbsoluteDistance(data.player.transform.position).magnitude;
-
+		if (distanceMultiplier > maxMultiplier)
+			distanceMultiplier = maxMultiplier;
     }
 
     void FindTargetsWithDelay()
@@ -109,7 +112,7 @@ public class EnemyDetection : MonoBehaviour
 	}
 	void WaitAndAddToList(float delay,Transform target,List<Transform>targets)
     {
-		timer += proportion  * Time.deltaTime;
+		timer += proportion  * distanceMultiplier *Time.deltaTime;
 
 
 		if (timer > 0 && timer < secondsToDetect / 2)
@@ -145,7 +148,8 @@ public class EnemyDetection : MonoBehaviour
 
 		for (int i = 0; i < targetsInViewRadius.Length; i++)
 		{
-			
+			CalculateMultiplier();
+
 			Transform target = targetsInViewRadius[i].transform;
 			Vector3 dirToTarget = (target.position - transform.position).normalized;
 			if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
@@ -185,8 +189,10 @@ public class EnemyDetection : MonoBehaviour
 			GameObject parent = targetsInHearingRadius[i].gameObject;
 			Transform target = targetsInHearingRadius[i].transform;
 			Vector3 dirToTarget = (target.position - transform.position).normalized;
+			CalculateMultiplier();
 
 			baseScript = parent.GetComponent<CharacterBaseBehavior>();
+
 
 			float dstToTarget = Vector3.Distance(transform.position, target.position);
 
