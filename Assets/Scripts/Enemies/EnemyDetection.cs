@@ -33,6 +33,7 @@ public class EnemyDetection : MonoBehaviour
 	[HideInInspector] public float timer = 0.0f;
 	public float secondsToDetect;
 	private float proportion;
+	private float playerStateMultipler;
 
 	[HideInInspector] public DecState state = DecState.STILL;
 	[HideInInspector] public bool debug = false;
@@ -73,13 +74,15 @@ public class EnemyDetection : MonoBehaviour
 
 			else if (player.GetComponent<CharacterBaseBehavior>().state == PlayerState.CROUCH)
 			{
-				hearingRadius = 3.5f;
+				hearingRadius = 7.5f;
 			}
 
 			else if (player.GetComponent<CharacterBaseBehavior>().state == PlayerState.RUNNING)
 			{
 				hearingRadius = 11.5f;
 			}
+			
+			playerStateMultipler = player.GetComponent<CharacterBaseBehavior>().detectionMultiplier;
 		}
 
 		FindTargetsWithDelay();
@@ -136,7 +139,7 @@ public class EnemyDetection : MonoBehaviour
 	}
 	void WaitAndAddToList(float delay,Transform target,List<Transform>targets)
     {
-		timer += proportion  * distanceMultiplier *Time.deltaTime;
+		timer += proportion  * distanceMultiplier * playerStateMultipler * Time.deltaTime;
 
 
 		if (timer > 0 && timer < secondsToDetect / 2)
@@ -214,14 +217,14 @@ public class EnemyDetection : MonoBehaviour
 			GameObject parent = targetsInHearingRadius[i].gameObject;
 			Transform target = targetsInHearingRadius[i].transform;
 			Vector3 dirToTarget = (target.position - transform.position).normalized;
+			
 			CalculateMultiplier();
 
 			baseScript = parent.GetComponent<CharacterBaseBehavior>();
 
-
 			float dstToTarget = Vector3.Distance(transform.position, target.position);
 
-			if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, targetMask)&& baseScript.state != PlayerState.CROUCH)
+			if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, targetMask))
 			{
 				WaitAndAddToList(secondsToDetect, target, noisyTargets);
 			} 

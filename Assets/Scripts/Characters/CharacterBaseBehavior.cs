@@ -49,8 +49,11 @@ public class CharacterBaseBehavior : MonoBehaviour
 
     private Vector3 targetPosition;
 
+    public float crouchMultiplier;
     private bool crouching = false;
+    public float runMultiplier;
     private bool running = false;
+    [HideInInspector] public float detectionMultiplier;
 
     public LayerMask whatIsSpice;
 
@@ -79,6 +82,8 @@ public class CharacterBaseBehavior : MonoBehaviour
         animator = GetComponent<Animator>();
         playerAgent.stoppingDistance = 2;
         abilityActive = false;
+
+        detectionMultiplier = 1.0f;
 
         child = transform.Find(name + "_low");
         materialHolder = child.gameObject.GetComponent<Renderer>().material;
@@ -169,17 +174,29 @@ public class CharacterBaseBehavior : MonoBehaviour
             {
                 crouching = !crouching;
                 running = false;
-                if(crouching && state == PlayerState.IDLE) { state = PlayerState.CROUCH; }
-                else if (state == PlayerState.CROUCH) { state = PlayerState.IDLE; }
+                if(crouching && state == PlayerState.IDLE) {
+                    detectionMultiplier = crouchMultiplier;
+                    state = PlayerState.CROUCH; 
+                }
+                else if (state == PlayerState.CROUCH) {
+                    detectionMultiplier = 1f;
+                    state = PlayerState.IDLE; 
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.LeftAlt) && state != PlayerState.CROUCH && state != PlayerState.IDLE)
             {
                 running = !running;
                 if (running && state == PlayerState.WALKING)
+                {
+                    detectionMultiplier = runMultiplier;
                     state = PlayerState.RUNNING;
+                }
                 else if (state == PlayerState.RUNNING)
+                {
+                    detectionMultiplier = 1f;
                     state = PlayerState.WALKING;
+                }
             }
 
 
