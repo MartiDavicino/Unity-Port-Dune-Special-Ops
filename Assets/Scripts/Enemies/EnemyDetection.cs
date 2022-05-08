@@ -27,6 +27,9 @@ public class EnemyDetection : MonoBehaviour
 
 	private CharacterBaseBehavior baseScript;
 
+	private Camera camera;
+	private GameObject player;
+
 	[HideInInspector] public float timer = 0.0f;
 	public float secondsToDetect;
 	private float proportion;
@@ -47,6 +50,8 @@ public class EnemyDetection : MonoBehaviour
 	[HideInInspector] public List<Transform> noisyTargets = new List<Transform>();
     void Start()
     {
+		camera = Camera.main;
+		player = camera.GetComponentInChildren<CameraMovement>().focusedPlayer;
 		multiplierHolder = sightMultiplier;
 		proportion = 1f;
 
@@ -58,6 +63,25 @@ public class EnemyDetection : MonoBehaviour
     {
 		angle1 = DirFromAngle(-viewAngle / 2, false);
 		angle2 = DirFromAngle(viewAngle / 2, false);
+
+		if (player != null)
+		{
+			if (player.GetComponent<CharacterBaseBehavior>().state == PlayerState.WALKING)
+			{
+				hearingRadius = 7.5f;
+			}
+
+			else if (player.GetComponent<CharacterBaseBehavior>().state == PlayerState.CROUCH)
+			{
+				hearingRadius = 3.5f;
+			}
+
+			else if (player.GetComponent<CharacterBaseBehavior>().state == PlayerState.RUNNING)
+			{
+				hearingRadius = 11.5f;
+			}
+		}
+
 		FindTargetsWithDelay();
 
 		if(debug)
@@ -179,7 +203,8 @@ public class EnemyDetection : MonoBehaviour
 		sightMultiplier = 1f;
 
 		noisyTargets.Clear();
-		Collider[] targetsInHearingRadius = Physics.OverlapSphere(transform.position, hearingRadius, targetMask);
+
+        Collider[] targetsInHearingRadius = Physics.OverlapSphere(transform.position, hearingRadius, targetMask);
 
 		if (targetsInHearingRadius.Length > 0)
 			playerHeard = true;

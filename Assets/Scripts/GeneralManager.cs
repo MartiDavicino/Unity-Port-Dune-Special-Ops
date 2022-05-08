@@ -78,7 +78,7 @@ public class GeneralManager : MonoBehaviour
                 if (nerala != null) selectedCharacter = nerala;
             }
 
-            if (zhibBase.playerHealth == 0 && neralaBase.playerHealth == 0)
+            if (zhibBase.playerHealth == 0 && neralaBase.playerHealth == 0 && omozraBase.playerHealth == 0)
                 gameLost = true;
 
             if (Input.GetKey(KeyCode.Z) && !hunterSeekerActive)

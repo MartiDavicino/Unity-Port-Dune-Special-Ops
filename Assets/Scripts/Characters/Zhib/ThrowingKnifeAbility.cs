@@ -33,6 +33,7 @@ public class ThrowingKnifeAbility : MonoBehaviour
     public GameObject knifePrefab;
     public LayerMask whatIsKnife;
     private GameObject[] thrownKnifes;
+    public float effectRange;
 
 
     // Start is called before the first frame update
