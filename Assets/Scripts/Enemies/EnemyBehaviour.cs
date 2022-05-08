@@ -77,6 +77,11 @@ public class EnemyBehaviour : MonoBehaviour
     private List<GameObject> guardList = new List<GameObject>();
     private bool waveSpawned;
     private Vector3 initOffset;
+
+    private Transform child;
+    private Material materialHolder;
+    private float colorTimer;
+
     [Header("- Only if Mentat -")]
     public float summonTime;
     public Vector3 spawnOffset;
@@ -86,7 +91,6 @@ public class EnemyBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         agent = GetComponent<NavMeshAgent>();
 
         patrolIterator = 0;
@@ -109,6 +113,10 @@ public class EnemyBehaviour : MonoBehaviour
                 attackRange = 7f;
                 waveSpawned = false;
                 initOffset = spawnOffset;
+                child = transform.Find(name + "_low");
+                materialHolder = child.gameObject.GetComponent<Renderer>().material;
+
+                colorTimer = 0f;
                 break;
             case EnemyType.RABBAN:
                 attackRange = 3.0f;
@@ -135,11 +143,11 @@ public class EnemyBehaviour : MonoBehaviour
         if (detected && !playerInAttackRange)
         {
             targetPlayerScript = player.gameObject.GetComponent<CharacterBaseBehavior>();
-            if (type != EnemyType.MENTAT)
-                Chasing();
-            else if (type == EnemyType.MENTAT)
-                Summoning();
 
+            if (type == EnemyType.MENTAT)
+                Summoning();
+            else
+                Chasing();
         }
 
         if (detected && playerInAttackRange)
@@ -228,7 +236,14 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Patroling()
     {
-        if(isGuard)
+        
+        if(type == EnemyType.MENTAT)
+        {
+            child.gameObject.GetComponent<Renderer>().material = materialHolder;
+            elapse_time = 0f;
+        }
+
+        if (isGuard)
         {
             if (!walkPointSet)
             {
@@ -397,11 +412,15 @@ public class EnemyBehaviour : MonoBehaviour
         {
             if (!waveSpawned)
             {
+
                 while (elapse_time < summonTime)
                 {
                     elapse_time += Time.deltaTime;
+                    child.gameObject.GetComponent<Renderer>().material = Resources.Load(name + "summon", typeof(Material)) as Material;
                     return;
                 }
+
+                child.gameObject.GetComponent<Renderer>().material = materialHolder;
 
                 elapse_time = 0;
 
@@ -452,6 +471,7 @@ public class EnemyBehaviour : MonoBehaviour
         }
 
     }
+
     private void Fleeing()
     {
 
