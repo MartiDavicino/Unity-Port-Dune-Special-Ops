@@ -9,6 +9,7 @@ public enum EnemyType
     HARKONNEN,
     SARDAUKAR,
     MENTAT,
+    RABBAN,
     NONE,
 }
 
@@ -116,6 +117,9 @@ public class EnemyBehaviour : MonoBehaviour
                 materialHolder = child.gameObject.GetComponent<Renderer>().material;
 
                 colorTimer = 0f;
+                break;
+            case EnemyType.RABBAN:
+                attackRange = 3.0f;
                 break;
 
             default:
