@@ -68,7 +68,7 @@ public class EnemyBehaviour : MonoBehaviour
     public GameObject needlePrefab;
 
     //Mentat
-    private List<GameObject> guardList;
+    private List<GameObject> guardList = new List<GameObject>();
     private bool isGuard;
     private bool summonFirst;
     [Header("- Only if Mentat -")]
