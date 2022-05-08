@@ -71,6 +71,7 @@ public class EnemyBehaviour : MonoBehaviour
     private List<GameObject> guardList = new List<GameObject>();
     private bool isGuard;
     private bool summonFirst;
+    private Vector3 initOffset;
     [Header("- Only if Mentat -")]
     public float summonTime;
     public float summonCooldown;
@@ -101,6 +102,7 @@ public class EnemyBehaviour : MonoBehaviour
             case EnemyType.MENTAT:
                 attackRange = 2.5f;
                 summonFirst = true;
+                initOffset = spawnOffset;
                 break;
 
             default:
@@ -370,22 +372,24 @@ public class EnemyBehaviour : MonoBehaviour
 
         if (summonFirst)
         {
-            Vector3 spawnPoint = transform.position + (transform.rotation * spawnOffset);
+            Vector3 spawnPoint = transform.position + (transform.rotation * initOffset);
             GameObject summonedEnemy = Instantiate(harkonnenPrefab, spawnPoint, transform.rotation);
             guardList.Add(summonedEnemy);
             summonFirst = false;
-        }else if (guardList.Count < 4)
+        } else if (guardList.Count < 4)
         {
-            if (guardList.Count == 1) spawnOffset.x = -spawnOffset.x;
-            if (guardList.Count == 2) spawnOffset.z = -spawnOffset.z;
+            if (guardList.Count == 1) spawnOffset.x = -initOffset.x;
+            if (guardList.Count == 2) spawnOffset.z = -initOffset.z;
             if (guardList.Count == 3)
             {
-                spawnOffset.x = -spawnOffset.x;
-                spawnOffset.z = -spawnOffset.z;
+                spawnOffset.x = -initOffset.x;
+                spawnOffset.z = -initOffset.z;
             }
             
             Vector3 spawnPoint = transform.position + (transform.rotation * spawnOffset);
             guardList.Add(Instantiate(harkonnenPrefab, spawnPoint, transform.rotation));
+
+            spawnOffset = initOffset;
         }
 
     }
