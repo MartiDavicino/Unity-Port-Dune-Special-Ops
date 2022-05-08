@@ -108,9 +108,12 @@ public class EnemyDetection : MonoBehaviour
 	void CalculateMultiplier()
     {
 		
-		distanceMultiplier = viewRadius * maxDistanceMultiplier / CalculateAbsoluteDistance(data.player.transform.position).magnitude;
-		if (distanceMultiplier > maxMultiplier)
-			distanceMultiplier = maxMultiplier;
+		if(data.player != null)
+        {
+			distanceMultiplier = viewRadius * maxDistanceMultiplier / CalculateAbsoluteDistance(data.player.transform.position).magnitude;
+			if (distanceMultiplier > maxMultiplier)
+				distanceMultiplier = maxMultiplier;
+        }
     }
 
     void FindTargetsWithDelay()

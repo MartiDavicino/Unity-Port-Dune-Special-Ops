@@ -140,35 +140,39 @@ public class EnemyBehaviour : MonoBehaviour
         //Check for sight and hear range
         bool detected = checkSenses();
 
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-
-        if (!detected)
+        if(player != null)
         {
-            Patroling();
-        }
+            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (detected && !playerInAttackRange)
-        {
-            targetPlayerScript = player.gameObject.GetComponent<CharacterBaseBehavior>();
-
-            if (type == EnemyType.MENTAT)
-                Summoning();
-            else
-                Chasing();
-        }
-
-        if (detected && playerInAttackRange)
-        {
-            agent.ResetPath();
-            targetPlayerScript = player.gameObject.GetComponent<CharacterBaseBehavior>();
-            if (type != EnemyType.MENTAT)
-                Attacking();
-            else if (type == EnemyType.MENTAT)
+            if (!detected)
             {
-                Fleeing();
-                Summoning();
+                Patroling();
+            }
+
+            if (detected && !playerInAttackRange)
+            {
+                targetPlayerScript = player.gameObject.GetComponent<CharacterBaseBehavior>();
+
+                if (type == EnemyType.MENTAT)
+                    Summoning();
+                else
+                    Chasing();
+            }
+
+            if (detected && playerInAttackRange)
+            {
+                agent.ResetPath();
+                targetPlayerScript = player.gameObject.GetComponent<CharacterBaseBehavior>();
+                if (type != EnemyType.MENTAT)
+                    Attacking();
+                else if (type == EnemyType.MENTAT)
+                {
+                    Fleeing();
+                    Summoning();
+                }
             }
         }
+
     }
     bool checkSenses()
     {
