@@ -68,7 +68,7 @@ public class EnemyBehaviour : MonoBehaviour
     public GameObject needlePrefab;
 
     //Mentat
-    private List<GameObject> guardsList;
+    private List<GameObject> guardList;
     private bool isGuard;
     private bool summonFirst;
     [Header("- Only if Mentat -")]
@@ -77,12 +77,10 @@ public class EnemyBehaviour : MonoBehaviour
     public Vector3 spawnOffset;
     public GameObject harkonnenPrefab;
 
-    //Fix for mentat guardslist idk why it doesn't work without it
-    private GameObject mentatFix;
-
     // Start is called before the first frame update
     void Start()
     {
+
         agent = GetComponent<NavMeshAgent>();
 
         patrolIterator = 0;
@@ -103,8 +101,6 @@ public class EnemyBehaviour : MonoBehaviour
             case EnemyType.MENTAT:
                 attackRange = 2.5f;
                 summonFirst = true;
-                mentatFix = new GameObject();
-                guardsList.Add(mentatFix);
                 break;
 
             default:
@@ -360,11 +356,8 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Summoning()
     {
-        if (guardsList[0] == mentatFix)
-            guardsList.Clear();
-
         if(!summonFirst)
-            if (guardsList.Count == 0)
+            if (guardList.Count == 0)
                 summonFirst = true;
 
         while (elapse_time < summonTime)
@@ -379,20 +372,20 @@ public class EnemyBehaviour : MonoBehaviour
         {
             Vector3 spawnPoint = transform.position + (transform.rotation * spawnOffset);
             GameObject summonedEnemy = Instantiate(harkonnenPrefab, spawnPoint, transform.rotation);
-            guardsList.Add(summonedEnemy);
+            guardList.Add(summonedEnemy);
             summonFirst = false;
-        }else if (guardsList.Count < 4)
+        }else if (guardList.Count < 4)
         {
-            if (guardsList.Count == 1) spawnOffset.x = -spawnOffset.x;
-            if (guardsList.Count == 2) spawnOffset.z = -spawnOffset.z;
-            if (guardsList.Count == 3)
+            if (guardList.Count == 1) spawnOffset.x = -spawnOffset.x;
+            if (guardList.Count == 2) spawnOffset.z = -spawnOffset.z;
+            if (guardList.Count == 3)
             {
                 spawnOffset.x = -spawnOffset.x;
                 spawnOffset.z = -spawnOffset.z;
             }
             
             Vector3 spawnPoint = transform.position + (transform.rotation * spawnOffset);
-            guardsList.Add(Instantiate(harkonnenPrefab, spawnPoint, transform.rotation));
+            guardList.Add(Instantiate(harkonnenPrefab, spawnPoint, transform.rotation));
         }
 
     }
