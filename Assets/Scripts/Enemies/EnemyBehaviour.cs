@@ -70,7 +70,7 @@ public class EnemyBehaviour : MonoBehaviour
     //Mentat
     private List<GameObject> guardList = new List<GameObject>();
     private bool isGuard;
-    private bool summonFirst;
+    private bool waveSpawned;
     private Vector3 initOffset;
     [Header("- Only if Mentat -")]
     public float summonTime;
@@ -101,7 +101,7 @@ public class EnemyBehaviour : MonoBehaviour
 
             case EnemyType.MENTAT:
                 attackRange = 2.5f;
-                summonFirst = true;
+                waveSpawned = false;
                 initOffset = spawnOffset;
                 break;
 
@@ -122,6 +122,7 @@ public class EnemyBehaviour : MonoBehaviour
         {
             Patroling();
         }
+        
         if (detected && !playerInAttackRange)
         {
             targetPlayerScript = player.gameObject.GetComponent<CharacterBaseBehavior>();
@@ -358,38 +359,48 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Summoning()
     {
-        if(!summonFirst)
-            if (guardList.Count == 0)
-                summonFirst = true;
-
-        while (elapse_time < summonTime)
+        
+        while(guardList.Count < 4)
         {
-            elapse_time += Time.deltaTime;
-            return;
-        }
-
-        elapse_time = 0;
-
-        if (summonFirst)
-        {
-            Vector3 spawnPoint = transform.position + (transform.rotation * initOffset);
-            GameObject summonedEnemy = Instantiate(harkonnenPrefab, spawnPoint, transform.rotation);
-            guardList.Add(summonedEnemy);
-            summonFirst = false;
-        } else if (guardList.Count < 4)
-        {
-            if (guardList.Count == 1) spawnOffset.x = -initOffset.x;
-            if (guardList.Count == 2) spawnOffset.z = -initOffset.z;
-            if (guardList.Count == 3)
+            if (!waveSpawned)
             {
-                spawnOffset.x = -initOffset.x;
-                spawnOffset.z = -initOffset.z;
-            }
-            
-            Vector3 spawnPoint = transform.position + (transform.rotation * spawnOffset);
-            guardList.Add(Instantiate(harkonnenPrefab, spawnPoint, transform.rotation));
+                while (elapse_time < summonTime)
+                {
+                    elapse_time += Time.deltaTime;
+                    return;
+                }
 
-            spawnOffset = initOffset;
+                elapse_time = 0;
+
+                for (int i = 0; i < 2; i++)
+                {
+                    if (guardList.Count == 1) spawnOffset.x = -initOffset.x;
+                    if (guardList.Count == 2) spawnOffset.z = -initOffset.z;
+                    if (guardList.Count == 3)
+                    {
+                        spawnOffset.x = -initOffset.x;
+                        spawnOffset.z = -initOffset.z;
+                    }
+            
+                    Vector3 spawnPoint = transform.position + (transform.rotation * spawnOffset);
+                    guardList.Add(Instantiate(harkonnenPrefab, spawnPoint, transform.rotation));
+
+                    spawnOffset = initOffset;
+                }
+            
+                waveSpawned = true;
+            } else
+            {
+                while (elapse_time < summonCooldown)
+                {
+                    elapse_time += Time.deltaTime;
+                    return;
+                }
+
+                elapse_time = summonTime;
+
+                waveSpawned = false;
+            }
         }
 
     }
