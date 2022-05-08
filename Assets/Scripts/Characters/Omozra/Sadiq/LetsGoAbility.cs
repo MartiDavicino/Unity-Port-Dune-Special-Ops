@@ -23,7 +23,6 @@ public class LetsGoAbility : MonoBehaviour
     private bool phase2;
 
     [HideInInspector] public bool pukePhase;
-    private bool waitingToPuke;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +40,6 @@ public class LetsGoAbility : MonoBehaviour
         phase2 = false;
 
         pukePhase = false;
-        waitingToPuke = false;
     }
 
     // Update is called once per frame

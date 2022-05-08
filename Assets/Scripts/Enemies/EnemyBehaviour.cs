@@ -67,6 +67,18 @@ public class EnemyBehaviour : MonoBehaviour
     public int ammunition;
     public GameObject needlePrefab;
 
+    //Mentat
+    private List<GameObject> guardsList;
+    private bool isGuard;
+    private bool summonFirst;
+    [Header("- Only if Mentat -")]
+    public float summonTime;
+    public float summonCooldown;
+    public Vector3 spawnOffset;
+    public GameObject harkonnenPrefab;
+
+    //Fix for mentat guardslist idk why it doesn't work without it
+    private GameObject mentatFix;
 
     // Start is called before the first frame update
     void Start()
@@ -90,6 +102,9 @@ public class EnemyBehaviour : MonoBehaviour
 
             case EnemyType.MENTAT:
                 attackRange = 2.5f;
+                summonFirst = true;
+                mentatFix = new GameObject();
+                guardsList.Add(mentatFix);
                 break;
 
             default:
@@ -112,14 +127,21 @@ public class EnemyBehaviour : MonoBehaviour
         if (detected && !playerInAttackRange)
         {
             targetPlayerScript = player.gameObject.GetComponent<CharacterBaseBehavior>();
-            Chasing();
+            if (type != EnemyType.MENTAT)
+                Chasing();
+            else if (type == EnemyType.MENTAT)
+                Summoning();
+
         }
 
         if (detected && playerInAttackRange)
         {
             agent.ResetPath();
             targetPlayerScript = player.gameObject.GetComponent<CharacterBaseBehavior>();
-            Attacking();
+            if (type != EnemyType.MENTAT)
+                Attacking();
+            else if (type == EnemyType.MENTAT)
+                Fleeing();
         }
     }
     bool checkSenses()
@@ -334,5 +356,48 @@ public class EnemyBehaviour : MonoBehaviour
         needle.transform.LookAt(targetPlayerScript.transform);
 
         ammunition--;
+    }
+
+    private void Summoning()
+    {
+        if (guardsList[0] == mentatFix)
+            guardsList.Clear();
+
+        if(!summonFirst)
+            if (guardsList.Count == 0)
+                summonFirst = true;
+
+        while (elapse_time < summonTime)
+        {
+            elapse_time += Time.deltaTime;
+            return;
+        }
+
+        elapse_time = 0;
+
+        if (summonFirst)
+        {
+            Vector3 spawnPoint = transform.position + (transform.rotation * spawnOffset);
+            GameObject summonedEnemy = Instantiate(harkonnenPrefab, spawnPoint, transform.rotation);
+            guardsList.Add(summonedEnemy);
+            summonFirst = false;
+        }else if (guardsList.Count < 4)
+        {
+            if (guardsList.Count == 1) spawnOffset.x = -spawnOffset.x;
+            if (guardsList.Count == 2) spawnOffset.z = -spawnOffset.z;
+            if (guardsList.Count == 3)
+            {
+                spawnOffset.x = -spawnOffset.x;
+                spawnOffset.z = -spawnOffset.z;
+            }
+            
+            Vector3 spawnPoint = transform.position + (transform.rotation * spawnOffset);
+            guardsList.Add(Instantiate(harkonnenPrefab, spawnPoint, transform.rotation));
+        }
+
+    }
+    private void Fleeing()
+    {
+
     }
 }
