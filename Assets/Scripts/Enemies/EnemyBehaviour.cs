@@ -9,6 +9,7 @@ public enum EnemyType
     HARKONNEN,
     SARDAUKAR,
     MENTAT,
+    RABBAN,
     NONE,
 }
 
@@ -90,6 +91,9 @@ public class EnemyBehaviour : MonoBehaviour
 
             case EnemyType.MENTAT:
                 attackRange = 2.5f;
+                break;
+            case EnemyType.RABBAN:
+                attackRange = 3.0f;
                 break;
 
             default:
