@@ -26,7 +26,7 @@ public class EnemyBehaviour : MonoBehaviour
     //General
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Transform player;
-    [HideInInspector] public EnemyState state;
+    public EnemyState state;
 
     private Transform placeholder1;
     private Transform placeholder2;
@@ -60,6 +60,11 @@ public class EnemyBehaviour : MonoBehaviour
     public EnemyType type = EnemyType.NONE;
     public LayerMask whatIsGround, whatIsPlayer;
 
+    //Harkonnen
+    [HideInInspector] public bool isGuard;
+    [HideInInspector] public GameObject leader;
+    [HideInInspector] public Vector3 guardOffset;
+    
     //Sardaukar
     private bool playerInRanged;
     private GameObject needle;
@@ -68,15 +73,26 @@ public class EnemyBehaviour : MonoBehaviour
     public int ammunition;
     public GameObject needlePrefab;
 
+    //Mentat
+    private List<GameObject> guardList = new List<GameObject>();
+    private bool waveSpawned;
+    private Vector3 initOffset;
+    [Header("- Only if Mentat -")]
+    public float summonTime;
+    public Vector3 spawnOffset;
+    public float summonCooldown;
+    public GameObject harkonnenPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
+
         agent = GetComponent<NavMeshAgent>();
 
         patrolIterator = 0;
         affectedByDecoy = false;
-        state = EnemyState.IDLE;
+        if(!isGuard) state = EnemyState.IDLE;
+        
         enemyD = GetComponent<EnemyDetection>();
 
         switch (type)
@@ -90,7 +106,9 @@ public class EnemyBehaviour : MonoBehaviour
                 break;
 
             case EnemyType.MENTAT:
-                attackRange = 2.5f;
+                attackRange = 7f;
+                waveSpawned = false;
+                initOffset = spawnOffset;
                 break;
             case EnemyType.RABBAN:
                 attackRange = 3.0f;
@@ -113,17 +131,28 @@ public class EnemyBehaviour : MonoBehaviour
         {
             Patroling();
         }
+
         if (detected && !playerInAttackRange)
         {
             targetPlayerScript = player.gameObject.GetComponent<CharacterBaseBehavior>();
-            Chasing();
+            if (type != EnemyType.MENTAT)
+                Chasing();
+            else if (type == EnemyType.MENTAT)
+                Summoning();
+
         }
 
         if (detected && playerInAttackRange)
         {
             agent.ResetPath();
             targetPlayerScript = player.gameObject.GetComponent<CharacterBaseBehavior>();
-            Attacking();
+            if (type != EnemyType.MENTAT)
+                Attacking();
+            else if (type == EnemyType.MENTAT)
+            {
+                Fleeing();
+                Summoning();
+            }
         }
     }
     bool checkSenses()
@@ -199,24 +228,45 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Patroling()
     {
-        if (!walkPointSet) SearchWalkPoint();
-
-        if (walkPointSet && !affectedByDecoy)
+        if(isGuard)
         {
-            agent.SetDestination(walkPoint);
-            state = EnemyState.WALKING;
+            if (!walkPointSet)
+            {
+                walkPoint = leader.transform.position + (leader.transform.rotation * guardOffset);
+                agent.SetDestination(walkPoint);
+                state = EnemyState.WALKING;
+            }
+
+            if (agent.remainingDistance < 0.5f && !agent.pathPending && walkPointSet)
+            {
+                transform.rotation = leader.transform.rotation;
+                state = EnemyState.IDLE;
+                walkPointSet = false;
+            }
+
+        } else { 
+        
+            if (!walkPointSet) SearchWalkPoint();
+
+            if (walkPointSet && !affectedByDecoy)
+            {
+                agent.SetDestination(walkPoint);
+                state = EnemyState.WALKING;
+            }
+
+
+            Vector3 distanceToWalkPoint = transform.position - agent.destination;
+            agent.speed = patrolingSpeed;
+
+            //WalkPoint reached
+            if (distanceToWalkPoint.magnitude < 0.5f)
+            {
+                walkPointSet = false;
+                agent.ResetPath();
+                state = EnemyState.IDLE;
+            }
         }
-
-
-        Vector3 distanceToWalkPoint = transform.position - agent.destination;
-        agent.speed = patrolingSpeed;
-
-        //WalkPoint reached
-        if (distanceToWalkPoint.magnitude < 1.5f)
-        {
-            walkPointSet = false;
-            agent.ResetPath();
-        }
+        
     }
     private void SearchWalkPoint()
     {
@@ -338,5 +388,101 @@ public class EnemyBehaviour : MonoBehaviour
         needle.transform.LookAt(targetPlayerScript.transform);
 
         ammunition--;
+    }
+
+    private void Summoning()
+    {
+        
+        while(guardList.Count < 4)
+        {
+            if (!waveSpawned)
+            {
+                while (elapse_time < summonTime)
+                {
+                    elapse_time += Time.deltaTime;
+                    return;
+                }
+
+                elapse_time = 0;
+
+                for (int i = 0; i < 2; i++)
+                {
+                    if (guardList.Count == 1) spawnOffset.x = -initOffset.x;
+                    if (guardList.Count == 2) spawnOffset.z = -initOffset.z;
+                    if (guardList.Count == 3)
+                    {
+                        spawnOffset.x = -initOffset.x;
+                        spawnOffset.z = -initOffset.z;
+                    }
+            
+                    Vector3 spawnPoint = transform.position + (transform.rotation * spawnOffset);
+                    GameObject summonedEnemy = Instantiate(harkonnenPrefab, spawnPoint, transform.rotation);
+                    guardList.Add(summonedEnemy);
+
+                    EnemyDetection summonedDetection = summonedEnemy.GetComponent<EnemyDetection>();
+                    summonedDetection.state = DecState.SEEKING;
+                    summonedDetection.timer = summonedDetection.secondsToDetect;
+
+                    EnemyBehaviour summonedBehaviour = summonedEnemy.GetComponent<EnemyBehaviour>();
+                    summonedBehaviour.walkPointSet = true;
+                    summonedBehaviour.state = EnemyState.WALKING;
+                    summonedBehaviour.isGuard = true;
+                    summonedBehaviour.leader = gameObject;
+                    summonedBehaviour.guardOffset = spawnOffset;
+
+                    NavMeshAgent summonedAgent = summonedEnemy.GetComponent<NavMeshAgent>();
+                    summonedAgent.SetDestination(player.position);
+
+                    spawnOffset = initOffset;
+                }
+            
+                waveSpawned = true;
+            } else
+            {
+                while (elapse_time < summonCooldown)
+                {
+                    elapse_time += Time.deltaTime;
+                    return;
+                }
+
+                elapse_time = 0;
+
+                waveSpawned = false;
+            }
+        }
+
+    }
+    private void Fleeing()
+    {
+
+        // store the starting transform
+        Transform startTransform = transform;
+
+        //temporarily point the object to look away from the player
+        transform.rotation = Quaternion.LookRotation(transform.position - player.position);
+
+        //Then we'll get the position on that rotation that's multiplyBy down the path (you could set a Random.range
+        // for this if you want variable results) and store it in a new Vector3 called runTo
+        Vector3 runTo = transform.position + transform.forward * agent.speed;
+        //Debug.Log("runTo = " + runTo);
+
+        //So now we've got a Vector3 to run to and we can transfer that to a location on the NavMesh with samplePosition.
+
+        NavMeshHit hit;    // stores the output in a variable called hit
+
+        // 5 is the distance to check, assumes you use default for the NavMesh Layer name
+        NavMesh.SamplePosition(runTo, out hit, 5, 1 << NavMesh.GetNavMeshLayerFromName("Default"));
+        //Debug.Log("hit = " + hit + " hit.position = " + hit.position);
+
+        // just used for testing - safe to ignore
+        //nextTurnTime = Time.time + 5;
+
+        // reset the transform back to our start transform
+        transform.position = startTransform.position;
+        transform.rotation = startTransform.rotation;
+
+        // And get it to head towards the found NavMesh position
+        agent.SetDestination(hit.position);
+        
     }
 }

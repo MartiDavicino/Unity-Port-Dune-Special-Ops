@@ -23,7 +23,6 @@ public class LetsGoAbility : MonoBehaviour
     private bool phase2;
 
     [HideInInspector] public bool pukePhase;
-    private bool waitingToPuke;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +40,6 @@ public class LetsGoAbility : MonoBehaviour
         phase2 = false;
 
         pukePhase = false;
-        waitingToPuke = false;
     }
 
     // Update is called once per frame
@@ -59,6 +57,8 @@ public class LetsGoAbility : MonoBehaviour
 
             if (phase1)
             {
+                omozraLetsGoScript.characterChosen = true;
+
                 while (elapse_time < 1.2f)
                 {
                     elapse_time += Time.deltaTime;
@@ -109,6 +109,9 @@ public class LetsGoAbility : MonoBehaviour
 
             if(pukePhase)
             {
+                omozraLetsGoScript.characterChosen = false;
+                omozraLetsGoScript.locationChosen = true;
+
                 transform.position = targetPos;
 
                 baseScript.state = SadiqState.SPITTING;
@@ -146,6 +149,8 @@ public class LetsGoAbility : MonoBehaviour
                 omozraLetsGoScript.addLineComponentOnce = true;
 
                 cll.isTrigger = false;
+
+                omozraLetsGoScript.locationChosen = false;
             }
         }
     }

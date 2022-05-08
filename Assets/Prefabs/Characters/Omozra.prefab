@@ -617,7 +617,7 @@ GameObject:
   - component: {fileID: 2531757979946751366}
   - component: {fileID: 8032751623648455598}
   m_Layer: 0
-  m_Name: omozra
+  m_Name: Omozra_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -631,7 +631,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6687921649775398796}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.78, y: 11.62, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 101.83358, y: 101.83358, z: 101.83358}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -824,6 +824,8 @@ GameObject:
   - component: {fileID: 7738372082402153353}
   - component: {fileID: 7738372082402153350}
   - component: {fileID: 7738372082402153356}
+  - component: {fileID: 4475807426259986342}
+  - component: {fileID: 4475807426259986343}
   m_Layer: 6
   m_Name: Omozra
   m_TagString: Player
@@ -875,8 +877,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 8.94, y: 19.99, z: 3.95}
-  m_Center: {x: 0, y: 9.24, z: 1.96}
+  m_Size: {x: 8.94, y: 16.5, z: 3.95}
+  m_Center: {x: 0, y: -1.9, z: 1.96}
 --- !u!95 &7738372082402153349
 Animator:
   serializedVersion: 4
@@ -887,7 +889,7 @@ Animator:
   m_GameObject: {fileID: 7468465412830655946}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 15079fac650240044ad488452db0f68e, type: 2}
+  m_Controller: {fileID: 9100000, guid: fdbb094b9e1696145b3ba3dbb84d9ebf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -928,7 +930,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1
-  m_BaseOffset: -0.94
+  m_BaseOffset: 10.46
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &7738372082402153350
@@ -959,7 +961,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   playerSpice: 0
-  ultimateCost: 1500
+  ultimateCost: 0
 --- !u!114 &7738372082402153356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -973,6 +975,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeToKill: 2
+--- !u!114 &4475807426259986342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7468465412830655946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41fedff627795a04588096bb67b11a03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseScript: {fileID: 0}
+  addLineComponentOnce: 0
+  targetEnemy: {fileID: 0}
+  maximumRange: 20
+  cooldown: 10
+  onCooldown: 0
+--- !u!114 &4475807426259986343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7468465412830655946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1afb2601185e4d45ba182687b824366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseScript: {fileID: 0}
+  addLineComponentOnce: 0
+  targetCharacter: {fileID: 0}
+  targetPosition: {x: 0, y: 0, z: 0}
+  characterEaten: 0
+  maximumRange: 20
+  cooldown: 10
+  onCooldown: 0
 --- !u!1 &8057625747827004712
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,7 +1037,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8057625747827004712}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.78, y: 11.62, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 101.83357, y: 101.83358, z: 101.83357}
   m_ConstrainProportionsScale: 0
   m_Children:

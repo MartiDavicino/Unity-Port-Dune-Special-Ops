@@ -41,7 +41,7 @@ public class CharacterBaseBehavior : MonoBehaviour
 
     [HideInInspector] public bool abilityActive;
     [HideInInspector] public bool ability1Active;
-     public bool ability2Active;
+    [HideInInspector] public bool ability2Active;
     [HideInInspector] public bool ability3Active;
 
     private Animator animator;
@@ -50,6 +50,7 @@ public class CharacterBaseBehavior : MonoBehaviour
     private Vector3 targetPosition;
 
     private bool crouching = false;
+    private bool running = false;
 
     public LayerMask whatIsSpice;
 
@@ -167,8 +168,18 @@ public class CharacterBaseBehavior : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftShift)/* && state != PlayerState.IDLE*/)
             {
                 crouching = !crouching;
+                running = false;
                 if(crouching && state == PlayerState.IDLE) { state = PlayerState.CROUCH; }
                 else if (state == PlayerState.CROUCH) { state = PlayerState.IDLE; }
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftAlt) && state != PlayerState.CROUCH && state != PlayerState.IDLE)
+            {
+                running = !running;
+                if (running && state == PlayerState.WALKING)
+                    state = PlayerState.RUNNING;
+                else if (state == PlayerState.RUNNING)
+                    state = PlayerState.WALKING;
             }
 
 
@@ -188,11 +199,13 @@ public class CharacterBaseBehavior : MonoBehaviour
                             targetPosition = meshHit.point;
 
                             if (crouching) { state = PlayerState.CROUCH; }
+                            else if (running) { state = PlayerState.RUNNING; }
                             else { state = PlayerState.WALKING; }
 
                         } else
                         {
                             if (crouching) { state = PlayerState.CROUCH; }
+                            else if (running) { state = PlayerState.RUNNING; }
                             else { state = PlayerState.WALKING; }
                             
                             targetPosition = meshHit.point;
@@ -215,6 +228,7 @@ public class CharacterBaseBehavior : MonoBehaviour
                 {
                     targetPosition = Vector3.zero;
                     if (crouching) { state = PlayerState.CROUCH; }
+                    else if (running) { state = PlayerState.RUNNING; }
                     else { state = PlayerState.IDLE; }
                     playerAgent.ResetPath();
                 }
@@ -238,7 +252,8 @@ public class CharacterBaseBehavior : MonoBehaviour
     {
         invisible = false;
 
-        if (state==PlayerState.CROUCH) { movementSpeed = 5.0f; }
+        if (state==PlayerState.CROUCH) { movementSpeed = 3.0f; }
+        else if (state == PlayerState.RUNNING) { movementSpeed = 12.0f; }
         else { movementSpeed = 7.5f; }
 
         playerAgent.speed = movementSpeed;

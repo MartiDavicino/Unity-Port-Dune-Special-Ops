@@ -80,6 +80,7 @@ public class OmozraÑamÑamAbility : MonoBehaviour
                             }
                             else
                             {
+                                agent.ResetPath();
                                 sadiqScript.ability2Active = true;
                             }
                         }
@@ -90,6 +91,7 @@ public class OmozraÑamÑamAbility : MonoBehaviour
                 {
                     if (agent.remainingDistance <= maximumRange && !agent.pathPending)
                     {
+                        agent.ResetPath();
                         sadiqScript.ability2Active = true;
                     }
                 }

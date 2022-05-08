@@ -150,7 +150,7 @@ public class ThrowingKnifeAbility : MonoBehaviour
                 if(pickables[i].gameObject.tag == "Knife")
                 {
                     Destroy(pickables[i].gameObject);
-                    //ammunition++; TESTING
+                    ammunition++;
                 }
 
             }
