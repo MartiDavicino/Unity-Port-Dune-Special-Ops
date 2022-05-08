@@ -20,6 +20,8 @@ public class GeneralManager : MonoBehaviour
     private CharacterBaseBehavior omozraBase;
     public bool omozraUnlocked;
 
+    public GameObject sadiq;
+
     private GameObject selectedCharacter;
     private bool allSelected;
 
@@ -57,28 +59,44 @@ public class GeneralManager : MonoBehaviour
 
         if (!gameLost)
         {
-            if (zhibBase.playerHealth == 0)
+            if(zhib != null)
             {
-                Destroy(zhib);
-                if (nerala != null && neralaUnlocked) selectedCharacter = nerala;
-                if (omozra != null && omozraUnlocked) selectedCharacter = omozra;
+                if (zhibBase.playerHealth == 0)
+                {
+                    Destroy(zhib);
+                    if (nerala != null && neralaUnlocked)
+                        selectedCharacter = nerala;
+                    else if (omozra != null && omozraUnlocked)
+                        selectedCharacter = omozra;
+                }
             }
 
-            if (neralaBase.playerHealth == 0)
+            if(nerala != null)
             {
-                Destroy(nerala);
-                if (zhib != null) selectedCharacter = zhib;
-                if (omozra != null) selectedCharacter = omozra;
+                if (neralaBase.playerHealth == 0)
+                {
+                    Destroy(nerala);
+                    if (zhib != null)
+                        selectedCharacter = zhib;
+                     else if (omozra != null && omozraUnlocked)
+                        selectedCharacter = omozra;
+                }
             }
 
-            if (neralaBase.playerHealth == 0)
+            if(omozra != null)
             {
-                Destroy(omozra);
-                if (zhib != null) selectedCharacter = zhib;
-                if (nerala != null) selectedCharacter = nerala;
+                if (omozraBase.playerHealth == 0)
+                {
+                    Destroy(omozra);
+                    Destroy(sadiq);
+                    if (zhib != null)
+                        selectedCharacter = zhib;
+                    else if (nerala != null)
+                        selectedCharacter = nerala;
+                }
             }
 
-            if (zhibBase.playerHealth == 0 && neralaBase.playerHealth == 0 && omozraBase.playerHealth == 0)
+            if (zhibBase.playerHealth == 0 && (neralaBase.playerHealth == 0 || !neralaUnlocked) && (omozraBase.playerHealth == 0 || !omozraUnlocked))
                 gameLost = true;
 
             if (Input.GetKey(KeyCode.Z) && !hunterSeekerActive)
