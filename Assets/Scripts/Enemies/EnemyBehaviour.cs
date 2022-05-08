@@ -25,7 +25,7 @@ public class EnemyBehaviour : MonoBehaviour
     //General
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Transform player;
-    [HideInInspector] public EnemyState state;
+    public EnemyState state;
 
     private Transform placeholder1;
     private Transform placeholder2;
@@ -59,6 +59,11 @@ public class EnemyBehaviour : MonoBehaviour
     public EnemyType type = EnemyType.NONE;
     public LayerMask whatIsGround, whatIsPlayer;
 
+    //Harkonnen
+    [HideInInspector] public bool isGuard;
+    [HideInInspector] public GameObject leader;
+    [HideInInspector] public Vector3 guardOffset;
+    
     //Sardaukar
     private bool playerInRanged;
     private GameObject needle;
@@ -69,13 +74,12 @@ public class EnemyBehaviour : MonoBehaviour
 
     //Mentat
     private List<GameObject> guardList = new List<GameObject>();
-    private bool isGuard;
     private bool waveSpawned;
     private Vector3 initOffset;
     [Header("- Only if Mentat -")]
     public float summonTime;
-    public float summonCooldown;
     public Vector3 spawnOffset;
+    public float summonCooldown;
     public GameObject harkonnenPrefab;
 
     // Start is called before the first frame update
@@ -86,7 +90,8 @@ public class EnemyBehaviour : MonoBehaviour
 
         patrolIterator = 0;
         affectedByDecoy = false;
-        state = EnemyState.IDLE;
+        if(!isGuard) state = EnemyState.IDLE;
+        
         enemyD = GetComponent<EnemyDetection>();
 
         switch (type)
@@ -122,7 +127,7 @@ public class EnemyBehaviour : MonoBehaviour
         {
             Patroling();
         }
-        
+
         if (detected && !playerInAttackRange)
         {
             targetPlayerScript = player.gameObject.GetComponent<CharacterBaseBehavior>();
@@ -216,24 +221,45 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Patroling()
     {
-        if (!walkPointSet) SearchWalkPoint();
-
-        if (walkPointSet && !affectedByDecoy)
+        if(isGuard)
         {
-            agent.SetDestination(walkPoint);
-            state = EnemyState.WALKING;
+            if (!walkPointSet)
+            {
+                walkPoint = leader.transform.position + (leader.transform.rotation * guardOffset);
+                agent.SetDestination(walkPoint);
+                state = EnemyState.WALKING;
+            }
+
+            if (agent.remainingDistance < 0.5f && !agent.pathPending && walkPointSet)
+            {
+                transform.rotation = leader.transform.rotation;
+                state = EnemyState.IDLE;
+                walkPointSet = false;
+            }
+
+        } else { 
+        
+            if (!walkPointSet) SearchWalkPoint();
+
+            if (walkPointSet && !affectedByDecoy)
+            {
+                agent.SetDestination(walkPoint);
+                state = EnemyState.WALKING;
+            }
+
+
+            Vector3 distanceToWalkPoint = transform.position - agent.destination;
+            agent.speed = patrolingSpeed;
+
+            //WalkPoint reached
+            if (distanceToWalkPoint.magnitude < 0.5f)
+            {
+                walkPointSet = false;
+                agent.ResetPath();
+                state = EnemyState.IDLE;
+            }
         }
-
-
-        Vector3 distanceToWalkPoint = transform.position - agent.destination;
-        agent.speed = patrolingSpeed;
-
-        //WalkPoint reached
-        if (distanceToWalkPoint.magnitude < 1.5f)
-        {
-            walkPointSet = false;
-            agent.ResetPath();
-        }
+        
     }
     private void SearchWalkPoint()
     {
@@ -383,7 +409,22 @@ public class EnemyBehaviour : MonoBehaviour
                     }
             
                     Vector3 spawnPoint = transform.position + (transform.rotation * spawnOffset);
-                    guardList.Add(Instantiate(harkonnenPrefab, spawnPoint, transform.rotation));
+                    GameObject summonedEnemy = Instantiate(harkonnenPrefab, spawnPoint, transform.rotation);
+                    guardList.Add(summonedEnemy);
+
+                    EnemyDetection summonedDetection = summonedEnemy.GetComponent<EnemyDetection>();
+                    summonedDetection.state = DecState.SEEKING;
+                    summonedDetection.timer = summonedDetection.secondsToDetect;
+
+                    EnemyBehaviour summonedBehaviour = summonedEnemy.GetComponent<EnemyBehaviour>();
+                    summonedBehaviour.walkPointSet = true;
+                    summonedBehaviour.state = EnemyState.WALKING;
+                    summonedBehaviour.isGuard = true;
+                    summonedBehaviour.leader = gameObject;
+                    summonedBehaviour.guardOffset = spawnOffset;
+
+                    NavMeshAgent summonedAgent = summonedEnemy.GetComponent<NavMeshAgent>();
+                    summonedAgent.SetDestination(player.position);
 
                     spawnOffset = initOffset;
                 }
@@ -397,7 +438,7 @@ public class EnemyBehaviour : MonoBehaviour
                     return;
                 }
 
-                elapse_time = summonTime;
+                elapse_time = 0;
 
                 waveSpawned = false;
             }

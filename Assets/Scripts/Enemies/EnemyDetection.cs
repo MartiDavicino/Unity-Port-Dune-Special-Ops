@@ -97,7 +97,7 @@ public class EnemyDetection : MonoBehaviour
 		{
 			state = DecState.STILL;
 			timer -= proportion * Time.deltaTime;
-		} else if (timer >= timer / 2 && timer < secondsToDetect)
+		} else if (timer >= timer / 2 && timer <= secondsToDetect)
 		{
 			state = DecState.SEEKING;
 			timer -= proportion * Time.deltaTime;
@@ -109,8 +109,6 @@ public class EnemyDetection : MonoBehaviour
 	}
 	void WaitAndAddToList(float delay,Transform target,List<Transform>targets)
     {
-
-		
 		timer += proportion  * Time.deltaTime;
 
 
