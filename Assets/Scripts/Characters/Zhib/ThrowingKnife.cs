@@ -8,6 +8,9 @@ public class ThrowingKnife : MonoBehaviour
 
     private float velocity;
 
+    public float soundRange;
+    public LayerMask whatIsEnemy;
+
     private bool hit;
 
     private GameObject zhib;
@@ -18,6 +21,9 @@ public class ThrowingKnife : MonoBehaviour
     {
         zhib = GameObject.Find("Zhib");
         baseScript = zhib.GetComponent<ThrowingKnifeAbility>();
+
+        soundRange = baseScript.effectRange;
+
         velocity = baseScript.knifeVelocity;
         hit = false;
         rb = GetComponent<Rigidbody>();
@@ -26,6 +32,8 @@ public class ThrowingKnife : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
         if (!hit)
         {
             transform.position += transform.rotation * Vector3.forward * velocity * Time.deltaTime;
@@ -88,8 +96,20 @@ public class ThrowingKnife : MonoBehaviour
         {
             hit = true;
             rb.useGravity = true;
+            EmitSound();
         }
 
         
+    }
+    void EmitSound()
+    {
+        Collider[] affectedEnemies = Physics.OverlapSphere(transform.position, soundRange, whatIsEnemy);
+
+        for (int i = 0; i < affectedEnemies.Length; i++)
+        {
+            affectedEnemies[i].GetComponent<EnemyDetection>().state = DecState.SEEKING;
+            affectedEnemies[i].GetComponent<EnemyDetection>().timer = affectedEnemies[i].GetComponent<EnemyDetection>().secondsToDetect;
+
+        }
     }
 }

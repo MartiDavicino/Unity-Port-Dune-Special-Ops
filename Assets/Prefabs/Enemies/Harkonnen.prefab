@@ -575,7 +575,7 @@ Transform:
   m_GameObject: {fileID: 716233281998640737}
   m_LocalRotation: {x: 0, y: -0.99666023, z: 0, w: 0.0816602}
   m_LocalPosition: {x: 7.988, y: 5.84, z: 12.883}
-  m_LocalScale: {x: 0.2465572, y: 0.24655715, z: 0.2465572}
+  m_LocalScale: {x: 0.24655727, y: 0.24655715, z: 0.24655727}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9082519780024179781}
@@ -614,7 +614,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 7.5, z: 2.45}
+  m_Size: {x: 5, y: 7.5, z: 3.67}
   m_Center: {x: 0.03, y: 3.6, z: 0.3}
 --- !u!33 &374356984102618181
 MeshFilter:
@@ -697,7 +697,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 2.72
-  m_Acceleration: 8
+  m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -723,13 +723,17 @@ MonoBehaviour:
   agent: {fileID: 374356984102618191}
   player: {fileID: 196824455201623259}
   state: 0
-  chasingSpeed: 5
+  chasingSpeed: 6
   patrolingSpeed: 3
   timeBetweenAttacks: 1
-  timeBetweenPatrolPoints: 0
+  timeBetweenPatrolPoints: 3
   visitedPoints: []
   affectedByDecoy: 0
-  patrolPoints: []
+  patrolPoints:
+  - {x: 205, y: 0.24, z: -16}
+  - {x: 218.45, y: 0.24, z: -12.4}
+  - {x: 226, y: 0.24, z: -30}
+  - {x: 220, y: 0.24, z: -43}
   playerInSightRange: 0
   playerInAttackRange: 0
   type: 0
@@ -739,12 +743,15 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
+  isGuard: 0
+  leader: {fileID: 0}
+  guardOffset: {x: 0, y: 0, z: 0}
   rangeAttackRange: 0
   ammunition: 0
   needlePrefab: {fileID: 0}
   summonTime: 0
-  summonCooldown: 0
   spawnOffset: {x: 0, y: 0, z: 0}
+  summonCooldown: 0
   harkonnenPrefab: {fileID: 0}
 --- !u!114 &374356984102618189
 MonoBehaviour:
@@ -767,6 +774,7 @@ MonoBehaviour:
   viewRadius: 15
   viewAngle: 90
   hearingRadius: 7.5
+  camera: {fileID: 0}
   timer: 0
   secondsToDetect: 3
   state: 0

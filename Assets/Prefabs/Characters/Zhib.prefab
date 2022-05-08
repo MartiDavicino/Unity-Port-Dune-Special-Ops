@@ -1479,8 +1479,9 @@ MonoBehaviour:
   state: 0
   whatIsSpice:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   playerSpice: 0
+  ultimateCost: 1500
 --- !u!114 &6868864155876820119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1513,6 +1514,7 @@ MonoBehaviour:
   whatIsKnife:
     serializedVersion: 2
     m_Bits: 1024
+  effectRange: 10
 --- !u!114 &6868864155876820118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1526,7 +1528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maximumRange: 10
-  effectRange: 10
+  effectRange: 20
   cooldown: 3
   decoyPrefab: {fileID: 7972253676922709312, guid: 2038e93e7de188149bcda1ef088e8b53, type: 3}
   whatIsDecoy:
