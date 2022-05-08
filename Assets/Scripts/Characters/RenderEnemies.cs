@@ -6,11 +6,43 @@ public class RenderEnemies : MonoBehaviour
 {
     public float renderRadius;
     public LayerMask whatIsEnemy;
+    private bool debug;
+    private bool once;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        once = true;
+        debug = false;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F10))
+        {
+            once = true;
+            debug = !debug;
+        }
+
+        if(debug)
+        {
+            if(once)
+            {
+                gameObject.AddComponent<LineRenderer>();
+                once = false;
+            }
+
+            gameObject.DrawCircleScaled(renderRadius, 0.05f, transform.localScale);
+
+        } else
+        {
+            if(once)
+            {
+                Destroy(gameObject.GetComponent<LineRenderer>());
+                once = false;
+            }
+        }
+
     }
 
     // Update is called once per frame

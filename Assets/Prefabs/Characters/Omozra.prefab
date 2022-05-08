@@ -254,6 +254,54 @@ Transform:
   m_Father: {fileID: 3415273431591075790}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2193842968054472389
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4782270467663276528}
+  - component: {fileID: 1320105044725782066}
+  m_Layer: 0
+  m_Name: fog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4782270467663276528
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2193842968054472389}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.3, y: -8.385585, z: 3.7}
+  m_LocalScale: {x: 10.762782, y: 10.762782, z: 10.762782}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7849353130830442352}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1320105044725782066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2193842968054472389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9784d089061d8b94d834471eaf6ff34c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderRadius: 30
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &2524352735665038954
 GameObject:
   m_ObjectHideFlags: 0
@@ -847,6 +895,7 @@ Transform:
   m_Children:
   - {fileID: 3102281679794523229}
   - {fileID: 2531757979946751366}
+  - {fileID: 4782270467663276528}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -957,6 +1006,9 @@ MonoBehaviour:
   ability2Active: 0
   ability3Active: 0
   state: 0
+  crouchMultiplier: 0
+  runMultiplier: 0
+  detectionMultiplier: 0
   whatIsSpice:
     serializedVersion: 2
     m_Bits: 4096
@@ -1009,6 +1061,8 @@ MonoBehaviour:
   addLineComponentOnce: 0
   targetCharacter: {fileID: 0}
   targetPosition: {x: 0, y: 0, z: 0}
+  characterChosen: 0
+  locationChosen: 0
   characterEaten: 0
   maximumRange: 20
   cooldown: 10

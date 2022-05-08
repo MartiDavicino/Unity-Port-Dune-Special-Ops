@@ -725,7 +725,7 @@ MonoBehaviour:
   needlePrefab: {fileID: 7972253676922709312, guid: 08e29585e2f739b4f90a8f38c5dec8e1, type: 3}
   waveSpawned: 0
   summonTime: 3
-  summonCooldown: 5
+  summonCooldown: 0
   spawnOffset: {x: -3, y: 0, z: -3}
   harkonnenPrefab: {fileID: 716233281998640737, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
 --- !u!114 &4278868393632840210
@@ -746,7 +746,7 @@ MonoBehaviour:
   maxMultiplier: 5
   multiplierHolder: 0
   data: {fileID: 4278868393632840211}
-  viewRadius: 15
+  viewRadius: 20
   viewAngle: 95
   hearingRadius: 7.5
   timer: 0
