@@ -707,13 +707,7 @@ MonoBehaviour:
   timeBetweenPatrolPoints: 0
   visitedPoints: []
   affectedByDecoy: 0
-  patrolPoints:
-  - {x: 101, y: 0.24, z: -78}
-  - {x: 108, y: 0.24, z: -80}
-  - {x: 112, y: 0.24, z: -70}
-  - {x: 103, y: 0.24, z: -54}
-  - {x: 97, y: 0.24, z: -55}
-  - {x: 93, y: 0.24, z: -68}
+  patrolPoints: []
   playerInSightRange: 0
   playerInAttackRange: 0
   type: 1
@@ -726,12 +720,13 @@ MonoBehaviour:
   isGuard: 0
   leader: {fileID: 0}
   guardOffset: {x: 0, y: 0, z: 0}
-  rangeAttackRange: 7
+  rangeAttackRange: 10
   ammunition: 2
   needlePrefab: {fileID: 7972253676922709312, guid: 08e29585e2f739b4f90a8f38c5dec8e1, type: 3}
+  waveSpawned: 0
   summonTime: 0
-  spawnOffset: {x: 0, y: 0, z: 0}
   summonCooldown: 0
+  spawnOffset: {x: 0, y: 0, z: 0}
   harkonnenPrefab: {fileID: 0}
 --- !u!114 &4278868393632840210
 MonoBehaviour:
@@ -751,7 +746,7 @@ MonoBehaviour:
   maxMultiplier: 5
   multiplierHolder: 0
   data: {fileID: 4278868393632840211}
-  viewRadius: 15
+  viewRadius: 20
   viewAngle: 95
   hearingRadius: 7.5
   timer: 0
@@ -1405,7 +1400,7 @@ GameObject:
   - component: {fileID: 3801416460525445728}
   - component: {fileID: 5985483621771151504}
   m_Layer: 0
-  m_Name: sardaukar_low
+  m_Name: Sardaukar_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

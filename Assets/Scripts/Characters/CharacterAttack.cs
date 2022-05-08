@@ -26,7 +26,6 @@ public class CharacterAttack : MonoBehaviour
         playerCamera = Camera.main;
         baseScript = gameObject.GetComponent<CharacterBaseBehavior>();
         agent = gameObject.GetComponent<NavMeshAgent>();
-        //targetState = EnemyState.ATTACKING;
         
     }
 
@@ -62,6 +61,7 @@ public class CharacterAttack : MonoBehaviour
                 if (attacking)
                 {
                     distanceToTarget = CalculateAbsoluteDistance(enemyTarget.transform.position);
+                    agent.SetDestination(enemyTarget.transform.position);
 
                     if (distanceToTarget.magnitude <= rangeToKill)
                     {
@@ -69,14 +69,9 @@ public class CharacterAttack : MonoBehaviour
                         baseScript.state = PlayerState.STEALTH_KILL;
                         attacking = false;
                         Destroy(enemyTarget);
-                        
-                        // enemyscript = enemyTarget.GetComponent<EnemyBehaviour>();
-                        //     if (enemyscript.state == targetState) {  //testing
-                        //         baseScript.playerHealth = baseScript.playerHealth - 1;
-                        //     }  //testing
+                    
                     }
                 }
-
             } else
             {
                 if (attacking)

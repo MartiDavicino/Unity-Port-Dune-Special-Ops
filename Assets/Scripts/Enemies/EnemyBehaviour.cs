@@ -75,17 +75,18 @@ public class EnemyBehaviour : MonoBehaviour
 
     //Mentat
     private List<GameObject> guardList = new List<GameObject>();
-    private bool waveSpawned;
+    [HideInInspector] public bool waveSpawned;
     private Vector3 initOffset;
 
     private Transform child;
     private Material materialHolder;
     private float colorTimer;
+    private bool shootOnce;
 
     [Header("- Only if Mentat -")]
     public float summonTime;
-    public Vector3 spawnOffset;
     public float summonCooldown;
+    public Vector3 spawnOffset;
     public GameObject harkonnenPrefab;
 
     // Start is called before the first frame update
@@ -103,23 +104,27 @@ public class EnemyBehaviour : MonoBehaviour
         {
             case EnemyType.HARKONNEN:
                 attackRange = 2.5f;                
+                child = transform.Find("Harkonnen_low");
                 break;
 
             case EnemyType.SARDAUKAR:
                 attackRange = 2.5f;
+                child = transform.Find("Sardaukar_low");
+                shootOnce = true;
                 break;
 
             case EnemyType.MENTAT:
                 attackRange = 7f;
                 waveSpawned = false;
                 initOffset = spawnOffset;
-                child = transform.Find(name + "_low");
+                child = transform.Find("Mentat_low");
                 materialHolder = child.gameObject.GetComponent<Renderer>().material;
 
                 colorTimer = 0f;
                 break;
             case EnemyType.RABBAN:
                 attackRange = 3.0f;
+                child = transform.Find(name + "_low");
                 break;
 
             default:
@@ -130,6 +135,8 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        child.gameObject.GetComponent<SkinnedMeshRenderer>().enabled = false;
+        
         //Check for sight and hear range
         bool detected = checkSenses();
 
@@ -330,20 +337,23 @@ public class EnemyBehaviour : MonoBehaviour
 
         if (type == EnemyType.SARDAUKAR)
         {
-            agent.SetDestination(player.position);
-            state = EnemyState.WALKING;
-            agent.speed = chasingSpeed;
-
 
             if (agent.remainingDistance <= rangeAttackRange && !agent.pathPending && ammunition > 0)
             {
                 agent.ResetPath();
                 RangeAttacking();
+            } else
+            {
+                agent.SetDestination(player.position);
+                state = EnemyState.WALKING;
+                agent.speed = chasingSpeed;
+                elapse_time = 0f;
+                shootOnce = true;
             }
 
         }
 
-        if (type == EnemyType.HARKONNEN)
+        if (type == EnemyType.HARKONNEN || type == EnemyType.RABBAN)
         {
             agent.SetDestination(player.position);
             state = EnemyState.WALKING;
@@ -384,9 +394,22 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void RangeAttacking()
     {
+        Vector3 offset;
+        Vector3 spawnPoint;
         state = EnemyState.IDLE;
 
         transform.LookAt(targetPlayerScript.transform);
+
+        if(shootOnce)
+        {
+            state = EnemyState.ATTACKING;
+            offset = new Vector3(0.8f, 1.0f, 0f);
+            spawnPoint = transform.position + (transform.rotation * offset);
+            needle = Instantiate(needlePrefab, spawnPoint, transform.rotation);
+            needle.transform.LookAt(targetPlayerScript.transform);
+            shootOnce = false;
+            ammunition--;
+        }
 
         while (elapse_time < timeBetweenAttacks)
         {
@@ -394,11 +417,13 @@ public class EnemyBehaviour : MonoBehaviour
             return;
         }
 
+        shootOnce = true;
+
         elapse_time = 0;
 
         state = EnemyState.ATTACKING;
-        Vector3 offset = new Vector3(0.8f, 1.0f, 0f);
-        Vector3 spawnPoint =  transform.position + (transform.rotation * offset);
+        offset = new Vector3(0.8f, 1.0f, 0f);
+        spawnPoint =  transform.position + (transform.rotation * offset);
         needle = Instantiate(needlePrefab, spawnPoint, transform.rotation);
         needle.transform.LookAt(targetPlayerScript.transform);
 
@@ -440,7 +465,7 @@ public class EnemyBehaviour : MonoBehaviour
 
                     EnemyDetection summonedDetection = summonedEnemy.GetComponent<EnemyDetection>();
                     summonedDetection.state = DecState.SEEKING;
-                    summonedDetection.timer = summonedDetection.secondsToDetect;
+                    summonedDetection.timer = summonedDetection.secondsToDetect - 0.2f;
 
                     EnemyBehaviour summonedBehaviour = summonedEnemy.GetComponent<EnemyBehaviour>();
                     summonedBehaviour.walkPointSet = true;
@@ -474,6 +499,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Fleeing()
     {
+        state = EnemyState.WALKING;
 
         // store the starting transform
         Transform startTransform = transform;

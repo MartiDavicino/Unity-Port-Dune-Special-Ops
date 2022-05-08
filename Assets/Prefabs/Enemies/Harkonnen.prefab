@@ -729,11 +729,7 @@ MonoBehaviour:
   timeBetweenPatrolPoints: 3
   visitedPoints: []
   affectedByDecoy: 0
-  patrolPoints:
-  - {x: 205, y: 0.24, z: -16}
-  - {x: 218.45, y: 0.24, z: -12.4}
-  - {x: 226, y: 0.24, z: -30}
-  - {x: 220, y: 0.24, z: -43}
+  patrolPoints: []
   playerInSightRange: 0
   playerInAttackRange: 0
   type: 0
@@ -749,9 +745,10 @@ MonoBehaviour:
   rangeAttackRange: 0
   ammunition: 0
   needlePrefab: {fileID: 0}
+  waveSpawned: 0
   summonTime: 0
-  spawnOffset: {x: 0, y: 0, z: 0}
   summonCooldown: 0
+  spawnOffset: {x: 0, y: 0, z: 0}
   harkonnenPrefab: {fileID: 0}
 --- !u!114 &374356984102618189
 MonoBehaviour:
@@ -768,13 +765,12 @@ MonoBehaviour:
   sightMultiplier: 1.5
   distanceMultiplier: 0
   maxDistanceMultiplier: 0
-  maxMultiplier: 0
+  maxMultiplier: 3
   multiplierHolder: 0
   data: {fileID: 374356984102618188}
   viewRadius: 15
   viewAngle: 90
   hearingRadius: 7.5
-  camera: {fileID: 0}
   timer: 0
   secondsToDetect: 3
   state: 0
@@ -1417,7 +1413,7 @@ GameObject:
   - component: {fileID: 2100550411596958878}
   - component: {fileID: 6094777481716746313}
   m_Layer: 0
-  m_Name: harkonnen
+  m_Name: Harkonnen_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

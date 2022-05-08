@@ -707,9 +707,7 @@ MonoBehaviour:
   timeBetweenPatrolPoints: 1
   visitedPoints: []
   affectedByDecoy: 0
-  patrolPoints:
-  - {x: 40, y: 0, z: -42}
-  - {x: 17, y: 0, z: -42}
+  patrolPoints: []
   playerInSightRange: 0
   playerInAttackRange: 0
   type: 2
@@ -725,9 +723,10 @@ MonoBehaviour:
   rangeAttackRange: 7
   ammunition: 2
   needlePrefab: {fileID: 7972253676922709312, guid: 08e29585e2f739b4f90a8f38c5dec8e1, type: 3}
+  waveSpawned: 0
   summonTime: 3
+  summonCooldown: 5
   spawnOffset: {x: -3, y: 0, z: -3}
-  summonCooldown: 0
   harkonnenPrefab: {fileID: 716233281998640737, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
 --- !u!114 &4278868393632840210
 MonoBehaviour:
@@ -1401,7 +1400,7 @@ GameObject:
   - component: {fileID: 3801416460525445728}
   - component: {fileID: 5985483621771151504}
   m_Layer: 0
-  m_Name: sardaukar_low
+  m_Name: Mentat_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1442,7 +1441,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7c3c32e55d725e048a7f58e6bcad5f46, type: 2}
+  - {fileID: 2100000, guid: 26f33ecff9054294f9d3469e706294dc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

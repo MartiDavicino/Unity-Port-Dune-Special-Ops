@@ -63,7 +63,12 @@ public class DetectionMeter : MonoBehaviour
         
         if(enemyD.state == DecState.FOUND)
         {
-            bar.color = Color.red;
+            if (enemyB.waveSpawned)
+                bar.color = Color.white;
+            else if (enemyB.type == EnemyType.MENTAT)
+                bar.color = Color.blue;
+            else
+                bar.color = Color.red;
         }
     }
 }
