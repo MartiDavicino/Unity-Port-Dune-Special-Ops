@@ -100,7 +100,6 @@ public class EnemyBehaviour : MonoBehaviour
         affectedByDecoy = false;
         if(!isGuard) state = EnemyState.IDLE;
         
-        enemyD = GetComponent<EnemyDetection>();
 
         switch (type)
         {
@@ -136,8 +135,10 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        enemyD = GetComponent<EnemyDetection>();
+
         child.gameObject.GetComponent<SkinnedMeshRenderer>().enabled = false;
-        
+
         //Check for sight and hear range
         bool detected = checkSenses();
 

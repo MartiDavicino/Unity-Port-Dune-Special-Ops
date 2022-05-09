@@ -116,7 +116,6 @@ public class EnemyDetection : MonoBehaviour
 			}
         }
 
-        
 		FindTargetsWithDelay();
 
 		if(debug)
@@ -160,7 +159,12 @@ public class EnemyDetection : MonoBehaviour
 			debuffed = false;
 		}
 	}
-	
+
+    private void LateUpdate()
+    {
+		visibleTargets.Clear();
+		noisyTargets.Clear();
+	}
 	void CalculateMultiplier()
     {
 		
@@ -198,7 +202,7 @@ public class EnemyDetection : MonoBehaviour
 			state = DecState.STILL;
 		}
 	}
-	void WaitAndAddToList(float delay,Transform target,List<Transform>targets)
+	void WaitAndAddToList(float delay,Transform target, string targetType)
     {
 		timer += proportion  * distanceMultiplier * playerStateMultipler * sightDebuffMultiplier * Time.deltaTime;
 
@@ -232,7 +236,9 @@ public class EnemyDetection : MonoBehaviour
 			else
             {
 				timer = delay;
-				targets.Add(target);
+				if(targetType == "noisy") noisyTargets.Add(target);
+				if(targetType == "visible") visibleTargets.Add(target);
+
 				state = DecState.FOUND;
             }
         }
@@ -247,7 +253,6 @@ public class EnemyDetection : MonoBehaviour
 		
 		sightMultiplier = 1f;
 
-		visibleTargets.Clear();
 		Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
 		
@@ -268,7 +273,7 @@ public class EnemyDetection : MonoBehaviour
 					if(!cB.invisible)
                     {
 						sightMultiplier = multiplierHolder;
-						WaitAndAddToList(secondsToDetect, target,visibleTargets);
+						WaitAndAddToList(secondsToDetect, target, "visible");
 						playerInView = true;
                     }
 				}
@@ -284,7 +289,6 @@ public class EnemyDetection : MonoBehaviour
 
 		sightMultiplier = 1f;
 
-		noisyTargets.Clear();
 
         Collider[] targetsInHearingRadius = Physics.OverlapSphere(transform.position, hearingRadius, targetMask);
 
@@ -305,7 +309,7 @@ public class EnemyDetection : MonoBehaviour
 
 			if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, targetMask))
 			{
-				WaitAndAddToList(secondsToDetect, target, noisyTargets);
+				WaitAndAddToList(secondsToDetect, target, "noisy");
 			} 
 		}
 
@@ -318,7 +322,6 @@ public class EnemyDetection : MonoBehaviour
 
 		sightMultiplier = 1f;
 
-		noisyTargets.Clear();
 
 		Collider[] targetsInHearingRadius = Physics.OverlapSphere(transform.position, hearingRadius, whatIsHunterSeeker);
 
@@ -337,7 +340,7 @@ public class EnemyDetection : MonoBehaviour
 
 			if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, whatIsHunterSeeker))
 			{
-				WaitAndAddToList(secondsToDetect, target, noisyTargets);
+				WaitAndAddToList(secondsToDetect, target, "noisy");
 			}
 		}
 
