@@ -1609,7 +1609,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxKills: 5
   killProximityRange: 3
-  killChainRange: 5
+  killChainRange: 7
+  chanceToKillSardaukar: 0.101
+  soundRange: 20
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 256

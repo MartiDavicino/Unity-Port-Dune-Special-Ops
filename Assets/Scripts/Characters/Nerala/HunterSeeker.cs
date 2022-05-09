@@ -56,19 +56,9 @@ public class HunterSeeker : MonoBehaviour
 
         for (int i = 0; i < killableEnemy.Length; i++)
         {
-
-            chBaseScript = nerala.GetComponent<CharacterBaseBehavior>();
-            chBaseScript.selectedCharacter = true;
-            chBaseScript.hunterSeeking = false;
-            chBaseScript.abilityActive = false;
-            chBaseScript.ability3Active = false;
-
-            Destroy(nerala.GetComponent<LineRenderer>());
-
-            cameraScript.focusedPlayer = nerala;
-
+            DisableHunterSeeker();
             Destroy(killableEnemy[i].gameObject);
-            Destroy(gameObject);
+            
             break;
         }
 
@@ -78,17 +68,7 @@ public class HunterSeeker : MonoBehaviour
             if(CalculateAbsoluteDistance(nerala.transform.position).magnitude < baseScript.hunterSeekerMaxRange) return;
         }
 
-        chBaseScript = nerala.GetComponent<CharacterBaseBehavior>();
-        chBaseScript.selectedCharacter = true;
-        chBaseScript.hunterSeeking = false;
-        chBaseScript.abilityActive = false;
-        chBaseScript.ability3Active = false;
-
-        Destroy(nerala.GetComponent<LineRenderer>());
-
-        cameraScript.focusedPlayer = nerala;
-
-        Destroy(gameObject);
+        DisableHunterSeeker();
     }
 
     void OnGUI()
@@ -105,5 +85,20 @@ public class HunterSeeker : MonoBehaviour
         distance.z = Mathf.Abs(transform.position.z - targetPos.z);
 
         return distance;
+    }
+
+    public void DisableHunterSeeker()
+    {
+        chBaseScript = nerala.GetComponent<CharacterBaseBehavior>();
+        chBaseScript.selectedCharacter = true;
+        chBaseScript.hunterSeeking = false;
+        chBaseScript.abilityActive = false;
+        chBaseScript.ability3Active = false;
+
+        Destroy(nerala.GetComponent<LineRenderer>());
+
+        cameraScript.focusedPlayer = nerala;
+
+        Destroy(gameObject);
     }
 }

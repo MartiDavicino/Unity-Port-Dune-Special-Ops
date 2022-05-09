@@ -767,6 +767,10 @@ MonoBehaviour:
   maxDistanceMultiplier: 0
   maxMultiplier: 3
   multiplierHolder: 0
+  debuffTime: 5
+  debuffTimer: 0
+  sightDebuffMultiplier: 0
+  debuffed: 0
   data: {fileID: 374356984102618188}
   viewRadius: 15
   viewAngle: 90
@@ -783,6 +787,9 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 128
+  whatIsHunterSeeker:
+    serializedVersion: 2
+    m_Bits: 8192
   visibleTargets: []
   noisyTargets: []
 --- !u!114 &374356984102618184

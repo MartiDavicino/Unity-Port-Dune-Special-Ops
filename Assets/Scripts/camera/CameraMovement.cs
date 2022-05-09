@@ -30,29 +30,32 @@ public class CameraMovement : MonoBehaviour
 
     void LateUpdate()
     {
-        if(!manager.gameLost)
+        if(focusedPlayer != null)
         {
-            playerCamera.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
-
-            if (!Input.GetKey(KeyCode.LeftShift))
+            if(!manager.gameLost)
             {
-                if (Input.GetKeyDown("e"))
-                    remainingAngle += angle;
+                playerCamera.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
 
-                if (Input.GetKeyDown("q"))
-                    remainingAngle -= angle;
+                if (!Input.GetKey(KeyCode.LeftShift))
+                {
+                    if (Input.GetKeyDown("e"))
+                        remainingAngle += angle;
 
-                float newRemainingAngle = Mathf.MoveTowards(remainingAngle, 0, rotSpeed * Time.deltaTime);
-                float delta = remainingAngle - newRemainingAngle;
-                remainingAngle = newRemainingAngle;
-                offset = Quaternion.AngleAxis(delta, Vector3.up) * offset;
-                transform.position = focusedPlayer.transform.position + offset;
-                transform.LookAt(focusedPlayer.transform);
-            } else if (Input.GetKey(KeyCode.LeftShift))
-            {
-                offset = Quaternion.AngleAxis(Input.GetAxis("Rotation") * rotSpeed * 0.001f, Vector3.up) * offset;
-                transform.position = focusedPlayer.transform.position + offset;
-                transform.LookAt(focusedPlayer.transform);
+                    if (Input.GetKeyDown("q"))
+                        remainingAngle -= angle;
+
+                    float newRemainingAngle = Mathf.MoveTowards(remainingAngle, 0, rotSpeed * Time.deltaTime);
+                    float delta = remainingAngle - newRemainingAngle;
+                    remainingAngle = newRemainingAngle;
+                    offset = Quaternion.AngleAxis(delta, Vector3.up) * offset;
+                    transform.position = focusedPlayer.transform.position + offset;
+                    transform.LookAt(focusedPlayer.transform);
+                } else if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    offset = Quaternion.AngleAxis(Input.GetAxis("Rotation") * rotSpeed * 0.001f, Vector3.up) * offset;
+                    transform.position = focusedPlayer.transform.position + offset;
+                    transform.LookAt(focusedPlayer.transform);
+                }
             }
         }
     }

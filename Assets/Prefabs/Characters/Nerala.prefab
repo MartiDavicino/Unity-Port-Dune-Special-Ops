@@ -1641,7 +1641,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1
-  m_BaseOffset: -0.94
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &8672128565203201539
@@ -1720,8 +1720,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sightDebuffMultiplier: 0.2
   maximumRange: 15
+  soundRange: 15
   cooldown: 3
-  ammunition: 100
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 256
+  harkonnenProb: 0.749
+  sardaukarUnawareProb: 0.029
+  sardaukarAwareProb: 0.284
 --- !u!114 &8672128565203201547
 MonoBehaviour:
   m_ObjectHideFlags: 0

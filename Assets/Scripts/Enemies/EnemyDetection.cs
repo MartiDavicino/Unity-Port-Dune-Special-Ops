@@ -20,7 +20,7 @@ public class EnemyDetection : MonoBehaviour
 	[HideInInspector] public float multiplierHolder;
 
 	public float debuffTime;
-	public float debuffTimer;
+	private float debuffTimer;
 	private Material materialHolder;
 	private Transform child;
 	[HideInInspector] public float sightDebuffMultiplier;
@@ -55,10 +55,14 @@ public class EnemyDetection : MonoBehaviour
 		
 	public LayerMask targetMask;
 	public LayerMask obstacleMask;
+	public LayerMask whatIsHunterSeeker;
 
 	[HideInInspector] public List<Transform> visibleTargets = new List<Transform>();
 	[HideInInspector] public List<Transform> noisyTargets = new List<Transform>();
-    void Start()
+
+	private float elapse_time = 0;
+
+	void Start()
     {
 		camera = Camera.main;
 		multiplierHolder = sightMultiplier;
@@ -81,29 +85,38 @@ public class EnemyDetection : MonoBehaviour
     void Update()
     {
 		player = camera.GetComponentInChildren<CameraMovement>().focusedPlayer;
-		angle1 = DirFromAngle(-viewAngle / 2, false);
-		angle2 = DirFromAngle(viewAngle / 2, false);
+		
+		if(player != null)
+        {
+			angle1 = DirFromAngle(-viewAngle / 2, false);
+			angle2 = DirFromAngle(viewAngle / 2, false);
 
-		if (player != null)
-		{
-			if (player.GetComponent<CharacterBaseBehavior>().state == PlayerState.WALKING)
-			{
-				hearingRadius = 7.5f;
-			}
+			string[] splitArray = player.name.Split(char.Parse(" "));
+			string[] splitArray2 = splitArray[0].Split(char.Parse("("));
+			string finalName = splitArray2[0];
 
-			else if (player.GetComponent<CharacterBaseBehavior>().state == PlayerState.CROUCH)
+			if (finalName != "HunterSeeker")
 			{
-				hearingRadius = 7.5f;
-			}
+				if (player.GetComponent<CharacterBaseBehavior>().state == PlayerState.WALKING)
+				{
+					hearingRadius = 7.5f;
+				}
 
-			else if (player.GetComponent<CharacterBaseBehavior>().state == PlayerState.RUNNING)
-			{
-				hearingRadius = 11.5f;
-			}
+				else if (player.GetComponent<CharacterBaseBehavior>().state == PlayerState.CROUCH)
+				{
+					hearingRadius = 7.5f;
+				}
+
+				else if (player.GetComponent<CharacterBaseBehavior>().state == PlayerState.RUNNING)
+				{
+					hearingRadius = 11.5f;
+				}
 			
-			playerStateMultipler = player.GetComponent<CharacterBaseBehavior>().detectionMultiplier;
-		}
+				playerStateMultipler = player.GetComponent<CharacterBaseBehavior>().detectionMultiplier;
+			}
+        }
 
+        
 		FindTargetsWithDelay();
 
 		if(debug)
@@ -163,8 +176,10 @@ public class EnemyDetection : MonoBehaviour
 	{
 		bool playerInView = FindVisibleTargets();
 		bool playerHeard = FindNoisyTargets();
+		bool mosquitoHeard = FindHunterSeeker();
 
-		if (!playerInView && !playerHeard)
+
+		if (!playerInView && !playerHeard && !mosquitoHeard)
 			TargetsNotFound();
 	}
 	void TargetsNotFound()
@@ -195,13 +210,31 @@ public class EnemyDetection : MonoBehaviour
 		else if (timer >= timer / 2 && timer < secondsToDetect)
 		{
 			state = DecState.SEEKING;
+			elapse_time = 0;
 		}
 
 		if (timer >= secondsToDetect)
         {
-			timer = delay;
-			targets.Add(target);
-			state = DecState.FOUND;
+			if(target.gameObject == GameObject.Find("HunterSeeker(Clone)"))
+            {
+				timer = delay;
+				state = DecState.FOUND;
+				while (elapse_time < 0.6f)
+				{
+					elapse_time += Time.deltaTime;
+					return;
+				}
+
+				elapse_time = 0;
+				HunterSeeker hunterScript = target.gameObject.GetComponent<HunterSeeker>();
+				hunterScript.DisableHunterSeeker();
+			}
+			else
+            {
+				timer = delay;
+				targets.Add(target);
+				state = DecState.FOUND;
+            }
         }
 
 
@@ -274,6 +307,38 @@ public class EnemyDetection : MonoBehaviour
 			{
 				WaitAndAddToList(secondsToDetect, target, noisyTargets);
 			} 
+		}
+
+		return playerHeard;
+	}
+
+	bool FindHunterSeeker()
+	{
+		bool playerHeard = false;
+
+		sightMultiplier = 1f;
+
+		noisyTargets.Clear();
+
+		Collider[] targetsInHearingRadius = Physics.OverlapSphere(transform.position, hearingRadius, whatIsHunterSeeker);
+
+		if (targetsInHearingRadius.Length > 0)
+			playerHeard = true;
+
+		for (int i = 0; i < targetsInHearingRadius.Length; i++)
+		{
+			GameObject parent = targetsInHearingRadius[i].gameObject;
+			Transform target = targetsInHearingRadius[i].transform;
+			Vector3 dirToTarget = (target.position - transform.position).normalized;
+
+			CalculateMultiplier();
+
+			float dstToTarget = Vector3.Distance(transform.position, target.position);
+
+			if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, whatIsHunterSeeker))
+			{
+				WaitAndAddToList(secondsToDetect, target, noisyTargets);
+			}
 		}
 
 		return playerHeard;
