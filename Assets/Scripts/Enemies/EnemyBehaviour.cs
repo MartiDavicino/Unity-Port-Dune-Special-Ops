@@ -53,6 +53,7 @@ public class EnemyBehaviour : MonoBehaviour
     private Vector3 walkPoint;
     private bool walkPointSet;
     private int patrolIterator;
+    private Vector3 initPos;
 
     //States
     private float attackRange;
@@ -68,9 +69,10 @@ public class EnemyBehaviour : MonoBehaviour
 
 
     //Harkonnen
-    [HideInInspector] public bool isGuard;
-    [HideInInspector] public GameObject leader;
-    [HideInInspector] public Vector3 guardOffset;
+    [Header("- Only if Harkonnen -")]
+    public bool isGuard;
+    public GameObject leader;
+    public Vector3 guardOffset;
     
     //Sardaukar
     private bool playerInRanged;
@@ -101,6 +103,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
 
+        initPos = gameObject.transform.position;
         patrolIterator = 0;
         affectedByDecoy = false;
         affectedByWaterTank = false;
@@ -274,6 +277,7 @@ public class EnemyBehaviour : MonoBehaviour
             if (!walkPointSet)
             {
                 walkPoint = leader.transform.position + (leader.transform.rotation * guardOffset);
+                agent.speed = patrolingSpeed;
                 agent.SetDestination(walkPoint);
                 state = EnemyState.WALKING;
             }
@@ -310,15 +314,15 @@ public class EnemyBehaviour : MonoBehaviour
                 resetEnemyTimeWaterT = 0;
             }
 
-            Vector3 distanceToWalkPoint = transform.position - agent.destination;
+            //Vector3 distanceToWalkPoint = transform.position - agent.destination;
             agent.speed = patrolingSpeed;
 
             //WalkPoint reached
-            if (distanceToWalkPoint.magnitude < 0.5f)
+            if (agent.remainingDistance < 0.5f && !agent.pathPending && walkPointSet)
             {
-                walkPointSet = false;
-                agent.ResetPath();
+                if(isGuard) transform.rotation = leader.transform.rotation;
                 state = EnemyState.IDLE;
+                walkPointSet = false;
             }
         }
         
@@ -328,7 +332,20 @@ public class EnemyBehaviour : MonoBehaviour
         bool visited = false;
 
 
-        if (patrolPoints.Count == 0) return;
+        if (patrolPoints.Count == 0)
+        {
+            if (agent.remainingDistance > 0.2f && !agent.pathPending)
+            {
+                agent.SetDestination(initPos);
+                state = EnemyState.WALKING;
+                walkPointSet = false;
+            } else
+            {
+                agent.ResetPath();
+                state = EnemyState.IDLE;
+            }
+            return;
+        }
 
 
         if (visitedPoints.Count == patrolPoints.Count)
