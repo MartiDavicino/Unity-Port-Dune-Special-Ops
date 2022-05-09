@@ -269,7 +269,7 @@ public class EnemyBehaviour : MonoBehaviour
         if(type == EnemyType.MENTAT)
         {
             child.gameObject.GetComponent<Renderer>().material = materialHolder;
-            elapse_time = 0f;
+            summonTime = 0f;
         }
 
         if (isGuard)
@@ -314,13 +314,12 @@ public class EnemyBehaviour : MonoBehaviour
                 resetEnemyTimeWaterT = 0;
             }
 
-            //Vector3 distanceToWalkPoint = transform.position - agent.destination;
             agent.speed = patrolingSpeed;
 
             //WalkPoint reached
             if (agent.remainingDistance < 0.5f && !agent.pathPending && walkPointSet)
             {
-                if(isGuard) transform.rotation = leader.transform.rotation;
+                if (isGuard) transform.rotation = leader.transform.rotation;
                 state = EnemyState.IDLE;
                 walkPointSet = false;
             }
