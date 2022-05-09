@@ -42,5 +42,13 @@ public class enemyAnimStates : MonoBehaviour
 
             animator.SetTrigger("isAttacking");
         }
+
+        if (baseScript.state == EnemyState.RANGED)
+        {
+            animator.ResetTrigger("hasStopped");
+            animator.ResetTrigger("isWalking");
+
+            animator.SetTrigger("rangeAttack");
+        }
     }
 }

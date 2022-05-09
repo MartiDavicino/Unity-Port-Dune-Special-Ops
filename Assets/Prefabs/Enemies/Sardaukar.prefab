@@ -703,7 +703,7 @@ MonoBehaviour:
   state: 0
   chasingSpeed: 6
   patrolingSpeed: 3
-  timeBetweenAttacks: 1.5
+  timeBetweenAttacks: 2
   timeBetweenPatrolPoints: 0
   visitedPoints: []
   affectedByDecoy: 0

@@ -19,6 +19,8 @@ public class Decoy : MonoBehaviour
 
     private List<GameObject> resetedEnemies = new List<GameObject>();
 
+    private float elapse_time;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +30,8 @@ public class Decoy : MonoBehaviour
         soundRange = decoyScript.effectRange;
 
         emmitSoundOnce = true;
+
+        elapse_time = 0f;
 
         StartCoroutine(SimulateProjectile());
     }
@@ -62,18 +66,28 @@ public class Decoy : MonoBehaviour
             yield return null;
         }
 
-
         gameObject.layer = 10;
     }
 
     void Update()
     {
         if (gameObject.layer == 10)
+        {
             if (emmitSoundOnce)
             {
                 EmitSound();
                 emmitSoundOnce = false;
             }
+
+            while (elapse_time < 0.3f)
+            {
+                elapse_time += Time.deltaTime;
+                return;
+            }
+
+            gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            elapse_time = 0;
+        }
         ResetNearEnemies();
     }
 
@@ -118,9 +132,22 @@ public class Decoy : MonoBehaviour
             EnemyBehaviour eB = affectedEnemies[i].gameObject.GetComponent<EnemyBehaviour>();
             eB.state = EnemyState.WALKING;
 
-            agent = affectedEnemies[i].gameObject.GetComponent<NavMeshAgent>();
-            agent.SetDestination(transform.position);
-            eB.affectedByDecoy = true;
+            EnemyDetection eD = affectedEnemies[i].gameObject.GetComponent<EnemyDetection>();
+            switch(eD.state)
+            {
+                case DecState.STILL:
+                    agent = affectedEnemies[i].gameObject.GetComponent<NavMeshAgent>();
+                    agent.SetDestination(transform.position);
+                    eB.affectedByDecoy = true;
+                    break;
+
+                case DecState.SEEKING:
+                    break;
+
+                case DecState.FOUND:
+                    break;
+            }
+
         }
     }
 }

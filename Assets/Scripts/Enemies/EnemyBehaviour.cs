@@ -18,6 +18,7 @@ public enum EnemyState
     IDLE,
     WALKING,
     ATTACKING,
+    RANGED,
     DEAD,
     NONE
 }
@@ -405,7 +406,7 @@ public class EnemyBehaviour : MonoBehaviour
 
         if(shootOnce)
         {
-            state = EnemyState.ATTACKING;
+            state = EnemyState.RANGED;
             offset = new Vector3(0.8f, 1.0f, 0f);
             spawnPoint = transform.position + (transform.rotation * offset);
             needle = Instantiate(needlePrefab, spawnPoint, transform.rotation);
@@ -424,7 +425,7 @@ public class EnemyBehaviour : MonoBehaviour
 
         rangedAttackTimer = 0;
 
-        state = EnemyState.ATTACKING;
+        state = EnemyState.RANGED;
         offset = new Vector3(0.8f, 1.0f, 0f);
         spawnPoint =  transform.position + (transform.rotation * offset);
         needle = Instantiate(needlePrefab, spawnPoint, transform.rotation);

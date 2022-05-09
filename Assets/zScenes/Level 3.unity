@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sardaukar (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4278868393632840211, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
+      propertyPath: timeBetweenAttacks
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4389638955010416099, guid: 9c66ee38a94ca624bb2bf5d9c5932600, type: 3}
       propertyPath: m_RootOrder
       value: 16
