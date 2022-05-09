@@ -1519,21 +1519,26 @@ MonoBehaviour:
   hunterSeeking: 0
   playerHealth: 3
   hit: 0
-  movementSpeed: 7.5
+  whatIsSpice:
+    serializedVersion: 2
+    m_Bits: 1024
+  ultimateCost: 0
+  playerSpice: 0
+  walkMovementSpeed: 7.5
+  crouchMovementSpeed: 3
+  runMovementSpeed: 12
+  walkSoundRange: 7.5
+  crouchSoundRange: 5
+  runSoundRange: 11.5
+  crouchMultiplier: 0.2
+  runMultiplier: 2
+  detectionMultiplier: 0
   invisible: 0
   abilityActive: 0
   ability1Active: 0
   ability2Active: 0
   ability3Active: 0
   state: 0
-  crouchMultiplier: 0.2
-  runMultiplier: 2
-  detectionMultiplier: 0
-  whatIsSpice:
-    serializedVersion: 2
-    m_Bits: 1024
-  playerSpice: 0
-  ultimateCost: 1500
 --- !u!114 &6868864155876820119
 MonoBehaviour:
   m_ObjectHideFlags: 0

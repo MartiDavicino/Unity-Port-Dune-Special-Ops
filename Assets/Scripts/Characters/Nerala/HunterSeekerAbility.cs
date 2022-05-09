@@ -11,6 +11,8 @@ public class HunterSeekerAbility : MonoBehaviour
 
     public float hunterSeekerVelocity;
     public float hunterSeekerMaxRange;
+    public float soundRange;
+    public float soundMultiplier;
     public float countdownTime;
 
     public GameObject hunterSeekerPrefab;

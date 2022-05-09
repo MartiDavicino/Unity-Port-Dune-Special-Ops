@@ -8,7 +8,7 @@ public class HunterSeeker : MonoBehaviour
     private NavMeshAgent playerAgent;
 
     private GameObject nerala;
-    private HunterSeekerAbility baseScript;
+    [HideInInspector] public HunterSeekerAbility baseScript;
 
     private float countdownTime;
     private float elapse_time;

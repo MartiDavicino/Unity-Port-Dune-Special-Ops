@@ -97,24 +97,31 @@ public class EnemyDetection : MonoBehaviour
 
 			if (finalName != "HunterSeeker")
 			{
-				if (player.GetComponent<CharacterBaseBehavior>().state == PlayerState.WALKING)
+				CharacterBaseBehavior playerScript = player.GetComponent<CharacterBaseBehavior>();
+				if (playerScript.state == PlayerState.WALKING)
 				{
-					hearingRadius = 7.5f;
+					hearingRadius = playerScript.walkSoundRange;
 				}
 
-				else if (player.GetComponent<CharacterBaseBehavior>().state == PlayerState.CROUCH)
+				else if (playerScript.state == PlayerState.CROUCH)
 				{
-					hearingRadius = 7.5f;
+					hearingRadius = playerScript.crouchSoundRange;
 				}
 
-				else if (player.GetComponent<CharacterBaseBehavior>().state == PlayerState.RUNNING)
+				else if (playerScript.state == PlayerState.RUNNING)
 				{
-					hearingRadius = 11.5f;
+					hearingRadius = playerScript.runSoundRange;
 				}
 			
-				playerStateMultipler = player.GetComponent<CharacterBaseBehavior>().detectionMultiplier;
+				playerStateMultipler = playerScript.detectionMultiplier;
+			} else
+            {
+				HunterSeeker hunterSeekerScript = player.GetComponent<HunterSeeker>();
+				hearingRadius = hunterSeekerScript.baseScript.soundRange;
+
+				playerStateMultipler = hunterSeekerScript.baseScript.soundMultiplier;
 			}
-        }
+		}
 
 		FindTargetsWithDelay();
 

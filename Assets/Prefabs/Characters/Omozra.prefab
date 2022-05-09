@@ -993,26 +993,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 889a20a3f0f5a0e4081538b5346691a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedCharacter: 0
+  selectedCharacter: 1
   allSelected: 0
   hunterSeeking: 0
-  playerHealth: 2
+  playerHealth: 3
   hit: 0
-  movementSpeed: 10
+  whatIsSpice:
+    serializedVersion: 2
+    m_Bits: 1024
+  ultimateCost: 0
+  playerSpice: 0
+  walkMovementSpeed: 7.5
+  crouchMovementSpeed: 3
+  runMovementSpeed: 12
+  walkSoundRange: 7.5
+  crouchSoundRange: 5
+  runSoundRange: 11.5
+  crouchMultiplier: 0.2
+  runMultiplier: 2
+  detectionMultiplier: 0
   invisible: 0
   abilityActive: 0
   ability1Active: 0
   ability2Active: 0
   ability3Active: 0
   state: 0
-  crouchMultiplier: 0.3
-  runMultiplier: 2
-  detectionMultiplier: 0
-  whatIsSpice:
-    serializedVersion: 2
-    m_Bits: 4096
-  playerSpice: 0
-  ultimateCost: 0
 --- !u!114 &4475807426259986342
 MonoBehaviour:
   m_ObjectHideFlags: 0

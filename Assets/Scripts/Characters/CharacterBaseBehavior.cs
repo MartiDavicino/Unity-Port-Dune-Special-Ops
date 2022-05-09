@@ -34,7 +34,29 @@ public class CharacterBaseBehavior : MonoBehaviour
     private Material materialHolder;
     private float elapse_time;
 
-    public float movementSpeed;
+    public LayerMask whatIsSpice;
+    public int ultimateCost;
+    [HideInInspector] public int playerSpice;
+    private int spiceTotal;
+    private bool notAvailable;
+
+    [Header("- Movement Speeds -")]
+    public float walkMovementSpeed;
+    public float crouchMovementSpeed;
+    public float runMovementSpeed;
+    private float movementSpeed;
+
+    [Header("- Sound Ranges -")]
+    public float walkSoundRange;
+    public float crouchSoundRange;
+    public float runSoundRange;
+
+    [Header("- Sound Multipliers -")]
+    public float crouchMultiplier;
+    private bool crouching = false;
+    public float runMultiplier;
+    private bool running = false;
+    [HideInInspector] public float detectionMultiplier;
 
     [HideInInspector] public bool invisible;
 
@@ -47,30 +69,13 @@ public class CharacterBaseBehavior : MonoBehaviour
     [HideInInspector] public PlayerState state = PlayerState.IDLE;
 
     private Vector3 targetPosition;
-
-    public float crouchMultiplier;
-    private bool crouching = false;
-    public float runMultiplier;
-    private bool running = false;
-    [HideInInspector] public float detectionMultiplier;
-
-    public LayerMask whatIsSpice;
-
-    [HideInInspector] public int playerSpice;
-
-    private int spiceTotal;
-
-    public int ultimateCost;
-
-    private bool notAvailable;
-
     private float timer;
 
     // Start is called before the first frame update
     void Start()
     {
         playerAgent = GetComponent<NavMeshAgent>();
-        playerAgent.speed = movementSpeed;
+        playerAgent.speed = walkMovementSpeed;
 
         playerCamera = Camera.main;
 
@@ -278,9 +283,9 @@ public class CharacterBaseBehavior : MonoBehaviour
     {
         invisible = false;
 
-        if (state==PlayerState.CROUCH) { movementSpeed = 3.0f; }
-        else if (state == PlayerState.RUNNING) { movementSpeed = 12.0f; }
-        else { movementSpeed = 7.5f; }
+        if (state==PlayerState.CROUCH) { movementSpeed = crouchMovementSpeed; }
+        else if (state == PlayerState.RUNNING) { movementSpeed = runMovementSpeed; }
+        else { movementSpeed = walkMovementSpeed; }
 
         playerAgent.speed = movementSpeed;
     }
