@@ -16,7 +16,16 @@ public class EnemyDetection : MonoBehaviour
 	public float distanceMultiplier;
 	public float maxDistanceMultiplier;
 	public float maxMultiplier = 5.0f;
+	private float playerStateMultipler;
 	[HideInInspector] public float multiplierHolder;
+
+	public float debuffTime;
+	public float debuffTimer;
+	private Material materialHolder;
+	private Transform child;
+	[HideInInspector] public float sightDebuffMultiplier;
+	[HideInInspector] public bool debuffed;
+
 	public EnemyBehaviour data;
 
 	public float viewRadius;
@@ -33,10 +42,10 @@ public class EnemyDetection : MonoBehaviour
 	[HideInInspector] public float timer = 0.0f;
 	public float secondsToDetect;
 	private float proportion;
-	private float playerStateMultipler;
 
 	[HideInInspector] public DecState state = DecState.STILL;
 	[HideInInspector] public bool debug = false;
+
 
 	public VisualDebug visual;
 	public hearingDebug hear;
@@ -58,6 +67,16 @@ public class EnemyDetection : MonoBehaviour
 		distanceMultiplier = 1f;
 		maxDistanceMultiplier = 1f;
 
+		debuffed = false;
+		debuffTimer = 0f;
+
+
+		string[] splitArray = name.Split(char.Parse(" "));
+		string[] splitArray2 = splitArray[0].Split(char.Parse("("));
+		string finalName = splitArray2[0];
+
+		child = transform.Find(finalName + "_low");
+		materialHolder = child.GetComponent<Renderer>().material;
 	}
     void Update()
     {
@@ -98,11 +117,35 @@ public class EnemyDetection : MonoBehaviour
 			visual.DebugDelete();
 
 		}
+
 		if (Input.GetKeyDown(KeyCode.F10))
 			debug = !debug;
 
-		
-		
+
+		if (!debuffed)
+		{
+			sightDebuffMultiplier = 1f;
+
+
+			child.GetComponent<Renderer>().material = materialHolder;
+		}
+		else
+		{
+			string[] splitArray = name.Split(char.Parse(" "));
+			string[] splitArray2 = splitArray[0].Split(char.Parse("("));
+			string finalName = splitArray2[0];
+
+			child.GetComponent<Renderer>().material = Resources.Load(finalName + "sleep", typeof(Material)) as Material;
+
+			while (debuffTimer < debuffTime)
+			{
+				debuffTimer += Time.deltaTime;
+				return;
+			}
+
+			debuffTimer = 0;
+			debuffed = false;
+		}
 	}
 	
 	void CalculateMultiplier()
@@ -142,7 +185,7 @@ public class EnemyDetection : MonoBehaviour
 	}
 	void WaitAndAddToList(float delay,Transform target,List<Transform>targets)
     {
-		timer += proportion  * distanceMultiplier * playerStateMultipler * Time.deltaTime;
+		timer += proportion  * distanceMultiplier * playerStateMultipler * sightDebuffMultiplier * Time.deltaTime;
 
 
 		if (timer > 0 && timer < secondsToDetect / 2)

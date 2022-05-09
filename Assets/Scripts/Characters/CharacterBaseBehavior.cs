@@ -31,7 +31,6 @@ public class CharacterBaseBehavior : MonoBehaviour
 
     [HideInInspector] public bool hit;
     private Transform child;
-    private Material currentMaterial;
     private Material materialHolder;
     private float elapse_time;
 

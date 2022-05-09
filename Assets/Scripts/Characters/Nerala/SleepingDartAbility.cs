@@ -18,17 +18,26 @@ public class SleepingDartAbility : MonoBehaviour
     private GameObject targetEnemy;
     private Vector3 targetDistance;
 
+    private bool onCooldown;
+    private float elapse_time;
+    private bool hasShot;
+
     //Ability Stats
     public float sightDebuffMultiplier;
     public float maximumRange;
-
+    public float soundRange;
     public float cooldown;
-    private bool onCooldown;
-    private float elapse_time;
 
-    public int ammunition;
+    public LayerMask whatIsEnemy;
 
-    private bool hasShot;
+    [Header("- Chances To Sleep -")]
+    [Range(0.0f, 1.0f)]
+    public float harkonnenProb;
+    [Range(0.0f, 1.0f)]
+    public float sardaukarUnawareProb;
+    [Range(0.0f, 1.0f)]
+    public float sardaukarAwareProb;
+
 
     // Start is called before the first frame update
     void Start()
@@ -67,7 +76,7 @@ public class SleepingDartAbility : MonoBehaviour
 
                 gameObject.DrawCircleScaled(maximumRange, 0.05f, transform.localScale);
 
-                if (Input.GetKeyDown(KeyCode.Mouse0) && ammunition > 0)
+                if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
                     Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
 
@@ -92,16 +101,10 @@ public class SleepingDartAbility : MonoBehaviour
 
                                 baseScript.state = PlayerState.ABILITY1;
 
-                                // Set Sleepy Effect to Enemy 
-                                EnemyDetection eD = targetEnemy.GetComponent<EnemyDetection>();
-                                eD.multiplierHolder *= sightDebuffMultiplier;
-
- 
-                                //
+                                ApplyPoison();
 
                                 hasShot = true;
                                 onCooldown = true;
-                                ammunition--;
                             }
                         }
                     }
@@ -121,16 +124,11 @@ public class SleepingDartAbility : MonoBehaviour
 
                         baseScript.state = PlayerState.ABILITY1;
 
-                        // Set Sleepy Effect to Enemy 
-                        EnemyDetection eD = targetEnemy.GetComponent<EnemyDetection>();
-                        eD.multiplierHolder *= sightDebuffMultiplier;
-
-                        //
+                        ApplyPoison();
 
                         hasShot = true;
                         onCooldown = true;
 
-                        ammunition--;
                         enemyOutOfRange = false;
 
                     }
@@ -170,6 +168,94 @@ public class SleepingDartAbility : MonoBehaviour
             }
     }
 
+    void ApplyPoison()
+    {
+
+
+        EnemyBehaviour eBehaviour = targetEnemy.GetComponent<EnemyBehaviour>();
+        EnemyDetection eDetection = targetEnemy.GetComponent<EnemyDetection>();
+
+        eDetection.multiplierHolder *= sightDebuffMultiplier;
+
+        switch (eBehaviour.type)
+        {
+            case EnemyType.HARKONNEN:
+                switch (eDetection.state)
+                {
+                    case DecState.STILL:
+                        eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                        eDetection.debuffed = true;
+                        break;
+
+                    case DecState.SEEKING:
+                        eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                        eDetection.debuffed = true;
+                        break;
+
+                    case DecState.FOUND:
+                        if (Random.value < harkonnenProb)
+                        {
+                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffed = true;
+                        } else
+                        {
+                            EmitSound();
+                        }
+                        break;
+                }
+                break;
+            case EnemyType.SARDAUKAR:
+                switch (eDetection.state)
+                {
+                    case DecState.STILL:
+                        if (Random.value < sardaukarUnawareProb)
+                        {
+                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffed = true;
+                        } else
+                        {
+                            EmitSound();
+                        }
+                        break;
+
+                    case DecState.SEEKING:
+                        if (Random.value < sardaukarAwareProb)
+                        {
+                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffed = true;
+                        } else
+                        {
+                            EmitSound();
+                        }
+                        break;
+
+                    case DecState.FOUND:
+                        EmitSound();
+                        break;
+                }
+                break;
+            case EnemyType.MENTAT:
+                switch (eDetection.state)
+                {
+                    case DecState.STILL:
+                        eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                        eDetection.debuffed = true;
+                        break;
+
+                    case DecState.SEEKING:
+                        eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                        eDetection.debuffed = true;
+                        break;
+
+                    case DecState.FOUND:
+                        eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                        eDetection.debuffed = true;
+                        break;
+                }
+                break;
+        }
+    }
+
     Vector3 CalculateAbsoluteDistance(Vector3 targetPos)
     {
         Vector3 distance = new Vector3(0f, 0f, 0f);
@@ -178,5 +264,17 @@ public class SleepingDartAbility : MonoBehaviour
         distance.z = Mathf.Abs(transform.position.z - targetPos.z);
 
         return distance;
+    }
+
+    void EmitSound()
+    {
+        Collider[] affectedEnemies = Physics.OverlapSphere(transform.position, soundRange, whatIsEnemy);
+
+        for (int i = 0; i < affectedEnemies.Length; i++)
+        {
+            affectedEnemies[i].GetComponent<EnemyDetection>().state = DecState.SEEKING;
+            affectedEnemies[i].GetComponent<EnemyDetection>().timer = affectedEnemies[i].GetComponent<EnemyDetection>().secondsToDetect;
+
+        }
     }
 }

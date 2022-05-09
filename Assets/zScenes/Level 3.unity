@@ -1218,6 +1218,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Nerala
       objectReference: {fileID: 0}
+    - target: {fileID: 8672128565203201548, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
+      propertyPath: m_BaseOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8672128565203201549, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
+      propertyPath: soundRange
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8672128565203201549, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
+      propertyPath: harkonnenProb
+      value: 0.749
+      objectReference: {fileID: 0}
+    - target: {fileID: 8672128565203201549, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
+      propertyPath: sardaukarAwareProb
+      value: 0.284
+      objectReference: {fileID: 0}
+    - target: {fileID: 8672128565203201549, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
+      propertyPath: whatIsEnemy.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 8672128565203201549, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
+      propertyPath: sardaukarUnawareProb
+      value: 0.029
+      objectReference: {fileID: 0}
     - target: {fileID: 9210757919227417333, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1228,7 +1252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9210757919227417333, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1268301
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 9210757919227417333, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1315,10 +1339,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 374356984102618189, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: debuffTime
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 716233281998640737, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
       propertyPath: m_Name
       value: Harkonnen
       objectReference: {fileID: 0}
+    - target: {fileID: 6094777481716746313, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 270d8ea48641a9f4d8668cc840e4f35f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe788bec4ad85fe4998cb15fcc148b34, type: 3}
 --- !u!1 &2092958026
