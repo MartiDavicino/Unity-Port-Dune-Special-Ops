@@ -68,6 +68,7 @@ public class EnemyBehaviour : MonoBehaviour
     //Sardaukar
     private bool playerInRanged;
     private GameObject needle;
+    private float rangedAttackTimer;
     [Header("- Only if Sardaukar -")]
     public float rangeAttackRange;
     public int ammunition;
@@ -80,7 +81,6 @@ public class EnemyBehaviour : MonoBehaviour
 
     private Transform child;
     private Material materialHolder;
-    private float colorTimer;
     private bool shootOnce;
 
     [Header("- Only if Mentat -")]
@@ -92,6 +92,7 @@ public class EnemyBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         agent = GetComponent<NavMeshAgent>();
 
         patrolIterator = 0;
@@ -108,6 +109,7 @@ public class EnemyBehaviour : MonoBehaviour
                 break;
 
             case EnemyType.SARDAUKAR:
+                rangedAttackTimer = 0f;
                 attackRange = 2.5f;
                 child = transform.Find("Sardaukar_low");
                 shootOnce = true;
@@ -119,8 +121,6 @@ public class EnemyBehaviour : MonoBehaviour
                 initOffset = spawnOffset;
                 child = transform.Find("Mentat_low");
                 materialHolder = child.gameObject.GetComponent<Renderer>().material;
-
-                colorTimer = 0f;
                 break;
             case EnemyType.RABBAN:
                 attackRange = 3.0f;
@@ -351,7 +351,6 @@ public class EnemyBehaviour : MonoBehaviour
                 agent.SetDestination(player.position);
                 state = EnemyState.WALKING;
                 agent.speed = chasingSpeed;
-                elapse_time = 0f;
                 shootOnce = true;
             }
 
@@ -415,15 +414,15 @@ public class EnemyBehaviour : MonoBehaviour
             ammunition--;
         }
 
-        while (elapse_time < timeBetweenAttacks)
+        while (rangedAttackTimer < timeBetweenAttacks)
         {
-            elapse_time += Time.deltaTime;
+            rangedAttackTimer += Time.deltaTime;
             return;
         }
 
         shootOnce = true;
 
-        elapse_time = 0;
+        rangedAttackTimer = 0;
 
         state = EnemyState.ATTACKING;
         offset = new Vector3(0.8f, 1.0f, 0f);

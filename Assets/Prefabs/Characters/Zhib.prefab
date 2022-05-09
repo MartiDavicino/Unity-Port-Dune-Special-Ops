@@ -1391,8 +1391,6 @@ GameObject:
   - component: {fileID: 6868864155876820125}
   - component: {fileID: 6868864155876820118}
   - component: {fileID: 6868864155876820113}
-  - component: {fileID: 1012071793}
-  - component: {fileID: 621181426376164503}
   m_Layer: 6
   m_Name: Zhib
   m_TagString: Player
@@ -1566,14 +1564,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6590c8f39ce564c4eb7408f88559eb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetEnemy: {fileID: 0}
   maximumRange: 12.5
   ammunition: 2
+  soundRange: 20
   knifeVelocity: 40
+  chanceToHitHarkonnen: 0.05
+  chanceToSardaukar: 0.09
   knifePrefab: {fileID: 8902590539744950886, guid: a2733bd1eb438aa4aa9f6a6b85ecec30, type: 3}
   whatIsKnife:
     serializedVersion: 2
     m_Bits: 1024
-  effectRange: 10
 --- !u!114 &6868864155876820118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1609,38 +1610,6 @@ MonoBehaviour:
   maxKills: 5
   killProximityRange: 3
   killChainRange: 5
-  whatIsEnemy:
-    serializedVersion: 2
-    m_Bits: 256
---- !u!114 &1012071793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6022001404598500244}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9784d089061d8b94d834471eaf6ff34c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderRadius: 10
-  whatIsEnemy:
-    serializedVersion: 2
-    m_Bits: 256
---- !u!114 &621181426376164503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6022001404598500244}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9784d089061d8b94d834471eaf6ff34c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renderRadius: 10
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 256

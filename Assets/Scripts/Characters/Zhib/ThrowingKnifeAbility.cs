@@ -21,7 +21,7 @@ public class ThrowingKnifeAbility : MonoBehaviour
     private bool enemyOutOfRange;
     private bool addLineComponentOnce;
 
-    private GameObject targetEnemy;
+    [HideInInspector] public GameObject targetEnemy;
 
     //Ability Stats
     public float maximumRange;
@@ -29,11 +29,19 @@ public class ThrowingKnifeAbility : MonoBehaviour
 
     //Knife
     private bool hasShot;
+    private GameObject[] thrownKnifes;
+    [Header("- Knife Stats -")]
+    public float soundRange;
     public float knifeVelocity;
+
+    [Range(0.0f, 1.0f)]
+    public float chanceToHitHarkonnen;
+
+    [Range(0.0f, 1.0f)]
+    public float chanceToSardaukar;
+
     public GameObject knifePrefab;
     public LayerMask whatIsKnife;
-    private GameObject[] thrownKnifes;
-    public float effectRange;
 
 
     // Start is called before the first frame update

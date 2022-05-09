@@ -214,7 +214,7 @@ public class CharacterAttack : MonoBehaviour
                                 break;
 
                             case DecState.SEEKING:
-                                if (Random.value > neralaChanceToHit) 
+                                if (Random.value < neralaChanceToHit) 
                                 {
                                     Destroy(enemyTarget);
                                 } else

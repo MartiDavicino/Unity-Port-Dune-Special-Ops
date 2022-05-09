@@ -154,7 +154,7 @@ public class EnemyDetection : MonoBehaviour
 			state = DecState.SEEKING;
 		}
 
-		if (timer >= delay)
+		if (timer >= secondsToDetect)
         {
 			timer = delay;
 			targets.Add(target);
