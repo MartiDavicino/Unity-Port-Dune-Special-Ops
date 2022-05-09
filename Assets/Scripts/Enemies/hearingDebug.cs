@@ -8,8 +8,12 @@ public class hearingDebug : MonoBehaviour
     public LineRenderer lDrawer;
     public EnemyDetection data;
     public GameObject info;
- 
+
     // Start is called before the first frame update
+    public void Start()
+    {
+        EnemyDetection data = gameObject.GetComponentInParent<EnemyDetection>();
+    }
     public void DebugDraw()
     {
         if (once && gameObject.GetComponent<LineRenderer>() == null)

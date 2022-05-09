@@ -180,6 +180,12 @@ public class EnemyBehaviour : MonoBehaviour
                     Summoning();
                 }
             }
+        } else
+        {
+            if (!detected)
+            {
+                Patroling();
+            }
         }
 
     }
