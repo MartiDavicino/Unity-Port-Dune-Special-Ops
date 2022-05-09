@@ -36,6 +36,8 @@ public class WeirdingWay : MonoBehaviour
 
     private Collider[] affectedEnemies;
 
+    private int initHealth;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -83,6 +85,7 @@ public class WeirdingWay : MonoBehaviour
                     {
                         if (rayHit.collider.tag == "Enemy")
                         {
+                            initHealth = baseScript.playerHealth;
                             goingToAttack = true;
                             enemyTargeted = true;
                             destroyLineComponentOnce = true;
@@ -109,6 +112,8 @@ public class WeirdingWay : MonoBehaviour
                 Destroy(gameObject.GetComponent<LineRenderer>());
                 destroyLineComponentOnce = false;
             }
+
+            if (goingToAttack) baseScript.playerHealth = initHealth;
 
             if (!agent.pathPending && agent.remainingDistance < killProximityRange && enemyTargeted && goingToAttack)
             {
@@ -166,6 +171,7 @@ public class WeirdingWay : MonoBehaviour
     {
         if (killCount < maxKills)
         {
+            baseScript.playerHealth = initHealth;
             baseScript.state = PlayerState.IDLE;
             transform.position = targetedEnemy.transform.position + (targetedEnemy.transform.rotation * attackPointOffset);
             transform.LookAt(targetedEnemy.transform);
@@ -225,6 +231,7 @@ public class WeirdingWay : MonoBehaviour
                 firstEnemyReached = false;
                 enemyTargeted = false;
                 killCount = 0;
+                baseScript.playerHealth = initHealth;
 
             }
         }
@@ -237,6 +244,7 @@ public class WeirdingWay : MonoBehaviour
             firstEnemyReached = false;
             enemyTargeted = false;
             killCount = 0;
+            baseScript.playerHealth = initHealth;
 
         }
     }
