@@ -1031,6 +1031,10 @@ MonoBehaviour:
   maximumRange: 20
   cooldown: 10
   onCooldown: 0
+  harkonnenUnawareProb: 0.151
+  harkonnenAwareProb: 0.181
+  sardaukarUnawareProb: 0.05
+  sardaukarAwareProb: 0.081
 --- !u!114 &4475807426259986343
 MonoBehaviour:
   m_ObjectHideFlags: 0

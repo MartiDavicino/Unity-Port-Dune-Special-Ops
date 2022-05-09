@@ -63,11 +63,15 @@ public class GeneralManager : MonoBehaviour
             {
                 if (zhibBase.playerHealth == 0)
                 {
+                    if(zhib == cameraScript.focusedPlayer)
+                    {
+                        if (nerala != null && neralaUnlocked)
+                            selectedCharacter = nerala;
+                        else if (omozra != null && omozraUnlocked)
+                            selectedCharacter = omozra;
+                    }
+
                     Destroy(zhib);
-                    if (nerala != null && neralaUnlocked)
-                        selectedCharacter = nerala;
-                    else if (omozra != null && omozraUnlocked)
-                        selectedCharacter = omozra;
                 }
             }
 
@@ -75,11 +79,15 @@ public class GeneralManager : MonoBehaviour
             {
                 if (neralaBase.playerHealth == 0)
                 {
+                    if (nerala == cameraScript.focusedPlayer)
+                    {
+                        if (zhib != null)
+                            selectedCharacter = zhib;
+                        else if (omozra != null && omozraUnlocked)
+                            selectedCharacter = omozra;
+                    }
+
                     Destroy(nerala);
-                    if (zhib != null)
-                        selectedCharacter = zhib;
-                     else if (omozra != null && omozraUnlocked)
-                        selectedCharacter = omozra;
                 }
             }
 
@@ -87,12 +95,16 @@ public class GeneralManager : MonoBehaviour
             {
                 if (omozraBase.playerHealth == 0)
                 {
+                    if (omozra == cameraScript.focusedPlayer)
+                    {
+                        if (zhib != null)
+                            selectedCharacter = zhib;
+                        else if (nerala != null)
+                            selectedCharacter = nerala;
+                    }
+
                     Destroy(omozra);
                     Destroy(sadiq);
-                    if (zhib != null)
-                        selectedCharacter = zhib;
-                    else if (nerala != null)
-                        selectedCharacter = nerala;
                 }
             }
 

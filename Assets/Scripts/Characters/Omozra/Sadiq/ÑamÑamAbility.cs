@@ -12,8 +12,6 @@ public class ÑamÑamAbility : MonoBehaviour
 
     private SadiqBehaviour baseScript;
 
-    private Vector3 initPos;
-    private Vector3 targetPos;
     private float elapse_time;
 
     private bool once;
@@ -26,8 +24,6 @@ public class ÑamÑamAbility : MonoBehaviour
     {
         omozra = GameObject.Find("Omozra");
         omozraÑamScript = omozra.GetComponent<OmozraÑamÑamAbility>();
-
-        initPos = transform.position;
 
         elapse_time = 0f;
         baseScript = gameObject.GetComponent<SadiqBehaviour>();
@@ -77,7 +73,7 @@ public class ÑamÑamAbility : MonoBehaviour
 
                 elapse_time = 0;
 
-                Destroy(targetEnemy);
+                DevourEnemy();
 
                 phase2 = false;
                 phase1 = false;
@@ -112,6 +108,76 @@ public class ÑamÑamAbility : MonoBehaviour
             omozraÑamScript.addLineComponentOnce = true;
 
             cll.isTrigger = false;
+        }
+    }
+
+    void DevourEnemy()
+    {
+        EnemyBehaviour eBehaviour = targetEnemy.GetComponent<EnemyBehaviour>();
+        EnemyDetection eDetection = targetEnemy.GetComponent<EnemyDetection>();
+
+        switch (eBehaviour.type)
+        {
+            case EnemyType.HARKONNEN:
+                switch (eDetection.state)
+                {
+                    case DecState.STILL:
+                        Destroy(targetEnemy);
+                        break;
+
+                    case DecState.SEEKING:
+                        if (Random.value < omozraÑamScript.harkonnenUnawareProb)
+                        {
+                            Destroy(targetEnemy);
+                        }
+                        break;
+
+                    case DecState.FOUND:
+                        if (Random.value < omozraÑamScript.harkonnenAwareProb)
+                        {
+                            Destroy(targetEnemy);
+                        }
+                        break;
+                }
+                break;
+            case EnemyType.SARDAUKAR:
+                switch (eDetection.state)
+                {
+                    case DecState.STILL:
+                        if (Random.value < omozraÑamScript.sardaukarUnawareProb)
+                        {
+                            Destroy(targetEnemy);
+                        }
+                        break;
+
+                    case DecState.SEEKING:
+                        if (Random.value < omozraÑamScript.sardaukarAwareProb)
+                        {
+                            Destroy(targetEnemy);
+                        }
+                        break;
+
+                    case DecState.FOUND:
+                        if (Random.value < omozraÑamScript.sardaukarAwareProb)
+                        {
+                            Destroy(targetEnemy);
+                        }
+                        break;
+                }
+                break;
+            case EnemyType.MENTAT:
+                switch (eDetection.state)
+                {
+                    case DecState.STILL:
+                        break;
+
+                    case DecState.SEEKING:
+                        break;
+
+                    case DecState.FOUND:
+                        break;
+                }
+                break;
         }
     }
 }

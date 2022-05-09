@@ -24,6 +24,16 @@ public class OmozraÑamÑamAbility : MonoBehaviour
     [HideInInspector] public bool onCooldown;
     private float elapse_time;
 
+    [Header("- Chances To Devour -")]
+    [Range(0.0f, 1.0f)]
+    public float harkonnenUnawareProb;
+    [Range(0.0f, 1.0f)]
+    public float harkonnenAwareProb;
+    [Range(0.0f, 1.0f)]
+    public float sardaukarUnawareProb;
+    [Range(0.0f, 1.0f)]
+    public float sardaukarAwareProb;
+
     // Start is called before the first frame update
     void Start()
     {
