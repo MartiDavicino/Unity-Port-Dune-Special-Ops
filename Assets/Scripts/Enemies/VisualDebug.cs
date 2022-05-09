@@ -6,14 +6,10 @@ public class VisualDebug : MonoBehaviour
 {
     private bool once = true;
     public LineRenderer lDrawer;
-    private EnemyDetection data;
+    public EnemyDetection data;
     public GameObject info;
 
     // Start is called before the first frame update
-    public void Start()
-    {
-        EnemyDetection data = gameObject.GetComponentInParent<EnemyDetection>();
-    }
     public void DebugDraw()
     {
         if (once && gameObject.GetComponent<LineRenderer>() == null)

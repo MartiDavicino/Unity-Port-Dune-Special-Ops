@@ -8,7 +8,6 @@ public class WaterTank : MonoBehaviour
 
     public float soundRange;
     public LayerMask whatIsEnemy;
-    public LayerMask whatIsPlayer;
 
     private NavMeshAgent agent;
 
@@ -16,72 +15,77 @@ public class WaterTank : MonoBehaviour
 
     public GameObject[] affectedEnemies;
 
+    public GameObject[] characters;
+
     private bool once;
 
-    private bool canActivate;
+    private Camera playerCamera;
+
+    private bool going;
 
     // Start is called before the first frame update
     void Start()
     {
-        once = true;
+        once = false;
+        going = false;
+        playerCamera = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!active)
+        //if (Input.GetMouseButtonDown(0))
+        //{
+
+        //    Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+        //    RaycastHit meshHit;
+
+        //    if (Physics.Raycast(ray, out meshHit))
+        //    {
+        //        if (meshHit.collider.gameObject.name == "Water Tank")
+        //        {
+        //            going = true;
+        //        }
+        //    }
+        //}
+
+        //if (going && )
+        for(int i = 0; i < characters.Length; i++)
         {
-            Collider[] affectedPlayers = Physics.OverlapSphere(transform.position, 5f, whatIsPlayer);
-
-            if (affectedPlayers.Length > 0)
-                canActivate = true;
-            else
-                canActivate = false;
-
-            if(canActivate)
-            {
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    active = true;
-                    canActivate = false;
-                }
+            if (Vector3.Distance(characters[i].transform.position, transform.position) < 3.5f)
+            {  
+                active = true;
             }
+            //print(Vector3.Distance(characters[i].transform.position, transform.position));
         }
 
-        if (active && once)
+            if (active && !once)
         {
             for (int i = 0; i < affectedEnemies.Length; i++)
             {
                 EnemyBehaviour eB = affectedEnemies[i].gameObject.GetComponent<EnemyBehaviour>();
                 eB.state = EnemyState.WALKING;
 
-                eB.affectedByWaterTank = true;
-
                 agent = affectedEnemies[i].gameObject.GetComponent<NavMeshAgent>();
                 agent.SetDestination(transform.position);
             }
-            once = false;
+            ResetNearEnemies();
+            once = true;
         }
-
-        ResetNearEnemies();
        
     }
 
-    private void OnGUI()
-    {
-        if (canActivate) GUI.Box(new Rect(Screen.width - 155, Screen.height - 45, 150, 40), "Press 'f' to\nactivate Water Tank");
-    }
     void ResetNearEnemies()
     {
         Collider[] affectedEnemies = Physics.OverlapSphere(transform.position, 5f, whatIsEnemy);
 
         for (int i = 0; i < affectedEnemies.Length; i++)
         {
-            EnemyBehaviour eB = affectedEnemies[i].gameObject.GetComponent<EnemyBehaviour>();
-            eB.resetedByWaterTank = true;
-
             agent = affectedEnemies[i].gameObject.GetComponent<NavMeshAgent>();
             agent.ResetPath();
+
+            EnemyBehaviour eB = affectedEnemies[i].gameObject.GetComponent<EnemyBehaviour>();
+            eB.state = EnemyState.IDLE;
         }
     }
 }
