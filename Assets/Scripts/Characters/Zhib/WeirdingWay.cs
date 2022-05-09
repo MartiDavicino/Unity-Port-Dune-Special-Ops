@@ -13,8 +13,10 @@ public class WeirdingWay : MonoBehaviour
     public int maxKills;
     public float killProximityRange;
     public float killChainRange;
+    [Range(0.0f, 1.0f)]
+    public float chanceToKillSardaukar;
+    public float soundRange;
     public LayerMask whatIsEnemy;
-
     private Vector3 attackPointOffset;
 
     private RaycastHit rayHit;
@@ -86,7 +88,8 @@ public class WeirdingWay : MonoBehaviour
                             destroyLineComponentOnce = true;
                             targetedEnemy = rayHit.collider.gameObject;
                             agent.SetDestination(rayHit.collider.gameObject.transform.position);
-                            baseScript.state = PlayerState.WALKING;
+                            if(baseScript.state == PlayerState.CROUCH && baseScript.state == PlayerState.RUNNING)
+                                baseScript.state = PlayerState.WALKING;
                         }
                     }
                 }
@@ -166,7 +169,31 @@ public class WeirdingWay : MonoBehaviour
             baseScript.state = PlayerState.IDLE;
             transform.position = targetedEnemy.transform.position + (targetedEnemy.transform.rotation * attackPointOffset);
             transform.LookAt(targetedEnemy.transform);
-            Destroy(targetedEnemy);
+            
+            EnemyBehaviour eB = targetedEnemy.GetComponent<EnemyBehaviour>();
+            switch (eB.type)
+            {
+                case EnemyType.HARKONNEN:
+                    Destroy(targetedEnemy);
+                    break;
+
+                case EnemyType.SARDAUKAR:
+                    if (Random.value < chanceToKillSardaukar)
+                    {
+                        Destroy(targetedEnemy);
+                    }
+                    else
+                    {
+                        EmitSound();
+                    }
+                    break;
+
+                case EnemyType.MENTAT:
+                    Destroy(targetedEnemy);
+                    break;
+            }
+            
+
             killCount++;
 
             affectedEnemies = Physics.OverlapSphere(transform.position, killChainRange, whatIsEnemy);
@@ -224,6 +251,17 @@ public class WeirdingWay : MonoBehaviour
         return distance;
     }
 
+    void EmitSound()
+    {
+        Collider[] affectedEnemies = Physics.OverlapSphere(transform.position, soundRange, whatIsEnemy);
+
+        for (int i = 0; i < affectedEnemies.Length; i++)
+        {
+            affectedEnemies[i].GetComponent<EnemyDetection>().state = DecState.SEEKING;
+            affectedEnemies[i].GetComponent<EnemyDetection>().timer = affectedEnemies[i].GetComponent<EnemyDetection>().secondsToDetect;
+
+        }
+    }
     void OnGUI()
     {
         if (baseScript.ability3Active) GUI.Box(new Rect(5, Screen.height - 30, 150, 25), "Weirding Way Active");
