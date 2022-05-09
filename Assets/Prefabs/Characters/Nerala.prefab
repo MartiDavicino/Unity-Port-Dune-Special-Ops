@@ -1668,8 +1668,8 @@ MonoBehaviour:
   ability2Active: 0
   ability3Active: 0
   state: 0
-  crouchMultiplier: 0
-  runMultiplier: 0
+  crouchMultiplier: 0.15
+  runMultiplier: 2
   detectionMultiplier: 0
   whatIsSpice:
     serializedVersion: 2
@@ -1688,7 +1688,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9659a8a70fc70794ea40ec416df403e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundRange: 20
   rangeToKill: 2
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 256
+  neralaChanceToHit: 0.5
 --- !u!114 &1983282172
 MonoBehaviour:
   m_ObjectHideFlags: 0

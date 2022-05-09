@@ -52,9 +52,13 @@ public class RenderEnemies : MonoBehaviour
 
         for (int i = 0; i < enemies.Length; i++)
         {
-            string deleteWord = "(Clone)";
-            
-            Transform child = enemies[i].gameObject.transform.Find(enemies[i].name.Replace(deleteWord, "") + "_low");
+            string[] splitArray = enemies[i].name.Split(char.Parse(" "));
+            string[] splitArray2 = splitArray[0].Split(char.Parse("("));
+
+            string finalName = splitArray2[0];
+
+            Transform child = enemies[i].gameObject.transform.Find(finalName + "_low");
+
             child.gameObject.GetComponent<SkinnedMeshRenderer>().enabled = true;
         }
     }

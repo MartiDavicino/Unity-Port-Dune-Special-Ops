@@ -52,7 +52,6 @@ public class EnemyDetection : MonoBehaviour
     void Start()
     {
 		camera = Camera.main;
-		player = camera.GetComponentInChildren<CameraMovement>().focusedPlayer;
 		multiplierHolder = sightMultiplier;
 		proportion = 1f;
 
@@ -62,6 +61,7 @@ public class EnemyDetection : MonoBehaviour
 	}
     void Update()
     {
+		player = camera.GetComponentInChildren<CameraMovement>().focusedPlayer;
 		angle1 = DirFromAngle(-viewAngle / 2, false);
 		angle2 = DirFromAngle(viewAngle / 2, false);
 

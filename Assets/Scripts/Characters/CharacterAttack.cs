@@ -17,7 +17,13 @@ public class CharacterAttack : MonoBehaviour
     private Vector3 distanceToTarget;
     private bool attacking;
     private bool hasAttacked;
+
+    public float soundRange;
     public float rangeToKill;
+    public LayerMask whatIsEnemy;
+
+    [Range(0.0f, 1.0f)]
+    public float neralaChanceToHit;
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +64,19 @@ public class CharacterAttack : MonoBehaviour
                     }
                 }
 
+                if (Input.GetKeyDown(KeyCode.Mouse0))
+                {
+                    Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+
+                    if (Physics.Raycast(ray, out rayHit))
+                    {
+                        if (rayHit.collider.tag == "Floor")
+                        {
+                            attacking = false;
+                        }
+                    }
+                }
+
                 if (attacking)
                 {
                     distanceToTarget = CalculateAbsoluteDistance(enemyTarget.transform.position);
@@ -68,7 +87,7 @@ public class CharacterAttack : MonoBehaviour
                         hasAttacked = true;
                         baseScript.state = PlayerState.STEALTH_KILL;
                         attacking = false;
-                        Destroy(enemyTarget);
+                        Attack(enemyTarget);
                     
                     }
                 }
@@ -94,4 +113,159 @@ public class CharacterAttack : MonoBehaviour
 
         return distance;
     }
+
+    void Attack(GameObject enemyTarget)
+    {
+        EnemyBehaviour eBehaviour = enemyTarget.GetComponent<EnemyBehaviour>();
+        EnemyDetection eDetection = enemyTarget.GetComponent<EnemyDetection>();
+
+        switch (gameObject.name)
+        {
+            case "Zhib":
+                switch(eBehaviour.type)
+                {
+                    case EnemyType.HARKONNEN:
+                        switch (eDetection.state)
+                        {
+                            case DecState.STILL:
+                                Destroy(enemyTarget);
+                                break;
+
+                            case DecState.SEEKING:
+                                Destroy(enemyTarget);
+                                break;
+
+                            case DecState.FOUND:
+                                Destroy(enemyTarget);
+                                baseScript.hit = true;
+                                EmitSound();
+                                break;
+                        }
+                        break;
+                    case EnemyType.SARDAUKAR:
+                        switch (eDetection.state)
+                        {
+                            case DecState.STILL:
+                                Destroy(enemyTarget);
+                                baseScript.hit = true;
+                                baseScript.playerHealth--;
+                                EmitSound();
+                                break;
+
+                            case DecState.SEEKING:
+                                Destroy(enemyTarget);
+                                baseScript.hit = true;
+                                baseScript.playerHealth--;
+                                EmitSound();
+                                break;
+
+                            case DecState.FOUND:
+                                Destroy(enemyTarget);
+                                baseScript.hit = true;
+                                EmitSound();
+                                break;
+                        }
+                        break;
+                    case EnemyType.MENTAT:
+                        switch (eDetection.state)
+                        {
+                            case DecState.STILL:
+                                Destroy(enemyTarget);
+                                break;
+
+                            case DecState.SEEKING:
+                                Destroy(enemyTarget);
+                                break;
+
+                            case DecState.FOUND:
+                                Destroy(enemyTarget);
+                                EmitSound();
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case "Nerala":
+                switch (eBehaviour.type)
+                {
+                    case EnemyType.HARKONNEN:
+                        switch (eDetection.state)
+                        {
+                            case DecState.STILL:
+                                Destroy(enemyTarget);
+                                break;
+
+                            case DecState.SEEKING:
+                                Destroy(enemyTarget);
+                                break;
+
+                            case DecState.FOUND:
+                                Destroy(enemyTarget);
+                                baseScript.hit = true;
+                                EmitSound();
+                                break;
+                        }
+                        break;
+                    case EnemyType.SARDAUKAR:
+                        switch (eDetection.state)
+                        {
+                            case DecState.STILL:
+                                Destroy(enemyTarget);
+                                break;
+
+                            case DecState.SEEKING:
+                                if (Random.value > neralaChanceToHit) 
+                                {
+                                    Destroy(enemyTarget);
+                                } else
+                                {
+                                    Destroy(enemyTarget);
+                                    baseScript.hit = true;
+                                    baseScript.playerHealth--;
+                                    EmitSound();
+                                }
+
+                                break;
+
+                            case DecState.FOUND:
+                                Destroy(enemyTarget);
+                                baseScript.hit = true;
+                                EmitSound();
+                                break;
+                        }
+                        break;
+                    case EnemyType.MENTAT:
+                        switch (eDetection.state)
+                        {
+                            case DecState.STILL:
+                                Destroy(enemyTarget);
+                                break;
+
+                            case DecState.SEEKING:
+                                Destroy(enemyTarget);
+                                break;
+
+                            case DecState.FOUND:
+                                Destroy(enemyTarget);
+                                EmitSound();
+                                break;
+                        }
+                        break;
+                }
+                break;
+        }
+    }
+
+    void EmitSound()
+    {
+        Collider[] affectedEnemies = Physics.OverlapSphere(transform.position, soundRange, whatIsEnemy);
+
+        for (int i = 0; i < affectedEnemies.Length; i++)
+        {
+            affectedEnemies[i].GetComponent<EnemyDetection>().state = DecState.SEEKING;
+            affectedEnemies[i].GetComponent<EnemyDetection>().timer = affectedEnemies[i].GetComponent<EnemyDetection>().secondsToDetect;
+
+        }
+    }
+
 }

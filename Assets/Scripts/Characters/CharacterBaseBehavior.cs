@@ -174,13 +174,23 @@ public class CharacterBaseBehavior : MonoBehaviour
             {
                 crouching = !crouching;
                 running = false;
-                if(crouching && state == PlayerState.IDLE) {
+                if(crouching) {
                     detectionMultiplier = crouchMultiplier;
                     state = PlayerState.CROUCH; 
                 }
                 else if (state == PlayerState.CROUCH) {
-                    detectionMultiplier = 1f;
-                    state = PlayerState.IDLE; 
+                    if(targetPosition != Vector3.zero)
+                    {
+                        if (CalculateAbsoluteDistance(targetPosition).magnitude > playerAgent.stoppingDistance)
+                        {
+                            detectionMultiplier = 1f;
+                            state = PlayerState.WALKING; 
+                        } 
+                    } else
+                    {
+                        detectionMultiplier = 1f;
+                        state = PlayerState.IDLE;
+                    }
                 }
             }
 
