@@ -58,8 +58,14 @@ public class EnemyBehaviour : MonoBehaviour
     private float attackRange;
     [HideInInspector] public bool playerInSightRange, playerInAttackRange;
 
+    [HideInInspector] public bool affectedByWaterTank;
+    [HideInInspector] public bool resetedByWaterTank;
+    public float resetEnemyTimeWaterT;
+    private float resetEnemyTimer;
+
     public EnemyType type = EnemyType.NONE;
     public LayerMask whatIsGround, whatIsPlayer;
+
 
     //Harkonnen
     [HideInInspector] public bool isGuard;
@@ -93,12 +99,13 @@ public class EnemyBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         agent = GetComponent<NavMeshAgent>();
 
         patrolIterator = 0;
         affectedByDecoy = false;
-        if(!isGuard) state = EnemyState.IDLE;
+        affectedByWaterTank = false;
+        resetedByWaterTank = false;
+        if (!isGuard) state = EnemyState.IDLE;
         
 
         switch (type)
@@ -276,12 +283,26 @@ public class EnemyBehaviour : MonoBehaviour
         
             if (!walkPointSet) SearchWalkPoint();
 
-            if (walkPointSet && !affectedByDecoy)
+            if (walkPointSet && !affectedByDecoy &&!affectedByWaterTank)
             {
                 agent.SetDestination(walkPoint);
                 state = EnemyState.WALKING;
             }
 
+            if(resetedByWaterTank)
+            {
+                state = EnemyState.IDLE;
+
+                while (resetEnemyTimer < resetEnemyTimeWaterT)
+                {
+                    resetEnemyTimer += Time.deltaTime;
+                    return;
+                }
+
+                resetedByWaterTank = false;
+                affectedByWaterTank = false;
+                resetEnemyTimeWaterT = 0;
+            }
 
             Vector3 distanceToWalkPoint = transform.position - agent.destination;
             agent.speed = patrolingSpeed;
