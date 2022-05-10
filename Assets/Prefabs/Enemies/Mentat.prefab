@@ -92,7 +92,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lDrawer: {fileID: 0}
-  data: {fileID: 4278868393632840210}
   info: {fileID: 4008469697949108057}
 --- !u!1 &50775863119911402
 GameObject:
@@ -683,7 +682,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 100
-  m_BaseOffset: -100
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &4278868393632840211
@@ -710,6 +709,9 @@ MonoBehaviour:
   patrolPoints: []
   playerInSightRange: 0
   playerInAttackRange: 0
+  affectedByWaterTank: 0
+  resetedByWaterTank: 0
+  resetEnemyTimeWaterT: 0
   type: 2
   whatIsGround:
     serializedVersion: 2
@@ -746,7 +748,6 @@ MonoBehaviour:
   maxMultiplier: 5
   multiplierHolder: 0
   debuffTime: 5
-  debuffTimer: 0
   sightDebuffMultiplier: 0
   debuffed: 0
   data: {fileID: 4278868393632840211}
