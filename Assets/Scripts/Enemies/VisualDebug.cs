@@ -6,7 +6,7 @@ public class VisualDebug : MonoBehaviour
 {
     private bool once = true;
     public LineRenderer lDrawer;
-    private EnemyDetection data;
+    public EnemyDetection data;
     public GameObject info;
 
     // Start is called before the first frame update

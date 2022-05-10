@@ -732,6 +732,9 @@ MonoBehaviour:
   patrolPoints: []
   playerInSightRange: 0
   playerInAttackRange: 0
+  affectedByWaterTank: 0
+  resetedByWaterTank: 0
+  resetEnemyTimeWaterT: 0
   type: 0
   whatIsGround:
     serializedVersion: 2
@@ -768,7 +771,6 @@ MonoBehaviour:
   maxMultiplier: 3
   multiplierHolder: 0
   debuffTime: 5
-  debuffTimer: 0
   sightDebuffMultiplier: 0
   debuffed: 0
   data: {fileID: 374356984102618188}

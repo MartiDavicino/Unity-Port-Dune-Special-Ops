@@ -24,9 +24,6 @@ public enum EnemyState
 }
 public class EnemyBehaviour : MonoBehaviour
 {
-    private Vector3 lateSetPosition;
-    private NavMeshAgent lateAgent;
-    
     //General
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Transform player;
@@ -38,6 +35,7 @@ public class EnemyBehaviour : MonoBehaviour
     private CharacterBaseBehavior targetPlayerScript;
     private EnemyDetection enemyD;
     
+
     private float elapse_time = 0;
 
     public float chasingSpeed;
@@ -104,7 +102,7 @@ public class EnemyBehaviour : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        lateAgent = agent;
+        enemyD = GetComponent<EnemyDetection>();
 
         initPos = gameObject.transform.position;
         patrolIterator = 0;
@@ -148,7 +146,6 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        enemyD = GetComponent<EnemyDetection>();
 
         child.gameObject.GetComponent<SkinnedMeshRenderer>().enabled = false;
 
@@ -159,7 +156,7 @@ public class EnemyBehaviour : MonoBehaviour
         {
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-            if (!detected)
+            if (!detected && patrolPoints.Count > 0)
             {
                 Patroling();
             }
@@ -188,18 +185,12 @@ public class EnemyBehaviour : MonoBehaviour
             }
         } else
         {
-            if (!detected)
+            if (!detected && patrolPoints.Count > 0)
             {
                 Patroling();
             }
         }
 
-    }
-
-    private void LateUpdate()
-    {
-        if(lateSetPosition != null && !lateAgent)
-            SetLateDestination(lateSetPosition, lateAgent);
     }
     bool checkSenses()
     {
@@ -275,6 +266,7 @@ public class EnemyBehaviour : MonoBehaviour
     private void Patroling()
     {
         
+
         if(type == EnemyType.MENTAT)
         {
             child.gameObject.GetComponent<Renderer>().material = materialHolder;
@@ -287,8 +279,7 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 walkPoint = leader.transform.position + (leader.transform.rotation * guardOffset);
                 agent.speed = patrolingSpeed;
-                lateAgent = agent;
-                lateSetPosition = walkPoint;
+                agent.SetDestination(walkPoint);
                 state = EnemyState.WALKING;
             }
 
@@ -305,8 +296,7 @@ public class EnemyBehaviour : MonoBehaviour
 
             if (walkPointSet && !affectedByDecoy &&!affectedByWaterTank)
             {
-                lateAgent = agent;
-                lateSetPosition = walkPoint;
+                agent.SetDestination(walkPoint);
                 state = EnemyState.WALKING;
             }
 
@@ -346,8 +336,7 @@ public class EnemyBehaviour : MonoBehaviour
         {
             if (agent.remainingDistance > 0.2f && !agent.pathPending)
             {
-                lateAgent = agent;
-                lateSetPosition = initPos;
+                agent.SetDestination(initPos);
                 state = EnemyState.WALKING;
                 walkPointSet = false;
             } else
@@ -405,8 +394,7 @@ public class EnemyBehaviour : MonoBehaviour
                 RangeAttacking();
             } else
             {
-                lateAgent = agent;
-                lateSetPosition = player.position;
+                agent.SetDestination(player.position);
                 state = EnemyState.WALKING;
                 agent.speed = chasingSpeed;
                 shootOnce = true;
@@ -416,8 +404,7 @@ public class EnemyBehaviour : MonoBehaviour
 
         if (type == EnemyType.HARKONNEN || type == EnemyType.RABBAN)
         {
-            lateAgent = agent;
-            lateSetPosition = player.position;
+            agent.SetDestination(player.position);
             state = EnemyState.WALKING;
             agent.speed = chasingSpeed;
 
@@ -537,8 +524,7 @@ public class EnemyBehaviour : MonoBehaviour
                     summonedBehaviour.guardOffset = spawnOffset;
 
                     NavMeshAgent summonedAgent = summonedEnemy.GetComponent<NavMeshAgent>();
-                    lateAgent = summonedAgent;
-                    lateSetPosition = player.position;
+                    summonedAgent.SetDestination(player.position);
 
                     spawnOffset = initOffset;
                 }
@@ -591,13 +577,7 @@ public class EnemyBehaviour : MonoBehaviour
         transform.rotation = startTransform.rotation;
 
         // And get it to head towards the found NavMesh position
-        lateAgent = agent;
-        lateSetPosition = hit.position;
+        agent.SetDestination(hit.position);
+        
     }
-
-    void SetLateDestination(Vector3 position, NavMeshAgent agent)
-    {
-        agent.SetDestination(position);
-    }
-
 }
