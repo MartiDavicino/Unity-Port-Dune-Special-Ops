@@ -52,16 +52,6 @@ public class HunterSeeker : MonoBehaviour
             }
         }
 
-        Collider[] killableEnemy = Physics.OverlapSphere(transform.position, 1.0f, whatIsEnemy);
-
-        for (int i = 0; i < killableEnemy.Length; i++)
-        {
-            DisableHunterSeeker();
-            Destroy(killableEnemy[i].gameObject);
-            
-            break;
-        }
-
         while (elapse_time < countdownTime)
         {
             elapse_time += Time.deltaTime;
@@ -100,5 +90,14 @@ public class HunterSeeker : MonoBehaviour
         cameraScript.focusedPlayer = nerala;
 
         Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Enemy")
+        {
+            DisableHunterSeeker();
+            Destroy(collision.gameObject);
+        }
     }
 }

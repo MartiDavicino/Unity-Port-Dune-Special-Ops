@@ -24,6 +24,9 @@ public enum EnemyState
 }
 public class EnemyBehaviour : MonoBehaviour
 {
+    private Vector3 lateSetPosition;
+    private NavMeshAgent lateAgent;
+    
     //General
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Transform player;
@@ -35,7 +38,6 @@ public class EnemyBehaviour : MonoBehaviour
     private CharacterBaseBehavior targetPlayerScript;
     private EnemyDetection enemyD;
     
-
     private float elapse_time = 0;
 
     public float chasingSpeed;
@@ -102,6 +104,7 @@ public class EnemyBehaviour : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        lateAgent = agent;
 
         initPos = gameObject.transform.position;
         patrolIterator = 0;
@@ -192,6 +195,12 @@ public class EnemyBehaviour : MonoBehaviour
         }
 
     }
+
+    private void LateUpdate()
+    {
+        if(lateSetPosition != null && !lateAgent)
+            SetLateDestination(lateSetPosition, lateAgent);
+    }
     bool checkSenses()
     {
         if(!enemyD.noisyTargets.Any() && enemyD.visibleTargets.Any())
@@ -278,7 +287,8 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 walkPoint = leader.transform.position + (leader.transform.rotation * guardOffset);
                 agent.speed = patrolingSpeed;
-                agent.SetDestination(walkPoint);
+                lateAgent = agent;
+                lateSetPosition = walkPoint;
                 state = EnemyState.WALKING;
             }
 
@@ -295,7 +305,8 @@ public class EnemyBehaviour : MonoBehaviour
 
             if (walkPointSet && !affectedByDecoy &&!affectedByWaterTank)
             {
-                agent.SetDestination(walkPoint);
+                lateAgent = agent;
+                lateSetPosition = walkPoint;
                 state = EnemyState.WALKING;
             }
 
@@ -335,7 +346,8 @@ public class EnemyBehaviour : MonoBehaviour
         {
             if (agent.remainingDistance > 0.2f && !agent.pathPending)
             {
-                agent.SetDestination(initPos);
+                lateAgent = agent;
+                lateSetPosition = initPos;
                 state = EnemyState.WALKING;
                 walkPointSet = false;
             } else
@@ -393,7 +405,8 @@ public class EnemyBehaviour : MonoBehaviour
                 RangeAttacking();
             } else
             {
-                agent.SetDestination(player.position);
+                lateAgent = agent;
+                lateSetPosition = player.position;
                 state = EnemyState.WALKING;
                 agent.speed = chasingSpeed;
                 shootOnce = true;
@@ -403,7 +416,8 @@ public class EnemyBehaviour : MonoBehaviour
 
         if (type == EnemyType.HARKONNEN || type == EnemyType.RABBAN)
         {
-            agent.SetDestination(player.position);
+            lateAgent = agent;
+            lateSetPosition = player.position;
             state = EnemyState.WALKING;
             agent.speed = chasingSpeed;
 
@@ -523,7 +537,8 @@ public class EnemyBehaviour : MonoBehaviour
                     summonedBehaviour.guardOffset = spawnOffset;
 
                     NavMeshAgent summonedAgent = summonedEnemy.GetComponent<NavMeshAgent>();
-                    summonedAgent.SetDestination(player.position);
+                    lateAgent = summonedAgent;
+                    lateSetPosition = player.position;
 
                     spawnOffset = initOffset;
                 }
@@ -565,7 +580,7 @@ public class EnemyBehaviour : MonoBehaviour
         NavMeshHit hit;    // stores the output in a variable called hit
 
         // 5 is the distance to check, assumes you use default for the NavMesh Layer name
-        NavMesh.SamplePosition(runTo, out hit, 5, 1 << NavMesh.GetNavMeshLayerFromName("Default"));
+        NavMesh.SamplePosition(runTo, out hit, 5, 1 << NavMesh.GetAreaFromName("Default"));
         //Debug.Log("hit = " + hit + " hit.position = " + hit.position);
 
         // just used for testing - safe to ignore
@@ -576,7 +591,13 @@ public class EnemyBehaviour : MonoBehaviour
         transform.rotation = startTransform.rotation;
 
         // And get it to head towards the found NavMesh position
-        agent.SetDestination(hit.position);
-        
+        lateAgent = agent;
+        lateSetPosition = hit.position;
     }
+
+    void SetLateDestination(Vector3 position, NavMeshAgent agent)
+    {
+        agent.SetDestination(position);
+    }
+
 }

@@ -36,7 +36,7 @@ public class EnemyDetection : MonoBehaviour
 
 	private CharacterBaseBehavior baseScript;
 
-	private Camera camera;
+	private Camera generalCamera;
 	private GameObject player;
 
 	[HideInInspector] public float timer = 0.0f;
@@ -64,7 +64,7 @@ public class EnemyDetection : MonoBehaviour
 
 	void Start()
     {
-		camera = Camera.main;
+		generalCamera = Camera.main;
 		multiplierHolder = sightMultiplier;
 		proportion = 1f;
 
@@ -84,7 +84,7 @@ public class EnemyDetection : MonoBehaviour
 	}
     void Update()
     {
-		player = camera.GetComponentInChildren<CameraMovement>().focusedPlayer;
+		player = generalCamera.GetComponentInChildren<CameraMovement>().focusedPlayer;
 		
 		if(player != null)
         {

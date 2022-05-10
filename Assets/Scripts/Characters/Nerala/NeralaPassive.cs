@@ -16,7 +16,7 @@ public class NeralaPassive : MonoBehaviour
 
     private bool goingTo;
     private bool isUp;
-    private string name;
+    private string passiveSpotName;
 
     void Start()
     {
@@ -50,7 +50,7 @@ public class NeralaPassive : MonoBehaviour
                         playerAgent.SetDestination(meshHit.point);
                         goingTo = true;
 
-                        name = meshHit.collider.gameObject.name;
+                        passiveSpotName = meshHit.collider.gameObject.name;
                     } else
                     {
                         goingTo = false;
@@ -60,7 +60,7 @@ public class NeralaPassive : MonoBehaviour
 
             if(goingTo && playerAgent.remainingDistance < 1.5f && !playerAgent.pathPending)
             {
-                if(name== "NeralaPassiveSpot")
+                if(passiveSpotName == "NeralaPassiveSpot")
                 {
                     if (isUp)
                     {
