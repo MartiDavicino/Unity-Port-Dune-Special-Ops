@@ -6,7 +6,6 @@ using UnityEngine;
 public class WaterTank : MonoBehaviour
 {
 
-    public float soundRange;
     public LayerMask whatIsEnemy;
     public LayerMask whatIsPlayer;
 
@@ -31,7 +30,7 @@ public class WaterTank : MonoBehaviour
     {
         if(!active)
         {
-            Collider[] affectedPlayers = Physics.OverlapSphere(transform.position, 5f, whatIsPlayer);
+            Collider[] affectedPlayers = Physics.OverlapSphere(transform.position, 15f, whatIsPlayer);
 
             if (affectedPlayers.Length > 0)
                 canActivate = true;
@@ -52,13 +51,10 @@ public class WaterTank : MonoBehaviour
         {
             for (int i = 0; i < affectedEnemies.Length; i++)
             {
-                EnemyBehaviour eB = affectedEnemies[i].gameObject.GetComponent<EnemyBehaviour>();
-                eB.state = EnemyState.WALKING;
-
-                eB.affectedByWaterTank = true;
-
-                agent = affectedEnemies[i].gameObject.GetComponent<NavMeshAgent>();
-                agent.SetDestination(transform.position);
+                affectedEnemies[i].GetComponent<EnemyBehaviour>().state = EnemyState.WALKING;
+                affectedEnemies[i].GetComponent<EnemyBehaviour>().affectedByWaterTank = true;
+                affectedEnemies[i].GetComponent<NavMeshAgent>().SetDestination(transform.position);
+                Destroy(affectedEnemies[i]);
             }
             once = false;
         }

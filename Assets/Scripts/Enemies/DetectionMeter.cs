@@ -34,7 +34,11 @@ public class DetectionMeter : MonoBehaviour
 
         transform.LookAt(playerCamera.transform);
 
-        if (enemyD.timer == 0) return;
+        if (enemyD.timer == 0)
+        {
+            bar.fillAmount = 0f;
+            return;
+        }
 
         if (enemyD.state == DecState.STILL)
         {

@@ -129,12 +129,12 @@ public class GeneralManager : MonoBehaviour
                 allSelected = false;
             }
 
-            if (Input.GetKey(KeyCode.V) && !hunterSeekerActive && neralaUnlocked && omozraUnlocked)
+            if (Input.GetKey(KeyCode.V) && !hunterSeekerActive)
             {
                 allSelected = true;
                 zhibBase.allSelected = true;
-                neralaBase.allSelected = true;
-                omozraBase.allSelected = true;
+                if(neralaUnlocked) neralaBase.allSelected = true;
+                if(omozraUnlocked) omozraBase.allSelected = true;
             }
 
 

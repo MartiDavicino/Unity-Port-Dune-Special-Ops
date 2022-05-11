@@ -50,10 +50,11 @@ public class EnemyBehaviour : MonoBehaviour
     [HideInInspector] public bool affectedByDecoy;
     public List<Vector3> patrolPoints;
 
-    private Vector3 walkPoint;
-    private bool walkPointSet;
+    [HideInInspector] public Vector3 walkPoint;
+    [HideInInspector] public bool walkPointSet;
     private int patrolIterator;
     private Vector3 initPos;
+    private Quaternion initRot;
 
     //States
     private float attackRange;
@@ -94,9 +95,22 @@ public class EnemyBehaviour : MonoBehaviour
 
     [Header("- Only if Mentat -")]
     public float summonTime;
+    private float summonTimer;
     public float summonCooldown;
     public Vector3 spawnOffset;
     public GameObject harkonnenPrefab;
+
+    ///////////////////////////////////////////////////////////////////////
+    //Esto es una guarrada pq sino no me van los putos enemigos en la build
+    //Se puede desactivar poniendo safe a true y
+    //comentando la llamada a KillImpostors()
+    private float spawnTimer = 0f;
+    private bool safe = false;
+    private bool initTP = false;
+    private Vector3 warpInitPos;
+    private bool warpOnce = true;
+    ///////////////////////////////////////////////////////////////////////
+
 
     // Start is called before the first frame update
     void Start()
@@ -104,11 +118,15 @@ public class EnemyBehaviour : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         enemyD = GetComponent<EnemyDetection>();
 
+
         initPos = gameObject.transform.position;
+        initRot = gameObject.transform.rotation;
+        agent.Warp(initPos);
         patrolIterator = 0;
         affectedByDecoy = false;
         affectedByWaterTank = false;
         resetedByWaterTank = false;
+        summonTimer = 0f;
         if (!isGuard) state = EnemyState.IDLE;
         
 
@@ -141,12 +159,12 @@ public class EnemyBehaviour : MonoBehaviour
             default:
                 break;
         }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
         child.gameObject.GetComponent<SkinnedMeshRenderer>().enabled = false;
 
         //Check for sight and hear range
@@ -156,13 +174,15 @@ public class EnemyBehaviour : MonoBehaviour
         {
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-            if (!detected && patrolPoints.Count > 0)
+            if (!detected)
             {
                 Patroling();
             }
 
             if (detected && !playerInAttackRange)
             {
+                visitedPoints.Clear();
+
                 targetPlayerScript = player.gameObject.GetComponent<CharacterBaseBehavior>();
 
                 if (type == EnemyType.MENTAT)
@@ -173,6 +193,8 @@ public class EnemyBehaviour : MonoBehaviour
 
             if (detected && playerInAttackRange)
             {
+                visitedPoints.Clear();
+
                 agent.ResetPath();
                 targetPlayerScript = player.gameObject.GetComponent<CharacterBaseBehavior>();
                 if (type != EnemyType.MENTAT)
@@ -185,12 +207,61 @@ public class EnemyBehaviour : MonoBehaviour
             }
         } else
         {
-            if (!detected && patrolPoints.Count > 0)
+            if (!detected)
             {
                 Patroling();
             }
         }
 
+        if(!isGuard) KillImpostors();
+
+    }
+
+    private void KillImpostors()
+    {
+        if(!initTP)
+        {
+            if (type == EnemyType.MENTAT) return;
+
+            while (spawnTimer < enemyD.secondsToDetect)
+            {
+                spawnTimer += Time.deltaTime;
+
+                if (enemyD.state != DecState.FOUND)
+                {
+                    Vector3 offset = new Vector3(3f, 0, 0);
+                    CameraMovement cM = Camera.main.GetComponent<CameraMovement>();
+                    agent.Warp(cM.focusedPlayer.transform.position + offset);
+                    warpInitPos = gameObject.transform.position;
+                    transform.LookAt(cM.focusedPlayer.transform.position);
+                }
+
+                return;
+            }
+
+            if (!safe)
+                Destroy(gameObject);
+            else if(warpOnce)
+            {
+                initTP = true;
+                warpOnce = false;
+            }
+        }
+    }
+    private void LateUpdate()
+    {
+        if(initTP)
+        {
+            Animator animator = gameObject.GetComponent<Animator>();
+            animator.SetTrigger("hasStopped");
+            enemyD.timer = 0f;
+            enemyD.state = DecState.STILL;
+            state = EnemyState.IDLE;
+            agent.ResetPath();
+            agent.Warp(initPos);
+            initTP = false;
+            gameObject.transform.rotation = initRot;
+        }
     }
     bool checkSenses()
     {
@@ -270,11 +341,12 @@ public class EnemyBehaviour : MonoBehaviour
         if(type == EnemyType.MENTAT)
         {
             child.gameObject.GetComponent<Renderer>().material = materialHolder;
-            summonTime = 0f;
+            if(summonTimer > 0) summonTimer -= summonTimer * Time.deltaTime;
         }
 
         if (isGuard)
         {
+
             if (!walkPointSet)
             {
                 walkPoint = leader.transform.position + (leader.transform.rotation * guardOffset);
@@ -291,10 +363,18 @@ public class EnemyBehaviour : MonoBehaviour
             }
 
         } else { 
+            
+            //WalkPoint reached
+            if (agent.remainingDistance < 0.5f && !agent.pathPending && walkPointSet)
+            {
+                if (isGuard) transform.rotation = leader.transform.rotation;
+                state = EnemyState.IDLE;
+                walkPointSet = false;
+            }
         
             if (!walkPointSet) SearchWalkPoint();
 
-            if (walkPointSet && !affectedByDecoy &&!affectedByWaterTank)
+            if (walkPointSet && !affectedByDecoy)
             {
                 agent.SetDestination(walkPoint);
                 state = EnemyState.WALKING;
@@ -317,13 +397,6 @@ public class EnemyBehaviour : MonoBehaviour
 
             agent.speed = patrolingSpeed;
 
-            //WalkPoint reached
-            if (agent.remainingDistance < 0.5f && !agent.pathPending && walkPointSet)
-            {
-                if (isGuard) transform.rotation = leader.transform.rotation;
-                state = EnemyState.IDLE;
-                walkPointSet = false;
-            }
         }
         
     }
@@ -335,7 +408,7 @@ public class EnemyBehaviour : MonoBehaviour
         if (patrolPoints.Count == 0)
         {
             if (agent.remainingDistance > 0.2f && !agent.pathPending)
-            {
+            { 
                 agent.SetDestination(initPos);
                 state = EnemyState.WALKING;
                 walkPointSet = false;
@@ -343,6 +416,7 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 agent.ResetPath();
                 state = EnemyState.IDLE;
+                gameObject.transform.rotation = initRot;
             }
             return;
         }
@@ -388,7 +462,7 @@ public class EnemyBehaviour : MonoBehaviour
         if (type == EnemyType.SARDAUKAR)
         {
 
-            if (agent.remainingDistance <= rangeAttackRange && !agent.pathPending && ammunition > 0)
+            if (agent.remainingDistance <= rangeAttackRange && ammunition > 0 && safe && !agent.pathPending && !player.gameObject.GetComponent<CharacterBaseBehavior>().startInvincible)
             {
                 agent.ResetPath();
                 RangeAttacking();
@@ -413,6 +487,8 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Attacking()
     {
+
+        safe = true;
 
         if (targetPlayerScript.playerHealth > 0 && state == EnemyState.WALKING)
         {
@@ -481,22 +557,23 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Summoning()
     {
-        
+        gameObject.transform.LookAt(player.position);
+
         while(guardList.Count < 4)
         {
             if (!waveSpawned)
             {
 
-                while (elapse_time < summonTime)
+                while (summonTimer < summonTime)
                 {
-                    elapse_time += Time.deltaTime;
+                    summonTimer += Time.deltaTime;
                     child.gameObject.GetComponent<Renderer>().material = Resources.Load(name + "summon", typeof(Material)) as Material;
                     return;
                 }
 
                 child.gameObject.GetComponent<Renderer>().material = materialHolder;
 
-                elapse_time = 0;
+                summonTimer = 0;
 
                 for (int i = 0; i < 2; i++)
                 {
@@ -532,13 +609,13 @@ public class EnemyBehaviour : MonoBehaviour
                 waveSpawned = true;
             } else
             {
-                while (elapse_time < summonCooldown)
+                while (summonTimer < summonCooldown)
                 {
-                    elapse_time += Time.deltaTime;
+                    summonTimer += Time.deltaTime;
                     return;
                 }
 
-                elapse_time = 0;
+                summonTimer = 0;
 
                 waveSpawned = false;
             }

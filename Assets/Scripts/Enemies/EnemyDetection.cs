@@ -43,7 +43,7 @@ public class EnemyDetection : MonoBehaviour
 	public float secondsToDetect;
 	private float proportion;
 
-	[HideInInspector] public DecState state = DecState.STILL;
+	public DecState state = DecState.STILL;
 	[HideInInspector] public bool debug = false;
 
 
@@ -199,7 +199,7 @@ public class EnemyDetection : MonoBehaviour
 		{
 			state = DecState.STILL;
 			timer -= proportion * Time.deltaTime;
-		} else if (timer >= timer / 2 && timer <= secondsToDetect)
+		} else if (timer >= timer / 2 && timer <= secondsToDetect && timer > 0)
 		{
 			state = DecState.SEEKING;
 			timer -= proportion * Time.deltaTime;
@@ -214,11 +214,7 @@ public class EnemyDetection : MonoBehaviour
 		timer += proportion  * distanceMultiplier * playerStateMultipler * sightDebuffMultiplier * Time.deltaTime;
 
 
-		if (timer > 0 && timer < secondsToDetect / 2)
-		{
-			state = DecState.STILL;
-		}
-		else if (timer >= timer / 2 && timer < secondsToDetect)
+		if (timer >= timer / 2 && timer < secondsToDetect)
 		{
 			state = DecState.SEEKING;
 			elapse_time = 0;

@@ -71,6 +71,14 @@ public class CharacterBaseBehavior : MonoBehaviour
     private Vector3 targetPosition;
     private float timer;
 
+    ///////////////////////////////////////////////
+    // Cosa de empezar con q vayan los enemies
+    [HideInInspector] public bool startInvincible = true;
+    private float startInvincibleTime = 5f;
+    private float startInvincibleTimer = 0f;
+    private int initHealth;
+    ///////////////////////////////////////////////
+
     // Start is called before the first frame update
     void Start()
     {
@@ -96,12 +104,28 @@ public class CharacterBaseBehavior : MonoBehaviour
 
         notAvailable = false;
 
+        initHealth = playerHealth;
+        playerHealth = 999;
+
         timer = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(startInvincible)
+        {
+            while (startInvincibleTimer < startInvincibleTime)
+            {
+                startInvincibleTimer += Time.deltaTime;
+                return;
+            }
+
+            playerHealth = initHealth;
+            startInvincible = false;
+        }
+
+
         spiceTotal = GameObject.Find("playercamera").GetComponent<GeneralManager>().totalSpice;
 
         if (hit) PlayerHit();
@@ -294,7 +318,7 @@ public class CharacterBaseBehavior : MonoBehaviour
         if (selectedCharacter)
         {
             GUI.Box(new Rect(5, 5, 50, 25), "Health");
-            GUI.Box(new Rect(62, 5, 20, 25), playerHealth.ToString());
+            GUI.Box(new Rect(62, 5, 30, 25), playerHealth.ToString());
         }
 
         if (allSelected)
