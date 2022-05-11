@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1680658650}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0578, y: 0.00111, z: 0.01074}
+  m_LocalPosition: {x: -0.0403, y: 0.00181, z: 0.0107}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2037297827}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0235, y: -0.00402, z: -0.00454}
+  m_LocalPosition: {x: 0.0523, y: 0.00248, z: -0.00952}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -75,9 +75,10 @@ GameObject:
   - component: {fileID: 7628211330597286642}
   - component: {fileID: 6469103398106469734}
   - component: {fileID: 1311828939093991304}
-  m_Layer: 14
-  m_Name: NeralaPassiveSpot
-  m_TagString: NeralaPassive
+  - component: {fileID: 5763889294560653247}
+  m_Layer: 15
+  m_Name: Cliff
+  m_TagString: Cliff
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -91,7 +92,7 @@ Transform:
   m_GameObject: {fileID: 2223153651994011471}
   m_LocalRotation: {x: -0.6092294, y: 0.35894224, z: 0.35894224, w: 0.6092294}
   m_LocalPosition: {x: 0.5402374, y: 3.7418385, z: -1.1558228}
-  m_LocalScale: {x: 30.024254, y: 340.65213, z: 422.56235}
+  m_LocalScale: {x: 30.024254, y: 468.15988, z: 370.14606}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2037297828}
@@ -127,7 +128,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cba1f8d285569894893a8c3ac8dd5527, type: 2}
+  - {fileID: 2100000, guid: d1a3f8b1ade32c942995ebe06b047941, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -178,3 +179,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.020000014, y: 0.02000001, z: 0.020000013}
   m_Center: {x: 0.000000014901161, y: -0.000000029802322, z: 0}
+--- !u!114 &5763889294560653247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2223153651994011471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5809074624bdd8c4dbfcbabc91596768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oneWay: 0
+  oneWayDirection: 2
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 64

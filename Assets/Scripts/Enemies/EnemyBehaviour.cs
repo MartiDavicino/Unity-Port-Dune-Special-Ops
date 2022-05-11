@@ -24,30 +24,35 @@ public enum EnemyState
 }
 public class EnemyBehaviour : MonoBehaviour
 {
-    //General
+    [Header("- !IMPORTANT! - True If Playtesting -")]
+    public bool safe = false;
+
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Transform player;
+    //General
+    [Header("- General Stats -")]
     public EnemyState state;
-
-    private Transform placeholder1;
-    private Transform placeholder2;
-
-    private CharacterBaseBehavior targetPlayerScript;
-    private EnemyDetection enemyD;
-    
-
-    private float elapse_time = 0;
-
     public float chasingSpeed;
     public float patrolingSpeed;
+    
+    [HideInInspector] public bool affectedByWaterTank;
+    [HideInInspector] public bool resetedByWaterTank;
+    public float resetEnemyTimeWaterT;
+    private float resetEnemyTimer;
 
     //Attacking
     public float timeBetweenAttacks;
-    public float timeBetweenPatrolPoints;
+
+    private Transform placeholder1;
+    private Transform placeholder2;
+    private CharacterBaseBehavior targetPlayerScript;
+    private EnemyDetection enemyD;
+    private float elapse_time = 0;
 
     //Patrol
     [HideInInspector] public List<Vector3> visitedPoints;
     [HideInInspector] public bool affectedByDecoy;
+    public float timeBetweenPatrolPoints;
     public List<Vector3> patrolPoints;
 
     [HideInInspector] public Vector3 walkPoint;
@@ -60,10 +65,6 @@ public class EnemyBehaviour : MonoBehaviour
     private float attackRange;
     [HideInInspector] public bool playerInSightRange, playerInAttackRange;
 
-    [HideInInspector] public bool affectedByWaterTank;
-    [HideInInspector] public bool resetedByWaterTank;
-    public float resetEnemyTimeWaterT;
-    private float resetEnemyTimer;
 
     public EnemyType type = EnemyType.NONE;
     public LayerMask whatIsGround, whatIsPlayer;
@@ -72,15 +73,15 @@ public class EnemyBehaviour : MonoBehaviour
     //Harkonnen
     [Header("- Only if Harkonnen -")]
     public bool isGuard;
-    public GameObject leader;
     public Vector3 guardOffset;
+    public GameObject leader;
     
     //Sardaukar
     private bool playerInRanged;
     private GameObject needle;
     private float rangedAttackTimer;
     [Header("- Only if Sardaukar -")]
-    public float rangeAttackRange;
+    public float rangedAttackRange;
     public int ammunition;
     public GameObject needlePrefab;
 
@@ -101,11 +102,10 @@ public class EnemyBehaviour : MonoBehaviour
     public GameObject harkonnenPrefab;
 
     ///////////////////////////////////////////////////////////////////////
-    //Esto es una guarrada pq sino no me van los putos enemigos en la build
+    //Esto es una guarrada pq sino no me van los putos enemigos en la build.
     //Se puede desactivar poniendo safe a true y
     //comentando la llamada a KillImpostors()
     private float spawnTimer = 0f;
-    private bool safe = false;
     private bool initTP = false;
     private Vector3 warpInitPos;
     private bool warpOnce = true;
@@ -183,6 +183,9 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 visitedPoints.Clear();
 
+                affectedByDecoy = false;
+                affectedByWaterTank = false;
+
                 targetPlayerScript = player.gameObject.GetComponent<CharacterBaseBehavior>();
 
                 if (type == EnemyType.MENTAT)
@@ -194,6 +197,9 @@ public class EnemyBehaviour : MonoBehaviour
             if (detected && playerInAttackRange)
             {
                 visitedPoints.Clear();
+
+                affectedByDecoy = false;
+                affectedByWaterTank = false;
 
                 agent.ResetPath();
                 targetPlayerScript = player.gameObject.GetComponent<CharacterBaseBehavior>();
@@ -213,7 +219,7 @@ public class EnemyBehaviour : MonoBehaviour
             }
         }
 
-        if(!isGuard) KillImpostors();
+        if(!isGuard && !safe) KillImpostors();
 
     }
 
@@ -337,7 +343,6 @@ public class EnemyBehaviour : MonoBehaviour
     private void Patroling()
     {
         
-
         if(type == EnemyType.MENTAT)
         {
             child.gameObject.GetComponent<Renderer>().material = materialHolder;
@@ -364,22 +369,6 @@ public class EnemyBehaviour : MonoBehaviour
 
         } else { 
             
-            //WalkPoint reached
-            if (agent.remainingDistance < 0.5f && !agent.pathPending && walkPointSet)
-            {
-                if (isGuard) transform.rotation = leader.transform.rotation;
-                state = EnemyState.IDLE;
-                walkPointSet = false;
-            }
-        
-            if (!walkPointSet) SearchWalkPoint();
-
-            if (walkPointSet && !affectedByDecoy)
-            {
-                agent.SetDestination(walkPoint);
-                state = EnemyState.WALKING;
-            }
-
             if(resetedByWaterTank)
             {
                 state = EnemyState.IDLE;
@@ -390,9 +379,29 @@ public class EnemyBehaviour : MonoBehaviour
                     return;
                 }
 
+                walkPointSet = true;
+                walkPoint = initPos;
+                agent.SetDestination(initPos);
+
                 resetedByWaterTank = false;
                 affectedByWaterTank = false;
                 resetEnemyTimeWaterT = 0;
+            }
+
+            //WalkPoint reached
+            if ((transform.position - walkPoint).magnitude < 0.5 && walkPointSet)
+            {
+                if (isGuard) transform.rotation = leader.transform.rotation;
+                state = EnemyState.IDLE;
+                walkPointSet = false;
+            }
+        
+            if (!walkPointSet) SearchWalkPoint();
+
+            if (walkPointSet && !affectedByDecoy && !affectedByWaterTank)
+            {
+                agent.SetDestination(walkPoint);
+                state = EnemyState.WALKING;
             }
 
             agent.speed = patrolingSpeed;
@@ -457,12 +466,11 @@ public class EnemyBehaviour : MonoBehaviour
     private void Chasing()
     {
         patrolIterator = 0;
-        affectedByDecoy = false;
 
         if (type == EnemyType.SARDAUKAR)
         {
 
-            if (agent.remainingDistance <= rangeAttackRange && ammunition > 0 && safe && !agent.pathPending && !player.gameObject.GetComponent<CharacterBaseBehavior>().startInvincible)
+            if (agent.remainingDistance <= rangedAttackRange && ammunition > 0 && safe && !agent.pathPending && !player.gameObject.GetComponent<CharacterBaseBehavior>().startInvincible)
             {
                 agent.ResetPath();
                 RangeAttacking();

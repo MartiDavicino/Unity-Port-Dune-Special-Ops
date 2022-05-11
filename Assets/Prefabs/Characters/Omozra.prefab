@@ -1018,6 +1018,7 @@ MonoBehaviour:
   ability2Active: 0
   ability3Active: 0
   state: 0
+  startInvincible: 0
 --- !u!114 &4475807426259986342
 MonoBehaviour:
   m_ObjectHideFlags: 0

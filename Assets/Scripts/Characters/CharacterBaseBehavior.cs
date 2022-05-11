@@ -73,7 +73,7 @@ public class CharacterBaseBehavior : MonoBehaviour
 
     ///////////////////////////////////////////////
     // Cosa de empezar con q vayan los enemies
-    [HideInInspector] public bool startInvincible = true;
+    public bool startInvincible;
     private float startInvincibleTime = 5f;
     private float startInvincibleTimer = 0f;
     private int initHealth;
@@ -105,7 +105,6 @@ public class CharacterBaseBehavior : MonoBehaviour
         notAvailable = false;
 
         initHealth = playerHealth;
-        playerHealth = 999;
 
         timer = 0f;
     }
@@ -115,6 +114,7 @@ public class CharacterBaseBehavior : MonoBehaviour
     {
         if(startInvincible)
         {
+            playerHealth = 99;
             while (startInvincibleTimer < startInvincibleTime)
             {
                 startInvincibleTimer += Time.deltaTime;

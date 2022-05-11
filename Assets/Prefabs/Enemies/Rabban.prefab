@@ -864,15 +864,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d535f114eeba2d4e9c17986184feaf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  safe: 1
   agent: {fileID: 0}
   player: {fileID: 0}
   state: 0
   chasingSpeed: 5
   patrolingSpeed: 5
+  affectedByWaterTank: 0
+  resetedByWaterTank: 0
+  resetEnemyTimeWaterT: 0
   timeBetweenAttacks: 0
-  timeBetweenPatrolPoints: 0
   visitedPoints: []
   affectedByDecoy: 0
+  timeBetweenPatrolPoints: 0
   patrolPoints:
   - {x: 181.5, y: 0, z: -37}
   - {x: 181.5, y: 0, z: -74}
@@ -885,11 +889,10 @@ MonoBehaviour:
   - {x: 155.6, y: 0, z: -43.86}
   - {x: 143.7, y: 0, z: -43.86}
   - {x: 143.7, y: 0, z: -37}
+  walkPoint: {x: 0, y: 0, z: 0}
+  walkPointSet: 0
   playerInSightRange: 0
   playerInAttackRange: 0
-  affectedByWaterTank: 0
-  resetedByWaterTank: 0
-  resetEnemyTimeWaterT: 0
   type: 3
   whatIsGround:
     serializedVersion: 2
@@ -898,9 +901,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   isGuard: 0
-  leader: {fileID: 0}
   guardOffset: {x: 0, y: 0, z: 0}
-  rangeAttackRange: 0
+  leader: {fileID: 0}
+  rangedAttackRange: 0
   ammunition: 0
   needlePrefab: {fileID: 0}
   waveSpawned: 0
@@ -1104,6 +1107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lDrawer: {fileID: 0}
+  data: {fileID: 0}
   info: {fileID: 4107594593907508096}
 --- !u!1 &5454159779416444582
 GameObject:

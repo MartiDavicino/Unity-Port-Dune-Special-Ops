@@ -1681,6 +1681,7 @@ MonoBehaviour:
   ability2Active: 0
   ability3Active: 0
   state: 0
+  startInvincible: 0
 --- !u!114 &8672128565203201545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1711,6 +1712,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba5f3f02ac213f46899549f30ad0956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whatIsPassive:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &8672128565203201549
 MonoBehaviour:
   m_ObjectHideFlags: 0

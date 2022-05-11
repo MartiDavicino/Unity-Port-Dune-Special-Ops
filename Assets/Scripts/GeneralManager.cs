@@ -111,19 +111,19 @@ public class GeneralManager : MonoBehaviour
             if (zhibBase.playerHealth == 0 && (neralaBase.playerHealth == 0 || !neralaUnlocked) && (omozraBase.playerHealth == 0 || !omozraUnlocked))
                 gameLost = true;
 
-            if (Input.GetKey(KeyCode.Z) && !hunterSeekerActive)
+            if (Input.GetKey(KeyCode.Z) && !hunterSeekerActive && zhib != null)
             {
                 selectedCharacter = zhib;
                 allSelected = false;
             }
 
-            if (Input.GetKey(KeyCode.X) && !hunterSeekerActive && neralaUnlocked)
+            if (Input.GetKey(KeyCode.X) && !hunterSeekerActive && neralaUnlocked && nerala != null)
             {
                 selectedCharacter = nerala;
                 allSelected = false;
             }
 
-            if (Input.GetKey(KeyCode.C) && !hunterSeekerActive && omozraUnlocked)
+            if (Input.GetKey(KeyCode.C) && !hunterSeekerActive && omozraUnlocked && omozra != null)
             {
                 selectedCharacter = omozra;
                 allSelected = false;
@@ -132,9 +132,9 @@ public class GeneralManager : MonoBehaviour
             if (Input.GetKey(KeyCode.V) && !hunterSeekerActive)
             {
                 allSelected = true;
-                zhibBase.allSelected = true;
-                if(neralaUnlocked) neralaBase.allSelected = true;
-                if(omozraUnlocked) omozraBase.allSelected = true;
+                if(zhib != null) zhibBase.allSelected = true;
+                if(neralaUnlocked && nerala != null) neralaBase.allSelected = true;
+                if(omozraUnlocked && omozra != null) omozraBase.allSelected = true;
             }
 
 

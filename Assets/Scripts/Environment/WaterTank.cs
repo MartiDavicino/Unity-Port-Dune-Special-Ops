@@ -9,11 +9,13 @@ public class WaterTank : MonoBehaviour
     public LayerMask whatIsEnemy;
     public LayerMask whatIsPlayer;
 
-    private NavMeshAgent agent;
+    private NavMeshAgent eAgent;
 
     public bool active;
 
     public GameObject[] affectedEnemies;
+    private List<GameObject> resetedEnemies;
+    private bool reseted;
 
     private bool once;
 
@@ -22,6 +24,7 @@ public class WaterTank : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        resetedEnemies = new List<GameObject>();
         once = true;
     }
 
@@ -51,13 +54,21 @@ public class WaterTank : MonoBehaviour
         {
             for (int i = 0; i < affectedEnemies.Length; i++)
             {
-                affectedEnemies[i].GetComponent<EnemyBehaviour>().state = EnemyState.WALKING;
-                affectedEnemies[i].GetComponent<EnemyBehaviour>().affectedByWaterTank = true;
-                affectedEnemies[i].GetComponent<NavMeshAgent>().SetDestination(transform.position);
-                Destroy(affectedEnemies[i]);
+                EnemyBehaviour eB = affectedEnemies[i].GetComponent<EnemyBehaviour>();
+                eB.state = EnemyState.WALKING;
+                eB.affectedByWaterTank = true;
+                eB.walkPointSet = true;
+
+                eAgent = affectedEnemies[i].GetComponent<NavMeshAgent>();
+                Vector3 waterTankPos = transform.position;
+                waterTankPos.y = 0;
+                eB.walkPoint = waterTankPos;
+                eAgent.SetDestination(waterTankPos);
+
             }
             once = false;
         }
+
 
         ResetNearEnemies();
        
@@ -73,11 +84,22 @@ public class WaterTank : MonoBehaviour
 
         for (int i = 0; i < affectedEnemies.Length; i++)
         {
-            EnemyBehaviour eB = affectedEnemies[i].gameObject.GetComponent<EnemyBehaviour>();
-            eB.resetedByWaterTank = true;
+            reseted = false;
 
-            agent = affectedEnemies[i].gameObject.GetComponent<NavMeshAgent>();
-            agent.ResetPath();
+            for (int j = 0; j < resetedEnemies.Count; j++)
+            {
+                if (resetedEnemies[j] == affectedEnemies[i].gameObject)
+                    reseted = true;
+            }
+
+
+            if(!reseted)
+            {
+                EnemyBehaviour eB = affectedEnemies[i].gameObject.GetComponent<EnemyBehaviour>();
+                eB.resetedByWaterTank = true;
+                resetedEnemies.Add(affectedEnemies[i].gameObject);
+            }
+
         }
     }
 }
