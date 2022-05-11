@@ -543,8 +543,8 @@ MonoBehaviour:
   agent: {fileID: 3385931162298201039}
   player: {fileID: 2988005374600729660}
   state: 0
-  chasingSpeed: 6
-  patrolingSpeed: 3
+  chasingSpeed: 8
+  patrolingSpeed: 4
   timeBetweenAttacks: 2
   timeBetweenPatrolPoints: 0
   visitedPoints: []
