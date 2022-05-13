@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/zScenes/Level 1.unity
     guid: 082ad225dc60ba547b7324917021e2b6
   - enabled: 1
-    path: Assets/zScenes/Tutorial.unity
+    path: Assets/zScenes/Build.unity
     guid: 12377a3bfea5bd140b1174a657783db0
   m_configObjects: {}

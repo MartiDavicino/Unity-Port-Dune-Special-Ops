@@ -60,8 +60,9 @@ public class DetectionMeter : MonoBehaviour
                 percent = 1.0f;
             }
 
-        
-            bar.color = Color.yellow;
+            Color orange = new Color(1.0f, 0.64f, 0.0f);
+
+            bar.color = orange;
             bar.fillAmount = percent ;
         }
         
