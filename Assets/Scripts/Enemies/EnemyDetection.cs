@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 using UnityEngine;
 
 public enum DecState
@@ -311,9 +312,6 @@ public class EnemyDetection : MonoBehaviour
 
         Collider[] targetsInHearingRadius = Physics.OverlapSphere(transform.position, hearingRadius, targetMask);
 
-		if (targetsInHearingRadius.Length > 0)
-			playerHeard = true;
-
 		for (int i = 0; i < targetsInHearingRadius.Length; i++)
 		{
 			GameObject parent = targetsInHearingRadius[i].gameObject;
@@ -323,13 +321,18 @@ public class EnemyDetection : MonoBehaviour
 			CalculateMultiplier();
 
 			baseScript = parent.GetComponent<CharacterBaseBehavior>();
+			NavMeshAgent pAgent = baseScript.GetComponent<NavMeshAgent>();
 
 			float dstToTarget = Vector3.Distance(transform.position, target.position);
 
 			if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, targetMask))
 			{
-				WaitAndAddToList(secondsToDetect, target, "noisy");
-			} 
+				if((pAgent.remainingDistance > 0 && !pAgent.pathPending))
+                {
+					WaitAndAddToList(secondsToDetect, target, "noisy");
+					playerHeard = true;
+                }
+			}
 		}
 
 		return playerHeard;
