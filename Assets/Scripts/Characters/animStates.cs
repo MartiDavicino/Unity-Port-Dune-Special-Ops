@@ -22,6 +22,7 @@ public class animStates : MonoBehaviour
         {
             animator.ResetTrigger("isWalking");
             animator.ResetTrigger("isCrouching");
+            animator.ResetTrigger("isRunning");
 
             animator.SetTrigger("hasStopped");
         }

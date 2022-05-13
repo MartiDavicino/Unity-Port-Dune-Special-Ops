@@ -71,6 +71,11 @@ public class CharacterBaseBehavior : MonoBehaviour
     private Vector3 targetPosition;
     private float timer;
 
+    private float main_time;
+    private float click_time = 0.333f;
+    private bool clickUp = true;
+    private int count;
+
     ///////////////////////////////////////////////
     // Cosa de empezar con q vayan los enemies
     public bool startInvincible;
@@ -132,28 +137,7 @@ public class CharacterBaseBehavior : MonoBehaviour
 
         if (allSelected)
         {
-            if (Input.GetMouseButton(0))
-            {
-
-                Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-                RaycastHit meshHit;
-
-                if (Physics.Raycast(ray, out meshHit))
-                {
-                    if (meshHit.collider.tag == "Floor")
-                    {
-                        playerAgent.SetDestination(meshHit.point);
-                        targetPosition = meshHit.point;
-
-                        state = PlayerState.WALKING;
-                    }
-                    else
-                    {
-                        state = PlayerState.WALKING;
-                        targetPosition = meshHit.point;
-                    }
-                }
-            }
+            MovementBehaviour();
         }
 
         if (selectedCharacter && !allSelected)
@@ -184,6 +168,15 @@ public class CharacterBaseBehavior : MonoBehaviour
                     ability3Active = !ability3Active;
                     abilityActive = !abilityActive;
                 }       
+            }
+
+            if(abilityActive && Input.GetMouseButtonDown(1))
+            {
+                ability1Active = false;
+                ability2Active = false;
+                ability3Active = false;
+                abilityActive = false;
+                Destroy(gameObject.GetComponent<LineRenderer>());
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1) && !ability3Active && !ability2Active)
@@ -240,33 +233,7 @@ public class CharacterBaseBehavior : MonoBehaviour
 
             if (!abilityActive)
             {
-                if (Input.GetMouseButton(0))
-                {
-
-                    Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit meshHit;
-
-                    if( Physics.Raycast(ray,out meshHit))
-                    {
-                        if(meshHit.collider.tag == "Floor")
-                        {
-                            playerAgent.SetDestination(meshHit.point);
-                            targetPosition = meshHit.point;
-
-                            if (crouching) { state = PlayerState.CROUCH; }
-                            else if (running) { state = PlayerState.RUNNING; }
-                            else { state = PlayerState.WALKING; }
-
-                        } else
-                        {
-                            if (crouching) { state = PlayerState.CROUCH; }
-                            else if (running) { state = PlayerState.RUNNING; }
-                            else { state = PlayerState.WALKING; }
-                            
-                            targetPosition = meshHit.point;
-                        }
-                    }
-                }
+                MovementBehaviour();
             }
 
         } else
@@ -361,5 +328,60 @@ public class CharacterBaseBehavior : MonoBehaviour
 
         hit = false;
         child.gameObject.GetComponent<Renderer>().material = materialHolder;
+    }
+
+    void MovementBehaviour()
+    {
+        if (Input.GetMouseButton(1))
+        {
+
+            if (main_time == 0.0f)
+            {
+                main_time = Time.time;
+            }
+
+            Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit meshHit;
+
+            if (Physics.Raycast(ray, out meshHit))
+            {
+                if (meshHit.collider.tag == "Floor")
+                {
+                    if(clickUp) count++;
+
+                    if (Time.time - main_time < click_time)
+                    {
+                        if (count == 2)
+                        {
+                            running = true;
+                            detectionMultiplier = runMultiplier;
+                            main_time = Time.time;
+                        }
+                    }
+
+                    playerAgent.SetDestination(meshHit.point);
+                    targetPosition = meshHit.point;
+
+                    if (crouching) { state = PlayerState.CROUCH; }
+                    else if (running) { state = PlayerState.RUNNING; }
+                    else { state = PlayerState.WALKING; }
+
+                }
+            }
+
+            clickUp = false;
+        }
+
+        if(Input.GetMouseButtonUp(1))
+        {
+            if(count == 2 || Time.time - main_time > click_time)
+            {
+                running = false;
+                count = 0;
+                main_time = 0;
+            }
+
+            clickUp = true;
+        }
     }
 }
