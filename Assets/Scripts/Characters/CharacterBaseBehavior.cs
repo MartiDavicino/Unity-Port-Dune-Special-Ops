@@ -209,27 +209,17 @@ public class CharacterBaseBehavior : MonoBehaviour
                         } 
                     } else
                     {
-                        detectionMultiplier = 1f;
-                        state = PlayerState.IDLE;
+                        if (running) {
+                            detectionMultiplier = runMultiplier;
+                            state = PlayerState.RUNNING; }
+                        else
+                        {
+                            detectionMultiplier = 1f;
+                            state = PlayerState.WALKING;
+                        }
                     }
                 }
             }
-
-            if (Input.GetKeyDown(KeyCode.LeftAlt) && state != PlayerState.CROUCH && state != PlayerState.IDLE)
-            {
-                running = !running;
-                if (running && state == PlayerState.WALKING)
-                {
-                    detectionMultiplier = runMultiplier;
-                    state = PlayerState.RUNNING;
-                }
-                else if (state == PlayerState.RUNNING)
-                {
-                    detectionMultiplier = 1f;
-                    state = PlayerState.WALKING;
-                }
-            }
-
 
             if (!abilityActive)
             {
@@ -357,6 +347,17 @@ public class CharacterBaseBehavior : MonoBehaviour
                             detectionMultiplier = runMultiplier;
                             main_time = Time.time;
                         }
+
+                        if(count > 2)
+                        {
+                            main_time = Time.time;
+                            count = 2;
+                        }
+                    } else
+                    {
+                        running = false;
+                        count = 0;
+                        main_time = 0;
                     }
 
                     playerAgent.SetDestination(meshHit.point);
@@ -364,24 +365,35 @@ public class CharacterBaseBehavior : MonoBehaviour
 
                     if (crouching) { state = PlayerState.CROUCH; }
                     else if (running) { state = PlayerState.RUNNING; }
-                    else { state = PlayerState.WALKING; }
-
+                    else {
+                        detectionMultiplier = 1f; 
+                        state = PlayerState.WALKING; }
                 }
             }
 
             clickUp = false;
         }
 
+        if(playerAgent.remainingDistance == 0 && !playerAgent.pathPending)
+        {
+            running = false;
+            count = 0;
+            main_time = 0;
+            detectionMultiplier = 1f;
+            state = PlayerState.IDLE;
+        }
+
         if(Input.GetMouseButtonUp(1))
         {
-            if(count == 2 || Time.time - main_time > click_time)
-            {
-                running = false;
-                count = 0;
-                main_time = 0;
-            }
 
             clickUp = true;
+        }
+
+        if(Time.time - main_time > click_time)
+        {
+            running = false;
+            count = 0;
+            main_time = 0;
         }
     }
 }

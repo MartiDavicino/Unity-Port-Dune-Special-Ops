@@ -58,7 +58,7 @@ public class SadiqBehaviour : MonoBehaviour
 
             omozraPos = omozra.transform.position;
             Vector3 destination = omozraPos + (omozra.transform.rotation * followOffset);
-
+            destination.y = 0;
             agent.SetDestination(destination);
 
             transform.LookAt(omozraPos);
