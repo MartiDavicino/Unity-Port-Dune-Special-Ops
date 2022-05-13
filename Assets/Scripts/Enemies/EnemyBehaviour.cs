@@ -41,6 +41,7 @@ public class EnemyBehaviour : MonoBehaviour
     private float resetEnemyTimer;
 
     //Attacking
+    private bool instaHit;
     public float timeBetweenAttacks;
 
     private Transform placeholder1;
@@ -123,6 +124,7 @@ public class EnemyBehaviour : MonoBehaviour
         initRot = gameObject.transform.rotation;
         agent.Warp(initPos);
         patrolIterator = 0;
+        instaHit = true;
         affectedByDecoy = false;
         affectedByWaterTank = false;
         resetedByWaterTank = false;
@@ -342,8 +344,9 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void Patroling()
     {
-        
-        if(type == EnemyType.MENTAT)
+        instaHit = true;
+
+        if (type == EnemyType.MENTAT)
         {
             child.gameObject.GetComponent<Renderer>().material = materialHolder;
             if(summonTimer > 0) summonTimer -= summonTimer * Time.deltaTime;
@@ -498,11 +501,12 @@ public class EnemyBehaviour : MonoBehaviour
 
         safe = true;
 
-        if (targetPlayerScript.playerHealth > 0 && state == EnemyState.WALKING)
+        if (instaHit && targetPlayerScript.playerHealth > 0 && state == EnemyState.WALKING)
         {
             state = EnemyState.ATTACKING;
             targetPlayerScript.playerHealth--;
             targetPlayerScript.hit = true;
+            instaHit = false;
         }
 
         state = EnemyState.IDLE;
