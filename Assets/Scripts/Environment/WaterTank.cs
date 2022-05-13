@@ -33,7 +33,7 @@ public class WaterTank : MonoBehaviour
     {
         if(!active)
         {
-            Collider[] affectedPlayers = Physics.OverlapSphere(transform.position, 15f, whatIsPlayer);
+            Collider[] affectedPlayers = Physics.OverlapSphere(transform.position, 5f, whatIsPlayer);
 
             if (affectedPlayers.Length > 0)
                 canActivate = true;

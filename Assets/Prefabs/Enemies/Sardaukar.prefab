@@ -597,7 +597,7 @@ MonoBehaviour:
   sightDebuffMultiplier: 0
   debuffed: 0
   data: {fileID: 3385931162298201036}
-  viewRadius: 20
+  viewRadius: 16
   viewAngle: 95
   hearingRadius: 7.5
   timer: 0

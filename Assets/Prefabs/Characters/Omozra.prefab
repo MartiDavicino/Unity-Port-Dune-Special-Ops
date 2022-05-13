@@ -1004,10 +1004,10 @@ MonoBehaviour:
   ultimateCost: 0
   playerSpice: 0
   walkMovementSpeed: 7.5
-  crouchMovementSpeed: 3
+  crouchMovementSpeed: 4
   runMovementSpeed: 12
   walkSoundRange: 7.5
-  crouchSoundRange: 5
+  crouchSoundRange: 1
   runSoundRange: 11.5
   crouchMultiplier: 0.2
   runMultiplier: 2

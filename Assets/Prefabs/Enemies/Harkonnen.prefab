@@ -707,12 +707,12 @@ MonoBehaviour:
   agent: {fileID: 374356984102618191}
   player: {fileID: 196824455201623259}
   state: 0
-  chasingSpeed: 6
-  patrolingSpeed: 3
+  chasingSpeed: 7.5
+  patrolingSpeed: 4
   affectedByWaterTank: 0
   resetedByWaterTank: 0
   resetEnemyTimeWaterT: 0
-  timeBetweenAttacks: 1
+  timeBetweenAttacks: 2
   visitedPoints: []
   affectedByDecoy: 0
   timeBetweenPatrolPoints: 0
@@ -760,7 +760,7 @@ MonoBehaviour:
   sightDebuffMultiplier: 0
   debuffed: 0
   data: {fileID: 374356984102618188}
-  viewRadius: 15
+  viewRadius: 13
   viewAngle: 90
   hearingRadius: 7.5
   timer: 0

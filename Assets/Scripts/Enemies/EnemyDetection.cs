@@ -216,7 +216,7 @@ public class EnemyDetection : MonoBehaviour
 	}
 	void WaitAndAddToList(float delay,Transform target, string targetType)
     {
-		timer += proportion  * distanceMultiplier * playerStateMultipler * sightDebuffMultiplier * Time.deltaTime;
+		timer += proportion  /** distanceMultiplier*/ * playerStateMultipler * sightDebuffMultiplier * Time.deltaTime;
 
 		if (timer > 0 && state == DecState.STILL)
 		{

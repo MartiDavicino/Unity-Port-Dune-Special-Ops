@@ -1517,20 +1517,20 @@ MonoBehaviour:
   selectedCharacter: 1
   allSelected: 0
   hunterSeeking: 0
-  playerHealth: 10
+  playerHealth: 4
   hit: 0
   whatIsSpice:
     serializedVersion: 2
     m_Bits: 1024
-  ultimateCost: 0
+  ultimateCost: 2000
   playerSpice: 0
   walkMovementSpeed: 7.5
-  crouchMovementSpeed: 3
+  crouchMovementSpeed: 4
   runMovementSpeed: 12
   walkSoundRange: 7.5
-  crouchSoundRange: 5
+  crouchSoundRange: 1
   runSoundRange: 11.5
-  crouchMultiplier: 0.2
+  crouchMultiplier: 0.75
   runMultiplier: 2
   detectionMultiplier: 0
   invisible: 0
@@ -1594,7 +1594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maximumRange: 10
-  effectRange: 20
+  effectRange: 14
   cooldown: 5
   decoyPrefab: {fileID: 7972253676922709312, guid: 2038e93e7de188149bcda1ef088e8b53, type: 3}
   whatIsDecoy:
