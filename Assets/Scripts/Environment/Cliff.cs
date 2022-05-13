@@ -21,6 +21,8 @@ public class Cliff : MonoBehaviour
     private CharacterBaseBehavior baseScript;
     private NavMeshAgent playerAgent;
 
+    private bool canActivate;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +35,8 @@ public class Cliff : MonoBehaviour
 
         for (int i = 0; i < characters.Length; i++)
         {
+            canActivate = true;
+
             baseScript = characters[i].gameObject.GetComponent<CharacterBaseBehavior>();
             playerAgent = characters[i].gameObject.GetComponent<NavMeshAgent>();
 
@@ -91,6 +95,55 @@ public class Cliff : MonoBehaviour
 
             }
             
+        }
+
+        if (characters.Length == 0)
+        {
+            canActivate = false;
+        }
+    }
+
+    private void OnGUI()
+    {
+        if (canActivate)
+        {
+
+            if (oneWay)
+            {
+                switch (oneWayDirection)
+                {
+                    case direction.UP_TO_DOWN:
+                        if (isUp)
+                        {
+                            GUI.Box(new Rect(Screen.width - 155, Screen.height - 45, 150, 40), "Press 'f' to\nclimb down");
+                        }
+                        break;
+
+                    case direction.DOWN_TO_UP:
+                        if (!isUp)
+                        {
+                            GUI.Box(new Rect(Screen.width - 155, Screen.height - 45, 150, 40), "Press 'f' to\nclimb up");
+                        }
+                        break;
+
+                    case direction.NONE:
+                        break;
+                }
+            }
+            else
+            {
+                if (isUp)
+                {
+                    GUI.Box(new Rect(Screen.width - 155, Screen.height - 45, 150, 40), "Press 'f' to\nclimb down");
+
+                }
+                else
+                {
+                    GUI.Box(new Rect(Screen.width - 155, Screen.height - 45, 150, 40), "Press 'f' to\nclimb up");
+
+                }
+            }
+
         }
     }
 }

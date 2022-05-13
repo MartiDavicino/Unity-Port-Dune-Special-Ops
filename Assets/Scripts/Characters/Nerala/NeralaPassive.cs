@@ -9,8 +9,10 @@ public class NeralaPassive : MonoBehaviour
     private CharacterBaseBehavior baseScript;
 
     private bool isUp;
+    private bool canActivate;
 
     public LayerMask whatIsPassive;
+
 
     void Start()
     {
@@ -18,6 +20,8 @@ public class NeralaPassive : MonoBehaviour
         baseScript = GetComponent<CharacterBaseBehavior>();
 
         isUp = false;
+        canActivate = false;
+
     }
 
     // Update is called once per frame
@@ -26,12 +30,13 @@ public class NeralaPassive : MonoBehaviour
         if(baseScript.selectedCharacter)
         {
 
-            Collider[] passiveSpot = Physics.OverlapSphere(transform.position, 5.0f, whatIsPassive);
+            Collider[] passiveSpot = Physics.OverlapSphere(transform.position, 7.0f, whatIsPassive);
 
             for (int i = 0; i < passiveSpot.Length; i++)
             {
                 if (passiveSpot[i].gameObject.tag == "NeralaPassive")
                 {
+                    canActivate = true;
                     float toleranceRange = 1f;
                     Transform upPoint = passiveSpot[i].gameObject.transform.Find("upPoint");
                     Transform downPoint = passiveSpot[i].gameObject.transform.Find("downPoint");
@@ -58,6 +63,17 @@ public class NeralaPassive : MonoBehaviour
                     }
                 }
             }
+
+            if(passiveSpot.Length == 0)
+            {
+                canActivate = false;
+            }
         }
+    }
+
+    private void OnGUI()
+    {
+        if (canActivate)
+            GUI.Box(new Rect(Screen.width - 155, Screen.height - 45, 150, 40), "Press 'f' to\nclimb");
     }
 }
