@@ -195,37 +195,56 @@ public class EnemyDetection : MonoBehaviour
 	}
 	void TargetsNotFound()
 	{
-		if (timer > 0 && timer < secondsToDetect / 2)
-		{
-			state = DecState.STILL;
-			timer -= proportion * Time.deltaTime;
-		} else if (timer >= timer / 2 && timer <= secondsToDetect && timer > 0)
-		{
+		timer -= proportion * Time.deltaTime;
+
+		if(state == DecState.FOUND)
 			state = DecState.SEEKING;
-			timer -= proportion * Time.deltaTime;
-		} else if (timer < 0f)
+
+		if(state == DecState.SEEKING && timer < 0)
         {
-			timer = 0f;
+			timer = secondsToDetect;
 			state = DecState.STILL;
+        }
+
+		if(state == DecState.STILL && timer < 0)
+        {
+			timer = secondsToDetect;
+			state = DecState.STILL;
+			timer = 0f;
 		}
+
 	}
 	void WaitAndAddToList(float delay,Transform target, string targetType)
     {
 		timer += proportion  * distanceMultiplier * playerStateMultipler * sightDebuffMultiplier * Time.deltaTime;
 
+		if (timer > 0 && state == DecState.STILL)
+		{
+			state = DecState.STILL;
 
-		if (timer >= timer / 2 && timer < secondsToDetect)
+			if(timer >= secondsToDetect)
+            {
+				state = DecState.SEEKING;
+				timer = 0;
+            }
+		}
+
+		if (timer > 0 && state == DecState.SEEKING)
 		{
 			state = DecState.SEEKING;
 			elapse_time = 0;
+
+			if (timer >= secondsToDetect)
+			{
+				state = DecState.FOUND;
+			}
 		}
 
-		if (timer >= secondsToDetect)
+		if (timer >= secondsToDetect && state == DecState.FOUND)
         {
 			if(target.gameObject == GameObject.Find("HunterSeeker(Clone)"))
             {
 				timer = delay;
-				state = DecState.FOUND;
 				while (elapse_time < 0.6f)
 				{
 					elapse_time += Time.deltaTime;
@@ -242,7 +261,6 @@ public class EnemyDetection : MonoBehaviour
 				if(targetType == "noisy") noisyTargets.Add(target);
 				if(targetType == "visible") visibleTargets.Add(target);
 
-				state = DecState.FOUND;
             }
         }
 
@@ -257,8 +275,6 @@ public class EnemyDetection : MonoBehaviour
 		sightMultiplier = 1f;
 
 		Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
-
-		
 
 		for (int i = 0; i < targetsInViewRadius.Length; i++)
 		{
