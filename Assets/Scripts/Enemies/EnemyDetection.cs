@@ -24,7 +24,7 @@ public class EnemyDetection : MonoBehaviour
 	private float debuffTimer;
 	private Material materialHolder;
 	private Transform child;
-	[HideInInspector] public float sightDebuffMultiplier;
+	[HideInInspector] public float debuffMultiplier;
 	[HideInInspector] public bool debuffed;
 
 	public EnemyBehaviour data;
@@ -143,7 +143,7 @@ public class EnemyDetection : MonoBehaviour
 
 		if (!debuffed)
 		{
-			sightDebuffMultiplier = 1f;
+			debuffMultiplier = 1f;
 
 			child.GetComponent<Renderer>().material = materialHolder;
 		}
@@ -211,11 +211,10 @@ public class EnemyDetection : MonoBehaviour
 			state = DecState.STILL;
 			timer = 0f;
 		}
-
 	}
 	void WaitAndAddToList(float delay,Transform target, string targetType)
     {
-		timer += proportion * sightMultiplier * playerStateMultipler * sightDebuffMultiplier /** distanceMultiplier*/ * Time.deltaTime;
+		timer += proportion * sightMultiplier * playerStateMultipler * debuffMultiplier /** distanceMultiplier*/ * Time.deltaTime;
 
 		if (timer > 0 && state == DecState.STILL)
 		{

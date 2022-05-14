@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 6254142d10f2dbd409942b0c36a4cf0a, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 65eb7700204821447940e73329d7cff9, type: 2}
 --- !u!1001 &333278098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -751,7 +751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zhib: {fileID: 919132148783968830}
   nerala: {fileID: 1155985330}
-  neralaUnlocked: 0
+  neralaUnlocked: 1
   omozra: {fileID: 1939320199}
   omozraUnlocked: 0
   sadiq: {fileID: 1418170123}
@@ -952,13 +952,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: Nerala
       objectReference: {fileID: 0}
+    - target: {fileID: 8672128565203201539, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
+      propertyPath: crouchSoundRange
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8672128565203201549, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
+      propertyPath: harkonnenAware
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8672128565203201549, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
+      propertyPath: harkonnenUnaware
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8672128565203201549, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
+      propertyPath: sightDebuffMultiplier
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 9210757919227417333, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9210757919227417333, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 246
+      value: 89.3
       objectReference: {fileID: 0}
     - target: {fileID: 9210757919227417333, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -966,7 +982,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9210757919227417333, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -82.1
+      value: 1.24
       objectReference: {fileID: 0}
     - target: {fileID: 9210757919227417333, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1058,7 +1074,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6402327512114749742, guid: accfd97eb2e459148b32990af20731dc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 91
+      value: 85.7
       objectReference: {fileID: 0}
     - target: {fileID: 6402327512114749742, guid: accfd97eb2e459148b32990af20731dc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1066,7 +1082,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6402327512114749742, guid: accfd97eb2e459148b32990af20731dc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.2
+      value: 14.5
       objectReference: {fileID: 0}
     - target: {fileID: 6402327512114749742, guid: accfd97eb2e459148b32990af20731dc, type: 3}
       propertyPath: m_LocalRotation.w

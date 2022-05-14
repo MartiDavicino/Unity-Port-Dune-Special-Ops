@@ -23,7 +23,7 @@ public class SleepingDartAbility : MonoBehaviour
     private bool hasShot;
 
     //Ability Stats
-    public float sightDebuffMultiplier;
+    public float debuffMultiplier;
     public float maximumRange;
     public float soundRange;
     public float cooldown;
@@ -201,7 +201,7 @@ public class SleepingDartAbility : MonoBehaviour
                     case DecState.STILL:
                         if (Random.value <= harkonnenUnaware)
                         {
-                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffMultiplier = debuffMultiplier;
                             eDetection.debuffed = true;
                         }
                         else
@@ -213,7 +213,7 @@ public class SleepingDartAbility : MonoBehaviour
                     case DecState.SEEKING:
                         if (Random.value <= harkonnenAware)
                         {
-                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffMultiplier = debuffMultiplier;
                             eDetection.debuffed = true;
                         }
                         else
@@ -225,7 +225,7 @@ public class SleepingDartAbility : MonoBehaviour
                     case DecState.FOUND:
                         if (Random.value <= harkonnenDetected)
                         {
-                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffMultiplier = debuffMultiplier;
                             eDetection.debuffed = true;
                         }
                         else
@@ -241,7 +241,7 @@ public class SleepingDartAbility : MonoBehaviour
                     case DecState.STILL:
                         if (Random.value <= sardaukarUnaware)
                         {
-                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffMultiplier = debuffMultiplier;
                             eDetection.debuffed = true;
                         }
                         else
@@ -253,7 +253,7 @@ public class SleepingDartAbility : MonoBehaviour
                     case DecState.SEEKING:
                         if (Random.value <= sardaukarAware)
                         {
-                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffMultiplier = debuffMultiplier;
                             eDetection.debuffed = true;
                         }
                         else
@@ -265,7 +265,7 @@ public class SleepingDartAbility : MonoBehaviour
                     case DecState.FOUND:
                         if (Random.value <= sardaukarDetected)
                         {
-                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffMultiplier = debuffMultiplier;
                             eDetection.debuffed = true;
                         }
                         else
@@ -281,7 +281,7 @@ public class SleepingDartAbility : MonoBehaviour
                     case DecState.STILL:
                         if (Random.value <= mentatUnaware)
                         {
-                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffMultiplier = debuffMultiplier;
                             eDetection.debuffed = true;
                         }
                         else
@@ -293,7 +293,7 @@ public class SleepingDartAbility : MonoBehaviour
                     case DecState.SEEKING:
                         if (Random.value <= mentatAware)
                         {
-                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffMultiplier = debuffMultiplier;
                             eDetection.debuffed = true;
                         }
                         else
@@ -305,7 +305,7 @@ public class SleepingDartAbility : MonoBehaviour
                     case DecState.FOUND:
                         if (Random.value <= mentatDetected)
                         {
-                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffMultiplier = debuffMultiplier;
                             eDetection.debuffed = true;
                         }
                         else

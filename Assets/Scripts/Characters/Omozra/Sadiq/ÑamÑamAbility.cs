@@ -122,18 +122,21 @@ public class ÑamÑamAbility : MonoBehaviour
                 switch (eDetection.state)
                 {
                     case DecState.STILL:
-                        Destroy(targetEnemy);
+                        if (Random.value < omozraÑamScript.harkonnenUnaware)
+                        {
+                            Destroy(targetEnemy);
+                        }
                         break;
 
                     case DecState.SEEKING:
-                        if (Random.value < omozraÑamScript.harkonnenUnawareProb)
+                        if (Random.value < omozraÑamScript.harkonnenAware)
                         {
                             Destroy(targetEnemy);
                         }
                         break;
 
                     case DecState.FOUND:
-                        if (Random.value < omozraÑamScript.harkonnenAwareProb)
+                        if (Random.value < omozraÑamScript.harkonnenDetected)
                         {
                             Destroy(targetEnemy);
                         }
@@ -144,21 +147,21 @@ public class ÑamÑamAbility : MonoBehaviour
                 switch (eDetection.state)
                 {
                     case DecState.STILL:
-                        if (Random.value < omozraÑamScript.sardaukarUnawareProb)
+                        if (Random.value < omozraÑamScript.sardaukarUnaware)
                         {
                             Destroy(targetEnemy);
                         }
                         break;
 
                     case DecState.SEEKING:
-                        if (Random.value < omozraÑamScript.sardaukarAwareProb)
+                        if (Random.value < omozraÑamScript.sardaukarAware)
                         {
                             Destroy(targetEnemy);
                         }
                         break;
 
                     case DecState.FOUND:
-                        if (Random.value < omozraÑamScript.sardaukarAwareProb)
+                        if (Random.value < omozraÑamScript.sardaukarDetected)
                         {
                             Destroy(targetEnemy);
                         }
@@ -169,12 +172,24 @@ public class ÑamÑamAbility : MonoBehaviour
                 switch (eDetection.state)
                 {
                     case DecState.STILL:
+                        if (Random.value < omozraÑamScript.mentatUnaware)
+                        {
+                            Destroy(targetEnemy);
+                        }
                         break;
 
                     case DecState.SEEKING:
+                        if (Random.value < omozraÑamScript.mentatAware)
+                        {
+                            Destroy(targetEnemy);
+                        }
                         break;
 
                     case DecState.FOUND:
+                        if (Random.value < omozraÑamScript.mentatDetected)
+                        {
+                            Destroy(targetEnemy);
+                        }
                         break;
                 }
                 break;
