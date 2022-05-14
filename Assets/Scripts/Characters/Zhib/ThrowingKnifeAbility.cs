@@ -33,16 +33,34 @@ public class ThrowingKnifeAbility : MonoBehaviour
     [Header("- Knife Stats -")]
     public float soundRange;
     public float knifeVelocity;
-
-    [Range(0.0f, 1.0f)]
-    public float chanceToHitHarkonnen;
-
-    [Range(0.0f, 1.0f)]
-    public float chanceToSardaukar;
-
     public GameObject knifePrefab;
     public LayerMask whatIsKnife;
 
+    [Header("- Chances To Hit -")]
+    
+    [Header("- Harkonnen -")]
+    [Range(0.0f, 1.0f)]
+    public float harkonnenUnaware;
+    [Range(0.0f, 1.0f)]
+    public float harkonnenAware;
+    [Range(0.0f, 1.0f)]
+    public float harkonnenDetected;
+
+    [Header("- Sardaukar -")]
+    [Range(0.0f, 1.0f)]
+    public float sardaukarUnaware;
+    [Range(0.0f, 1.0f)]
+    public float sardaukarAware;
+    [Range(0.0f, 1.0f)]
+    public float sardaukarDetected;
+
+    [Header("- Mentat -")]
+    [Range(0.0f, 1.0f)]
+    public float mentatUnaware;
+    [Range(0.0f, 1.0f)]
+    public float mentatAware;
+    [Range(0.0f, 1.0f)]
+    public float mentatDetected;
 
     // Start is called before the first frame update
     void Start()

@@ -9,14 +9,41 @@ public class WeirdingWay : MonoBehaviour
     private CharacterBaseBehavior baseScript;
     private Camera playerCamera;
     private NavMeshAgent agent;
+    
+    //Still testing if we want to generate sound
+    private float soundRange;
 
     public int maxKills;
     public float killProximityRange;
     public float killChainRange;
-    [Range(0.0f, 1.0f)]
-    public float chanceToKillSardaukar;
-    public float soundRange;
     public LayerMask whatIsEnemy;
+
+    [Header("- Chances To Hit -")]
+
+    [Header("- Harkonnen -")]
+    [Range(0.0f, 1.0f)]
+    public float harkonnenUnaware;
+    [Range(0.0f, 1.0f)]
+    public float harkonnenAware;
+    [Range(0.0f, 1.0f)]
+    public float harkonnenDetected;
+
+    [Header("- Sardaukar -")]
+    [Range(0.0f, 1.0f)]
+    public float sardaukarUnaware;
+    [Range(0.0f, 1.0f)]
+    public float sardaukarAware;
+    [Range(0.0f, 1.0f)]
+    public float sardaukarDetected;
+
+    [Header("- Mentat -")]
+    [Range(0.0f, 1.0f)]
+    public float mentatUnaware;
+    [Range(0.0f, 1.0f)]
+    public float mentatAware;
+    [Range(0.0f, 1.0f)]
+    public float mentatDetected;
+
     private Vector3 attackPointOffset;
 
     private RaycastHit rayHit;
@@ -176,26 +203,123 @@ public class WeirdingWay : MonoBehaviour
             transform.position = targetedEnemy.transform.position + (targetedEnemy.transform.rotation * attackPointOffset);
             transform.LookAt(targetedEnemy.transform);
             
-            EnemyBehaviour eB = targetedEnemy.GetComponent<EnemyBehaviour>();
-            switch (eB.type)
+            EnemyBehaviour eBehaviour = targetedEnemy.GetComponent<EnemyBehaviour>();
+            EnemyDetection eDetection = targetedEnemy.GetComponent<EnemyDetection>();
+
+            switch (eBehaviour.type)
             {
                 case EnemyType.HARKONNEN:
-                    Destroy(targetedEnemy);
-                    break;
+                    switch (eDetection.state)
+                    {
+                        case DecState.STILL:
+                            if (Random.value <= harkonnenUnaware)
+                            {
+                                Destroy(targetedEnemy);
+                            }
+                            else
+                            {
+                                //EmitSound();
+                            }
+                            break;
 
+                        case DecState.SEEKING:
+                            if (Random.value <= harkonnenAware)
+                            {
+                                Destroy(targetedEnemy);
+                            }
+                            else
+                            {
+                                //EmitSound();
+                            }
+                            break;
+
+                        case DecState.FOUND:
+                            if (Random.value <= harkonnenDetected)
+                            {
+                                Destroy(targetedEnemy);
+
+                            }
+                            else
+                            {
+                                //EmitSound();
+                            }
+                            break;
+                    }
+                    break;
                 case EnemyType.SARDAUKAR:
-                    if (Random.value < chanceToKillSardaukar)
+                    switch (eDetection.state)
                     {
-                        Destroy(targetedEnemy);
-                    }
-                    else
-                    {
-                        EmitSound();
+                        case DecState.STILL:
+                            if (Random.value <= sardaukarUnaware)
+                            {
+                                Destroy(targetedEnemy);
+
+                            }
+                            else
+                            {
+                                //EmitSound();
+                            }
+                            break;
+
+                        case DecState.SEEKING:
+                            if (Random.value <= sardaukarAware)
+                            {
+                                Destroy(targetedEnemy);
+                            }
+                            else
+                            {
+                                //EmitSound();
+                            }
+                            break;
+
+                        case DecState.FOUND:
+                            if (Random.value <= sardaukarDetected)
+                            {
+                                Destroy(targetedEnemy);
+                            }
+                            else
+                            {
+                                //EmitSound();
+                            }
+                            break;
                     }
                     break;
-
                 case EnemyType.MENTAT:
-                    Destroy(targetedEnemy);
+                    switch (eDetection.state)
+                    {
+                        case DecState.STILL:
+                            if (Random.value <= mentatUnaware)
+                            {
+                                Destroy(targetedEnemy);
+                            }
+                            else
+                            {
+                                //EmitSound();
+                            }
+                            break;
+
+                        case DecState.SEEKING:
+                            if (Random.value <= mentatAware)
+                            {
+                                Destroy(targetedEnemy);
+                            }
+                            else
+                            {
+                                //EmitSound();
+                            }
+                            break;
+
+                        case DecState.FOUND:
+                            if (Random.value <= mentatDetected)
+                            {
+                                Destroy(targetedEnemy);
+                            }
+                            else
+                            {
+                                //EmitSound();
+                            }
+                            break;
+                    }
                     break;
             }
             

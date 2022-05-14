@@ -34,8 +34,8 @@ public class CharacterBaseBehavior : MonoBehaviour
     private Material materialHolder;
     private float elapse_time;
 
-    public LayerMask whatIsSpice;
     public int ultimateCost;
+    public LayerMask whatIsSpice;
     [HideInInspector] public int playerSpice;
     private int spiceTotal;
     private bool notAvailable;

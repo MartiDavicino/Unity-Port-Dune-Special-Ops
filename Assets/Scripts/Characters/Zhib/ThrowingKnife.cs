@@ -9,8 +9,18 @@ public class ThrowingKnife : MonoBehaviour
     private float velocity;
 
     [HideInInspector] public float soundRange;
-    private float chanceToHitHarkonnen;
-    private float chanceToSardaukar;
+
+    private float harkonnenUnaware;
+    private float harkonnenAware;
+    private float harkonnenDetected;
+
+    private float sardaukarUnaware;
+    private float sardaukarAware;
+    private float sardaukarDetected;
+
+    private float mentatUnaware;
+    private float mentatAware;
+    private float mentatDetected;
 
     public LayerMask whatIsEnemy;
 
@@ -26,8 +36,17 @@ public class ThrowingKnife : MonoBehaviour
         baseScript = zhib.GetComponent<ThrowingKnifeAbility>();
 
         soundRange = baseScript.soundRange;
-        chanceToHitHarkonnen = baseScript.chanceToHitHarkonnen;
-        chanceToSardaukar = baseScript.chanceToSardaukar;
+        harkonnenUnaware = baseScript.harkonnenUnaware;
+        harkonnenAware = baseScript.harkonnenAware;
+        harkonnenDetected = baseScript.harkonnenDetected;
+
+        sardaukarUnaware = baseScript.sardaukarUnaware;
+        sardaukarAware = baseScript.sardaukarAware;
+        sardaukarDetected = baseScript.sardaukarDetected;
+
+        mentatUnaware = baseScript.mentatUnaware;
+        mentatAware = baseScript.mentatAware;
+        mentatDetected = baseScript.mentatDetected;
 
         velocity = baseScript.knifeVelocity;
         hit = false;
@@ -78,24 +97,36 @@ public class ThrowingKnife : MonoBehaviour
                     switch (eDetection.state)
                     {
                         case DecState.STILL:
-                            if(gameObject.layer != 10) Destroy(coll.gameObject);
-                            break;
-
-                        case DecState.SEEKING:
-                            if (Random.value < chanceToHitHarkonnen)
+                            if (Random.value <= harkonnenUnaware)
                             {
                                 if (gameObject.layer != 10) Destroy(coll.gameObject);
                             }
                             else
                             {
-                                hit = true;
+                                EmitSound();
+                            }
+                            break;
+
+                        case DecState.SEEKING:
+                            if (Random.value <= harkonnenAware)
+                            {
+                                if (gameObject.layer != 10) Destroy(coll.gameObject);
+                            }
+                            else
+                            {
                                 EmitSound();
                             }
                             break;
 
                         case DecState.FOUND:
-                            hit = true;
-                            EmitSound();
+                            if (Random.value <= harkonnenDetected)
+                            {
+                                if (gameObject.layer != 10) Destroy(coll.gameObject);
+                            }
+                            else
+                            {
+                                EmitSound();
+                            }
                             break;
                     }
                     break;
@@ -103,7 +134,7 @@ public class ThrowingKnife : MonoBehaviour
                     switch (eDetection.state)
                     {
                         case DecState.STILL:
-                            if (Random.value < chanceToSardaukar)
+                            if (Random.value <= sardaukarUnaware)
                             {
                                 if (gameObject.layer != 10) Destroy(coll.gameObject);
                             }
@@ -115,13 +146,27 @@ public class ThrowingKnife : MonoBehaviour
                             break;
 
                         case DecState.SEEKING:
-                            hit = true;
-                            EmitSound();
+                            if (Random.value <= sardaukarAware)
+                            {
+                                if (gameObject.layer != 10) Destroy(coll.gameObject);
+                            }
+                            else
+                            {
+                                hit = true;
+                                EmitSound();
+                            }
                             break;
 
                         case DecState.FOUND:
-                            hit = true;
-                            EmitSound();
+                            if (Random.value <= sardaukarDetected)
+                            {
+                                if (gameObject.layer != 10) Destroy(coll.gameObject);
+                            }
+                            else
+                            {
+                                hit = true;
+                                EmitSound();
+                            }
                             break;
                     }
                     break;
@@ -129,16 +174,39 @@ public class ThrowingKnife : MonoBehaviour
                     switch (eDetection.state)
                     {
                         case DecState.STILL:
-                            if (gameObject.layer != 10) Destroy(coll.gameObject);
+                            if (Random.value <= mentatUnaware)
+                            {
+                                if (gameObject.layer != 10) Destroy(coll.gameObject);
+                            }
+                            else
+                            {
+                                hit = true;
+                                EmitSound();
+                            }
                             break;
 
                         case DecState.SEEKING:
-                            if (gameObject.layer != 10) Destroy(coll.gameObject);
+                            if (Random.value <= mentatAware)
+                            {
+                                if (gameObject.layer != 10) Destroy(coll.gameObject);
+                            }
+                            else
+                            {
+                                hit = true;
+                                EmitSound();
+                            }
                             break;
 
                         case DecState.FOUND:
-                            hit = true;
-                            EmitSound();
+                            if (Random.value <= mentatDetected)
+                            {
+                                if (gameObject.layer != 10) Destroy(coll.gameObject);
+                            }
+                            else
+                            {
+                                hit = true;
+                                EmitSound();
+                            }
                             break;
                     }
                     break;

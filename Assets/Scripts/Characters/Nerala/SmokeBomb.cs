@@ -40,6 +40,7 @@ public class SmokeBomb : MonoBehaviour
             while (elapse_time < timeOfEffect)
             {
                 elapse_time += Time.deltaTime;
+                gameObject.GetComponent<Rigidbody>().isKinematic = true;
                 return;
             }
 

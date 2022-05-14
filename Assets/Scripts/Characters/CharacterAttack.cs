@@ -22,9 +22,6 @@ public class CharacterAttack : MonoBehaviour
     public float rangeToKill;
     public LayerMask whatIsEnemy;
 
-    [Range(0.0f, 1.0f)]
-    public float neralaChanceToHit;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -70,7 +67,7 @@ public class CharacterAttack : MonoBehaviour
 
                     if (Physics.Raycast(ray, out rayHit))
                     {
-                        if (rayHit.collider.tag == "Floor")
+                        if (rayHit.collider.tag != "Enemy")
                         {
                             attacking = false;
                         }
@@ -147,16 +144,10 @@ public class CharacterAttack : MonoBehaviour
                         {
                             case DecState.STILL:
                                 Destroy(enemyTarget);
-                                baseScript.hit = true;
-                                baseScript.playerHealth--;
-                                EmitSound();
                                 break;
 
                             case DecState.SEEKING:
                                 Destroy(enemyTarget);
-                                baseScript.hit = true;
-                                baseScript.playerHealth--;
-                                EmitSound();
                                 break;
 
                             case DecState.FOUND:
@@ -214,17 +205,7 @@ public class CharacterAttack : MonoBehaviour
                                 break;
 
                             case DecState.SEEKING:
-                                if (Random.value < neralaChanceToHit) 
-                                {
-                                    Destroy(enemyTarget);
-                                } else
-                                {
-                                    Destroy(enemyTarget);
-                                    baseScript.hit = true;
-                                    baseScript.playerHealth--;
-                                    EmitSound();
-                                }
-
+                                Destroy(enemyTarget);
                                 break;
 
                             case DecState.FOUND:

@@ -31,12 +31,30 @@ public class SleepingDartAbility : MonoBehaviour
     public LayerMask whatIsEnemy;
 
     [Header("- Chances To Sleep -")]
+
+    [Header("- Harkonnen -")]
     [Range(0.0f, 1.0f)]
-    public float harkonnenProb;
+    public float harkonnenUnaware;
     [Range(0.0f, 1.0f)]
-    public float sardaukarUnawareProb;
+    public float harkonnenAware;
     [Range(0.0f, 1.0f)]
-    public float sardaukarAwareProb;
+    public float harkonnenDetected;
+
+    [Header("- Sardaukar -")]
+    [Range(0.0f, 1.0f)]
+    public float sardaukarUnaware;
+    [Range(0.0f, 1.0f)]
+    public float sardaukarAware;
+    [Range(0.0f, 1.0f)]
+    public float sardaukarDetected;
+
+    [Header("- Mentat -")]
+    [Range(0.0f, 1.0f)]
+    public float mentatUnaware;
+    [Range(0.0f, 1.0f)]
+    public float mentatAware;
+    [Range(0.0f, 1.0f)]
+    public float mentatDetected;
 
 
     // Start is called before the first frame update
@@ -175,29 +193,42 @@ public class SleepingDartAbility : MonoBehaviour
         EnemyBehaviour eBehaviour = targetEnemy.GetComponent<EnemyBehaviour>();
         EnemyDetection eDetection = targetEnemy.GetComponent<EnemyDetection>();
 
-        eDetection.multiplierHolder *= sightDebuffMultiplier;
-
         switch (eBehaviour.type)
         {
             case EnemyType.HARKONNEN:
                 switch (eDetection.state)
                 {
                     case DecState.STILL:
-                        eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
-                        eDetection.debuffed = true;
-                        break;
-
-                    case DecState.SEEKING:
-                        eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
-                        eDetection.debuffed = true;
-                        break;
-
-                    case DecState.FOUND:
-                        if (Random.value < harkonnenProb)
+                        if (Random.value <= harkonnenUnaware)
                         {
                             eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
                             eDetection.debuffed = true;
-                        } else
+                        }
+                        else
+                        {
+                            EmitSound();
+                        }
+                        break;
+
+                    case DecState.SEEKING:
+                        if (Random.value <= harkonnenAware)
+                        {
+                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffed = true;
+                        }
+                        else
+                        {
+                            EmitSound();
+                        }
+                        break;
+
+                    case DecState.FOUND:
+                        if (Random.value <= harkonnenDetected)
+                        {
+                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffed = true;
+                        }
+                        else
                         {
                             EmitSound();
                         }
@@ -208,29 +239,39 @@ public class SleepingDartAbility : MonoBehaviour
                 switch (eDetection.state)
                 {
                     case DecState.STILL:
-                        if (Random.value < sardaukarUnawareProb)
+                        if (Random.value <= sardaukarUnaware)
                         {
                             eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
                             eDetection.debuffed = true;
-                        } else
+                        }
+                        else
                         {
                             EmitSound();
                         }
                         break;
 
                     case DecState.SEEKING:
-                        if (Random.value < sardaukarAwareProb)
+                        if (Random.value <= sardaukarAware)
                         {
                             eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
                             eDetection.debuffed = true;
-                        } else
+                        }
+                        else
                         {
                             EmitSound();
                         }
                         break;
 
                     case DecState.FOUND:
-                        EmitSound();
+                        if (Random.value <= sardaukarDetected)
+                        {
+                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffed = true;
+                        }
+                        else
+                        {
+                            EmitSound();
+                        }
                         break;
                 }
                 break;
@@ -238,18 +279,39 @@ public class SleepingDartAbility : MonoBehaviour
                 switch (eDetection.state)
                 {
                     case DecState.STILL:
-                        eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
-                        eDetection.debuffed = true;
+                        if (Random.value <= mentatUnaware)
+                        {
+                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffed = true;
+                        }
+                        else
+                        {
+                            EmitSound();
+                        }
                         break;
 
                     case DecState.SEEKING:
-                        eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
-                        eDetection.debuffed = true;
+                        if (Random.value <= mentatAware)
+                        {
+                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffed = true;
+                        }
+                        else
+                        {
+                            EmitSound();
+                        }
                         break;
 
                     case DecState.FOUND:
-                        eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
-                        eDetection.debuffed = true;
+                        if (Random.value <= mentatDetected)
+                        {
+                            eDetection.sightDebuffMultiplier = sightDebuffMultiplier;
+                            eDetection.debuffed = true;
+                        }
+                        else
+                        {
+                            EmitSound();
+                        }
                         break;
                 }
                 break;

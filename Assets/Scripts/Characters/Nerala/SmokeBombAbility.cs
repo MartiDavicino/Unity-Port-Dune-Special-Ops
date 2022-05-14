@@ -20,7 +20,7 @@ public class SmokeBombAbility : MonoBehaviour
 
     //Decoy
     public GameObject smokeBombPrefab;
-    public LayerMask whatIsSmokeBomb;
+    //public LayerMask whatIsSmokeBomb;
     [HideInInspector] public Vector3 targetPosition;
 
     // Start is called before the first frame update

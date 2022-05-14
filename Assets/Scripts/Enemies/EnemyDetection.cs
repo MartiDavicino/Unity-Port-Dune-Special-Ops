@@ -135,7 +135,6 @@ public class EnemyDetection : MonoBehaviour
         {
 			hear.DebugDelete();
 			visual.DebugDelete();
-
 		}
 
 		if (Input.GetKeyDown(KeyCode.F10))
@@ -145,7 +144,6 @@ public class EnemyDetection : MonoBehaviour
 		if (!debuffed)
 		{
 			sightDebuffMultiplier = 1f;
-
 
 			child.GetComponent<Renderer>().material = materialHolder;
 		}
@@ -217,7 +215,7 @@ public class EnemyDetection : MonoBehaviour
 	}
 	void WaitAndAddToList(float delay,Transform target, string targetType)
     {
-		timer += proportion  /** distanceMultiplier*/ * playerStateMultipler * sightDebuffMultiplier * Time.deltaTime;
+		timer += proportion * sightMultiplier * playerStateMultipler * sightDebuffMultiplier /** distanceMultiplier*/ * Time.deltaTime;
 
 		if (timer > 0 && state == DecState.STILL)
 		{
@@ -307,9 +305,6 @@ public class EnemyDetection : MonoBehaviour
 	{
 		bool playerHeard = false;
 
-		sightMultiplier = 1f;
-
-
         Collider[] targetsInHearingRadius = Physics.OverlapSphere(transform.position, hearingRadius, targetMask);
 
 		for (int i = 0; i < targetsInHearingRadius.Length; i++)
@@ -327,11 +322,13 @@ public class EnemyDetection : MonoBehaviour
 
 			if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, targetMask))
 			{
-				if((pAgent.remainingDistance > 0 && !pAgent.pathPending))
-                {
+				//Waiting for still behaviour when crouching 
+
+				//if((pAgent.remainingDistance > 0 && !pAgent.pathPending))
+                //{
 					WaitAndAddToList(secondsToDetect, target, "noisy");
 					playerHeard = true;
-                }
+                //}
 			}
 		}
 
