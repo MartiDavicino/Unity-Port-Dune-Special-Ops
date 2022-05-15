@@ -65,6 +65,7 @@ public class EnemyDetection : MonoBehaviour
 
 	private float elapse_time = 0;
 
+
 	void Start()
     {
 		generalCamera = Camera.main;
@@ -273,7 +274,9 @@ public class EnemyDetection : MonoBehaviour
 		
 		sightMultiplier = 1f;
 
-		Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
+		float finalRadius = Mathf.Sqrt(transform.position.y * transform.position.y + viewRadius * viewRadius);
+
+		Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, finalRadius, targetMask);
 
 		for (int i = 0; i < targetsInViewRadius.Length; i++)
 		{
@@ -309,7 +312,9 @@ public class EnemyDetection : MonoBehaviour
 	{
 		bool playerHeard = false;
 
-        Collider[] targetsInHearingRadius = Physics.OverlapSphere(transform.position, hearingRadius, targetMask);
+		float finalRadius = Mathf.Sqrt(transform.position.y * transform.position.y + hearingRadius * hearingRadius);
+
+		Collider[] targetsInHearingRadius = Physics.OverlapSphere(transform.position, finalRadius, targetMask);
 
 		for (int i = 0; i < targetsInHearingRadius.Length; i++)
 		{
