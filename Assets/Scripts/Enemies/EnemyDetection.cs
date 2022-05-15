@@ -173,15 +173,14 @@ public class EnemyDetection : MonoBehaviour
 		visibleTargets.Clear();
 		noisyTargets.Clear();
 	}
-	void CalculateMultiplier()
+	void CalculateMultiplier(float radius, Transform target)
     {
-		
-		if(data.player != null)
-        {
-			distanceMultiplier = viewRadius * maxDistanceMultiplier / CalculateAbsoluteDistance(data.player.transform.position).magnitude;
-			if (distanceMultiplier > maxDistanceMultiplier)
-				distanceMultiplier = maxDistanceMultiplier;
-        }
+		distanceMultiplier = 1 + (maxDistanceMultiplier - 1) * (1 - CalculateAbsoluteDistance(target.position).magnitude / radius);
+		if (distanceMultiplier < 1) distanceMultiplier = 1;
+
+		//distanceMultiplier = radius * maxDistanceMultiplier / CalculateAbsoluteDistance(data.player.transform.position).magnitude;
+		if (distanceMultiplier > maxDistanceMultiplier)
+			distanceMultiplier = maxDistanceMultiplier;
     }
 
     void FindTargetsWithDelay()
@@ -216,7 +215,7 @@ public class EnemyDetection : MonoBehaviour
 	}
 	void WaitAndAddToList(float delay,Transform target, string targetType)
     {
-		timer += proportion * sightMultiplier * playerStateMultipler * debuffMultiplier /** distanceMultiplier*/ * Time.deltaTime;
+		timer += proportion * sightMultiplier * playerStateMultipler * debuffMultiplier * distanceMultiplier * Time.deltaTime;
 
 		if (timer > 0 && state == DecState.STILL)
 		{
@@ -284,7 +283,6 @@ public class EnemyDetection : MonoBehaviour
 			if(targetsInViewRadius[i].gameObject == GameObject.Find("HunterSeeker(Clone)"))
             	return playerInView;
 
-			CalculateMultiplier();
 
 			Transform target = targetsInViewRadius[i].transform;
 			Vector3 dirToTarget = (target.position - transform.position).normalized;
@@ -298,6 +296,7 @@ public class EnemyDetection : MonoBehaviour
 					if(!cB.invisible)
                     {
 						sightMultiplier = multiplierHolder;
+						CalculateMultiplier(viewRadius, target);
 						WaitAndAddToList(secondsPerBar, target, "visible");
 						playerInView = true;
                     }
@@ -322,7 +321,6 @@ public class EnemyDetection : MonoBehaviour
 			Transform target = targetsInHearingRadius[i].transform;
 			Vector3 dirToTarget = (target.position - transform.position).normalized;
 			
-			CalculateMultiplier();
 
 			baseScript = parent.GetComponent<CharacterBaseBehavior>();
 			NavMeshAgent pAgent = baseScript.GetComponent<NavMeshAgent>();
@@ -335,6 +333,7 @@ public class EnemyDetection : MonoBehaviour
 
 				//if((pAgent.remainingDistance > 0 && !pAgent.pathPending))
                 //{
+					CalculateMultiplier(hearingRadius, target);
 					WaitAndAddToList(secondsPerBar, target, "noisy");
 					playerHeard = true;
                 //}
@@ -362,7 +361,7 @@ public class EnemyDetection : MonoBehaviour
 			Transform target = targetsInHearingRadius[i].transform;
 			Vector3 dirToTarget = (target.position - transform.position).normalized;
 
-			CalculateMultiplier();
+			CalculateMultiplier(hearingRadius, target);
 
 			float dstToTarget = Vector3.Distance(transform.position, target.position);
 
