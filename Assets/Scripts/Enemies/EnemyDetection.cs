@@ -14,7 +14,7 @@ public enum DecState
 public class EnemyDetection : MonoBehaviour
 {
 	[Header("- Detection -")]
-	public float secondsToDetect;
+	public float secondsPerBar;
 	[HideInInspector] public float timer = 0.0f;
 	private float proportion;
 
@@ -202,13 +202,13 @@ public class EnemyDetection : MonoBehaviour
 
 		if(state == DecState.SEEKING && timer < 0)
         {
-			timer = secondsToDetect;
+			timer = secondsPerBar;
 			state = DecState.STILL;
         }
 
 		if(state == DecState.STILL && timer < 0)
         {
-			timer = secondsToDetect;
+			timer = secondsPerBar;
 			state = DecState.STILL;
 			timer = 0f;
 		}
@@ -221,7 +221,7 @@ public class EnemyDetection : MonoBehaviour
 		{
 			state = DecState.STILL;
 
-			if(timer >= secondsToDetect)
+			if(timer >= secondsPerBar)
             {
 				state = DecState.SEEKING;
 				timer = 0;
@@ -233,13 +233,13 @@ public class EnemyDetection : MonoBehaviour
 			state = DecState.SEEKING;
 			elapse_time = 0;
 
-			if (timer >= secondsToDetect)
+			if (timer >= secondsPerBar)
 			{
 				state = DecState.FOUND;
 			}
 		}
 
-		if (timer >= secondsToDetect && state == DecState.FOUND)
+		if (timer >= secondsPerBar && state == DecState.FOUND)
         {
 			if(target.gameObject == GameObject.Find("HunterSeeker(Clone)"))
             {
@@ -295,7 +295,7 @@ public class EnemyDetection : MonoBehaviour
 					if(!cB.invisible)
                     {
 						sightMultiplier = multiplierHolder;
-						WaitAndAddToList(secondsToDetect, target, "visible");
+						WaitAndAddToList(secondsPerBar, target, "visible");
 						playerInView = true;
                     }
 				}
@@ -330,7 +330,7 @@ public class EnemyDetection : MonoBehaviour
 
 				//if((pAgent.remainingDistance > 0 && !pAgent.pathPending))
                 //{
-					WaitAndAddToList(secondsToDetect, target, "noisy");
+					WaitAndAddToList(secondsPerBar, target, "noisy");
 					playerHeard = true;
                 //}
 			}
@@ -363,7 +363,7 @@ public class EnemyDetection : MonoBehaviour
 
 			if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, whatIsHunterSeeker))
 			{
-				WaitAndAddToList(secondsToDetect, target, "noisy");
+				WaitAndAddToList(secondsPerBar, target, "noisy");
 			}
 		}
 

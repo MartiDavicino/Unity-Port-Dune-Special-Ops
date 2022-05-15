@@ -335,7 +335,7 @@ public class SleepingDartAbility : MonoBehaviour
         for (int i = 0; i < affectedEnemies.Length; i++)
         {
             affectedEnemies[i].GetComponent<EnemyDetection>().state = DecState.SEEKING;
-            affectedEnemies[i].GetComponent<EnemyDetection>().timer = affectedEnemies[i].GetComponent<EnemyDetection>().secondsToDetect;
+            affectedEnemies[i].GetComponent<EnemyDetection>().timer = affectedEnemies[i].GetComponent<EnemyDetection>().secondsPerBar;
 
         }
     }

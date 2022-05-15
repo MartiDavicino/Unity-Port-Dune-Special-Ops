@@ -42,7 +42,7 @@ public class DetectionMeter : MonoBehaviour
 
         if (enemyD.state == DecState.STILL)
         {
-            percent = enemyD.timer / enemyD.secondsToDetect;
+            percent = enemyD.timer / enemyD.secondsPerBar;
             if (percent >= 1.0f)
             {
                 percent = 1.0f;
@@ -54,7 +54,7 @@ public class DetectionMeter : MonoBehaviour
 
         if (enemyD.state == DecState.SEEKING)
         {
-            percent = enemyD.timer / enemyD.secondsToDetect;
+            percent = enemyD.timer / enemyD.secondsPerBar;
             if (percent >= 1.0f)
             {
                 percent = 1.0f;

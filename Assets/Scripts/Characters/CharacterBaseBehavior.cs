@@ -45,6 +45,9 @@ public class CharacterBaseBehavior : MonoBehaviour
     public float walkMovementSpeed;
     public float crouchMovementSpeed;
     public float runMovementSpeed;
+    public float staminaSeconds;
+    [HideInInspector] public float staminaTimer;
+    [HideInInspector] public bool isTired;
     private float movementSpeed;
 
     [Header("- Sound Ranges -")]
@@ -67,7 +70,7 @@ public class CharacterBaseBehavior : MonoBehaviour
     [HideInInspector] public bool ability3Active;
 
     private Animator animator;
-    [HideInInspector] public PlayerState state = PlayerState.IDLE;
+    public PlayerState state = PlayerState.IDLE;
 
     private Vector3 targetPosition;
     private float timer;
@@ -109,6 +112,8 @@ public class CharacterBaseBehavior : MonoBehaviour
         notAvailable = false;
 
         initHealth = playerHealth;
+        staminaTimer = staminaSeconds;
+        isTired = false;
 
         timer = 0f;
     }
@@ -251,9 +256,33 @@ public class CharacterBaseBehavior : MonoBehaviour
     {
         invisible = false;
 
-        if (state==PlayerState.CROUCH) { movementSpeed = crouchMovementSpeed; }
-        else if (state == PlayerState.RUNNING) { movementSpeed = runMovementSpeed; }
-        else { movementSpeed = walkMovementSpeed; }
+        if (state==PlayerState.CROUCH) {
+            movementSpeed = crouchMovementSpeed;
+            staminaTimer += Time.deltaTime;
+            if (staminaTimer > staminaSeconds)
+            {
+                staminaTimer = staminaSeconds;
+                isTired = false;
+            }
+        }
+        else if (state == PlayerState.RUNNING) {
+            movementSpeed = runMovementSpeed;
+            staminaTimer -= Time.deltaTime;
+            if (staminaTimer < 0f)
+            {
+                staminaTimer = 0f;
+                isTired = true;
+            }
+        }
+        else { 
+            movementSpeed = walkMovementSpeed;
+            staminaTimer += Time.deltaTime;
+            if (staminaTimer > staminaSeconds)
+            {
+                staminaTimer = staminaSeconds;
+                isTired = false;
+            }
+        }
 
         playerAgent.speed = movementSpeed;
     }
@@ -328,7 +357,7 @@ public class CharacterBaseBehavior : MonoBehaviour
 
                     if (Time.time - main_time < click_time)
                     {
-                        if (count == 2)
+                        if (count == 2 && !isTired)
                         {
                             running = true;
                             detectionMultiplier = runMultiplier;
@@ -366,7 +395,6 @@ public class CharacterBaseBehavior : MonoBehaviour
             running = false;
             count = 0;
             main_time = 0;
-            detectionMultiplier = 1f;
             state = PlayerState.IDLE;
         }
 
@@ -376,7 +404,7 @@ public class CharacterBaseBehavior : MonoBehaviour
             clickUp = true;
         }
 
-        if(Time.time - main_time > click_time)
+        if(Time.time - main_time > click_time || isTired)
         {
             running = false;
             count = 0;

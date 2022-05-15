@@ -244,7 +244,7 @@ public class EnemyBehaviour : MonoBehaviour
         {
             if (type == EnemyType.MENTAT) return;
 
-            while (spawnTimer < enemyD.secondsToDetect)
+            while (spawnTimer < enemyD.secondsPerBar)
             {
                 spawnTimer += Time.deltaTime;
 
@@ -648,7 +648,7 @@ public class EnemyBehaviour : MonoBehaviour
 
                     EnemyDetection summonedDetection = summonedEnemy.GetComponent<EnemyDetection>();
                     summonedDetection.state = DecState.SEEKING;
-                    summonedDetection.timer = summonedDetection.secondsToDetect - 0.2f;
+                    summonedDetection.timer = summonedDetection.secondsPerBar - 0.2f;
 
                     EnemyBehaviour summonedBehaviour = summonedEnemy.GetComponent<EnemyBehaviour>();
                     summonedBehaviour.walkPointSet = true;
