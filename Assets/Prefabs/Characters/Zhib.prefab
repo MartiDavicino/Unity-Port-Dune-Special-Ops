@@ -1711,18 +1711,18 @@ MonoBehaviour:
   selectedCharacter: 1
   allSelected: 0
   hunterSeeking: 0
-  playerHealth: 3
+  playerHealth: 4
   hit: 0
-  ultimateCost: 100
+  ultimateCost: 2000
   playerSpice: 0
   walkMovementSpeed: 7.5
-  crouchMovementSpeed: 4
-  runMovementSpeed: 12
+  crouchMovementSpeed: 4.5
+  runMovementSpeed: 10
   staminaSeconds: 5
   staminaTimer: 0
   isTired: 0
   walkSoundRange: 7.5
-  crouchSoundRange: 5
+  crouchSoundRange: 4
   runSoundRange: 11.5
   crouchMultiplier: 0.75
   runMultiplier: 2
@@ -1764,7 +1764,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetEnemy: {fileID: 0}
   maximumRange: 12.5
-  ammunition: 99
+  ammunition: 1
   soundRange: 20
   knifeVelocity: 40
   knifePrefab: {fileID: 8902590539744950886, guid: a2733bd1eb438aa4aa9f6a6b85ecec30, type: 3}
@@ -1772,14 +1772,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   harkonnenUnaware: 1
-  harkonnenAware: 1
-  harkonnenDetected: 0
-  sardaukarUnaware: 1
-  sardaukarAware: 1
+  harkonnenAware: 0.8
+  harkonnenDetected: 0.2
+  sardaukarUnaware: 0.75
+  sardaukarAware: 0.25
   sardaukarDetected: 0
-  mentatUnaware: 0
-  mentatAware: 0
-  mentatDetected: 0
+  mentatUnaware: 1
+  mentatAware: 0.5
+  mentatDetected: 0.25
 --- !u!114 &6868864155876820118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1818,15 +1818,15 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 256
-  harkonnenUnaware: 0
-  harkonnenAware: 0
-  harkonnenDetected: 0
-  sardaukarUnaware: 0
-  sardaukarAware: 0
-  sardaukarDetected: 0
-  mentatUnaware: 0
-  mentatAware: 0
-  mentatDetected: 0
+  harkonnenUnaware: 1
+  harkonnenAware: 0.9
+  harkonnenDetected: 0.75
+  sardaukarUnaware: 0.75
+  sardaukarAware: 0.5
+  sardaukarDetected: 0.2
+  mentatUnaware: 1
+  mentatAware: 1
+  mentatDetected: 1
 --- !u!1 &6488871487136115159
 GameObject:
   m_ObjectHideFlags: 0

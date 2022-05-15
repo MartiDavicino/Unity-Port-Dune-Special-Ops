@@ -1855,18 +1855,18 @@ MonoBehaviour:
   hunterSeeking: 0
   playerHealth: 3
   hit: 0
-  ultimateCost: 10
+  ultimateCost: 1500
   playerSpice: 0
   walkMovementSpeed: 7.5
-  crouchMovementSpeed: 4
-  runMovementSpeed: 12
+  crouchMovementSpeed: 5
+  runMovementSpeed: 10
   staminaSeconds: 3
   staminaTimer: 0
   isTired: 0
   walkSoundRange: 7.5
-  crouchSoundRange: 4
+  crouchSoundRange: 3.5
   runSoundRange: 11.5
-  crouchMultiplier: 0.2
+  crouchMultiplier: 0.7
   runMultiplier: 2
   detectionMultiplier: 0
   invisible: 0
@@ -1919,7 +1919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 480d0c9309e617647be941d1c9e2e0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debuffMultiplier: 0
+  debuffMultiplier: 0.5
   maximumRange: 15
   soundRange: 15
   cooldown: 3
@@ -1927,13 +1927,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   harkonnenUnaware: 1
-  harkonnenAware: 1
+  harkonnenAware: 0.9
   harkonnenDetected: 0
-  sardaukarUnaware: 0
-  sardaukarAware: 0
+  sardaukarUnaware: 1
+  sardaukarAware: 0.8
   sardaukarDetected: 0
-  mentatUnaware: 0
-  mentatAware: 0
+  mentatUnaware: 1
+  mentatAware: 0.5
   mentatDetected: 0
 --- !u!114 &8672128565203201547
 MonoBehaviour:
@@ -1949,7 +1949,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maximumRange: 15
   smokeEffectRange: 5
-  timeOfEffect: 4
+  timeOfEffect: 5
   ammunition: 2
   smokeBombPrefab: {fileID: 6426780562200808130, guid: c912b95efd14955469b952f7fd99030f, type: 3}
   targetPosition: {x: 0, y: 0, z: 0}

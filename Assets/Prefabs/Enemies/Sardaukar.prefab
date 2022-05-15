@@ -543,9 +543,9 @@ MonoBehaviour:
   safe: 1
   agent: {fileID: 3385931162298201039}
   player: {fileID: 2988005374600729660}
-  state: 0
   chasingSpeed: 8
   patrolingSpeed: 4
+  state: 0
   affectedByWaterTank: 0
   resetedByWaterTank: 0
   resetEnemyTimeWaterT: 0
@@ -572,10 +572,10 @@ MonoBehaviour:
   harkonnenDropChance: 0
   harkonnenMaxDrop: 0
   harkonnenMinDrop: 0
-  rangedAttackRange: 0
+  rangedAttackRange: 10
   ammunition: 2
   needlePrefab: {fileID: 7972253676922709312, guid: 08e29585e2f739b4f90a8f38c5dec8e1, type: 3}
-  sardaukarDropChance: 1
+  sardaukarDropChance: 0.5
   sardaukarMaxDrop: 80
   sardaukarMinDrop: 160
   waveSpawned: 0
@@ -598,22 +598,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a7b33bc98d117c4095311ede6ab5402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sightMultiplier: 2
-  distanceMultiplier: 0
-  maxDistanceMultiplier: 0
-  maxMultiplier: 5
-  multiplierHolder: 0
+  secondsPerBar: 1.25
+  timer: 0
+  viewRadius: 15
+  viewAngle: 95
+  hearingRadius: 7.5
   debuffTime: 5
   debuffMultiplier: 0
   debuffed: 0
-  data: {fileID: 3385931162298201036}
-  viewRadius: 16
-  viewAngle: 95
-  hearingRadius: 7.5
-  timer: 0
-  secondsToDetect: 2.5
+  sightMultiplier: 1
+  maxDistanceMultiplier: 2.5
+  notDetectedMultiplier: 0.75
+  multiplierHolder: 0
   state: 0
   debug: 0
+  data: {fileID: 3385931162298201036}
   visual: {fileID: 1557302441979522620}
   hear: {fileID: 1557302441842351914}
   targetMask:

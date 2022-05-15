@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0b348fe03238d40b3b77bd77930d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spiceAmmount: 0
+  spiceAmmount: 1000
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
