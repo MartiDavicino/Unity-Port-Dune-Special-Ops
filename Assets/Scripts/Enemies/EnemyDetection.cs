@@ -13,12 +13,15 @@ public enum DecState
 
 public class EnemyDetection : MonoBehaviour
 {
-	public float sightMultiplier;
-	public float distanceMultiplier;
-	public float maxDistanceMultiplier;
-	public float maxMultiplier = 5.0f;
-	private float playerStateMultipler;
-	[HideInInspector] public float multiplierHolder;
+	[Header("- Detection -")]
+	public float secondsToDetect;
+	[HideInInspector] public float timer = 0.0f;
+	private float proportion;
+
+	public float viewRadius;
+	[Range(0, 360)]
+	public float viewAngle;
+	public float hearingRadius;
 
 	public float debuffTime;
 	private float debuffTimer;
@@ -27,27 +30,26 @@ public class EnemyDetection : MonoBehaviour
 	[HideInInspector] public float debuffMultiplier;
 	[HideInInspector] public bool debuffed;
 
-	public EnemyBehaviour data;
 
-	public float viewRadius;
-	[Range(0, 360)]
-	public float viewAngle;
+	[Header("- Detection Multipliers -")]
+	public float sightMultiplier;
+	public float maxDistanceMultiplier;
+	[Range(0.0f, 1.0f)]
+	public float notDetectedMultiplier;
 
-	public float hearingRadius;
+	private float playerStateMultipler;
+	[HideInInspector] public float multiplierHolder;
+	private float distanceMultiplier;
 
-	private CharacterBaseBehavior baseScript;
-
-	private Camera generalCamera;
-	private GameObject player;
-
-	[HideInInspector] public float timer = 0.0f;
-	public float secondsToDetect;
-	private float proportion;
-
+	[Header("- Base -")]
 	public DecState state = DecState.STILL;
 	[HideInInspector] public bool debug = false;
 
+	private CharacterBaseBehavior baseScript;
+	private Camera generalCamera;
+	private GameObject player;
 
+	public EnemyBehaviour data;
 	public VisualDebug visual;
 	public hearingDebug hear;
 
@@ -70,7 +72,6 @@ public class EnemyDetection : MonoBehaviour
 		proportion = 1f;
 
 		distanceMultiplier = 1f;
-		maxDistanceMultiplier = 1f;
 
 		debuffed = false;
 		debuffTimer = 0f;
@@ -177,8 +178,8 @@ public class EnemyDetection : MonoBehaviour
 		if(data.player != null)
         {
 			distanceMultiplier = viewRadius * maxDistanceMultiplier / CalculateAbsoluteDistance(data.player.transform.position).magnitude;
-			if (distanceMultiplier > maxMultiplier)
-				distanceMultiplier = maxMultiplier;
+			if (distanceMultiplier > maxDistanceMultiplier)
+				distanceMultiplier = maxDistanceMultiplier;
         }
     }
 
@@ -194,7 +195,7 @@ public class EnemyDetection : MonoBehaviour
 	}
 	void TargetsNotFound()
 	{
-		timer -= proportion * Time.deltaTime;
+		timer -= proportion * notDetectedMultiplier * Time.deltaTime;
 
 		if(state == DecState.FOUND)
 			state = DecState.SEEKING;

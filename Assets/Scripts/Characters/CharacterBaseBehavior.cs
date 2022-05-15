@@ -19,6 +19,8 @@ public enum PlayerState
 
 public class CharacterBaseBehavior : MonoBehaviour
 {
+    [Header("- IMPORTANT - False If Playtesting -")]
+    public bool startInvincible;
 
     [HideInInspector] public bool selectedCharacter;
     [HideInInspector] public bool allSelected;
@@ -27,6 +29,7 @@ public class CharacterBaseBehavior : MonoBehaviour
     private NavMeshAgent playerAgent;
     private Camera playerCamera;
 
+    [Header("- Base -")]
     public int playerHealth;
 
     [HideInInspector] public bool hit;
@@ -76,7 +79,6 @@ public class CharacterBaseBehavior : MonoBehaviour
 
     ///////////////////////////////////////////////
     // Cosa de empezar con q vayan los enemies
-    public bool startInvincible;
     private float startInvincibleTime = 5f;
     private float startInvincibleTimer = 0f;
     private int initHealth;

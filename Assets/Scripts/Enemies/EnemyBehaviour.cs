@@ -24,7 +24,7 @@ public enum EnemyState
 }
 public class EnemyBehaviour : MonoBehaviour
 {
-    [Header("- !IMPORTANT! - True If Playtesting -")]
+    [Header("- IMPORTANT - True If Playtesting -")]
     public bool safe = false;
 
     [HideInInspector] public NavMeshAgent agent;
