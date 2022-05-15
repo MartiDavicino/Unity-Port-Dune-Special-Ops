@@ -112,14 +112,15 @@ public class WeirdingWay : MonoBehaviour
                     {
                         if (rayHit.collider.tag == "Enemy")
                         {
+                            playerCamera.GetComponent<GeneralManager>().totalSpice -= baseScript.ultimateCost;
+
                             initHealth = baseScript.playerHealth;
                             goingToAttack = true;
                             enemyTargeted = true;
                             destroyLineComponentOnce = true;
                             targetedEnemy = rayHit.collider.gameObject;
                             agent.SetDestination(rayHit.collider.gameObject.transform.position);
-                            if(baseScript.state == PlayerState.CROUCH && baseScript.state == PlayerState.RUNNING)
-                                baseScript.state = PlayerState.WALKING;
+                            baseScript.state = PlayerState.WALKING;
                         }
                     }
                 }

@@ -50,6 +50,8 @@ public class HunterSeekerAbility : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
+                    Camera.main.GetComponent<GeneralManager>().totalSpice -= baseScript.ultimateCost;
+
                     Vector3 spawnPoint = gameObject.transform.position + gameObject.transform.forward * spawnRange + gameObject.transform.up * 1;
                     Instantiate(hunterSeekerPrefab, spawnPoint, gameObject.transform.rotation);
 

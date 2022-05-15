@@ -78,6 +78,8 @@ public class OmozraLetsGoAbility : MonoBehaviour
                     {
                         if (rayHit.collider.tag == "Player")
                         {
+                            playerCamera.GetComponent<GeneralManager>().totalSpice -= baseScript.ultimateCost;
+
                             targetCharacter = rayHit.collider.gameObject;
 
                             characterChosen = true;

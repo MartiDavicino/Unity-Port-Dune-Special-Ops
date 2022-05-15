@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GeneralManager : MonoBehaviour
 {
+    public int totalSpice;
+
     public GameObject zhib;
     private CharacterBaseBehavior zhibBase;
 
@@ -29,7 +31,6 @@ public class GeneralManager : MonoBehaviour
 
     public bool gameLost;
 
-    [HideInInspector] public int totalSpice;
 
     
 
@@ -213,6 +214,11 @@ public class GeneralManager : MonoBehaviour
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
+        }
+
+        if(totalSpice < 0)
+        {
+            totalSpice = 0;
         }
 
         //totalSpice = zhibBase.playerSpice + neralaBase.playerSpice + omozraBase.playerSpice;
