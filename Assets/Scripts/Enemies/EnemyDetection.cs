@@ -276,6 +276,10 @@ public class EnemyDetection : MonoBehaviour
 
 		for (int i = 0; i < targetsInViewRadius.Length; i++)
 		{
+
+			if(targetsInViewRadius[i].gameObject == GameObject.Find("HunterSeeker(Clone)"))
+            	return playerInView;
+
 			CalculateMultiplier();
 
 			Transform target = targetsInViewRadius[i].transform;

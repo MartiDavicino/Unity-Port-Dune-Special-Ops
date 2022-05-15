@@ -31,13 +31,13 @@ public class EnemyBehaviour : MonoBehaviour
     [HideInInspector] public Transform player;
     //General
     [Header("- General Stats -")]
-    public EnemyState state;
     public float chasingSpeed;
     public float patrolingSpeed;
+    public EnemyState state;
     
     [HideInInspector] public bool affectedByWaterTank;
     [HideInInspector] public bool resetedByWaterTank;
-    public float resetEnemyTimeWaterT;
+    [HideInInspector] public float resetEnemyTimeWaterT;
     private float resetEnemyTimer;
 
     //Attacking
@@ -69,6 +69,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     public EnemyType type = EnemyType.NONE;
     public LayerMask whatIsGround, whatIsPlayer;
+    public GameObject spicePrefab;
 
 
     //Harkonnen
@@ -76,7 +77,11 @@ public class EnemyBehaviour : MonoBehaviour
     public bool isGuard;
     public Vector3 guardOffset;
     public GameObject leader;
-    
+    [Range(0.0f, 1.0f)]
+    public float harkonnenDropChance;
+    public int harkonnenMaxDrop;
+    public int harkonnenMinDrop;
+
     //Sardaukar
     private bool playerInRanged;
     private GameObject needle;
@@ -85,6 +90,10 @@ public class EnemyBehaviour : MonoBehaviour
     public float rangedAttackRange;
     public int ammunition;
     public GameObject needlePrefab;
+    [Range(0.0f, 1.0f)]
+    public float sardaukarDropChance;
+    public int sardaukarMaxDrop;
+    public int sardaukarMinDrop;
 
     //Mentat
     private List<GameObject> guardList = new List<GameObject>();
@@ -101,6 +110,10 @@ public class EnemyBehaviour : MonoBehaviour
     public float summonCooldown;
     public Vector3 spawnOffset;
     public GameObject harkonnenPrefab;
+    [Range(0.0f, 1.0f)]
+    public float mentatDropChance;
+    public int mentatMaxDrop;
+    public int mentatMinDrop;
 
     ///////////////////////////////////////////////////////////////////////
     //Esto es una guarrada pq sino no me van los putos enemigos en la build.
@@ -269,6 +282,38 @@ public class EnemyBehaviour : MonoBehaviour
             agent.Warp(initPos);
             initTP = false;
             gameObject.transform.rotation = initRot;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        switch(type)
+        {
+            case EnemyType.HARKONNEN:
+                if (Random.value < harkonnenDropChance)
+                {
+                    GameObject spiceDropped = Instantiate(spicePrefab, transform.position, transform.rotation);
+                    Spice spiceScript = spiceDropped.GetComponent<Spice>();
+                    spiceScript.spiceAmmount = Random.Range(harkonnenMinDrop, harkonnenMaxDrop);
+                }
+                break;
+            case EnemyType.SARDAUKAR:
+                if (Random.value < sardaukarDropChance)
+                {
+                    GameObject spiceDropped = Instantiate(spicePrefab, transform.position, transform.rotation);
+                    Spice spiceScript = spiceDropped.GetComponent<Spice>();
+                    spiceScript.spiceAmmount = Random.Range(sardaukarMinDrop, sardaukarMaxDrop);
+                }
+                break;
+            case EnemyType.MENTAT:
+                if (Random.value < mentatDropChance)
+                {
+                    Quaternion spawnRot = transform.rotation;
+                    spawnRot.x = 90;
+                    GameObject spiceDropped = Instantiate(spicePrefab, transform.position, spawnRot);
+                    spiceDropped.GetComponent<Spice>().spiceAmmount = Random.Range(mentatMinDrop, mentatMaxDrop); ;
+                }
+                break;
         }
     }
     bool checkSenses()

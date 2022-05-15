@@ -35,9 +35,7 @@ public class CharacterBaseBehavior : MonoBehaviour
     private float elapse_time;
 
     public int ultimateCost;
-    public LayerMask whatIsSpice;
     [HideInInspector] public int playerSpice;
-    private int spiceTotal;
     private bool notAvailable;
 
     [Header("- Movement Speeds -")]
@@ -105,7 +103,6 @@ public class CharacterBaseBehavior : MonoBehaviour
         child = transform.Find(name + "_low");
         materialHolder = child.gameObject.GetComponent<Renderer>().material;
         elapse_time = 0;
-        playerSpice = 0;
 
         notAvailable = false;
 
@@ -131,7 +128,7 @@ public class CharacterBaseBehavior : MonoBehaviour
         }
 
 
-        spiceTotal = GameObject.Find("playercamera").GetComponent<GeneralManager>().totalSpice;
+        playerSpice = GameObject.Find("playercamera").GetComponent<GeneralManager>().totalSpice;
 
         if (hit) PlayerHit();
 
@@ -158,7 +155,7 @@ public class CharacterBaseBehavior : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha3) && (!abilityActive || ability3Active))
             {
 
-                if (spiceTotal < ultimateCost)
+                if (playerSpice < ultimateCost)
                 {
                     timer = 3.0f;
                     notAvailable = true;
@@ -245,18 +242,6 @@ public class CharacterBaseBehavior : MonoBehaviour
                     playerAgent.ResetPath();
                 }
             }
-        }
-
-        Collider[] pickables = Physics.OverlapSphere(transform.position, 3.0f, whatIsSpice);
-
-        for (int i = 0; i < pickables.Length; i++)
-        {
-            if (pickables[i].gameObject.tag == "SpiceSpot")
-            {
-                Destroy(pickables[i].gameObject);
-                playerSpice += 1000;
-            }
-
         }
     }
 

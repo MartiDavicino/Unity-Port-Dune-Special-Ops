@@ -36,9 +36,8 @@ public class HunterSeeker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(1))
         {
-
             Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit meshHit;
 

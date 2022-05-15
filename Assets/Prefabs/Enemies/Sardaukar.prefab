@@ -381,7 +381,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2466943049301266054}
-  m_LocalRotation: {x: -0, y: -0.64276135, z: -0, w: 0.7660665}
+  m_LocalRotation: {x: 0, y: -0.64276093, z: 0, w: 0.7660669}
   m_LocalPosition: {x: 3.399353, y: 31.725248, z: 59.693546}
   m_LocalScale: {x: 0.0010696183, y: 0.0010696183, z: 0.0010696183}
   m_ConstrainProportionsScale: 0
@@ -565,17 +565,27 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
+  spicePrefab: {fileID: 5107240104563982919, guid: 7a2a4df62cbb5c5498d71aa8b1c6da1b, type: 3}
   isGuard: 0
   guardOffset: {x: 0, y: 0, z: 0}
   leader: {fileID: 0}
+  harkonnenDropChance: 0
+  harkonnenMaxDrop: 0
+  harkonnenMinDrop: 0
   rangedAttackRange: 0
   ammunition: 2
   needlePrefab: {fileID: 7972253676922709312, guid: 08e29585e2f739b4f90a8f38c5dec8e1, type: 3}
+  sardaukarDropChance: 1
+  sardaukarMaxDrop: 80
+  sardaukarMinDrop: 160
   waveSpawned: 0
   summonTime: 0
   summonCooldown: 0
   spawnOffset: {x: 0, y: 0, z: 0}
   harkonnenPrefab: {fileID: 0}
+  mentatDropChance: 0
+  mentatMaxDrop: 0
+  mentatMinDrop: 0
 --- !u!114 &3385931162298201037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -594,7 +604,7 @@ MonoBehaviour:
   maxMultiplier: 5
   multiplierHolder: 0
   debuffTime: 5
-  sightDebuffMultiplier: 0
+  debuffMultiplier: 0
   debuffed: 0
   data: {fileID: 3385931162298201036}
   viewRadius: 16

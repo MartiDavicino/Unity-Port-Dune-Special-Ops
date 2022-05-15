@@ -215,7 +215,7 @@ public class GeneralManager : MonoBehaviour
             }
         }
 
-        totalSpice = zhibBase.playerSpice + neralaBase.playerSpice + omozraBase.playerSpice;
+        //totalSpice = zhibBase.playerSpice + neralaBase.playerSpice + omozraBase.playerSpice;
     }
 
     void OnGUI()
