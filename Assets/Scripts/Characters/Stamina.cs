@@ -31,8 +31,12 @@ public class Stamina : MonoBehaviour
 
         transform.LookAt(playerCamera.transform);
 
-        percent = baseScript.staminaTimer / baseScript.staminaSeconds;
-        
+        if(!baseScript.isTired)
+            percent = baseScript.staminaTimer / baseScript.staminaSeconds;
+        else
+            percent = baseScript.staminaTimer / baseScript.recoveryTime;
+
+
         bar.enabled = true;
 
         if (percent >= 1.0f)

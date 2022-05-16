@@ -46,6 +46,7 @@ public class CharacterBaseBehavior : MonoBehaviour
     public float crouchMovementSpeed;
     public float runMovementSpeed;
     public float staminaSeconds;
+    public float recoveryTime;
     [HideInInspector] public float staminaTimer;
     [HideInInspector] public bool isTired;
     private float movementSpeed;
@@ -259,7 +260,7 @@ public class CharacterBaseBehavior : MonoBehaviour
         if (state==PlayerState.CROUCH) {
             movementSpeed = crouchMovementSpeed;
             staminaTimer += Time.deltaTime;
-            if (staminaTimer > staminaSeconds)
+            if (staminaTimer > recoveryTime)
             {
                 staminaTimer = staminaSeconds;
                 isTired = false;
@@ -277,7 +278,7 @@ public class CharacterBaseBehavior : MonoBehaviour
         else { 
             movementSpeed = walkMovementSpeed;
             staminaTimer += Time.deltaTime;
-            if (staminaTimer > staminaSeconds)
+            if (staminaTimer > recoveryTime)
             {
                 staminaTimer = staminaSeconds;
                 isTired = false;
