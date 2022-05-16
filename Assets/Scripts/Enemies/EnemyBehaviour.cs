@@ -69,7 +69,6 @@ public class EnemyBehaviour : MonoBehaviour
 
     public EnemyType type = EnemyType.NONE;
     public LayerMask whatIsGround, whatIsPlayer;
-    public GameObject spicePrefab;
 
 
     //Harkonnen
@@ -283,39 +282,6 @@ public class EnemyBehaviour : MonoBehaviour
             agent.Warp(initPos);
             initTP = false;
             gameObject.transform.rotation = initRot;
-        }
-    }
-
-    private void OnDestroy()
-    {
-        
-        switch(type)
-        {
-            case EnemyType.HARKONNEN:
-                if (Random.value < harkonnenDropChance)
-                {
-                    GameObject spiceDropped = Instantiate(spicePrefab, transform.position, transform.rotation);
-                    Spice spiceScript = spiceDropped.GetComponent<Spice>();
-                    spiceScript.spiceAmmount = Random.Range(harkonnenMinDrop, harkonnenMaxDrop);
-                }
-                break;
-            case EnemyType.SARDAUKAR:
-                if (Random.value < sardaukarDropChance)
-                {
-                    GameObject spiceDropped = Instantiate(spicePrefab, transform.position, transform.rotation);
-                    Spice spiceScript = spiceDropped.GetComponent<Spice>();
-                    spiceScript.spiceAmmount = Random.Range(sardaukarMinDrop, sardaukarMaxDrop);
-                }
-                break;
-            case EnemyType.MENTAT:
-                if (Random.value < mentatDropChance)
-                {
-                    Quaternion spawnRot = transform.rotation;
-                    spawnRot.x = 90;
-                    GameObject spiceDropped = Instantiate(spicePrefab, transform.position, spawnRot);
-                    spiceDropped.GetComponent<Spice>().spiceAmmount = Random.Range(mentatMinDrop, mentatMaxDrop); ;
-                }
-                break;
         }
     }
     bool checkSenses()

@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class ÑamÑamAbility : MonoBehaviour
 {
+    public GameObject spicePrefab;
+
     private GameObject omozra;
     private OmozraÑamÑamAbility omozraÑamScript;
     private GameObject targetEnemy;
@@ -92,6 +94,9 @@ public class ÑamÑamAbility : MonoBehaviour
             
             elapse_time = 0;
 
+            once = true;
+            phase1 = true;
+            phase2 = false;
  
             transform.position = omozra.transform.position + (omozra.transform.rotation * baseScript.followOffset);
             baseScript.state = SadiqState.IDLE;
@@ -124,6 +129,7 @@ public class ÑamÑamAbility : MonoBehaviour
                     case DecState.STILL:
                         if (Random.value < omozraÑamScript.harkonnenUnaware)
                         {
+                            SpawnSpice(eBehaviour, spicePrefab, targetEnemy.transform.position, targetEnemy.transform.rotation);
                             Destroy(targetEnemy);
                         }
                         break;
@@ -131,6 +137,7 @@ public class ÑamÑamAbility : MonoBehaviour
                     case DecState.SEEKING:
                         if (Random.value < omozraÑamScript.harkonnenAware)
                         {
+                            SpawnSpice(eBehaviour, spicePrefab, targetEnemy.transform.position, targetEnemy.transform.rotation);
                             Destroy(targetEnemy);
                         }
                         break;
@@ -138,6 +145,7 @@ public class ÑamÑamAbility : MonoBehaviour
                     case DecState.FOUND:
                         if (Random.value < omozraÑamScript.harkonnenDetected)
                         {
+                            SpawnSpice(eBehaviour, spicePrefab, targetEnemy.transform.position, targetEnemy.transform.rotation);
                             Destroy(targetEnemy);
                         }
                         break;
@@ -149,6 +157,7 @@ public class ÑamÑamAbility : MonoBehaviour
                     case DecState.STILL:
                         if (Random.value < omozraÑamScript.sardaukarUnaware)
                         {
+                            SpawnSpice(eBehaviour, spicePrefab, targetEnemy.transform.position, targetEnemy.transform.rotation);
                             Destroy(targetEnemy);
                         }
                         break;
@@ -156,6 +165,7 @@ public class ÑamÑamAbility : MonoBehaviour
                     case DecState.SEEKING:
                         if (Random.value < omozraÑamScript.sardaukarAware)
                         {
+                            SpawnSpice(eBehaviour, spicePrefab, targetEnemy.transform.position, targetEnemy.transform.rotation);
                             Destroy(targetEnemy);
                         }
                         break;
@@ -163,6 +173,7 @@ public class ÑamÑamAbility : MonoBehaviour
                     case DecState.FOUND:
                         if (Random.value < omozraÑamScript.sardaukarDetected)
                         {
+                            SpawnSpice(eBehaviour, spicePrefab, targetEnemy.transform.position, targetEnemy.transform.rotation);
                             Destroy(targetEnemy);
                         }
                         break;
@@ -174,6 +185,7 @@ public class ÑamÑamAbility : MonoBehaviour
                     case DecState.STILL:
                         if (Random.value < omozraÑamScript.mentatUnaware)
                         {
+                            SpawnSpice(eBehaviour, spicePrefab, targetEnemy.transform.position, targetEnemy.transform.rotation);
                             Destroy(targetEnemy);
                         }
                         break;
@@ -181,6 +193,7 @@ public class ÑamÑamAbility : MonoBehaviour
                     case DecState.SEEKING:
                         if (Random.value < omozraÑamScript.mentatAware)
                         {
+                            SpawnSpice(eBehaviour, spicePrefab, targetEnemy.transform.position, targetEnemy.transform.rotation);
                             Destroy(targetEnemy);
                         }
                         break;
@@ -188,9 +201,41 @@ public class ÑamÑamAbility : MonoBehaviour
                     case DecState.FOUND:
                         if (Random.value < omozraÑamScript.mentatDetected)
                         {
+                            SpawnSpice(eBehaviour, spicePrefab, targetEnemy.transform.position, targetEnemy.transform.rotation);
                             Destroy(targetEnemy);
                         }
                         break;
+                }
+                break;
+        }
+    }
+    void SpawnSpice(EnemyBehaviour eBehaviour, GameObject spicePrefab, Vector3 pos, Quaternion rot)
+    {
+        switch (eBehaviour.type)
+        {
+            case EnemyType.HARKONNEN:
+                if (Random.value < eBehaviour.harkonnenDropChance)
+                {
+                    GameObject spiceDropped = Instantiate(spicePrefab, pos, rot);
+                    Spice spiceScript = spiceDropped.GetComponent<Spice>();
+                    spiceScript.spiceAmmount = Random.Range(eBehaviour.harkonnenMinDrop, eBehaviour.harkonnenMaxDrop);
+                }
+                break;
+            case EnemyType.SARDAUKAR:
+                if (Random.value < eBehaviour.sardaukarDropChance)
+                {
+                    GameObject spiceDropped = Instantiate(spicePrefab, pos, rot);
+                    Spice spiceScript = spiceDropped.GetComponent<Spice>();
+                    spiceScript.spiceAmmount = Random.Range(eBehaviour.sardaukarMinDrop, eBehaviour.sardaukarMaxDrop);
+                }
+                break;
+            case EnemyType.MENTAT:
+                if (Random.value < eBehaviour.mentatDropChance)
+                {
+                    Quaternion spawnRot = rot;
+                    spawnRot.x = 90;
+                    GameObject spiceDropped = Instantiate(spicePrefab, pos, spawnRot);
+                    spiceDropped.GetComponent<Spice>().spiceAmmount = Random.Range(eBehaviour.mentatMinDrop, eBehaviour.mentatMaxDrop); ;
                 }
                 break;
         }

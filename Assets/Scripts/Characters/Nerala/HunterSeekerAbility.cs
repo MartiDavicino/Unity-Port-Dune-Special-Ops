@@ -16,6 +16,7 @@ public class HunterSeekerAbility : MonoBehaviour
     public float countdownTime;
 
     public GameObject hunterSeekerPrefab;
+    public GameObject spicePrefab;
 
     // Start is called before the first frame update
     void Start()

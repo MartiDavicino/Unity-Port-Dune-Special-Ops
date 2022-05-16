@@ -17,6 +17,7 @@ public class WeirdingWay : MonoBehaviour
     public float killProximityRange;
     public float killChainRange;
     public LayerMask whatIsEnemy;
+    public GameObject spicePrefab;
 
     [Header("- Chances To Hit -")]
 
@@ -215,6 +216,7 @@ public class WeirdingWay : MonoBehaviour
                         case DecState.STILL:
                             if (Random.value <= harkonnenUnaware)
                             {
+                                SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -226,6 +228,7 @@ public class WeirdingWay : MonoBehaviour
                         case DecState.SEEKING:
                             if (Random.value <= harkonnenAware)
                             {
+                                SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -237,6 +240,7 @@ public class WeirdingWay : MonoBehaviour
                         case DecState.FOUND:
                             if (Random.value <= harkonnenDetected)
                             {
+                                SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
                                 Destroy(targetedEnemy);
 
                             }
@@ -253,6 +257,7 @@ public class WeirdingWay : MonoBehaviour
                         case DecState.STILL:
                             if (Random.value <= sardaukarUnaware)
                             {
+                                SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
                                 Destroy(targetedEnemy);
 
                             }
@@ -265,6 +270,7 @@ public class WeirdingWay : MonoBehaviour
                         case DecState.SEEKING:
                             if (Random.value <= sardaukarAware)
                             {
+                                SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -276,6 +282,7 @@ public class WeirdingWay : MonoBehaviour
                         case DecState.FOUND:
                             if (Random.value <= sardaukarDetected)
                             {
+                                SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -291,6 +298,7 @@ public class WeirdingWay : MonoBehaviour
                         case DecState.STILL:
                             if (Random.value <= mentatUnaware)
                             {
+                                SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -302,6 +310,7 @@ public class WeirdingWay : MonoBehaviour
                         case DecState.SEEKING:
                             if (Random.value <= mentatAware)
                             {
+                                SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -313,6 +322,7 @@ public class WeirdingWay : MonoBehaviour
                         case DecState.FOUND:
                             if (Random.value <= mentatDetected)
                             {
+                                SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -374,6 +384,37 @@ public class WeirdingWay : MonoBehaviour
         }
     }
 
+    void SpawnSpice(EnemyBehaviour eBehaviour, GameObject spicePrefab, Vector3 pos, Quaternion rot)
+    {
+        switch (eBehaviour.type)
+        {
+            case EnemyType.HARKONNEN:
+                if (Random.value < eBehaviour.harkonnenDropChance)
+                {
+                    GameObject spiceDropped = Instantiate(spicePrefab, pos, rot);
+                    Spice spiceScript = spiceDropped.GetComponent<Spice>();
+                    spiceScript.spiceAmmount = Random.Range(eBehaviour.harkonnenMinDrop, eBehaviour.harkonnenMaxDrop);
+                }
+                break;
+            case EnemyType.SARDAUKAR:
+                if (Random.value < eBehaviour.sardaukarDropChance)
+                {
+                    GameObject spiceDropped = Instantiate(spicePrefab, pos, rot);
+                    Spice spiceScript = spiceDropped.GetComponent<Spice>();
+                    spiceScript.spiceAmmount = Random.Range(eBehaviour.sardaukarMinDrop, eBehaviour.sardaukarMaxDrop);
+                }
+                break;
+            case EnemyType.MENTAT:
+                if (Random.value < eBehaviour.mentatDropChance)
+                {
+                    Quaternion spawnRot = rot;
+                    spawnRot.x = 90;
+                    GameObject spiceDropped = Instantiate(spicePrefab, pos, spawnRot);
+                    spiceDropped.GetComponent<Spice>().spiceAmmount = Random.Range(eBehaviour.mentatMinDrop, eBehaviour.mentatMaxDrop); ;
+                }
+                break;
+        }
+    }
     Vector3 CalculateAbsoluteDistance(GameObject enemy)
     {
         Vector3 distance = new Vector3(0f,0f,0f);

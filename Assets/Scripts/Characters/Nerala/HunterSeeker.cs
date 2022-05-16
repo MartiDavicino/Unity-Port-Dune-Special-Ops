@@ -18,14 +18,17 @@ public class HunterSeeker : MonoBehaviour
     private Camera playerCamera;
     private CameraMovement cameraScript;
     public LayerMask whatIsEnemy;
+    private GameObject spicePrefab;
 
     // Start is called before the first frame update
     void Start()
     {
         playerAgent = GetComponent<NavMeshAgent>();
 
+
         nerala = GameObject.Find("Nerala");
         baseScript = nerala.GetComponent<HunterSeekerAbility>();
+        spicePrefab = baseScript.spicePrefab;
         countdownTime = baseScript.countdownTime;
         elapse_time = 0f;
         playerAgent.speed = baseScript.hunterSeekerVelocity;
@@ -59,6 +62,7 @@ public class HunterSeeker : MonoBehaviour
 
         DisableHunterSeeker();
     }
+
 
     void OnGUI()
     {
@@ -96,7 +100,42 @@ public class HunterSeeker : MonoBehaviour
         if(collision.gameObject.tag == "Enemy")
         {
             DisableHunterSeeker();
+            EnemyBehaviour eBehaviour = collision.gameObject.GetComponent<EnemyBehaviour>();
+
+            SpawnSpice(eBehaviour, spicePrefab, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
             Destroy(collision.gameObject);
+        }
+    }
+
+    void SpawnSpice(EnemyBehaviour eBehaviour, GameObject spicePrefab, Vector3 pos, Quaternion rot)
+    {
+        switch (eBehaviour.type)
+        {
+            case EnemyType.HARKONNEN:
+                if (Random.value < eBehaviour.harkonnenDropChance)
+                {
+                    GameObject spiceDropped = Instantiate(spicePrefab, pos, rot);
+                    Spice spiceScript = spiceDropped.GetComponent<Spice>();
+                    spiceScript.spiceAmmount = Random.Range(eBehaviour.harkonnenMinDrop, eBehaviour.harkonnenMaxDrop);
+                }
+                break;
+            case EnemyType.SARDAUKAR:
+                if (Random.value < eBehaviour.sardaukarDropChance)
+                {
+                    GameObject spiceDropped = Instantiate(spicePrefab, pos, rot);
+                    Spice spiceScript = spiceDropped.GetComponent<Spice>();
+                    spiceScript.spiceAmmount = Random.Range(eBehaviour.sardaukarMinDrop, eBehaviour.sardaukarMaxDrop);
+                }
+                break;
+            case EnemyType.MENTAT:
+                if (Random.value < eBehaviour.mentatDropChance)
+                {
+                    Quaternion spawnRot = rot;
+                    spawnRot.x = 90;
+                    GameObject spiceDropped = Instantiate(spicePrefab, pos, spawnRot);
+                    spiceDropped.GetComponent<Spice>().spiceAmmount = Random.Range(eBehaviour.mentatMinDrop, eBehaviour.mentatMaxDrop); ;
+                }
+                break;
         }
     }
 }

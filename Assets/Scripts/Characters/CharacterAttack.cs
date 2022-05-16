@@ -21,6 +21,7 @@ public class CharacterAttack : MonoBehaviour
     public float soundRange;
     public float rangeToKill;
     public LayerMask whatIsEnemy;
+    public GameObject spicePrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -125,14 +126,17 @@ public class CharacterAttack : MonoBehaviour
                         switch (eDetection.state)
                         {
                             case DecState.STILL:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.SEEKING:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.FOUND:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 baseScript.hit = true;
                                 EmitSound();
@@ -143,14 +147,17 @@ public class CharacterAttack : MonoBehaviour
                         switch (eDetection.state)
                         {
                             case DecState.STILL:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.SEEKING:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.FOUND:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 baseScript.hit = true;
                                 EmitSound();
@@ -161,14 +168,17 @@ public class CharacterAttack : MonoBehaviour
                         switch (eDetection.state)
                         {
                             case DecState.STILL:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.SEEKING:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.FOUND:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 EmitSound();
                                 break;
@@ -183,14 +193,17 @@ public class CharacterAttack : MonoBehaviour
                         switch (eDetection.state)
                         {
                             case DecState.STILL:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.SEEKING:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.FOUND:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 baseScript.hit = true;
                                 EmitSound();
@@ -201,14 +214,17 @@ public class CharacterAttack : MonoBehaviour
                         switch (eDetection.state)
                         {
                             case DecState.STILL:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.SEEKING:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.FOUND:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 baseScript.hit = true;
                                 EmitSound();
@@ -219,14 +235,17 @@ public class CharacterAttack : MonoBehaviour
                         switch (eDetection.state)
                         {
                             case DecState.STILL:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.SEEKING:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.FOUND:
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 EmitSound();
                                 break;
@@ -237,6 +256,37 @@ public class CharacterAttack : MonoBehaviour
         }
     }
 
+    void SpawnSpice(EnemyBehaviour eBehaviour, GameObject spicePrefab, Vector3 pos, Quaternion rot)
+    {
+        switch (eBehaviour.type)
+        {
+            case EnemyType.HARKONNEN:
+                if (Random.value < eBehaviour.harkonnenDropChance)
+                {
+                    GameObject spiceDropped = Instantiate(spicePrefab, pos, rot);
+                    Spice spiceScript = spiceDropped.GetComponent<Spice>();
+                    spiceScript.spiceAmmount = Random.Range(eBehaviour.harkonnenMinDrop, eBehaviour.harkonnenMaxDrop);
+                }
+                break;
+            case EnemyType.SARDAUKAR:
+                if (Random.value < eBehaviour.sardaukarDropChance)
+                {
+                    GameObject spiceDropped = Instantiate(spicePrefab, pos, rot);
+                    Spice spiceScript = spiceDropped.GetComponent<Spice>();
+                    spiceScript.spiceAmmount = Random.Range(eBehaviour.sardaukarMinDrop, eBehaviour.sardaukarMaxDrop);
+                }
+                break;
+            case EnemyType.MENTAT:
+                if (Random.value < eBehaviour.mentatDropChance)
+                {
+                    Quaternion spawnRot = rot;
+                    spawnRot.x = 90;
+                    GameObject spiceDropped = Instantiate(spicePrefab, pos, spawnRot);
+                    spiceDropped.GetComponent<Spice>().spiceAmmount = Random.Range(eBehaviour.mentatMinDrop, eBehaviour.mentatMaxDrop); ;
+                }
+                break;
+        }
+    }
     void EmitSound()
     {
         Collider[] affectedEnemies = Physics.OverlapSphere(transform.position, soundRange, whatIsEnemy);
@@ -248,5 +298,6 @@ public class CharacterAttack : MonoBehaviour
 
         }
     }
+
 
 }

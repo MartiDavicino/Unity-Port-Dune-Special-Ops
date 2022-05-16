@@ -195,3 +195,4 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 256
+  spicePrefab: {fileID: 5107240104563982919, guid: 7a2a4df62cbb5c5498d71aa8b1c6da1b, type: 3}

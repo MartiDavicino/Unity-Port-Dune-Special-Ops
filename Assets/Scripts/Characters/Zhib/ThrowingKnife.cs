@@ -23,6 +23,7 @@ public class ThrowingKnife : MonoBehaviour
     private float mentatDetected;
 
     public LayerMask whatIsEnemy;
+    public GameObject spicePrefab;
 
     private bool hit;
 
@@ -99,7 +100,11 @@ public class ThrowingKnife : MonoBehaviour
                         case DecState.STILL:
                             if (Random.value <= harkonnenUnaware)
                             {
-                                if (gameObject.layer != 10) Destroy(coll.gameObject);
+                                if (gameObject.layer != 10)
+                                {
+                                    SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
+                                    Destroy(coll.gameObject);
+                                }
                             }
                             else
                             {
@@ -110,7 +115,11 @@ public class ThrowingKnife : MonoBehaviour
                         case DecState.SEEKING:
                             if (Random.value <= harkonnenAware)
                             {
-                                if (gameObject.layer != 10) Destroy(coll.gameObject);
+                                if (gameObject.layer != 10)
+                                {
+                                    SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
+                                    Destroy(coll.gameObject);
+                                }
                             }
                             else
                             {
@@ -121,7 +130,11 @@ public class ThrowingKnife : MonoBehaviour
                         case DecState.FOUND:
                             if (Random.value <= harkonnenDetected)
                             {
-                                if (gameObject.layer != 10) Destroy(coll.gameObject);
+                                if (gameObject.layer != 10)
+                                {
+                                    SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
+                                    Destroy(coll.gameObject);
+                                }
                             }
                             else
                             {
@@ -136,7 +149,11 @@ public class ThrowingKnife : MonoBehaviour
                         case DecState.STILL:
                             if (Random.value <= sardaukarUnaware)
                             {
-                                if (gameObject.layer != 10) Destroy(coll.gameObject);
+                                if (gameObject.layer != 10)
+                                {
+                                    SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
+                                    Destroy(coll.gameObject);
+                                }
                             }
                             else
                             {
@@ -148,7 +165,11 @@ public class ThrowingKnife : MonoBehaviour
                         case DecState.SEEKING:
                             if (Random.value <= sardaukarAware)
                             {
-                                if (gameObject.layer != 10) Destroy(coll.gameObject);
+                                if (gameObject.layer != 10)
+                                {
+                                    SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
+                                    Destroy(coll.gameObject);
+                                }
                             }
                             else
                             {
@@ -160,7 +181,11 @@ public class ThrowingKnife : MonoBehaviour
                         case DecState.FOUND:
                             if (Random.value <= sardaukarDetected)
                             {
-                                if (gameObject.layer != 10) Destroy(coll.gameObject);
+                                if (gameObject.layer != 10)
+                                {
+                                    SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
+                                    Destroy(coll.gameObject);
+                                }
                             }
                             else
                             {
@@ -176,7 +201,11 @@ public class ThrowingKnife : MonoBehaviour
                         case DecState.STILL:
                             if (Random.value <= mentatUnaware)
                             {
-                                if (gameObject.layer != 10) Destroy(coll.gameObject);
+                                if (gameObject.layer != 10)
+                                {
+                                    SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
+                                    Destroy(coll.gameObject);
+                                }
                             }
                             else
                             {
@@ -188,7 +217,11 @@ public class ThrowingKnife : MonoBehaviour
                         case DecState.SEEKING:
                             if (Random.value <= mentatAware)
                             {
-                                if (gameObject.layer != 10) Destroy(coll.gameObject);
+                                if (gameObject.layer != 10)
+                                {
+                                    SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
+                                    Destroy(coll.gameObject);
+                                }
                             }
                             else
                             {
@@ -200,7 +233,11 @@ public class ThrowingKnife : MonoBehaviour
                         case DecState.FOUND:
                             if (Random.value <= mentatDetected)
                             {
-                                if (gameObject.layer != 10) Destroy(coll.gameObject);
+                                if (gameObject.layer != 10)
+                                {
+                                    SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
+                                    Destroy(coll.gameObject);
+                                }
                             }
                             else
                             {
@@ -233,6 +270,38 @@ public class ThrowingKnife : MonoBehaviour
         }
 
         
+    }
+
+    void SpawnSpice(EnemyBehaviour eBehaviour, GameObject spicePrefab, Vector3 pos, Quaternion rot)
+    {
+        switch (eBehaviour.type)
+        {
+            case EnemyType.HARKONNEN:
+                if (Random.value < eBehaviour.harkonnenDropChance)
+                {
+                    GameObject spiceDropped = Instantiate(spicePrefab, pos, rot);
+                    Spice spiceScript = spiceDropped.GetComponent<Spice>();
+                    spiceScript.spiceAmmount = Random.Range(eBehaviour.harkonnenMinDrop, eBehaviour.harkonnenMaxDrop);
+                }
+                break;
+            case EnemyType.SARDAUKAR:
+                if (Random.value < eBehaviour.sardaukarDropChance)
+                {
+                    GameObject spiceDropped = Instantiate(spicePrefab, pos, rot);
+                    Spice spiceScript = spiceDropped.GetComponent<Spice>();
+                    spiceScript.spiceAmmount = Random.Range(eBehaviour.sardaukarMinDrop, eBehaviour.sardaukarMaxDrop);
+                }
+                break;
+            case EnemyType.MENTAT:
+                if (Random.value < eBehaviour.mentatDropChance)
+                {
+                    Quaternion spawnRot = baseScript.targetEnemy.transform.rotation;
+                    spawnRot.x = 90;
+                    GameObject spiceDropped = Instantiate(spicePrefab, pos, spawnRot);
+                    spiceDropped.GetComponent<Spice>().spiceAmmount = Random.Range(eBehaviour.mentatMinDrop, eBehaviour.mentatMaxDrop); ;
+                }
+                break;
+        }
     }
     void KnifeToGround()
     {
