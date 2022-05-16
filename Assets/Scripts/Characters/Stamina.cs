@@ -59,47 +59,5 @@ public class Stamina : MonoBehaviour
         {
             bar.color = Color.red;
         }
-
-        //if (baseScript.staminaTimer == 0)
-        //{
-        //    bar.fillAmount = 0f;
-        //    return;
-        //}
-
-        //if (enemyD.state == DecState.STILL)
-        //{
-        //    percent = enemyD.timer / enemyD.secondsPerBar;
-        //    if (percent >= 1.0f)
-        //    {
-        //        percent = 1.0f;
-        //    }
-
-        //    bar.color = Color.green;
-        //    bar.fillAmount = percent;
-        //}
-
-        //if (enemyD.state == DecState.SEEKING)
-        //{
-        //    percent = enemyD.timer / enemyD.secondsPerBar;
-        //    if (percent >= 1.0f)
-        //    {
-        //        percent = 1.0f;
-        //    }
-
-        //    Color orange = new Color(1.0f, 0.64f, 0.0f);
-
-        //    bar.color = orange;
-        //    bar.fillAmount = percent;
-        //}
-
-        //if (enemyD.state == DecState.FOUND)
-        //{
-        //    if (enemyB.waveSpawned)
-        //        bar.color = Color.white;
-        //    else if (enemyB.type == EnemyType.MENTAT)
-        //        bar.color = Color.blue;
-        //    else
-        //        bar.color = Color.red;
-        //}
     }
 }

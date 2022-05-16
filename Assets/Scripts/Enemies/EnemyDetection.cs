@@ -18,6 +18,10 @@ public class EnemyDetection : MonoBehaviour
 	[HideInInspector] public float timer = 0.0f;
 	private float proportion;
 
+	public float aggroTime;
+	private float aggroTimer;
+	[HideInInspector] public bool isAggro;
+
 	public float viewRadius;
 	[Range(0, 360)]
 	public float viewAngle;
@@ -77,6 +81,8 @@ public class EnemyDetection : MonoBehaviour
 		debuffed = false;
 		debuffTimer = 0f;
 
+		isAggro = false;
+		aggroTimer = 0f;
 
 		string[] splitArray = name.Split(char.Parse(" "));
 		string[] splitArray2 = splitArray[0].Split(char.Parse("("));
@@ -89,6 +95,18 @@ public class EnemyDetection : MonoBehaviour
     {
 		player = generalCamera.GetComponentInChildren<CameraMovement>().focusedPlayer;
 		
+		if(isAggro)
+        {
+			while (aggroTimer < aggroTime)
+			{
+				aggroTimer += Time.deltaTime;
+				return;
+			}
+
+			aggroTimer = 0;
+			isAggro = false;
+		}
+
 		if(player != null)
         {
 			angle1 = DirFromAngle(-viewAngle / 2, false);
@@ -190,7 +208,7 @@ public class EnemyDetection : MonoBehaviour
 		bool mosquitoHeard = FindHunterSeeker();
 
 
-		if (!playerInView && !playerHeard && !mosquitoHeard)
+		if (!playerInView && !playerHeard && !mosquitoHeard && !isAggro)
 			TargetsNotFound();
 	}
 	void TargetsNotFound()
@@ -236,6 +254,7 @@ public class EnemyDetection : MonoBehaviour
 			if (timer >= secondsPerBar)
 			{
 				state = DecState.FOUND;
+				isAggro = true;
 			}
 		}
 

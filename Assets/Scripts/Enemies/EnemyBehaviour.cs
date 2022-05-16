@@ -189,13 +189,14 @@ public class EnemyBehaviour : MonoBehaviour
         {
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-            if (!detected)
+            if (!detected && !enemyD.isAggro)
             {
                 Patroling();
             }
 
-            if (detected && !playerInAttackRange)
+            if ((detected || enemyD.isAggro) && !playerInAttackRange)
             {
+
                 visitedPoints.Clear();
 
                 affectedByDecoy = false;
@@ -209,7 +210,7 @@ public class EnemyBehaviour : MonoBehaviour
                     Chasing();
             }
 
-            if (detected && playerInAttackRange)
+            if ((detected || enemyD.isAggro) && playerInAttackRange)
             {
                 visitedPoints.Clear();
 
@@ -287,6 +288,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void OnDestroy()
     {
+        
         switch(type)
         {
             case EnemyType.HARKONNEN:
@@ -700,7 +702,7 @@ public class EnemyBehaviour : MonoBehaviour
         NavMeshHit hit;    // stores the output in a variable called hit
 
         // 5 is the distance to check, assumes you use default for the NavMesh Layer name
-        NavMesh.SamplePosition(runTo, out hit, 5, 1 << NavMesh.GetAreaFromName("Default"));
+        NavMesh.SamplePosition(runTo, out hit, 5, 1 << NavMesh.GetAreaFromName("Walkable"));
         //Debug.Log("hit = " + hit + " hit.position = " + hit.position);
 
         // just used for testing - safe to ignore
