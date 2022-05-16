@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class hearingDebug : MonoBehaviour
+public class HearingDebug : MonoBehaviour
 {
     private bool once = true;
     public LineRenderer lDrawer;
@@ -14,24 +14,28 @@ public class hearingDebug : MonoBehaviour
     {
         EnemyDetection data = gameObject.GetComponentInParent<EnemyDetection>();
     }
-    public void DebugDraw()
+    public void Update()
     {
-        if (once && gameObject.GetComponent<LineRenderer>() == null)
+        if(data.debug)
         {
-            gameObject.AddComponent<LineRenderer>();
-            lDrawer = gameObject.GetComponent<LineRenderer>();
-            once = false;
+            if (once && gameObject.GetComponent<LineRenderer>() == null)
+            {
+                gameObject.AddComponent<LineRenderer>();
+                lDrawer = gameObject.GetComponent<LineRenderer>();
+                once = false;
+            }
+
+            gameObject.DrawCircleScaled(data.hearingRadius, 0.05f,info.transform.localScale);
         }
-        gameObject.DrawCircleScaled(data.hearingRadius, 0.05f,info.transform.localScale);
+        else
+        {
+            if (gameObject.GetComponent<LineRenderer>() != null)
+            {
+                Destroy(gameObject.GetComponent<LineRenderer>());
+                once = true;
+            }
+        }
     }
 
-    public void DebugDelete()
-    {
-        if (gameObject.GetComponent<LineRenderer>() != null)
-        {
-            Destroy(gameObject.GetComponent<LineRenderer>());
-            once = true;
-        }
-        
-    }
+    
 }

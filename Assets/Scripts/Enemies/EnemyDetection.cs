@@ -54,8 +54,6 @@ public class EnemyDetection : MonoBehaviour
 	private GameObject player;
 
 	public EnemyBehaviour data;
-	public VisualDebug visual;
-	public hearingDebug hear;
 
 	private Vector3 angle1;
 	private Vector3 angle2;
@@ -145,17 +143,6 @@ public class EnemyDetection : MonoBehaviour
 		}
 
 		FindTargetsWithDelay();
-
-		if(debug)
-        {
-			hear.DebugDraw();
-			visual.DebugDraw();
-		}
-		else if(!debug)
-        {
-			hear.DebugDelete();
-			visual.DebugDelete();
-		}
 
 		if (Input.GetKeyDown(KeyCode.F10))
 			debug = !debug;

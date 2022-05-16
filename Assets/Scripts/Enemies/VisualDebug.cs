@@ -14,23 +14,26 @@ public class VisualDebug : MonoBehaviour
     {
         EnemyDetection data = gameObject.GetComponentInParent<EnemyDetection>();
     }
-    public void DebugDraw()
+    public void Update()
     {
-        if (once && gameObject.GetComponent<LineRenderer>() == null)
+        if (data.debug)
         {
-            gameObject.AddComponent<LineRenderer>();
-            lDrawer = gameObject.GetComponent<LineRenderer>();
-            once = false;
-        }
-        gameObject.DrawCircleScaled(data.viewRadius, 0.05f, info.transform.localScale);
-    }
+            if (once && gameObject.GetComponent<LineRenderer>() == null)
+            {
+                gameObject.AddComponent<LineRenderer>();
+                lDrawer = gameObject.GetComponent<LineRenderer>();
+                once = false;
+            }
 
-    public void DebugDelete()
-    {
-        if (gameObject.GetComponent<LineRenderer>() != null)
+            gameObject.DrawCircleScaled(data.viewRadius, 0.05f, info.transform.localScale);
+        }
+        else
         {
-            Destroy(gameObject.GetComponent<LineRenderer>());
-            once = true;
+            if (gameObject.GetComponent<LineRenderer>() != null)
+            {
+                Destroy(gameObject.GetComponent<LineRenderer>());
+                once = true;
+            }
         }
     }
 }
