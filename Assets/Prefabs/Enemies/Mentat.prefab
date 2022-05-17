@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lDrawer: {fileID: 0}
-  data: {fileID: 0}
+  data: {fileID: 4278868393632840210}
   info: {fileID: 4008469697949108057}
 --- !u!1 &50775863119911402
 GameObject:
@@ -723,7 +723,6 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
-  spicePrefab: {fileID: 5107240104563982919, guid: 7a2a4df62cbb5c5498d71aa8b1c6da1b, type: 3}
   isGuard: 0
   guardOffset: {x: 0, y: 0, z: 0}
   leader: {fileID: 0}
@@ -758,6 +757,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   secondsPerBar: 1.125
   timer: 0
+  aggroTime: 0
+  isAggro: 0
   viewRadius: 20
   viewAngle: 100
   hearingRadius: 7.5
@@ -771,8 +772,6 @@ MonoBehaviour:
   state: 0
   debug: 0
   data: {fileID: 4278868393632840211}
-  visual: {fileID: 1067296739}
-  hear: {fileID: 877172469}
   targetMask:
     serializedVersion: 2
     m_Bits: 64
