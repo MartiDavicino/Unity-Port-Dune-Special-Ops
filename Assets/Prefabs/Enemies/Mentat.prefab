@@ -757,7 +757,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   secondsPerBar: 1.125
   timer: 0
-  aggroTime: 0
+  aggroTime: 3.5
   isAggro: 0
   viewRadius: 20
   viewAngle: 100

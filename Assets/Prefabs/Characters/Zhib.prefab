@@ -1719,6 +1719,7 @@ MonoBehaviour:
   crouchMovementSpeed: 4.5
   runMovementSpeed: 10
   staminaSeconds: 5
+  recoveryTime: 0
   staminaTimer: 0
   isTired: 0
   walkSoundRange: 7.5
@@ -1750,6 +1751,7 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 256
+  spicePrefab: {fileID: 5107240104563982919, guid: 7a2a4df62cbb5c5498d71aa8b1c6da1b, type: 3}
 --- !u!114 &6868864155876820125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1763,7 +1765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetEnemy: {fileID: 0}
-  maximumRange: 12.5
+  maximumRange: 10
   ammunition: 1
   soundRange: 20
   knifeVelocity: 40
@@ -1792,9 +1794,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953f1c4712370874181d0a8126cc157e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumRange: 10
-  effectRange: 14
-  cooldown: 5
+  maximumRange: 13
+  effectRange: 8
+  cooldown: 7.5
   decoyPrefab: {fileID: 7972253676922709312, guid: 2038e93e7de188149bcda1ef088e8b53, type: 3}
   whatIsDecoy:
     serializedVersion: 2
@@ -1818,6 +1820,7 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 256
+  spicePrefab: {fileID: 5107240104563982919, guid: 7a2a4df62cbb5c5498d71aa8b1c6da1b, type: 3}
   harkonnenUnaware: 1
   harkonnenAware: 0.9
   harkonnenDetected: 0.75

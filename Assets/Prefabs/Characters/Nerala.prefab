@@ -1861,6 +1861,7 @@ MonoBehaviour:
   crouchMovementSpeed: 5
   runMovementSpeed: 10
   staminaSeconds: 3
+  recoveryTime: 0
   staminaTimer: 0
   isTired: 0
   walkSoundRange: 7.5
@@ -1892,6 +1893,7 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 256
+  spicePrefab: {fileID: 5107240104563982919, guid: 7a2a4df62cbb5c5498d71aa8b1c6da1b, type: 3}
 --- !u!114 &1983282172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1920,9 +1922,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debuffMultiplier: 0.5
-  maximumRange: 15
+  maximumRange: 12
   soundRange: 15
-  cooldown: 3
+  cooldown: 5
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 256
@@ -1971,6 +1973,7 @@ MonoBehaviour:
   soundMultiplier: 1
   countdownTime: 10
   hunterSeekerPrefab: {fileID: 3678424213461940499, guid: 409146c6d5af645e593e5c13ff089808, type: 3}
+  spicePrefab: {fileID: 5107240104563982919, guid: 7a2a4df62cbb5c5498d71aa8b1c6da1b, type: 3}
 --- !u!1 &8460098701719083031
 GameObject:
   m_ObjectHideFlags: 0

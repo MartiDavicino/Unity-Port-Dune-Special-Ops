@@ -728,7 +728,6 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
-  spicePrefab: {fileID: 5107240104563982919, guid: 7a2a4df62cbb5c5498d71aa8b1c6da1b, type: 3}
   isGuard: 0
   guardOffset: {x: 0, y: 0, z: 0}
   leader: {fileID: 0}
@@ -763,6 +762,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   secondsPerBar: 1.5
   timer: 0
+  aggroTime: 2
+  isAggro: 0
   viewRadius: 13
   viewAngle: 90
   hearingRadius: 7.5
@@ -776,8 +777,6 @@ MonoBehaviour:
   state: 0
   debug: 0
   data: {fileID: 374356984102618188}
-  visual: {fileID: 1213589239}
-  hear: {fileID: 1333869942}
   targetMask:
     serializedVersion: 2
     m_Bits: 64
