@@ -109,7 +109,7 @@ public class WeirdingWay : MonoBehaviour
                 {
                     Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
 
-                    if (Physics.Raycast(ray, out rayHit, 1000, LayerMask.GetMask("Enemy")))
+                    if (Physics.Raycast(ray, out rayHit))
                     {
                         if (rayHit.collider.tag == "Enemy")
                         {

@@ -6,12 +6,12 @@ public class shadowScript : MonoBehaviour
 {
 
     public GameObject shadowPlane;
+    public Transform player;
     public LayerMask shadowLayer;
     public float shadowRadius;
     private float radiusCircle { get { return shadowRadius * shadowRadius; } }
 
     private Mesh mesh;
-    private Transform player;
     private Vector3[] vertices;
     private Color[] colors;
 
@@ -24,8 +24,6 @@ public class shadowScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        player = Camera.main.GetComponent<CameraMovement>().focusedPlayer.transform;
-
         Ray r = new Ray(transform.position, player.position - transform.position);
         RaycastHit hit;
 
