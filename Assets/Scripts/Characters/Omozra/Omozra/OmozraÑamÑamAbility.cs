@@ -90,7 +90,7 @@ public class OmozraÑamÑamAbility : MonoBehaviour
                 {
                     Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
 
-                    if (Physics.Raycast(ray, out rayHit))
+                    if (Physics.Raycast(ray, out rayHit, 1000, LayerMask.GetMask("Enemy")))
                     {
                         if (rayHit.collider.tag == "Enemy")
                         {

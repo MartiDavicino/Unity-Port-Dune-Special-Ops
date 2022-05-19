@@ -44,7 +44,7 @@ public class HunterSeeker : MonoBehaviour
             Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit meshHit;
 
-            if (Physics.Raycast(ray, out meshHit))
+            if (Physics.Raycast(ray, out meshHit, 1000, LayerMask.GetMask("Ground")))
             {
                 if (meshHit.collider.tag == "Floor")
                 {

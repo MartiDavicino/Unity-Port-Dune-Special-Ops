@@ -74,7 +74,7 @@ public class OmozraLetsGoAbility : MonoBehaviour
                 {
                     Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
 
-                    if (Physics.Raycast(ray, out rayHit))
+                    if (Physics.Raycast(ray, out rayHit, 1000, LayerMask.GetMask("Player")))
                     {
                         if (rayHit.collider.tag == "Player")
                         {
@@ -128,7 +128,7 @@ public class OmozraLetsGoAbility : MonoBehaviour
                 {
                     Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
 
-                    if (Physics.Raycast(ray, out rayHit))
+                    if (Physics.Raycast(ray, out rayHit, 1000, LayerMask.GetMask("Ground")))
                     {
                         if (rayHit.collider.tag == "Floor")
                         {
