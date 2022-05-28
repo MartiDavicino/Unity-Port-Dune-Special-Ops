@@ -14,7 +14,9 @@ public class CameraMovement : MonoBehaviour
 
     private float remainingAngle;
 
-    public Vector3 offset;
+    public Vector3 initOffset;
+    public Vector3 topViewOffset;
+    [HideInInspector] public Vector3 transitionOffset;
 
     public float scrollSpeed;
 
@@ -23,9 +25,10 @@ public class CameraMovement : MonoBehaviour
     private GeneralManager manager;
     void Start()
     {
-        transform.position = transform.position + offset;
+        transform.position = transform.position + initOffset;
         manager = GetComponent<GeneralManager>();
         playerCamera = GetComponent<Camera>();
+        transitionOffset = initOffset;
     }
 
     void LateUpdate()
@@ -47,13 +50,13 @@ public class CameraMovement : MonoBehaviour
                     float newRemainingAngle = Mathf.MoveTowards(remainingAngle, 0, rotSpeed * Time.deltaTime);
                     float delta = remainingAngle - newRemainingAngle;
                     remainingAngle = newRemainingAngle;
-                    offset = Quaternion.AngleAxis(delta, Vector3.up) * offset;
-                    transform.position = focusedPlayer.transform.position + offset;
+                    transitionOffset = Quaternion.AngleAxis(delta, Vector3.up) * transitionOffset;
+                    transform.position = focusedPlayer.transform.position + transitionOffset;
                     transform.LookAt(focusedPlayer.transform);
                 } else if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    offset = Quaternion.AngleAxis(Input.GetAxis("Rotation") * rotSpeed * 0.001f, Vector3.up) * offset;
-                    transform.position = focusedPlayer.transform.position + offset;
+                    transitionOffset = Quaternion.AngleAxis(Input.GetAxis("Rotation") * rotSpeed * 0.001f, Vector3.up) * transitionOffset;
+                    transform.position = focusedPlayer.transform.position + transitionOffset;
                     transform.LookAt(focusedPlayer.transform);
                 }
             }

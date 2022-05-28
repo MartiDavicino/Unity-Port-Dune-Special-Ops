@@ -28,6 +28,7 @@ public class CharacterBaseBehavior : MonoBehaviour
 
     private NavMeshAgent playerAgent;
     private Camera playerCamera;
+    private CameraMovement cameraScript;
 
     [Header("- Base -")]
     public int playerHealth;
@@ -88,6 +89,8 @@ public class CharacterBaseBehavior : MonoBehaviour
     private int initHealth;
     ///////////////////////////////////////////////
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -95,7 +98,7 @@ public class CharacterBaseBehavior : MonoBehaviour
         playerAgent.speed = walkMovementSpeed;
 
         playerCamera = Camera.main;
-
+        cameraScript = playerCamera.GetComponent<CameraMovement>();
         invisible = false;
 
         allSelected = false;
@@ -411,5 +414,33 @@ public class CharacterBaseBehavior : MonoBehaviour
             count = 0;
             main_time = 0;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "CameraChange")
+        {
+            if (cameraScript != null && cameraScript.transitionOffset.y <= cameraScript.topViewOffset.y - 1f)
+                StartCoroutine(LerpFromTo(cameraScript.transitionOffset, cameraScript.topViewOffset, 1f));
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "CameraChange")
+        {
+            if (cameraScript != null && cameraScript.transitionOffset.y >= cameraScript.initOffset.y + 1f)
+                StartCoroutine(LerpFromTo(cameraScript.transitionOffset, cameraScript.initOffset, 1f));
+        }
+    }
+
+    IEnumerator LerpFromTo(Vector3 pos1, Vector3 pos2, float duration)
+    {
+        for (float t = 0f; t < duration; t += Time.deltaTime)
+        {
+            cameraScript.transitionOffset = Vector3.Lerp(pos1, pos2, t / duration);
+            yield return 0;
+        }
+        cameraScript.transitionOffset = pos2;
     }
 }
