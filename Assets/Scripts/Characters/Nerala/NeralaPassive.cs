@@ -37,13 +37,13 @@ public class NeralaPassive : MonoBehaviour
                 if (passiveSpot[i].gameObject.tag == "NeralaPassive")
                 {
                     canActivate = true;
-                    float toleranceRange = 1f;
+                    float toleranceRange = 2f;
                     Transform upPoint = passiveSpot[i].gameObject.transform.Find("upPoint");
                     Transform downPoint = passiveSpot[i].gameObject.transform.Find("downPoint");
 
-                    if (transform.position.y - toleranceRange < upPoint.position.y && transform.position.y + toleranceRange < downPoint.position.y)
+                    if (transform.position.y - toleranceRange <= downPoint.position.y && transform.position.y + toleranceRange < upPoint.position.y)
                         isUp = false;
-                    else if (transform.position.y - toleranceRange > upPoint.position.y && transform.position.y + toleranceRange > downPoint.position.y)
+                    else if (transform.position.y + toleranceRange >= upPoint.position.y && transform.position.y - toleranceRange > downPoint.position.y)
                         isUp = true;
 
                     if (Input.GetKeyDown(KeyCode.F))
@@ -52,12 +52,12 @@ public class NeralaPassive : MonoBehaviour
                         if (isUp)
                         {
                             baseScript.state = PlayerState.IDLE;
-                            playerAgent.Warp(upPoint.position);
+                            playerAgent.Warp(downPoint.position);
                             playerAgent.ResetPath();
                         } else
                         {
                             baseScript.state = PlayerState.IDLE;
-                            playerAgent.Warp(downPoint.position);
+                            playerAgent.Warp(upPoint.position);
                             playerAgent.ResetPath();
                         }
                     }
