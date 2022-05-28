@@ -404,7 +404,6 @@ public class CharacterBaseBehavior : MonoBehaviour
 
         if(Input.GetMouseButtonUp(1))
         {
-
             clickUp = true;
         }
 
