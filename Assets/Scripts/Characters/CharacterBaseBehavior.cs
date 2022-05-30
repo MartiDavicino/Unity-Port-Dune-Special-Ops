@@ -89,8 +89,6 @@ public class CharacterBaseBehavior : MonoBehaviour
     private int initHealth;
     ///////////////////////////////////////////////
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -138,6 +136,10 @@ public class CharacterBaseBehavior : MonoBehaviour
             startInvincible = false;
         }
 
+        if (state == PlayerState.STEALTH_KILL)
+        {
+            return;
+        }
 
         playerSpice = GameObject.Find("playercamera").GetComponent<GeneralManager>().totalSpice;
 

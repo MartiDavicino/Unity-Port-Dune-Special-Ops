@@ -17,11 +17,16 @@ public class CharacterAttack : MonoBehaviour
     private Vector3 distanceToTarget;
     private bool attacking;
     private bool hasAttacked;
+    
+    private Animator animator;
+    private bool attackPlayed;
 
     public float soundRange;
     public float rangeToKill;
     public LayerMask whatIsEnemy;
     public GameObject spicePrefab;
+
+    private Vector3 neralaIsJustAnnoying;
 
     // Start is called before the first frame update
     void Start()
@@ -30,16 +35,40 @@ public class CharacterAttack : MonoBehaviour
         playerCamera = Camera.main;
         baseScript = gameObject.GetComponent<CharacterBaseBehavior>();
         agent = gameObject.GetComponent<NavMeshAgent>();
-        
+        animator = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (hasAttacked || baseScript.state == PlayerState.STEALTH_KILL)
+        if (Input.GetKeyDown(KeyCode.F2))
         {
-            baseScript.state = PlayerState.IDLE;
             hasAttacked = false;
+            attackPlayed = false;
+            baseScript.state = PlayerState.IDLE;
+        }
+
+        if (baseScript.state == PlayerState.STEALTH_KILL)
+        {
+            agent.ResetPath();
+
+            if (gameObject.name == "Nerala")
+            {
+                transform.LookAt(neralaIsJustAnnoying);
+                transform.rotation *= Quaternion.Euler(0, 90, 0);
+            }
+
+            if (attackPlayed && !animator.GetCurrentAnimatorStateInfo(0).IsName("SneakyKill"))
+            {
+                hasAttacked = false;
+                attackPlayed = false;
+                baseScript.state = PlayerState.IDLE;
+            }
+
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("SneakyKill"))
+                attackPlayed = true;
+            
+            if(hasAttacked) return;
         }
 
         if (baseScript.selectedCharacter)
@@ -55,6 +84,7 @@ public class CharacterAttack : MonoBehaviour
                         if (rayHit.collider.tag == "Enemy")
                         {
                             attacking = true;
+                            baseScript.state = PlayerState.WALKING;
 
                             enemyTarget = rayHit.collider.gameObject;
                             agent.SetDestination(rayHit.collider.gameObject.transform.position);
@@ -62,18 +92,10 @@ public class CharacterAttack : MonoBehaviour
                     }
                 }
 
-                if (Input.GetKeyDown(KeyCode.Mouse0))
-                {
-                    Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+                if (Input.GetKeyDown(KeyCode.Mouse1))
+                    attacking = false;
 
-                    if (Physics.Raycast(ray, out rayHit, 1000, LayerMask.GetMask("Enemy")))
-                    {
-                        if (rayHit.collider.tag != "Enemy")
-                        {
-                            attacking = false;
-                        }
-                    }
-                }
+
 
                 if (attacking)
                 {
@@ -86,7 +108,7 @@ public class CharacterAttack : MonoBehaviour
                         baseScript.state = PlayerState.STEALTH_KILL;
                         attacking = false;
                         Attack(enemyTarget);
-                    
+                        neralaIsJustAnnoying = enemyTarget.transform.position;
                     }
                 }
             } else

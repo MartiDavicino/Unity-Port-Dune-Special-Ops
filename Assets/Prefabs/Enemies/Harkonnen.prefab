@@ -767,7 +767,7 @@ MonoBehaviour:
   viewRadius: 13
   viewAngle: 90
   hearingRadius: 7.5
-  debuffTime: 5
+  debuffTime: 999
   debuffMultiplier: 0
   debuffed: 0
   sightMultiplier: 1

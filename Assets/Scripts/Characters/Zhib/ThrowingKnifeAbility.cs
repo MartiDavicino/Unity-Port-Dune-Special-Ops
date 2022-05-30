@@ -91,7 +91,7 @@ public class ThrowingKnifeAbility : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F1) && ammunition == 0)
         {
             Destroy(thrownKnifes[0].gameObject);
-            ammunition++;
+            ammunition++;   
         }
 
         if (baseScript.selectedCharacter)

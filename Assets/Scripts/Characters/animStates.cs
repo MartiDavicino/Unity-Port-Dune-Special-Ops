@@ -23,6 +23,7 @@ public class animStates : MonoBehaviour
             animator.ResetTrigger("isWalking");
             animator.ResetTrigger("isCrouching");
             animator.ResetTrigger("isRunning");
+            animator.ResetTrigger("sneakyKill");
 
             animator.SetTrigger("hasStopped");
         }
@@ -32,6 +33,7 @@ public class animStates : MonoBehaviour
             animator.ResetTrigger("hasStopped");
             animator.ResetTrigger("isCrouching");
             animator.ResetTrigger("isRunning");
+            animator.ResetTrigger("sneakyKill");
 
             animator.SetTrigger("isWalking");
         }
@@ -41,6 +43,7 @@ public class animStates : MonoBehaviour
             animator.ResetTrigger("hasStopped");
             animator.ResetTrigger("isWalking");
             animator.ResetTrigger("isRunning");
+            animator.ResetTrigger("sneakyKill");
 
             animator.SetTrigger("isCrouching");
         }
@@ -50,6 +53,7 @@ public class animStates : MonoBehaviour
             animator.ResetTrigger("hasStopped");
             animator.ResetTrigger("isCrouching");
             animator.ResetTrigger("isWalking");
+            animator.ResetTrigger("sneakyKill");
 
             animator.SetTrigger("isRunning");
         }

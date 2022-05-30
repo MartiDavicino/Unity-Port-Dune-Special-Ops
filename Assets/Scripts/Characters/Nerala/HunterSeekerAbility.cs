@@ -10,7 +10,8 @@ public class HunterSeekerAbility : MonoBehaviour
     private bool hunterDeployed;
 
     public float hunterSeekerVelocity;
-    public float hunterSeekerMaxRange;
+    public int maxKills;
+    //public float hunterSeekerMaxRange;
     public float soundRange;
     public float soundMultiplier;
     public float countdownTime;
@@ -68,7 +69,7 @@ public class HunterSeekerAbility : MonoBehaviour
             }
         }
 
-        if (baseScript.hunterSeeking) gameObject.DrawCircleScaled(hunterSeekerMaxRange, 0.05f, transform.localScale);
+        //if (baseScript.hunterSeeking) gameObject.DrawCircleScaled(hunterSeekerMaxRange, 0.05f, transform.localScale);
 
     }
 

@@ -9,6 +9,8 @@ public class HunterSeeker : MonoBehaviour
 
     private GameObject nerala;
     [HideInInspector] public HunterSeekerAbility baseScript;
+    [HideInInspector] public int maxKills;
+    private int kills;
 
     private float countdownTime;
     private float elapse_time;
@@ -30,6 +32,8 @@ public class HunterSeeker : MonoBehaviour
         baseScript = nerala.GetComponent<HunterSeekerAbility>();
         spicePrefab = baseScript.spicePrefab;
         countdownTime = baseScript.countdownTime;
+        maxKills = baseScript.maxKills;
+        kills = 0;
         elapse_time = 0f;
         playerAgent.speed = baseScript.hunterSeekerVelocity;
         playerCamera = Camera.main;
@@ -57,7 +61,8 @@ public class HunterSeeker : MonoBehaviour
         while (elapse_time < countdownTime)
         {
             elapse_time += Time.deltaTime;
-            if(CalculateAbsoluteDistance(nerala.transform.position).magnitude < baseScript.hunterSeekerMaxRange) return;
+            return;
+            //if(CalculateAbsoluteDistance(nerala.transform.position).magnitude < baseScript.hunterSeekerMaxRange) return;
         }
 
         DisableHunterSeeker();
@@ -99,7 +104,9 @@ public class HunterSeeker : MonoBehaviour
     {
         if(collision.gameObject.tag == "Enemy")
         {
-            DisableHunterSeeker();
+            kills++;
+            if(kills == maxKills) DisableHunterSeeker();
+
             EnemyBehaviour eBehaviour = collision.gameObject.GetComponent<EnemyBehaviour>();
 
             SpawnSpice(eBehaviour, spicePrefab, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
