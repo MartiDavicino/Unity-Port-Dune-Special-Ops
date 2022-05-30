@@ -417,7 +417,7 @@ public class CharacterBaseBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "CameraChange")
+        if (other.gameObject.tag == "CameraChange" && selectedCharacter)
         {
             if (cameraScript != null && cameraScript.transitionOffset.y <= cameraScript.topViewOffset.y - 1f)
                 StartCoroutine(LerpFromTo(cameraScript.transitionOffset, cameraScript.topViewOffset, 1f));

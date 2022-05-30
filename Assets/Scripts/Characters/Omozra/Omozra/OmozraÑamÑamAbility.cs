@@ -126,21 +126,19 @@ public class OmozraÑamÑamAbility : MonoBehaviour
                 addLineComponentOnce = true;
                 enemyOutOfRange = false;
             }
-            
-            if(onCooldown)
-            {
-                while (elapse_time < cooldown)
-                {
-                    elapse_time += Time.deltaTime;
-                    return;
-                }
+        }
 
-                elapse_time = 0;
-                
-                onCooldown = false;
+        if(onCooldown)
+        {
+            while (elapse_time < cooldown)
+            {
+                elapse_time += Time.deltaTime;
+                return;
             }
 
-            
+            elapse_time = 0;
+                
+            onCooldown = false;
         }
     }
     void OnGUI()

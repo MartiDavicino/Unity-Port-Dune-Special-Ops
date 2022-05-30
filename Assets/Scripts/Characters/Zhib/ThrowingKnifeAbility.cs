@@ -88,6 +88,12 @@ public class ThrowingKnifeAbility : MonoBehaviour
             hasShot = false;
         }
 
+        if (Input.GetKeyDown(KeyCode.F1) && ammunition == 0)
+        {
+            Destroy(thrownKnifes[0].gameObject);
+            ammunition++;
+        }
+
         if (baseScript.selectedCharacter)
         {
             if (baseScript.ability1Active)
