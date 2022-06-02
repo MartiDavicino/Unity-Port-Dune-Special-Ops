@@ -15,7 +15,11 @@ public class Decoy : MonoBehaviour
     public float firingAngle = 45.0f;
     public float gravity;
 
-    private bool emmitSoundOnce;
+    public float effectTime;
+    private float effectTimer;
+
+    private float pulseFreq;
+    private float pulseFreqTimer;
 
     private List<GameObject> resetedEnemies = new List<GameObject>();
 
@@ -29,7 +33,11 @@ public class Decoy : MonoBehaviour
 
         soundRange = decoyScript.effectRange;
 
-        emmitSoundOnce = true;
+        pulseFreq = 1f;
+        pulseFreqTimer = 0f;
+
+        effectTime = 5f;
+        effectTimer = 0f;
 
         elapse_time = 0f;
 
@@ -73,22 +81,26 @@ public class Decoy : MonoBehaviour
     {
         if (gameObject.layer == 10)
         {
-            if (emmitSoundOnce)
+            if(effectTimer < effectTime)
             {
-                EmitSound();
-                emmitSoundOnce = false;
-            }
-
-            while (elapse_time < 0.3f)
+                effectTimer += Time.deltaTime;
+            } else
             {
-                elapse_time += Time.deltaTime;
                 return;
             }
 
+            if (pulseFreqTimer < pulseFreq)
+            {
+                pulseFreqTimer += Time.deltaTime;
+                return;
+            }
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
-            elapse_time = 0;
+
+            EmitSound();
+            ResetNearEnemies();
+
+            pulseFreqTimer = 0;
         }
-        ResetNearEnemies();
     }
 
     void ResetNearEnemies()
@@ -107,8 +119,8 @@ public class Decoy : MonoBehaviour
                 }
             }
 
-            if(!reseted)
-            {
+            //if(!reseted)
+            //{
                 resetedEnemies.Add(affectedEnemies[j].gameObject);
                 agent = affectedEnemies[j].gameObject.GetComponent<NavMeshAgent>();
                 agent.ResetPath();
@@ -116,7 +128,7 @@ public class Decoy : MonoBehaviour
                 EnemyBehaviour eB = affectedEnemies[j].gameObject.GetComponent<EnemyBehaviour>();
                 eB.state = EnemyState.IDLE;
                 eB.affectedByDecoy = false;
-            }
+            //}
 
             reseted = false;
         }

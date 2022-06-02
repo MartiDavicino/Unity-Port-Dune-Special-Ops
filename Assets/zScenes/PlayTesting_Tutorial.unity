@@ -12251,7 +12251,7 @@ MonoBehaviour:
   totalSpice: 1000
   zhib: {fileID: 919132148783968830}
   nerala: {fileID: 1983282160}
-  neralaUnlocked: 1
+  neralaUnlocked: 0
   omozra: {fileID: 1529773621}
   omozraUnlocked: 0
   sadiq: {fileID: 0}
@@ -82270,7 +82270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9210757919227417333, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 273.33
+      value: 215
       objectReference: {fileID: 0}
     - target: {fileID: 9210757919227417333, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -82278,7 +82278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9210757919227417333, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 51.1
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 9210757919227417333, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: m_LocalRotation.w

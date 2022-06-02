@@ -7566,7 +7566,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8672128565203201545, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: rangeToKill
-      value: 7
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 8672128565203201547, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: ammunition
@@ -54009,6 +54009,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4475807426259986342, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
+      propertyPath: mentatAware
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4475807426259986342, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
+      propertyPath: mentatUnaware
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4475807426259986342, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
+      propertyPath: harkonnenAware
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4475807426259986342, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
+      propertyPath: mentatDetected
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4475807426259986342, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
+      propertyPath: sardaukarAware
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4475807426259986342, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
+      propertyPath: harkonnenUnaware
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4475807426259986342, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
+      propertyPath: sardaukarUnaware
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4475807426259986342, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
+      propertyPath: harkonnenDetected
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4475807426259986342, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
+      propertyPath: sardaukarDetected
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7468465412830655946, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
       propertyPath: m_Name
       value: Omozra
