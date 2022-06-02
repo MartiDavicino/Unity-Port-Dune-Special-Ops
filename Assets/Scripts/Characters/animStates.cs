@@ -23,9 +23,11 @@ public class animStates : MonoBehaviour
             animator.ResetTrigger("isWalking");
             animator.ResetTrigger("isCrouching");
             animator.ResetTrigger("isRunning");
-            animator.ResetTrigger("sneakyKill");
 
-            animator.SetTrigger("hasStopped");
+            if(gameObject.name != "Omozra")
+                animator.ResetTrigger("sneakyKill");
+
+                animator.SetTrigger("hasStopped");
         }
 
         if (baseScript.state == PlayerState.WALKING)
@@ -33,7 +35,9 @@ public class animStates : MonoBehaviour
             animator.ResetTrigger("hasStopped");
             animator.ResetTrigger("isCrouching");
             animator.ResetTrigger("isRunning");
-            animator.ResetTrigger("sneakyKill");
+
+            if(gameObject.name != "Omozra")
+                animator.ResetTrigger("sneakyKill");
 
             animator.SetTrigger("isWalking");
         }
@@ -43,7 +47,9 @@ public class animStates : MonoBehaviour
             animator.ResetTrigger("hasStopped");
             animator.ResetTrigger("isWalking");
             animator.ResetTrigger("isRunning");
-            animator.ResetTrigger("sneakyKill");
+
+            if(gameObject.name != "Omozra")
+                animator.ResetTrigger("sneakyKill");
 
             animator.SetTrigger("isCrouching");
         }
@@ -53,7 +59,9 @@ public class animStates : MonoBehaviour
             animator.ResetTrigger("hasStopped");
             animator.ResetTrigger("isCrouching");
             animator.ResetTrigger("isWalking");
-            animator.ResetTrigger("sneakyKill");
+
+            if(gameObject.name != "Omozra")
+                animator.ResetTrigger("sneakyKill");
 
             animator.SetTrigger("isRunning");
         }

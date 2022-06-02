@@ -12229,11 +12229,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30a9363510c5e8341b77005f936bd410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  focusedPlayer: {fileID: 919132148783968830}
+  focusedPlayer: {fileID: 0}
   rotSpeed: 1000
   angle: 45
-  offset: {x: 0, y: 16, z: -12}
-  scrollSpeed: 15
+  initOffset: {x: 0, y: 16, z: -12}
+  topViewOffset: {x: 0, y: 20, z: -3}
+  transitionOffset: {x: 0, y: 0, z: 0}
+  scrollSpeed: 50
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
