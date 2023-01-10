@@ -1,6 +1,8 @@
+using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System;
 
 public class SendDeath : MonoBehaviour
 {
@@ -10,17 +12,16 @@ public class SendDeath : MonoBehaviour
     // Start is called before the first frame update
     public void Send(int x,int z)
     {
-        StartCoroutine(uploader.SendDeath((int)Zhib.transform.position.x, (int)Zhib.transform.position.y));
+        StartCoroutine(uploader.SendDeath(x, z));
+    }
 
+    void OnEnable()
+    {
+        UploadController.OnDeath += Send;
     }
 
     void OnDisable()
     {
         UploadController.OnDeath -= Send;
-    }
-
-    public void Position(int x, int z)
-    {
-
     }
 }

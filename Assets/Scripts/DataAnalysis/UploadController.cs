@@ -39,18 +39,6 @@ public class UploadController : MonoBehaviour
             {
                 Debug.Log(request.error);
             }
-            else
-            {
-                try
-                {
-
-                }
-                catch
-                {
-                    Debug.Log("[ERROR] parsing last player ID: Response " + request.downloadHandler.text);
-                }
-
-            }
         }
     }
 
@@ -78,18 +66,7 @@ public class UploadController : MonoBehaviour
             {
                 Debug.Log(request.error);
             }
-            else
-            {
-                try
-                {
-
-                }
-                catch
-                {
-                    Debug.Log("[ERROR] parsing last player ID: Response " + request.downloadHandler.text);
-                }
-
-            }
+            
         }
     }
 
@@ -115,18 +92,7 @@ public class UploadController : MonoBehaviour
             {
                 Debug.Log(request.error);
             }
-            else
-            {
-                try
-                {
-
-                }
-                catch
-                {
-                    Debug.Log("[ERROR] parsing last player ID: Response " + request.downloadHandler.text);
-                }
-                
-            }
+           
         }
     }
 }

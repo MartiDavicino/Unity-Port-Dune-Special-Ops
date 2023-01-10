@@ -89,6 +89,13 @@ public class CharacterBaseBehavior : MonoBehaviour
     private int initHealth;
     ///////////////////////////////////////////////
 
+    public float updateInterval = 1.0F;
+    private double lastInterval;
+    private int frames;
+    private float fps;
+
+    public UploadController uploader;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -118,6 +125,9 @@ public class CharacterBaseBehavior : MonoBehaviour
         isTired = false;
 
         timer = 0f;
+
+        lastInterval = Time.realtimeSinceStartup;
+        frames = 0;
     }
 
     // Update is called once per frame
@@ -291,6 +301,17 @@ public class CharacterBaseBehavior : MonoBehaviour
         }
 
         playerAgent.speed = movementSpeed;
+
+        ++frames;
+        float timeNow = Time.realtimeSinceStartup;
+        if (timeNow > lastInterval + updateInterval)
+        {
+            fps = (float)(frames / (timeNow - lastInterval));
+            frames = 0;
+            lastInterval = timeNow;
+
+            uploader.OnMovement((int)playerAgent.transform.position.x, (int)playerAgent.transform.position.z);
+        }
     }
     void OnGUI()
     {
