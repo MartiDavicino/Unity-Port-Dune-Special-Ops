@@ -4,8 +4,8 @@ using System.Collections;
 
 public class HeatMapDrawer : MonoBehaviour
 {
-    [Range(1f, 10f)]
-    public float gridDensity;
+    [Range(1, 10)]
+    public int gridDensity;
 
     float scale;
     Vector3 scaleMultiplier;
@@ -29,14 +29,16 @@ public class HeatMapDrawer : MonoBehaviour
         Vector2 initialPos = new Vector2(330, 133);
         Vector2 gridSize = new Vector2(330 - (-13), 133 - (-310));
 
-        //If the desity increases the scale of the primitive should decrease
 
-        scale = 1 / gridDensity;
+        //If the desity increases the scale of the primitive should decrease
+        float gridIncrement = (1f / gridDensity)*10;
+        scale = gridIncrement*0.9f;
+
         scaleMultiplier =new Vector3 (scale, scale, scale);
 
-        for (int i = 0; i < gridSize.x; i++)
+        for (float i = 0; i < gridSize.x; i+=gridIncrement)
         {
-            for(int j = 0; j < gridSize.y; j++)
+            for(float j = 0; j < gridSize.y; j+=gridIncrement)
             {
                 float value = Random.Range(1, 10);
                 DrawCube(initialPos.x-i,initialPos.y-j,value,drawByHeight,drawByWidth,drawByColor,thresholdDraw,primitiveType);
@@ -64,19 +66,25 @@ public class HeatMapDrawer : MonoBehaviour
 
             indicator.transform.position = new Vector3(x, 0.2f, y);
 
+            indicator.transform.SetParent(transform);
+
 
             if (drawByHeight)
             {
-                scaleMultiplier = new Vector3(scale, scale * value, scale);
+                scaleMultiplier = new Vector3(scale, scale * value/1, scale);
                 indicator.transform.localScale = scaleMultiplier;
 
+                //offset object so is not displayed below the map
+                Vector3 offset=new Vector3(0,0,0);
+                indicator.transform.position += offset;
             }
+
             if (drawByWidth)
             {
-                float widthMultiplier = value * 0.05f;
+                float widthMultiplier =value/10;
                 scaleMultiplier = new Vector3(scale * widthMultiplier, scale, scale * widthMultiplier);
                 indicator.transform.localScale = scaleMultiplier;
-            }
+            }   
 
             if (drawByColor)
             {
@@ -87,12 +95,13 @@ public class HeatMapDrawer : MonoBehaviour
             else
                 indicator.GetComponent<Renderer>().material.color = defaultColor;
 
-
+            //planes are bigger than other primitives
+            if (_primitiveType == PrimitiveType.Plane)
+            {
+                indicator.transform.localScale = scaleMultiplier / 10;
+            }
+            else
+                indicator.transform.localScale = scaleMultiplier;
         }
-
-        
-        
-     
-        
     }
 }
