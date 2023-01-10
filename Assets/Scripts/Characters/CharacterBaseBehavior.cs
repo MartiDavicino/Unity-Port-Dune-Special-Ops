@@ -316,7 +316,7 @@ public class CharacterBaseBehavior : MonoBehaviour
             fps = (float)(frames / (timeNow - lastInterval));
             frames = 0;
             lastInterval = timeNow;
-
+           
             UploadController.instance.OnMovement((int)playerAgent.transform.position.x, (int)playerAgent.transform.position.z);
         }
     }

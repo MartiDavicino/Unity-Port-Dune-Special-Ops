@@ -226,20 +226,23 @@ public class CharacterAttack : MonoBehaviour
                         switch (eDetection.state)
                         {
                             case DecState.STILL:
-                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+
+                                SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.SEEKING:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.FOUND:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+
                                 Destroy(enemyTarget);
                                 baseScript.hit = true;
                                 EmitSound();
@@ -252,6 +255,7 @@ public class CharacterAttack : MonoBehaviour
                             case DecState.STILL:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
                                 UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+
                                 Destroy(enemyTarget);
                                 break;
 
