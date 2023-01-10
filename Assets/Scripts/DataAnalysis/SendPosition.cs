@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class SendPosition : MonoBehaviour
 {
-    public UploadController uploader;
+    public GameObject uploader;
 
     // Start is called before the first frame update
     void OnDisable()
     {
-        UploadController.OnMovement -= SendPos_;
+        uploader.GetComponent<UploadController>().OnMovement -= SendPos_;
     }
     void OnEnable()
     {
-        UploadController.OnMovement += SendPos_;
+        Debug.Log("AAA");
+        uploader.GetComponent<UploadController>().OnMovement += SendPos_;
     }
 
     void SendPos_(int x, int z)
     {
-        StartCoroutine(uploader.SendPos(x, z));
+        StartCoroutine(uploader.GetComponent<UploadController>().SendPos(x, z));
     }
 
 }

@@ -5,21 +5,21 @@ using UnityEngine;
 public class SendKill : MonoBehaviour
 {
     public GameObject Zhib;
-    public UploadController uploader;
+    public GameObject uploader;
     // Start is called before the first frame update
     public void SendKill_(int x, int z)
     {
-        StartCoroutine(uploader.SendKill(x, z));
+        StartCoroutine(uploader.GetComponent<UploadController>().SendKill(x, z));
 
     }
 
     void OnEnable()
     {
-        UploadController.OnDeath += SendKill_;
+        uploader.GetComponent<UploadController>().OnDeath += SendKill_;
     }
 
     void OnDisable()
     {
-        UploadController.OnDeath -= SendKill_;
+        uploader.GetComponent<UploadController>().OnDeath -= SendKill_;
     }
 }

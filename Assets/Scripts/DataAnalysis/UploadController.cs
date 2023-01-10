@@ -10,9 +10,9 @@ public class UploadController : MonoBehaviour
     // Start is called before the first frame update
     //Upload Player
 
-    public static Action<int, int> OnMovement; //Movement, Kill and Death
-    public static Action<int, int> OnKill;
-    public static Action<int, int> OnDeath;
+    public  Action<int, int> OnMovement; //Movement, Kill and Death
+    public Action<int, int> OnKill;
+    public Action<int, int> OnDeath;
 
     private void OnEnable()
     {

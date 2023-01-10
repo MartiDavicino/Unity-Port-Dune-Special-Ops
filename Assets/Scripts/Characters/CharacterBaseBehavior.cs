@@ -94,7 +94,7 @@ public class CharacterBaseBehavior : MonoBehaviour
     private int frames;
     private float fps;
 
-    public UploadController uploader;
+    public GameObject uploader;
 
     // Start is called before the first frame update
     void Start()
@@ -310,7 +310,7 @@ public class CharacterBaseBehavior : MonoBehaviour
             frames = 0;
             lastInterval = timeNow;
 
-            uploader.OnMovement((int)playerAgent.transform.position.x, (int)playerAgent.transform.position.z);
+            uploader.GetComponent<UploadController>().OnMovement((int)playerAgent.transform.position.x, (int)playerAgent.transform.position.z);
         }
     }
     void OnGUI()

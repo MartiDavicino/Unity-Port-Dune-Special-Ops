@@ -31,7 +31,7 @@ public class GeneralManager : MonoBehaviour
 
     public bool gameLost;
 
-    public UploadController uploader;
+    public GameObject uploader;
 
 
     
@@ -66,7 +66,7 @@ public class GeneralManager : MonoBehaviour
             {
                 if (zhibBase.playerHealth == 0)
                 {
-                    uploader.OnDeath((int)zhibBase.transform.position.x, (int)zhibBase.transform.position.z);
+                    uploader.GetComponent<UploadController>().OnDeath((int)zhibBase.transform.position.x, (int)zhibBase.transform.position.z);
                     if(zhib == cameraScript.focusedPlayer)
                     {
                         if (nerala != null && neralaUnlocked)

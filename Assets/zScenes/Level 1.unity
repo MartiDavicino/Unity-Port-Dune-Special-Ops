@@ -1259,7 +1259,7 @@ Transform:
   - {fileID: 240001526}
   - {fileID: 887912931}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &177816289
 BoxCollider:
@@ -4538,7 +4538,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &688743554
 BoxCollider:
@@ -5055,6 +5055,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Omozra
       objectReference: {fileID: 0}
+    - target: {fileID: 7738372082402153350, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
+      propertyPath: uploader
+      value: 
+      objectReference: {fileID: 1575981302}
     - target: {fileID: 7849353130830442352, guid: 54d375f4a96b7894381161f1f0fac3a9, type: 3}
       propertyPath: m_RootOrder
       value: 19
@@ -5661,7 +5665,7 @@ RectTransform:
   - {fileID: 1229067552}
   - {fileID: 1918593480}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -7548,7 +7552,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1205006808
 MonoBehaviour:
@@ -9921,6 +9925,50 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!1 &1575981302
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1575981304}
+  - component: {fileID: 1575981303}
+  m_Layer: 0
+  m_Name: UploadController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1575981303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1575981302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1d8b6572e114a74aaa2339628d6c22e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1575981304
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1575981302}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 91.86604, y: 52.322742, z: -93.28478}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1597234122
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34452,6 +34500,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6868864155876820113, guid: accfd97eb2e459148b32990af20731dc, type: 3}
+      propertyPath: uploader
+      value: 
+      objectReference: {fileID: 1575981303}
+    - target: {fileID: 6868864155876820119, guid: accfd97eb2e459148b32990af20731dc, type: 3}
+      propertyPath: uploader
+      value: 
+      objectReference: {fileID: 1575981302}
+    - target: {fileID: 6868864155876820120, guid: accfd97eb2e459148b32990af20731dc, type: 3}
+      propertyPath: uploader
+      value: 
+      objectReference: {fileID: 1575981302}
     - target: {fileID: 6868864155876820120, guid: accfd97eb2e459148b32990af20731dc, type: 3}
       propertyPath: playerHealth
       value: 3
@@ -34463,6 +34523,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6402327512114749742, guid: accfd97eb2e459148b32990af20731dc, type: 3}
   m_PrefabInstance: {fileID: 6868864156860664234}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6868864156860664246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148783968830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be569bb14b9fd7b41ab37bb4e2b51748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uploader: {fileID: 1575981302}
 --- !u!33 &6876059423790893100
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -39337,6 +39410,10 @@ PrefabInstance:
       value: Nerala
       objectReference: {fileID: 0}
     - target: {fileID: 8672128565203201539, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
+      propertyPath: uploader
+      value: 
+      objectReference: {fileID: 1575981302}
+    - target: {fileID: 8672128565203201539, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: ultimateCost
       value: 1500
       objectReference: {fileID: 0}
@@ -39344,6 +39421,10 @@ PrefabInstance:
       propertyPath: whatIsSpice.m_Bits
       value: 1024
       objectReference: {fileID: 0}
+    - target: {fileID: 8672128565203201545, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
+      propertyPath: uploader
+      value: 
+      objectReference: {fileID: 1575981302}
     - target: {fileID: 9210757919227417333, guid: b447f3e8021f60049aaa296864b3287e, type: 3}
       propertyPath: m_RootOrder
       value: 5
