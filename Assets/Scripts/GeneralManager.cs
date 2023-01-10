@@ -31,10 +31,8 @@ public class GeneralManager : MonoBehaviour
 
     public bool gameLost;
 
-    public GameObject uploader;
 
 
-    
 
     // Start is called before the first frame update
     void Start()
@@ -62,12 +60,14 @@ public class GeneralManager : MonoBehaviour
 
         if (!gameLost)
         {
-            if(zhib != null)
+            if (zhib != null)
             {
                 if (zhibBase.playerHealth == 0)
                 {
-                    uploader.GetComponent<UploadController>().OnDeath((int)zhibBase.transform.position.x, (int)zhibBase.transform.position.z);
-                    if(zhib == cameraScript.focusedPlayer)
+
+                    UploadController.instance.OnDeath((int)zhibBase.transform.position.x, (int)zhibBase.transform.position.z);
+
+                    if (zhib == cameraScript.focusedPlayer)
                     {
                         if (nerala != null && neralaUnlocked)
                             selectedCharacter = nerala;
@@ -79,7 +79,7 @@ public class GeneralManager : MonoBehaviour
                 }
             }
 
-            if(nerala != null)
+            if (nerala != null)
             {
                 if (neralaBase.playerHealth == 0)
                 {
@@ -95,7 +95,7 @@ public class GeneralManager : MonoBehaviour
                 }
             }
 
-            if(omozra != null)
+            if (omozra != null)
             {
                 if (omozraBase.playerHealth == 0)
                 {
@@ -136,9 +136,9 @@ public class GeneralManager : MonoBehaviour
             if (Input.GetKey(KeyCode.V) && !hunterSeekerActive)
             {
                 allSelected = true;
-                if(zhib != null) zhibBase.allSelected = true;
-                if(neralaUnlocked && nerala != null) neralaBase.allSelected = true;
-                if(omozraUnlocked && omozra != null) omozraBase.allSelected = true;
+                if (zhib != null) zhibBase.allSelected = true;
+                if (neralaUnlocked && nerala != null) neralaBase.allSelected = true;
+                if (omozraUnlocked && omozra != null) omozraBase.allSelected = true;
             }
 
 
@@ -219,7 +219,7 @@ public class GeneralManager : MonoBehaviour
             }
         }
 
-        if(totalSpice < 0)
+        if (totalSpice < 0)
         {
             totalSpice = 0;
         }

@@ -9,15 +9,30 @@ public class UploadController : MonoBehaviour
 {
     // Start is called before the first frame update
     //Upload Player
+    private static UploadController uploadController;
 
-    public  Action<int, int> OnMovement; //Movement, Kill and Death
+    public static UploadController instance
+    {
+        get
+        {
+            if (uploadController == null)
+            {
+                uploadController = FindObjectOfType<UploadController>();
+            }
+            return uploadController;
+        }
+
+
+    }
+
+    public Action<int, int> OnMovement; //Movement, Kill and Death
     public Action<int, int> OnKill;
     public Action<int, int> OnDeath;
 
     private void OnEnable()
     {
     }
-    public  IEnumerator SendPos(int _x, int _z)
+    public IEnumerator SendPos(int _x, int _z)
     {
         yield return new WaitForEndOfFrame();
 
@@ -43,7 +58,7 @@ public class UploadController : MonoBehaviour
     }
 
     //UploadSession
-    public  IEnumerator SendKill(int _x, int _z)
+    public IEnumerator SendKill(int _x, int _z)
     {
         yield return new WaitForEndOfFrame();
 
@@ -66,11 +81,11 @@ public class UploadController : MonoBehaviour
             {
                 Debug.Log(request.error);
             }
-            
+
         }
     }
 
-    public  IEnumerator SendDeath(int _x, int _z)
+    public IEnumerator SendDeath(int _x, int _z)
     {
         yield return new WaitForEndOfFrame();
 
@@ -92,14 +107,14 @@ public class UploadController : MonoBehaviour
             {
                 Debug.Log(request.error);
             }
-           
+
         }
     }
 }
 
 public class CallbackEvents
 {
-    public static Action<int,int> OnMovementCallback;
+    public static Action<int, int> OnMovementCallback;
     public static Action<int, int> OnKillCallback;
     public static Action<int, int> OnDearthCallback;
 }

@@ -94,8 +94,6 @@ public class CharacterBaseBehavior : MonoBehaviour
     private int frames;
     private float fps;
 
-    public GameObject uploader;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -133,7 +131,7 @@ public class CharacterBaseBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(startInvincible)
+        if (startInvincible)
         {
             playerHealth = 99;
             while (startInvincibleTimer < startInvincibleTime)
@@ -187,10 +185,10 @@ public class CharacterBaseBehavior : MonoBehaviour
                 {
                     ability3Active = !ability3Active;
                     abilityActive = !abilityActive;
-                }       
+                }
             }
 
-            if(abilityActive && Input.GetMouseButtonDown(1))
+            if (abilityActive && Input.GetMouseButtonDown(1))
             {
                 ability1Active = false;
                 ability2Active = false;
@@ -200,7 +198,7 @@ public class CharacterBaseBehavior : MonoBehaviour
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1) && !ability3Active && !ability2Active)
-                if(gameObject.GetComponent<LineRenderer>() != null)
+                if (gameObject.GetComponent<LineRenderer>() != null)
                     Destroy(gameObject.GetComponent<LineRenderer>());
 
             if (Input.GetKeyDown(KeyCode.Alpha2) && !ability1Active && !ability3Active)
@@ -215,23 +213,28 @@ public class CharacterBaseBehavior : MonoBehaviour
             {
                 crouching = !crouching;
                 running = false;
-                if(crouching) {
+                if (crouching)
+                {
                     detectionMultiplier = crouchMultiplier;
-                    state = PlayerState.CROUCH; 
+                    state = PlayerState.CROUCH;
                 }
-                else if (state == PlayerState.CROUCH) {
-                    if(targetPosition != Vector3.zero)
+                else if (state == PlayerState.CROUCH)
+                {
+                    if (targetPosition != Vector3.zero)
                     {
                         if (CalculateAbsoluteDistance(targetPosition).magnitude > playerAgent.stoppingDistance)
                         {
                             detectionMultiplier = 1f;
-                            state = PlayerState.WALKING; 
-                        } 
-                    } else
+                            state = PlayerState.WALKING;
+                        }
+                    }
+                    else
                     {
-                        if (running) {
+                        if (running)
+                        {
                             detectionMultiplier = runMultiplier;
-                            state = PlayerState.RUNNING; }
+                            state = PlayerState.RUNNING;
+                        }
                         else
                         {
                             detectionMultiplier = 1f;
@@ -246,15 +249,16 @@ public class CharacterBaseBehavior : MonoBehaviour
                 MovementBehaviour();
             }
 
-        } else
+        }
+        else
         {
-            if(gameObject.GetComponent<LineRenderer>() != null && !hunterSeeking)
+            if (gameObject.GetComponent<LineRenderer>() != null && !hunterSeeking)
                 Destroy(gameObject.GetComponent<LineRenderer>());
         }
 
-        if(targetPosition != Vector3.zero)
+        if (targetPosition != Vector3.zero)
         {
-            if(CalculateAbsoluteDistance(targetPosition).magnitude <= playerAgent.stoppingDistance)
+            if (CalculateAbsoluteDistance(targetPosition).magnitude <= playerAgent.stoppingDistance)
             {
                 if (animator != null)
                 {
@@ -272,7 +276,8 @@ public class CharacterBaseBehavior : MonoBehaviour
     {
         invisible = false;
 
-        if (state==PlayerState.CROUCH) {
+        if (state == PlayerState.CROUCH)
+        {
             movementSpeed = crouchMovementSpeed;
             staminaTimer += Time.deltaTime;
             if (staminaTimer > recoveryTime)
@@ -281,7 +286,8 @@ public class CharacterBaseBehavior : MonoBehaviour
                 isTired = false;
             }
         }
-        else if (state == PlayerState.RUNNING) {
+        else if (state == PlayerState.RUNNING)
+        {
             movementSpeed = runMovementSpeed;
             staminaTimer -= Time.deltaTime;
             if (staminaTimer < 0f)
@@ -290,7 +296,8 @@ public class CharacterBaseBehavior : MonoBehaviour
                 isTired = true;
             }
         }
-        else { 
+        else
+        {
             movementSpeed = walkMovementSpeed;
             staminaTimer += Time.deltaTime;
             if (staminaTimer > recoveryTime)
@@ -310,7 +317,7 @@ public class CharacterBaseBehavior : MonoBehaviour
             frames = 0;
             lastInterval = timeNow;
 
-            uploader.GetComponent<UploadController>().OnMovement((int)playerAgent.transform.position.x, (int)playerAgent.transform.position.z);
+            UploadController.instance.OnMovement((int)playerAgent.transform.position.x, (int)playerAgent.transform.position.z);
         }
     }
     void OnGUI()
@@ -380,7 +387,7 @@ public class CharacterBaseBehavior : MonoBehaviour
             {
                 if (meshHit.collider.tag == "Floor")
                 {
-                    if(clickUp) count++;
+                    if (clickUp) count++;
 
                     if (Time.time - main_time < click_time)
                     {
@@ -391,12 +398,13 @@ public class CharacterBaseBehavior : MonoBehaviour
                             main_time = Time.time;
                         }
 
-                        if(count > 2)
+                        if (count > 2)
                         {
                             main_time = Time.time;
                             count = 2;
                         }
-                    } else
+                    }
+                    else
                     {
                         running = false;
                         count = 0;
@@ -408,16 +416,18 @@ public class CharacterBaseBehavior : MonoBehaviour
 
                     if (crouching) { state = PlayerState.CROUCH; }
                     else if (running) { state = PlayerState.RUNNING; }
-                    else {
-                        detectionMultiplier = 1f; 
-                        state = PlayerState.WALKING; }
+                    else
+                    {
+                        detectionMultiplier = 1f;
+                        state = PlayerState.WALKING;
+                    }
                 }
             }
 
             clickUp = false;
         }
 
-        if(playerAgent.remainingDistance == 0 && !playerAgent.pathPending)
+        if (playerAgent.remainingDistance == 0 && !playerAgent.pathPending)
         {
             running = false;
             count = 0;
@@ -425,12 +435,12 @@ public class CharacterBaseBehavior : MonoBehaviour
             state = PlayerState.IDLE;
         }
 
-        if(Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(1))
         {
             clickUp = true;
         }
 
-        if(Time.time - main_time > click_time || isTired)
+        if (Time.time - main_time > click_time || isTired)
         {
             running = false;
             count = 0;

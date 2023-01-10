@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class WeirdingWay : MonoBehaviour
 {
-    public UploadController uploader;
     private CharacterBaseBehavior baseScript;
     private Camera playerCamera;
     private NavMeshAgent agent;
-    
+
     //Still testing if we want to generate sound
     private float soundRange;
 
@@ -97,7 +96,7 @@ public class WeirdingWay : MonoBehaviour
 
             if (baseScript.ability3Active && !hasEnded)
             {
-                if(addLineComponentOnce)
+                if (addLineComponentOnce)
                 {
                     addLineComponentOnce = false;
                     gameObject.AddComponent<LineRenderer>();
@@ -126,7 +125,8 @@ public class WeirdingWay : MonoBehaviour
                     }
                 }
 
-            } else
+            }
+            else
             {
                 goingToAttack = false;
 
@@ -161,7 +161,8 @@ public class WeirdingWay : MonoBehaviour
                 StartKillChain();
             }
 
-        } else
+        }
+        else
         {
             goingToAttack = false;
 
@@ -171,7 +172,7 @@ public class WeirdingWay : MonoBehaviour
             killCount = 0;
         }
 
-   
+
     }
 
     void LateUpdate()
@@ -186,15 +187,16 @@ public class WeirdingWay : MonoBehaviour
     }
     void StartKillChain()
     {
-        if(waitTimer >= pulseRate)
+        if (waitTimer >= pulseRate)
         {
             KillChain();
             waitTimer = 0f;
-        } else
+        }
+        else
         {
             waitTimer += 1 * Time.deltaTime;
         }
-        
+
     }
     void KillChain()
     {
@@ -204,7 +206,7 @@ public class WeirdingWay : MonoBehaviour
             baseScript.state = PlayerState.IDLE;
             transform.position = targetedEnemy.transform.position + (targetedEnemy.transform.rotation * attackPointOffset);
             transform.LookAt(targetedEnemy.transform);
-            
+
             EnemyBehaviour eBehaviour = targetedEnemy.GetComponent<EnemyBehaviour>();
             EnemyDetection eDetection = targetedEnemy.GetComponent<EnemyDetection>();
 
@@ -217,7 +219,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= harkonnenUnaware)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
-                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
+                                UploadController.instance.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -230,7 +232,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= harkonnenAware)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
-                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
+                                UploadController.instance.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -243,7 +245,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= harkonnenDetected)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
-                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
+                                UploadController.instance.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
 
                             }
@@ -261,7 +263,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= sardaukarUnaware)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
-                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
+                                UploadController.instance.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
 
                             }
@@ -275,7 +277,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= sardaukarAware)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
-                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
+                                UploadController.instance.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -288,7 +290,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= sardaukarDetected)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
-                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
+                                UploadController.instance.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -305,7 +307,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= mentatUnaware)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
-                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
+                                UploadController.instance.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -318,7 +320,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= mentatAware)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
-                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
+                                UploadController.instance.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -331,7 +333,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= mentatDetected)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
-                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
+                                UploadController.instance.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -342,7 +344,7 @@ public class WeirdingWay : MonoBehaviour
                     }
                     break;
             }
-            
+
 
             killCount++;
 
@@ -426,7 +428,7 @@ public class WeirdingWay : MonoBehaviour
     }
     Vector3 CalculateAbsoluteDistance(GameObject enemy)
     {
-        Vector3 distance = new Vector3(0f,0f,0f);
+        Vector3 distance = new Vector3(0f, 0f, 0f);
 
         distance.x = Mathf.Abs(transform.position.x - enemy.transform.position.x);
         distance.z = Mathf.Abs(transform.position.z - enemy.transform.position.z);

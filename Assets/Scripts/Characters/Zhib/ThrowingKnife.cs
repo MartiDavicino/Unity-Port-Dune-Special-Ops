@@ -29,7 +29,6 @@ public class ThrowingKnife : MonoBehaviour
 
     private GameObject zhib;
     private ThrowingKnifeAbility baseScript;
-    public UploadController uploader;
 
 
     // Start is called before the first frame update
@@ -37,7 +36,7 @@ public class ThrowingKnife : MonoBehaviour
     {
         zhib = GameObject.Find("Zhib");
         baseScript = zhib.GetComponent<ThrowingKnifeAbility>();
-        uploader = GameObject.Find("CameraAim").gameObject.GetComponent<UploadController>(); 
+
         soundRange = baseScript.soundRange;
         harkonnenUnaware = baseScript.harkonnenUnaware;
         harkonnenAware = baseScript.harkonnenAware;
@@ -59,7 +58,7 @@ public class ThrowingKnife : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
 
         if (!hit)
         {
@@ -75,7 +74,8 @@ public class ThrowingKnife : MonoBehaviour
                 if (rayHit.distance > desiredDistance)
                 {
                     transform.position = new Vector3(transform.position.x, transform.position.y + desiredDistance - rayHit.distance, transform.position.z);
-                } else if(rayHit.distance < desiredDistance)
+                }
+                else if (rayHit.distance < desiredDistance)
                 {
                     transform.position = new Vector3(transform.position.x, transform.position.y + desiredDistance - rayHit.distance, transform.position.z);
                 }
@@ -105,7 +105,7 @@ public class ThrowingKnife : MonoBehaviour
                                 if (gameObject.layer != 10)
                                 {
                                     SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
-                                    uploader.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
+                                    UploadController.instance.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
                                     Destroy(coll.gameObject);
                                 }
                             }
@@ -121,7 +121,7 @@ public class ThrowingKnife : MonoBehaviour
                                 if (gameObject.layer != 10)
                                 {
                                     SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
-                                    uploader.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
+                                    UploadController.instance.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
                                     Destroy(coll.gameObject);
                                 }
                             }
@@ -137,7 +137,7 @@ public class ThrowingKnife : MonoBehaviour
                                 if (gameObject.layer != 10)
                                 {
                                     SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
-                                    uploader.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
+                                    UploadController.instance.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
                                     Destroy(coll.gameObject);
                                 }
                             }
@@ -157,7 +157,7 @@ public class ThrowingKnife : MonoBehaviour
                                 if (gameObject.layer != 10)
                                 {
                                     SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
-                                    uploader.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
+                                    UploadController.instance.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
                                     Destroy(coll.gameObject);
                                 }
                             }
@@ -174,7 +174,7 @@ public class ThrowingKnife : MonoBehaviour
                                 if (gameObject.layer != 10)
                                 {
                                     SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
-                                    uploader.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
+                                    UploadController.instance.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
                                     Destroy(coll.gameObject);
                                 }
                             }
@@ -191,7 +191,7 @@ public class ThrowingKnife : MonoBehaviour
                                 if (gameObject.layer != 10)
                                 {
                                     SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
-                                    uploader.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
+                                    UploadController.instance.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
                                     Destroy(coll.gameObject);
                                 }
                             }
@@ -212,7 +212,7 @@ public class ThrowingKnife : MonoBehaviour
                                 if (gameObject.layer != 10)
                                 {
                                     SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
-                                    uploader.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
+                                    UploadController.instance.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
                                     Destroy(coll.gameObject);
                                 }
                             }
@@ -229,7 +229,7 @@ public class ThrowingKnife : MonoBehaviour
                                 if (gameObject.layer != 10)
                                 {
                                     SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
-                                    uploader.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
+                                    UploadController.instance.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
                                     Destroy(coll.gameObject);
                                 }
                             }
@@ -246,7 +246,7 @@ public class ThrowingKnife : MonoBehaviour
                                 if (gameObject.layer != 10)
                                 {
                                     SpawnSpice(eBehaviour, spicePrefab, baseScript.targetEnemy.transform.position, baseScript.targetEnemy.transform.rotation);
-                                    uploader.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
+                                    UploadController.instance.SendKill((int)coll.gameObject.transform.position.x, (int)coll.gameObject.transform.position.z);
                                     Destroy(coll.gameObject);
                                 }
                             }
@@ -260,11 +260,11 @@ public class ThrowingKnife : MonoBehaviour
                     break;
             }
 
-                hit = true;
+            hit = true;
 
-                KnifeToGround();
+            KnifeToGround();
         }
-            
+
 
         if (coll.gameObject.tag == "Floor")
         {
@@ -280,7 +280,7 @@ public class ThrowingKnife : MonoBehaviour
             EmitSound();
         }
 
-        
+
     }
 
     void SpawnSpice(EnemyBehaviour eBehaviour, GameObject spicePrefab, Vector3 pos, Quaternion rot)

@@ -8,20 +8,19 @@ public class SendDeath : MonoBehaviour
 {
 
     public GameObject Zhib;
-    public GameObject uploader;
     // Start is called before the first frame update
     public void Send(int x,int z)
     {
-        StartCoroutine(uploader.GetComponent<UploadController>().SendDeath(x, z));
+        StartCoroutine(UploadController.instance.SendDeath(x, z));
     }
 
     void OnEnable()
     {
-        uploader.GetComponent<UploadController>().OnDeath += Send;
+        UploadController.instance.OnDeath += Send;
     }
 
     void OnDisable()
     {
-        uploader.GetComponent<UploadController>().OnDeath -= Send;
+        UploadController.instance.OnDeath -= Send;
     }
 }

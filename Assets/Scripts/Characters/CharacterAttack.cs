@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class CharacterAttack : MonoBehaviour
 {
-
-    public GameObject uploader;
-
     private CharacterBaseBehavior baseScript;
     private RaycastHit rayHit;
     private NavMeshAgent agent;
@@ -153,20 +150,20 @@ public class CharacterAttack : MonoBehaviour
                         {
                             case DecState.STILL:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
 
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.SEEKING:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.FOUND:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
                                 Destroy(enemyTarget);
                                 baseScript.hit = true;
                                 EmitSound();
@@ -178,19 +175,19 @@ public class CharacterAttack : MonoBehaviour
                         {
                             case DecState.STILL:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.SEEKING:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.FOUND:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
                                 Destroy(enemyTarget);
                                 baseScript.hit = true;
                                 EmitSound();
@@ -202,19 +199,19 @@ public class CharacterAttack : MonoBehaviour
                         {
                             case DecState.STILL:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.SEEKING:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.FOUND:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
                                 Destroy(enemyTarget);
                                 EmitSound();
                                 break;
@@ -230,19 +227,19 @@ public class CharacterAttack : MonoBehaviour
                         {
                             case DecState.STILL:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.SEEKING:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.FOUND:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
                                 Destroy(enemyTarget);
                                 baseScript.hit = true;
                                 EmitSound();
@@ -254,19 +251,19 @@ public class CharacterAttack : MonoBehaviour
                         {
                             case DecState.STILL:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.SEEKING:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.FOUND:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
                                 Destroy(enemyTarget);
                                 baseScript.hit = true;
                                 EmitSound();
@@ -278,19 +275,19 @@ public class CharacterAttack : MonoBehaviour
                         {
                             case DecState.STILL:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.SEEKING:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
                                 Destroy(enemyTarget);
                                 break;
 
                             case DecState.FOUND:
                                 SpawnSpice(eBehaviour, spicePrefab, enemyTarget.transform.position, enemyTarget.transform.rotation);
-                                uploader.GetComponent<UploadController>().OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
+                                UploadController.instance.OnKill((int)enemyTarget.transform.position.x, (int)enemyTarget.transform.position.z);
                                 Destroy(enemyTarget);
                                 EmitSound();
                                 break;
