@@ -4,19 +4,24 @@ using System.Collections;
 
 public class HeatMapDrawer : MonoBehaviour
 {
+    public Material defaultMaterial;
+
+    Vector2 initialPos;
     [Range(1, 10)]
     public int gridDensity;
 
     float scale;
     Vector3 scaleMultiplier;
     Gradient colorGradient;
-    public Gradient customGradient;
+    public Gradient heatGradient;
+    public Gradient contrastGradient;
+    public Gradient constantGradient;
     GradientColorKey[] colorKey;
     GradientAlphaKey[] alphaKey;
     public Color defaultColor;
 
     public PrimitiveType primitiveType;
-    public bool drawByHeight,drawByWidth,drawByColor;
+    public bool drawByHeight,drawByWidth,drawByColor,drawByTransparency;
     [Range(0f, 1f)]
     public float thresholdDraw;
 
@@ -26,26 +31,17 @@ public class HeatMapDrawer : MonoBehaviour
         //gridsize
         //330,133
         //-13,-310
-        Vector2 initialPos = new Vector2(330, 133);
+        initialPos = new Vector2(330, 133);
         Vector2 gridSize = new Vector2(330 - (-13), 133 - (-310));
 
 
         //If the desity increases the scale of the primitive should decrease
-        float gridIncrement = (1f / gridDensity)*10;
-        scale = gridIncrement*0.9f;
+       
 
-        scaleMultiplier =new Vector3 (scale, scale, scale);
 
-        for (float i = 0; i < gridSize.x; i+=gridIncrement)
-        {
-            for(float j = 0; j < gridSize.y; j+=gridIncrement)
-            {
-                float value = Random.Range(1, 10);
-                DrawCube(initialPos.x-i,initialPos.y-j,value,drawByHeight,drawByWidth,drawByColor,thresholdDraw,primitiveType);
-                    
-            }
-        }
-    }
+        DrawGrid(gridSize);
+        
+    }   
 
     // Update is called once per frame
     void Update()
@@ -53,7 +49,36 @@ public class HeatMapDrawer : MonoBehaviour
         
     }
 
-    void DrawCube(float x,float y,float value,bool _drawByHeight,bool _drawbyWidth,bool _drawByColor,float _thresholdDraw, PrimitiveType _primitiveType)
+    void DrawWithoutGrid()
+    {
+
+    }
+
+    void DrawPath()
+    {
+
+    }
+
+    void DrawGrid(Vector2 _gridSize)
+    {
+        float gridIncrement = (1f / gridDensity) * 10;
+        scale = gridIncrement * 0.9f;
+
+        scaleMultiplier = new Vector3(scale, scale, scale);
+
+        for (float i = 0; i < _gridSize.x; i += gridIncrement)
+        {
+            for (float j = 0; j < _gridSize.y; j += gridIncrement)
+            {
+                float value = Random.Range(1, 10);
+                DrawCube(initialPos.x - i, initialPos.y - j, value, drawByHeight, drawByWidth, drawByColor,drawByTransparency, thresholdDraw, primitiveType);
+
+            }
+        }
+    }
+
+
+    void DrawCube(float x,float y,float value,bool _drawByHeight,bool _drawbyWidth,bool _drawByColor,bool _drawByTransparency,float _thresholdDraw, PrimitiveType _primitiveType)
     {
         if (value > _thresholdDraw * 10)
         {
@@ -64,36 +89,48 @@ public class HeatMapDrawer : MonoBehaviour
             GameObject indicator = GameObject.CreatePrimitive(_primitiveType);
             indicator.name = "Heat: " + value;
 
-            indicator.transform.position = new Vector3(x, 0.2f, y);
+            indicator.transform.position = new Vector3(x, 0.0f, y);
 
             indicator.transform.SetParent(transform);
 
 
-            if (drawByHeight)
+            if (_drawByHeight)
             {
-                scaleMultiplier = new Vector3(scale, scale * value/1, scale);
+                scaleMultiplier = new Vector3(scale, scale * value*0.1f, scale);
                 indicator.transform.localScale = scaleMultiplier;
 
                 //offset object so is not displayed below the map
-                Vector3 offset=new Vector3(0,0,0);
-                indicator.transform.position += offset;
+                Vector3 offset=new Vector3(1,20,1);
+                indicator.transform.position = Vector3.Scale(indicator.transform.position,offset);
             }
 
-            if (drawByWidth)
+            if (_drawbyWidth)
             {
                 float widthMultiplier =value/10;
                 scaleMultiplier = new Vector3(scale * widthMultiplier, scale, scale * widthMultiplier);
                 indicator.transform.localScale = scaleMultiplier;
-            }   
+            }
 
-            if (drawByColor)
+            indicator.GetComponent<Renderer>().material = defaultMaterial;
+            if (_drawByColor)
             {
-                Material newMaterial = new Material(Shader.Find("Standard"));
-                newMaterial.color = customGradient.Evaluate(value / 10f);
-                indicator.GetComponent<Renderer>().material = newMaterial;
+                indicator.GetComponent<Renderer>().material.color = constantGradient.Evaluate(value / 10f);
             }
             else
+            {
                 indicator.GetComponent<Renderer>().material.color = defaultColor;
+            }
+
+            if (_drawByTransparency)
+            {
+                Color transparentColor = indicator.GetComponent<Renderer>().material.color;
+                transparentColor.a = value/10f;
+                indicator.GetComponent<Renderer>().material.color = transparentColor;
+            }
+            
+
+            //material transprency
+            
 
             //planes are bigger than other primitives
             if (_primitiveType == PrimitiveType.Plane)
