@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WeirdingWay : MonoBehaviour
 {
-
+    public UploadController uploader;
     private CharacterBaseBehavior baseScript;
     private Camera playerCamera;
     private NavMeshAgent agent;
@@ -217,6 +217,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= harkonnenUnaware)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
+                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -229,6 +230,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= harkonnenAware)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
+                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -241,6 +243,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= harkonnenDetected)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
+                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
 
                             }
@@ -258,6 +261,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= sardaukarUnaware)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
+                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
 
                             }
@@ -271,6 +275,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= sardaukarAware)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
+                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -283,6 +288,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= sardaukarDetected)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
+                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -299,6 +305,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= mentatUnaware)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
+                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -311,6 +318,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= mentatAware)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
+                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
                             }
                             else
@@ -323,6 +331,7 @@ public class WeirdingWay : MonoBehaviour
                             if (Random.value <= mentatDetected)
                             {
                                 SpawnSpice(eBehaviour, spicePrefab, targetedEnemy.transform.position, targetedEnemy.transform.rotation);
+                                uploader.SendKill((int)targetedEnemy.transform.position.x, (int)targetedEnemy.transform.position.z);
                                 Destroy(targetedEnemy);
                             }
                             else
