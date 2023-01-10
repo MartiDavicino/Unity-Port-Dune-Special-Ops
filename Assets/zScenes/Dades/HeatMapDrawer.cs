@@ -4,46 +4,42 @@ using System.Collections;
 
 public class HeatMapDrawer : MonoBehaviour
 {
+    [Range(1f, 10f)]
+    public float gridDensity;
 
     float scale;
     Vector3 scaleMultiplier;
     Gradient colorGradient;
+    public Gradient customGradient;
     GradientColorKey[] colorKey;
     GradientAlphaKey[] alphaKey;
+    public Color defaultColor;
 
+    public PrimitiveType primitiveType;
+    public bool drawByHeight,drawByWidth,drawByColor;
+    [Range(0f, 1f)]
+    public float thresholdDraw;
 
     // Start is called before the first frame update
     void Start()
     {
-        int gridSize = 30;
+        //gridsize
+        //330,133
+        //-13,-310
+        Vector2 initialPos = new Vector2(330, 133);
+        Vector2 gridSize = new Vector2(330 - (-13), 133 - (-310));
 
-        scale = 10f;
+        //If the desity increases the scale of the primitive should decrease
+
+        scale = 1 / gridDensity;
         scaleMultiplier =new Vector3 (scale, scale, scale);
 
-        colorGradient = new Gradient ();
-
-        colorKey = new GradientColorKey[2];
-        colorKey[0].color = Color.green;
-        colorKey[0].time = 0.0f;
-        colorKey[1].color = Color.red;
-        colorKey[1].time = 1.0f;
-
-        alphaKey = new GradientAlphaKey[2];
-
-        alphaKey[0].alpha = 0.2f;
-        alphaKey[0].time = 0.0f;
-        alphaKey[1].alpha = 1.0f;
-        alphaKey[1].time = 0.8f;
-        colorGradient.SetKeys(colorKey, alphaKey);
-
-
-        for (int i = 0; i < gridSize; i++)
+        for (int i = 0; i < gridSize.x; i++)
         {
-            for(int j = 0; j < gridSize; j++)
+            for(int j = 0; j < gridSize.y; j++)
             {
                 float value = Random.Range(1, 10);
-                DrawCube(i * 10, j * 10,value);
-                //Debug.Log("Cube drawn");
+                DrawCube(initialPos.x-i,initialPos.y-j,value,drawByHeight,drawByWidth,drawByColor,thresholdDraw,primitiveType);
                     
             }
         }
@@ -55,24 +51,48 @@ public class HeatMapDrawer : MonoBehaviour
         
     }
 
-    void DrawCube(float x,float y,float value)
+    void DrawCube(float x,float y,float value,bool _drawByHeight,bool _drawbyWidth,bool _drawByColor,float _thresholdDraw, PrimitiveType _primitiveType)
     {
-        scaleMultiplier = new Vector3(scale, scale*value, scale);
-       
-        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.name = "Heat: "+value;
-
-        cube.transform.position = new Vector3(x,0,y);
-        cube.transform.localScale = scaleMultiplier;
+        if (value > _thresholdDraw * 10)
+        {
+            scaleMultiplier = new Vector3(scale, scale, scale);
 
 
-        Material newMaterial = new Material(Shader.Find("Standard"));
-        newMaterial.color = colorGradient.Evaluate(value/10f);
-        cube.GetComponent<Renderer>().material = newMaterial;
+            //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Plane);
+            GameObject indicator = GameObject.CreatePrimitive(_primitiveType);
+            indicator.name = "Heat: " + value;
+
+            indicator.transform.position = new Vector3(x, 0.2f, y);
+
+
+            if (drawByHeight)
+            {
+                scaleMultiplier = new Vector3(scale, scale * value, scale);
+                indicator.transform.localScale = scaleMultiplier;
+
+            }
+            if (drawByWidth)
+            {
+                float widthMultiplier = value * 0.05f;
+                scaleMultiplier = new Vector3(scale * widthMultiplier, scale, scale * widthMultiplier);
+                indicator.transform.localScale = scaleMultiplier;
+            }
+
+            if (drawByColor)
+            {
+                Material newMaterial = new Material(Shader.Find("Standard"));
+                newMaterial.color = customGradient.Evaluate(value / 10f);
+                indicator.GetComponent<Renderer>().material = newMaterial;
+            }
+            else
+                indicator.GetComponent<Renderer>().material.color = defaultColor;
+
+
+        }
+
         
-        //newMaterial.color=colorGradient.Evaluate(value*10f);
-
-        //cube.GetComponent<Renderer>().material = newMaterial;
+        
+     
         
     }
 }
