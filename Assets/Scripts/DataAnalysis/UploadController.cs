@@ -36,7 +36,7 @@ public class UploadController : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
 
-        Debug.Log("Sending Position...");
+        //Debug.Log("Sending Position...");
 
         int x = _x;
         int z = _z;

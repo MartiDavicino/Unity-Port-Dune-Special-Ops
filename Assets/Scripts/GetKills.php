@@ -14,7 +14,7 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
-$sql = "SELECT PosID, x, z FROM Positions ";
+$sql = "SELECT KillsId, x, z FROM Kills ";
 
 $result = $conn->query($sql);
 
@@ -24,7 +24,7 @@ if($result->num_rows > 0)
     while($row = $result->fetch_assoc())
     {
         $rows[] = $row;
-        echo $row["PosID"]. "," . $row["x"] . "," . $row["z"] ."*";
+        echo $row["KillsId"]. "," . $row["x"] . "," . $row["z"] ."*";
     }
     //echo json_encode($rows);
 }
@@ -32,4 +32,5 @@ if($result->num_rows > 0)
 $conn->close();
 
 ?>
+
 
