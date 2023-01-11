@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 
 public class HeatMapDrawer : MonoBehaviour
 {
@@ -23,7 +25,7 @@ public class HeatMapDrawer : MonoBehaviour
     public Color defaultColor;
 
     public PrimitiveType primitiveType;
-    public bool drawByHeight,drawByWidth,drawByColor,drawByTransparency;
+    public bool drawByHeight, drawByWidth, drawByColor, drawByTransparency;
     [Range(0f, 1f)]
     public float thresholdDraw;
 
@@ -49,82 +51,32 @@ public class HeatMapDrawer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void DrawPositionsFromData()
     {
         if (downloadInstance.positionList.Count > 0)
         {
-            int round = 10;
-            bool[,] positionOcupied = new bool[(int)gridSize.x,(int)gridSize.y];
-            int[,] timesOcupied = new int[(int)gridSize.x, (int)gridSize.y];
-            
-
-            Debug.Log("Draw from controller from list with "+downloadInstance.positionList.Count+" positions");
-
-            //Set to Zero
-            for (int i = 0; i < (int)gridSize.x; i++)
-            {
-                for (int j = 0; j < (int)gridSize.y; j++)
-                {
-                    timesOcupied[i, j] = 0;
-                }
-            }
+            Debug.Log("Draw from controller from list with " + downloadInstance.positionList.Count + " positions");
 
             //Add all the visited times to each tile
-            for (int i = 0; i < downloadInstance.positionList.Count; i++)
+            foreach (PositionData element in downloadInstance.positionList)
             {
-                //timesOcupied[RoundBy(downloadInstance.positionList[i].x, round), RoundBy(downloadInstance.positionList[i].z, round)]++;
-                //Debug.Log("Pillao");
-
-
-                float x = RoundBy(downloadInstance.positionList[i].x, round);
-                float z = RoundBy(downloadInstance.positionList[i].z, round);
-
-                timesOcupied[(int)x, (int)z] = timesOcupied[(int)x, (int)z] + 1;
-
-                Debug.Log("Pillao");
-            }
-            Debug.Log("Mas y masHasta aqui");
-
-            //int mostVisited = 0;
-            ////Count the most visited tile
-            //for (int i = 0; i < (int)gridSize.x; i++)
-            //{
-            //    for (int j = 0; j < (int)gridSize.y; j++)
-            //    {
-            //        if(timesOcupied[i,j]>mostVisited)
-            //            mostVisited = timesOcupied[i,j];
-            //    }
-            //}
-            //Debug.Log("Most visited times: " +mostVisited);
-
-            //convert to grid
-            for (int i = 0; i < downloadInstance.positionList.Count; i++)
-            {
-                Debug.Log("Drawing pos");
-                //DrawCube(downloadInstance.posDatList[i].x, downloadInstance.posDatList[i].z, 1, drawByHeight, drawByWidth, drawByColor, drawByTransparency, thresholdDraw, primitiveType);
-
-                if(positionOcupied[RoundBy(downloadInstance.positionList[i].x, round), RoundBy(downloadInstance.positionList[i].z, round)] == false)
-                    DrawSimpleCube(downloadInstance.positionList[i].x, downloadInstance.positionList[i].z);
-
-                positionOcupied[RoundBy(downloadInstance.positionList[i].x, round), RoundBy(downloadInstance.positionList[i].z, round)] = true;
+                DrawSimpleCube(element.x, element.z, element.PosID);
 
             }
+            // for (int i = 0; i < downloadInstance.positionList.Count; i++)
+            // {
+            //     Debug.Log("Drawing pos");
+            //     DrawSimpleCube(downloadInstance.positionList.ElementAt(i).x, downloadInstance.positionList.ElementAt(i).x, downloadInstance.positionList.ElementAt(i).PosID);
+            // }
         }
         else
             Debug.Log("Positions list still not loaded");
-        
-    }
-    int RoundBy(float number,int r)
-    {
-        int myNumber=(int)number;
-        myNumber=myNumber / r;
-        myNumber=myNumber * r;
 
-        return myNumber;
     }
+
 
     void DrawWithoutGrid()
     {
@@ -148,14 +100,14 @@ public class HeatMapDrawer : MonoBehaviour
             for (float j = 0; j < _gridSize.y; j += gridIncrement)
             {
                 float value = Random.Range(1, 10);
-                DrawCube(initialPos.x - i, initialPos.y - j, value, drawByHeight, drawByWidth, drawByColor,drawByTransparency, thresholdDraw, primitiveType);
+                DrawCube(initialPos.x - i, initialPos.y - j, value, drawByHeight, drawByWidth, drawByColor, drawByTransparency, thresholdDraw, primitiveType);
 
             }
         }
     }
 
 
-    void DrawCube(float x,float y,float value,bool _drawByHeight,bool _drawbyWidth,bool _drawByColor,bool _drawByTransparency,float _thresholdDraw, PrimitiveType _primitiveType)
+    void DrawCube(float x, float y, float value, bool _drawByHeight, bool _drawbyWidth, bool _drawByColor, bool _drawByTransparency, float _thresholdDraw, PrimitiveType _primitiveType)
     {
         if (value > _thresholdDraw * 10)
         {
@@ -173,17 +125,17 @@ public class HeatMapDrawer : MonoBehaviour
 
             if (_drawByHeight)
             {
-                scaleMultiplier = new Vector3(scale, scale * value*0.1f, scale);
+                scaleMultiplier = new Vector3(scale, scale * value * 0.1f, scale);
                 indicator.transform.localScale = scaleMultiplier;
 
                 //offset object so is not displayed below the map
-                Vector3 offset=new Vector3(1,20,1);
-                indicator.transform.position = Vector3.Scale(indicator.transform.position,offset);
+                Vector3 offset = new Vector3(1, 20, 1);
+                indicator.transform.position = Vector3.Scale(indicator.transform.position, offset);
             }
 
             if (_drawbyWidth)
             {
-                float widthMultiplier =value/10;
+                float widthMultiplier = value / 10;
                 scaleMultiplier = new Vector3(scale * widthMultiplier, scale, scale * widthMultiplier);
                 indicator.transform.localScale = scaleMultiplier;
             }
@@ -201,13 +153,13 @@ public class HeatMapDrawer : MonoBehaviour
             if (_drawByTransparency)
             {
                 Color transparentColor = indicator.GetComponent<Renderer>().material.color;
-                transparentColor.a = value/10f;
+                transparentColor.a = value / 10f;
                 indicator.GetComponent<Renderer>().material.color = transparentColor;
             }
-            
+
 
             //material transprency
-            
+
 
             //planes are bigger than other primitives
             if (_primitiveType == PrimitiveType.Plane)
@@ -219,12 +171,12 @@ public class HeatMapDrawer : MonoBehaviour
         }
     }
 
-    void DrawSimpleCube(float _x,float _z)
+    void DrawSimpleCube(float _x, float _z, int times)
     {
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         cube.transform.position = new Vector3(_x, 0.0f, _z);
         cube.transform.SetParent(transform);
-        cube.transform.localScale = new Vector3(1,100,1);
+        cube.transform.localScale = new Vector3(1, times, 1);
 
     }
 }

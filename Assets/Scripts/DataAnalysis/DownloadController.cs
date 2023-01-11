@@ -5,13 +5,14 @@ using UnityEngine.AI;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UIElements;
+using System;
 
 public class PositionData
 {
     public int PosID = 0;
-    public float x = 0f;
-    public float z = 0f;
-    public PositionData(int _id, float _x, float _z)
+    public int x = 0;
+    public int z = 0;
+    public PositionData(int _id, int _x, int _z)
     {
         PosID = _id;
         x = _x;
@@ -50,7 +51,7 @@ public class DeathsData
 public class DownloadController : MonoBehaviour
 {
 
-   
+
 
     public List<PositionData> positionList = new List<PositionData>();
     public List<KillData> killList = new List<KillData>();
@@ -93,9 +94,9 @@ public class DownloadController : MonoBehaviour
 
     public void PositionOut(PositionData _posData)
     {
-        Debug.Log(_posData.PosID);
-        Debug.Log(_posData.x);
-        Debug.Log(_posData.z);
+        // Debug.Log(_posData.PosID);
+        // Debug.Log(_posData.x);
+        // Debug.Log(_posData.z);
 
         if (!positionList.Contains(_posData))
             positionList.Add(_posData);
@@ -114,6 +115,15 @@ public class DownloadController : MonoBehaviour
         Debug.Log(_deathsData.deathID);
         Debug.Log(_deathsData.x);
         Debug.Log(_deathsData.z);
+    }
+
+    int RoundBy(float number, int r)
+    {
+        int myNumber = (int)number;
+        myNumber = myNumber / r;
+        myNumber = myNumber * r;
+
+        return myNumber;
     }
 
     IEnumerator GetPositions()
@@ -162,8 +172,17 @@ public class DownloadController : MonoBehaviour
                                     //check if try parse was succesfull
                                     if (n != 0)
                                     {
-                                        positionList.Add(new PositionData(int.Parse(positionInfo[0]), int.Parse(positionInfo[1]), int.Parse(positionInfo[2])));
-                                        PositionOut(positionList[y]);
+                                        int count = int.Parse(positionInfo[0]);
+                                        int x = int.Parse(positionInfo[1]);
+                                        int z = int.Parse(positionInfo[2]);
+
+                                        //TODO: Avoid Duplicates!
+                                        if (!positionList.Contains(new PositionData(count, x, z)))
+                                        {
+                                            Debug.Log("COunt" + count.ToString());
+                                            positionList.Add(new PositionData(count, x, z));
+                                            PositionOut(positionList[y]);
+                                        }
                                     }
                                 }
                             }
@@ -281,7 +300,6 @@ public class DownloadController : MonoBehaviour
         }
     }
 }
-
 
 
 
