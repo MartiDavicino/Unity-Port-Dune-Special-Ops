@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
+using System.Linq;
 
 public class HeatMapDrawer : MonoBehaviour
 {
@@ -52,25 +53,30 @@ public class HeatMapDrawer : MonoBehaviour
         
     }
 
+    public class PositionInfo
+    {
+        public int x;
+        public int z;
+        public int times = 1;
+        public PositionInfo(int _x, int _z)
+        {
+            x = _x;
+            z = _z;
+        }
+
+    }
+
     public void DrawPositionsFromData()
     {
         if (downloadInstance.positionList.Count > 0)
         {
             int round = 10;
-            bool[,] positionOcupied = new bool[(int)gridSize.x,(int)gridSize.y];
-            int[,] timesOcupied = new int[(int)gridSize.x, (int)gridSize.y];
-            
+            //bool[,] positionOcupied = new bool[(int)gridSize.x,(int)gridSize.y];
+            //int[,] timesOcupied = new int[(int)gridSize.x, (int)gridSize.y];
+
+            List<PositionInfo> posList = new List<PositionInfo>();
 
             Debug.Log("Draw from controller from list with "+downloadInstance.positionList.Count+" positions");
-
-            //Set to Zero
-            for (int i = 0; i < (int)gridSize.x; i++)
-            {
-                for (int j = 0; j < (int)gridSize.y; j++)
-                {
-                    timesOcupied[i, j] = 0;
-                }
-            }
 
             //Add all the visited times to each tile
             for (int i = 0; i < downloadInstance.positionList.Count; i++)
@@ -79,38 +85,30 @@ public class HeatMapDrawer : MonoBehaviour
                 //Debug.Log("Pillao");
 
 
-                float x = RoundBy(downloadInstance.positionList[i].x, round);
-                float z = RoundBy(downloadInstance.positionList[i].z, round);
+                int x = RoundBy(downloadInstance.positionList[i].x, round);
+                int z = RoundBy(downloadInstance.positionList[i].z, round);
 
-                timesOcupied[(int)x, (int)z] = timesOcupied[(int)x, (int)z] + 1;
+                PositionInfo temporal = new PositionInfo(x,z);
 
-                Debug.Log("Pillao");
+
+                if (posList.Contains(temporal))
+                {
+                    int index = posList.IndexOf(temporal);
+                    posList[index].times += 1;
+                }
+                else
+                {
+                    posList.Add(temporal);
+                }
+
+
             }
-            Debug.Log("Mas y masHasta aqui");
 
-            //int mostVisited = 0;
-            ////Count the most visited tile
-            //for (int i = 0; i < (int)gridSize.x; i++)
-            //{
-            //    for (int j = 0; j < (int)gridSize.y; j++)
-            //    {
-            //        if(timesOcupied[i,j]>mostVisited)
-            //            mostVisited = timesOcupied[i,j];
-            //    }
-            //}
-            //Debug.Log("Most visited times: " +mostVisited);
 
-            //convert to grid
-            for (int i = 0; i < downloadInstance.positionList.Count; i++)
+            for (int i = 0; i < posList.Count; i++)
             {
                 Debug.Log("Drawing pos");
-                //DrawCube(downloadInstance.posDatList[i].x, downloadInstance.posDatList[i].z, 1, drawByHeight, drawByWidth, drawByColor, drawByTransparency, thresholdDraw, primitiveType);
-
-                if(positionOcupied[RoundBy(downloadInstance.positionList[i].x, round), RoundBy(downloadInstance.positionList[i].z, round)] == false)
-                    DrawSimpleCube(downloadInstance.positionList[i].x, downloadInstance.positionList[i].z);
-
-                positionOcupied[RoundBy(downloadInstance.positionList[i].x, round), RoundBy(downloadInstance.positionList[i].z, round)] = true;
-
+                DrawSimpleCube(posList[i].x, posList[i].z, posList[i].times);
             }
         }
         else
@@ -219,12 +217,12 @@ public class HeatMapDrawer : MonoBehaviour
         }
     }
 
-    void DrawSimpleCube(float _x,float _z)
+    void DrawSimpleCube(float _x,float _z,int times)
     {
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         cube.transform.position = new Vector3(_x, 0.0f, _z);
         cube.transform.SetParent(transform);
-        cube.transform.localScale = new Vector3(1,100,1);
+        cube.transform.localScale = new Vector3(1,times,1);
 
     }
 }

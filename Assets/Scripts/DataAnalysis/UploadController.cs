@@ -42,20 +42,25 @@ public class UploadController : MonoBehaviour
         int x = _x;
         int z = _z;
 
-        WWWForm form = new WWWForm();
-        form.AddField("x", x);
-        form.AddField("z", z);
-
-        using (var request = UnityWebRequest.Post("https://citmalumnes.upc.es/~aitoram1/Delivery3/SendPosition.php", form))
+        if (x != 7 && z != 101 || x != 262 && z != 44)
         {
-            request.downloadHandler = new DownloadHandlerBuffer();
+            WWWForm form = new WWWForm();
+            form.AddField("x", x);
+            form.AddField("z", z);
 
-            yield return request.SendWebRequest();
-            if (request.result != UnityWebRequest.Result.Success)
+            using (var request = UnityWebRequest.Post("https://citmalumnes.upc.es/~aitoram1/Delivery3/SendPosition.php", form))
             {
-                Debug.Log(request.error);
+                request.downloadHandler = new DownloadHandlerBuffer();
+
+                yield return request.SendWebRequest();
+                if (request.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(request.error);
+                }
             }
         }
+
+        
     }
 
     //UploadSession

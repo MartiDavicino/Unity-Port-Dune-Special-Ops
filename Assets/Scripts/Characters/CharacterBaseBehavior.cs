@@ -89,7 +89,7 @@ public class CharacterBaseBehavior : MonoBehaviour
     private int initHealth;
     ///////////////////////////////////////////////
 
-    public float updateInterval = 100.0F;
+    public float updateInterval = 50.0F;
     private double lastInterval;
     private int frames;
     private float fps;
