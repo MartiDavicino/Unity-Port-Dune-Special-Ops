@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 
 public class HeatMapDrawer : MonoBehaviour
 {
@@ -53,17 +54,18 @@ public class HeatMapDrawer : MonoBehaviour
         
     }
 
-    public class PositionInfo
+
+    public class FinalInfo
     {
         public int x;
         public int z;
-        public int times = 1;
-        public PositionInfo(int _x, int _z)
+        public int times;
+        public FinalInfo(int _x, int _z, int _times)
         {
             x = _x;
             z = _z;
+            times = _times;
         }
-
     }
 
     public void DrawPositionsFromData()
@@ -71,44 +73,26 @@ public class HeatMapDrawer : MonoBehaviour
         if (downloadInstance.positionList.Count > 0)
         {
             int round = 10;
-            //bool[,] positionOcupied = new bool[(int)gridSize.x,(int)gridSize.y];
-            //int[,] timesOcupied = new int[(int)gridSize.x, (int)gridSize.y];
 
-            List<PositionInfo> posList = new List<PositionInfo>();
+            List<FinalInfo> finalList = new List<FinalInfo>();
 
             Debug.Log("Draw from controller from list with "+downloadInstance.positionList.Count+" positions");
 
             //Add all the visited times to each tile
             for (int i = 0; i < downloadInstance.positionList.Count; i++)
             {
-                //timesOcupied[RoundBy(downloadInstance.positionList[i].x, round), RoundBy(downloadInstance.positionList[i].z, round)]++;
-                //Debug.Log("Pillao");
-
-
                 int x = RoundBy(downloadInstance.positionList[i].x, round);
                 int z = RoundBy(downloadInstance.positionList[i].z, round);
 
-                PositionInfo temporal = new PositionInfo(x,z);
+                FinalInfo temporal = new FinalInfo(x, z, downloadInstance.positionList[i].posCount);
 
-
-                if (posList.Contains(temporal))
-                {
-                    int index = posList.IndexOf(temporal);
-                    posList[index].times += 1;
-                }
-                else
-                {
-                    posList.Add(temporal);
-                }
-
-
+                finalList.Add(temporal);
             }
 
-
-            for (int i = 0; i < posList.Count; i++)
+            for (int i = 0; i < finalList.Count; i++)
             {
                 Debug.Log("Drawing pos");
-                DrawSimpleCube(posList[i].x, posList[i].z, posList[i].times);
+                DrawSimpleCube(finalList[i].x, finalList[i].z, finalList[i].times);
             }
         }
         else

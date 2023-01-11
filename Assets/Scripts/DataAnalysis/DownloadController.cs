@@ -5,15 +5,16 @@ using UnityEngine.AI;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UIElements;
+using System.Security.Cryptography;
 
 public class PositionData
 {
-    public int PosID = 0;
+    public int posCount = 0;
     public float x = 0f;
     public float z = 0f;
-    public PositionData(int _id, float _x, float _z)
+    public PositionData( float _x, float _z, int count)
     {
-        PosID = _id;
+        posCount = count;
         x = _x;
         z = _z;
     }
@@ -23,12 +24,12 @@ public class PositionData
 
 public class KillData
 {
-    public int killID = 0;
+    public int killCount = 0;
     public float x = 0f;
     public float z = 0f;
-    public KillData(int _killID, float _x, float _z)
+    public KillData(float _x, float _z, int _killCount)
     {
-        killID = _killID;
+        killCount = _killCount;
         x = _x;
         z = _z;
     }
@@ -36,12 +37,12 @@ public class KillData
 
 public class DeathsData
 {
-    public int deathID = 0;
+    public int deathCount = 0;
     public float x = 0f;
     public float z = 0f;
-    public DeathsData(int _deathID, float _x, float _z)
+    public DeathsData(float _x, float _z,int _deathCount)
     {
-        deathID = _deathID;
+        deathCount = _deathCount;
         x = _x;
         z = _z;
     }
@@ -93,7 +94,7 @@ public class DownloadController : MonoBehaviour
 
     public void PositionOut(PositionData _posData)
     {
-        Debug.Log(_posData.PosID);
+        Debug.Log(_posData.posCount);
         Debug.Log(_posData.x);
         Debug.Log(_posData.z);
 
@@ -102,7 +103,7 @@ public class DownloadController : MonoBehaviour
     }
     public void KillsOut(KillData _killData)
     {
-        Debug.Log(_killData.killID);
+        Debug.Log(_killData.killCount);
         Debug.Log(_killData.x);
         Debug.Log(_killData.z);
 
@@ -111,7 +112,7 @@ public class DownloadController : MonoBehaviour
     }
     public void DeathsOut(DeathsData _deathsData)
     {
-        Debug.Log(_deathsData.deathID);
+        Debug.Log(_deathsData.deathCount);
         Debug.Log(_deathsData.x);
         Debug.Log(_deathsData.z);
     }
@@ -162,7 +163,7 @@ public class DownloadController : MonoBehaviour
                                     //check if try parse was succesfull
                                     if (n != 0)
                                     {
-                                        positionList.Add(new PositionData(int.Parse(positionInfo[0]), int.Parse(positionInfo[1]), int.Parse(positionInfo[2])));
+                                        positionList.Add(new PositionData(int.Parse(positionInfo[2]), int.Parse(positionInfo[0]), int.Parse(positionInfo[1])));
                                         PositionOut(positionList[y]);
                                     }
                                 }
@@ -214,7 +215,7 @@ public class DownloadController : MonoBehaviour
                                     //check if try parse was succesfull
                                     if (n != 0)
                                     {
-                                        killList.Add(new KillData(int.Parse(killsInfo[0]), int.Parse(killsInfo[1]), int.Parse(killsInfo[2])));
+                                        killList.Add(new KillData(int.Parse(killsInfo[2]), int.Parse(killsInfo[0]), int.Parse(killsInfo[1])));
                                         KillsOut(killList[y]);
                                     }
                                 }
@@ -268,7 +269,7 @@ public class DownloadController : MonoBehaviour
                                     //check if try parse was succesfull
                                     if (n != 0)
                                     {
-                                        DeathsList.Add(new DeathsData(int.Parse(deathsInfo[0]), int.Parse(deathsInfo[1]), int.Parse(deathsInfo[2])));
+                                        DeathsList.Add(new DeathsData(int.Parse(deathsInfo[2]), int.Parse(deathsInfo[0]), int.Parse(deathsInfo[1])));
                                         // DeathsOut(DeathsList[y]);
                                     }
                                 }
