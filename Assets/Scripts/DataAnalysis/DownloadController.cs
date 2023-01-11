@@ -49,6 +49,28 @@ public class DeathsData
 
 public class DownloadController : MonoBehaviour
 {
+
+   
+
+    public List<PositionData> positionList = new List<PositionData>();
+    public List<KillData> killList = new List<KillData>();
+
+
+    private static DownloadController downloadInstance;
+
+    public static DownloadController MyDownloadInstance
+    {
+        get
+        {
+            if (downloadInstance == null)
+            {
+                downloadInstance = FindObjectOfType<DownloadController>();
+            }
+            return downloadInstance;
+        }
+
+
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -74,12 +96,18 @@ public class DownloadController : MonoBehaviour
         Debug.Log(_posData.PosID);
         Debug.Log(_posData.x);
         Debug.Log(_posData.z);
+
+        if (!positionList.Contains(_posData))
+            positionList.Add(_posData);
     }
     public void KillsOut(KillData _killData)
     {
         Debug.Log(_killData.killID);
         Debug.Log(_killData.x);
         Debug.Log(_killData.z);
+
+        if (!killList.Contains(_killData))
+            killList.Add(_killData);
     }
     public void DeathsOut(DeathsData _deathsData)
     {
@@ -105,7 +133,6 @@ public class DownloadController : MonoBehaviour
             }
             else
             {
-                List<PositionData> positionData = new List<PositionData>();
 
                 // Show results as text
                 //Debug.Log(www.downloadHandler.text);
@@ -135,8 +162,8 @@ public class DownloadController : MonoBehaviour
                                     //check if try parse was succesfull
                                     if (n != 0)
                                     {
-                                        positionData.Add(new PositionData(int.Parse(positionInfo[0]), int.Parse(positionInfo[1]), int.Parse(positionInfo[2])));
-                                        PositionOut(positionData[y]);
+                                        positionList.Add(new PositionData(int.Parse(positionInfo[0]), int.Parse(positionInfo[1]), int.Parse(positionInfo[2])));
+                                        PositionOut(positionList[y]);
                                     }
                                 }
                             }
@@ -159,7 +186,6 @@ public class DownloadController : MonoBehaviour
             }
             else
             {
-                List<KillData> KillList = new List<KillData>();
 
                 // Show results as text
                 //Debug.Log(www.downloadHandler.text);
@@ -188,8 +214,8 @@ public class DownloadController : MonoBehaviour
                                     //check if try parse was succesfull
                                     if (n != 0)
                                     {
-                                        KillList.Add(new KillData(int.Parse(killsInfo[0]), int.Parse(killsInfo[1]), int.Parse(killsInfo[2])));
-                                        KillsOut(KillList[y]);
+                                        killList.Add(new KillData(int.Parse(killsInfo[0]), int.Parse(killsInfo[1]), int.Parse(killsInfo[2])));
+                                        KillsOut(killList[y]);
                                     }
                                 }
                             }
