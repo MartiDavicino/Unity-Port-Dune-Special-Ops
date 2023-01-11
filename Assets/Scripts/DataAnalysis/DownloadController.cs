@@ -136,7 +136,7 @@ public class DownloadController : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Post("https://citmalumnes.upc.es/~aitoram1/Delivery3/GetPositions.php", form))
         {
             yield return www.SendWebRequest();
-
+            Debug.Log("starting download...");
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);

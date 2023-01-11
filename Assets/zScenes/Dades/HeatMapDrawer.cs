@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using System.Xml.Linq;
 
 public class HeatMapDrawer : MonoBehaviour
 {
@@ -61,10 +62,21 @@ public class HeatMapDrawer : MonoBehaviour
             Debug.Log("Draw from controller from list with " + downloadInstance.positionList.Count + " positions");
 
             //Add all the visited times to each tile
-            foreach (PositionData element in downloadInstance.positionList)
-            {
-                DrawSimpleCube(element.x, element.z, element.PosID);
+            //foreach (PositionData element in downloadInstance.positionList)
+            //{
 
+
+            //    int index = Random.Range(0, downloadInstance.positionList.Count());
+
+            //    DrawSimpleCube(element.x, element.z, element.PosID);
+
+            //}
+
+            for(int i = 0; i< 1000; i++)
+            {
+                int index = Random.Range(0, downloadInstance.positionList.Count());
+
+                DrawSimpleCube(downloadInstance.positionList[index].x, downloadInstance.positionList[index].z, downloadInstance.positionList[index].PosID);
             }
             // for (int i = 0; i < downloadInstance.positionList.Count; i++)
             // {
