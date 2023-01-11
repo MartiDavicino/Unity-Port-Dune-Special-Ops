@@ -66,6 +66,7 @@ public class GeneralManager : MonoBehaviour
                 {
                     Debug.Log(zhibBase.transform.position.x);
                     UploadController.instance.OnDeath((int)zhibBase.transform.position.x, (int)zhibBase.transform.position.z);
+                    Debug.Log(zhibBase.transform.position.x);
 
                     if (zhib == cameraScript.focusedPlayer)
                     {

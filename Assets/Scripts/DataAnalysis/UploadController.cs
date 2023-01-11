@@ -11,6 +11,7 @@ public class UploadController : MonoBehaviour
     //Upload Player
     private static UploadController uploadController;
 
+    public SendDeath senderOfDeath;
     public static UploadController instance
     {
         get
@@ -87,7 +88,6 @@ public class UploadController : MonoBehaviour
 
     public IEnumerator SendDeath(int _x, int _z)
     {
-        yield return new WaitForEndOfFrame();
 
         Debug.Log("Sending Death...");
 
@@ -109,6 +109,8 @@ public class UploadController : MonoBehaviour
             }
 
         }
+        OnDeath -= senderOfDeath.SendDeath_;
+
     }
 }
 

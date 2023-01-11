@@ -10089,6 +10089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d8b6572e114a74aaa2339628d6c22e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  senderOfDeath: {fileID: 6868864156860664258}
 --- !u!4 &1575981304
 Transform:
   m_ObjectHideFlags: 0

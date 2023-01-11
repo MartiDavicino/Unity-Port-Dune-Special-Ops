@@ -1,8 +1,7 @@
-using UnityEngine;
-using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
-using System;
+using UnityEngine;
+
 
 public class SendDeath : MonoBehaviour
 {
@@ -13,12 +12,10 @@ public class SendDeath : MonoBehaviour
         UploadController.instance.OnDeath += SendDeath_;
     }
 
-    void OnDisable()
-    {
-        UploadController.instance.OnDeath -= SendDeath_;
-    }
-    void SendDeath_(int x, int z)
+
+    public void SendDeath_(int x, int z)
     {
         StartCoroutine(UploadController.instance.SendDeath(x, z));
+
     }
 }
