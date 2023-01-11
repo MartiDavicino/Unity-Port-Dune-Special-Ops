@@ -46,6 +46,7 @@ public class HeatMapDrawer : MonoBehaviour
         //scale
         gridIncrement = (1f / gridDensity) * 10;
         scale = gridIncrement * 0.9f;
+        scale = scale * 0.2f;
         scaleMultiplier = new Vector3(scale, scale, scale);
 
         //DrawGrid(gridSize);
@@ -68,51 +69,39 @@ public class HeatMapDrawer : MonoBehaviour
         {
             Debug.Log("Draw from controller from list with " + downloadInstance.positionList.Count + " positions");
 
-            int maxTimes = 0;
             //Look for max
-            
-            for(int i = 0;i<downloadInstance.positionList.Count;i++)
+            int maxTimes = 0;
+            for (int i = 0;i<downloadInstance.positionList.Count;i++)
             {
-                Debug.Log("Max times" + downloadInstance.positionList[i].PosID);
 
-                if (downloadInstance.positionList[0].PosID > maxTimes)
+                if (downloadInstance.positionList[i].PosID > maxTimes)
                 {
-                    maxTimes = downloadInstance.positionList[0].PosID;
+                    maxTimes = downloadInstance.positionList[i].PosID;
                 }
                 
             }
-
 
             //Add all the visited times to each tile
 
             foreach (PositionData element in downloadInstance.positionList)
             {
                 //DrawSimpleCube(element.x, element.z, element.PosID);
+                float normalized = element.PosID / maxTimes; 
+                Debug.Log("norm"+normalized);
 
                 DrawCube(element.x, element.z, element.PosID, drawByHeight, drawByWidth, drawByColor, drawByTransparency, thresholdDraw, primitiveType);
 
-                //foreach (PositionData element in downloadInstance.positionList)
-                //{
-
-
-                //    int index = Random.Range(0, downloadInstance.positionList.Count());
-
-                //    DrawSimpleCube(element.x, element.z, element.PosID);
-
-                //}
+                
             }
-            for(int i = 0; i< 1000; i++)
-            {
-                int index = Random.Range(0, downloadInstance.positionList.Count());
+            //for(int i = 0; i< 1000; i++)
+            //{
+            //    int index = Random.Range(0, downloadInstance.positionList.Count());
 
-                DrawSimpleCube(downloadInstance.positionList[index].x, downloadInstance.positionList[index].z, downloadInstance.positionList[index].PosID);
+            //    DrawSimpleCube(downloadInstance.positionList[index].x, downloadInstance.positionList[index].z, downloadInstance.positionList[index].PosID);
 
-            }
-            // for (int i = 0; i < downloadInstance.positionList.Count; i++)
-            // {
-            //     Debug.Log("Drawing pos");
-            //     DrawSimpleCube(downloadInstance.positionList.ElementAt(i).x, downloadInstance.positionList.ElementAt(i).x, downloadInstance.positionList.ElementAt(i).PosID);
-            // }
+
+            //}
+            
         }
         else
             Debug.Log("Positions list still not loaded");
