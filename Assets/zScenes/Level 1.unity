@@ -7956,9 +7956,9 @@ MonoBehaviour:
   defaultColor: {r: 0.8301887, g: 0.12061229, b: 0.69114715, a: 0}
   primitiveType: 3
   drawByHeight: 0
-  drawByWidth: 1
+  drawByWidth: 0
   drawByColor: 1
-  drawByTransparency: 1
+  drawByTransparency: 0
   thresholdDraw: 0
 --- !u!65 &1210355662
 BoxCollider:

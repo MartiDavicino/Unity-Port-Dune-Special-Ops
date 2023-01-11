@@ -16,6 +16,7 @@ public class HeatMapDrawer : MonoBehaviour
 
     float scale;
     Vector3 scaleMultiplier;
+    float gridIncrement;
     Gradient colorGradient;
     public Gradient heatGradient;
     public Gradient contrastGradient;
@@ -41,10 +42,16 @@ public class HeatMapDrawer : MonoBehaviour
         initialPos = new Vector2(330, 133);
         gridSize = new Vector2(330 - (-13), 133 - (-310));
 
+        //scale
+        gridIncrement = (1f / gridDensity) * 10;
+        scale = gridIncrement * 0.9f;
+        scaleMultiplier = new Vector3(scale, scale, scale);
+
         //DrawGrid(gridSize);
 
         downloadInstance = DownloadController.MyDownloadInstance;
         DrawPositionsFromData();
+
     }
 
 
@@ -60,11 +67,27 @@ public class HeatMapDrawer : MonoBehaviour
         {
             Debug.Log("Draw from controller from list with " + downloadInstance.positionList.Count + " positions");
 
+            int maxTimes = 0;
+            //Look for max
+            
+            for(int i = 0;i<downloadInstance.positionList.Count;i++)
+            {
+                Debug.Log("Max times" + downloadInstance.positionList[i].PosID);
+
+                if (downloadInstance.positionList[0].PosID > maxTimes)
+                {
+                    maxTimes = downloadInstance.positionList[0].PosID;
+                }
+                
+            }
+            
+
             //Add all the visited times to each tile
             foreach (PositionData element in downloadInstance.positionList)
             {
-                DrawSimpleCube(element.x, element.z, element.PosID);
-
+                //DrawSimpleCube(element.x, element.z, element.PosID);
+                
+                DrawCube(element.x, element.z, element.PosID, drawByHeight, drawByWidth, drawByColor, drawByTransparency, thresholdDraw, primitiveType);
             }
             // for (int i = 0; i < downloadInstance.positionList.Count; i++)
             // {
@@ -90,10 +113,7 @@ public class HeatMapDrawer : MonoBehaviour
 
     void DrawGrid(Vector2 _gridSize)
     {
-        float gridIncrement = (1f / gridDensity) * 10;
-        scale = gridIncrement * 0.9f;
-
-        scaleMultiplier = new Vector3(scale, scale, scale);
+        
 
         for (float i = 0; i < _gridSize.x; i += gridIncrement)
         {
