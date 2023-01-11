@@ -94,6 +94,10 @@ public class CharacterBaseBehavior : MonoBehaviour
     private int frames;
     private float fps;
 
+    private bool isdead = false;
+
+    public void setIsDead(bool value) { isdead = value; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -316,8 +320,9 @@ public class CharacterBaseBehavior : MonoBehaviour
             fps = (float)(frames / (timeNow - lastInterval));
             frames = 0;
             lastInterval = timeNow;
-           
-            UploadController.instance.OnMovement((int)playerAgent.transform.position.x, (int)playerAgent.transform.position.z);
+
+            if (playerHealth != 0)
+                UploadController.instance.OnMovement((int)playerAgent.transform.position.x, (int)playerAgent.transform.position.z);
         }
     }
     void OnGUI()

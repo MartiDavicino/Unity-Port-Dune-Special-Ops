@@ -31,7 +31,7 @@ public class GeneralManager : MonoBehaviour
 
     public bool gameLost;
 
-
+    private bool isdead = false;
 
 
     // Start is called before the first frame update
@@ -58,13 +58,13 @@ public class GeneralManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
             Application.Quit();
 
-        if (!gameLost)
+        if (!gameLost && !isdead)
         {
             if (zhib != null)
             {
                 if (zhibBase.playerHealth == 0)
                 {
-
+                    Debug.Log(zhibBase.transform.position.x);
                     UploadController.instance.OnDeath((int)zhibBase.transform.position.x, (int)zhibBase.transform.position.z);
 
                     if (zhib == cameraScript.focusedPlayer)
@@ -76,6 +76,7 @@ public class GeneralManager : MonoBehaviour
                     }
 
                     Destroy(zhib);
+                    isdead = true;
                 }
             }
 
