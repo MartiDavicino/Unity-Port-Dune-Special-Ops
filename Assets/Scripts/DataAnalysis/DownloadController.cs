@@ -44,8 +44,17 @@ public class DownloadController : MonoBehaviour
 
     public void GetPositionsData()
     {
-        //StartCoroutine(GetPositions());
+        StartCoroutine(GetPositions());
+    }
+
+    public void GetKillsData()
+    {
         StartCoroutine(GetKills());
+    }
+
+    public void GetDeathsData()
+    {
+        // StartCoroutine(GetDeaths());
     }
 
     public void KillsOut(KillData _killData)
