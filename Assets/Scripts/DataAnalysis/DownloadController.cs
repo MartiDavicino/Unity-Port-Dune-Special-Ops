@@ -17,8 +17,8 @@ public class PositionData
         x = _x;
         z = _z;
     }
-    
-   
+
+
 }
 
 public class KillData
@@ -39,7 +39,7 @@ public class DownloadController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     public void GetPositionsData()
@@ -62,6 +62,65 @@ public class DownloadController : MonoBehaviour
         //Debug.Log(_posData.z);
     }
 
+    IEnumerator GetPositions()
+    {
+        //get the data and put it in forms
+        WWWForm form = new WWWForm();
+        form.AddField("PosId", 0);
+
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://citmalumnes.upc.es/~aitoram1/Delivery3/GetPositions.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                List<PositionData> positionData = new List<PositionData>();
+
+                // Show results as text
+                //Debug.Log(www.downloadHandler.text);
+
+                // Or retrieve results as binary data
+                string rawResponse = www.downloadHandler.text;
+
+                //split the raw response with "*"
+                string[] positions = rawResponse.Split('*');
+
+                for (int i = 0; i < positions.Length; i++)
+                {
+                    if (positions[i] != "")
+                    {
+                        string[] positionInfo = positions[i].Split(",");
+                        //correct all the format errors of positionInfo
+
+
+                        for (int y = 0; y < positionInfo.Length; y++)
+                        {
+                            //check that positionInfo[y] is not empty or in the end of the string
+                            if (positionInfo[y] != "" && positionInfo[y] != " ")
+                            {
+                                //check if the positionInfo[y] is a number
+                                if (int.TryParse(positionInfo[y], out int n))
+                                {
+                                    //check if try parse was succesfull
+                                    if (n != 0)
+                                    {
+                                        positionData.Add(new PositionData(int.Parse(positionInfo[0]), int.Parse(positionInfo[1]), int.Parse(positionInfo[2])));
+                                        PositionOut(positionData[y]);
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
     IEnumerator GetKills()
     {
         using (UnityWebRequest www = UnityWebRequest.Get("https://citmalumnes.upc.es/~aitoram1/Delivery3/GetKills.php"))
@@ -115,15 +174,9 @@ public class DownloadController : MonoBehaviour
             }
         }
     }
-
-    IEnumerator GetPositions()
+    IEnumerator GetDeaths()
     {
-        //get the data and put it in forms
-        WWWForm form = new WWWForm();
-        form.AddField("PosId", 0);
-        
-        
-        using (UnityWebRequest www = UnityWebRequest.Post("https://citmalumnes.upc.es/~aitoram1/Delivery3/GetPositions.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Get("https://citmalumnes.upc.es/~aitoram1/Delivery3/GetDeaths.php"))
         {
             yield return www.SendWebRequest();
 
@@ -133,7 +186,7 @@ public class DownloadController : MonoBehaviour
             }
             else
             {
-                List<PositionData> positionData = new List<PositionData>();
+                List<KillData> KillList = new List<KillData>();
 
                 // Show results as text
                 //Debug.Log(www.downloadHandler.text);
@@ -142,37 +195,36 @@ public class DownloadController : MonoBehaviour
                 string rawResponse = www.downloadHandler.text;
 
                 //split the raw response with "*"
-                string[] positions = rawResponse.Split('*');
+                string[] kills = rawResponse.Split('*');
 
-                for (int i = 0; i < positions.Length; i++)
+                for (int i = 0; i < kills.Length; i++)
                 {
-                    if (positions[i] != "")
+                    if (kills[i] != "")
                     {
-                        string[] positionInfo = positions[i].Split(",");
+                        string[] killsInfo = kills[i].Split(",");
                         //correct all the format errors of positionInfo
 
-
-                        for (int y = 0; y < positionInfo.Length; y++)
+                        for (int y = 0; y < killsInfo.Length; y++)
                         {
                             //check that positionInfo[y] is not empty or in the end of the string
-                            if (positionInfo[y] != "" && positionInfo[y] != " ")
+                            if (killsInfo[y] != "" && killsInfo[y] != " ")
                             {
                                 //check if the positionInfo[y] is a number
-                                if (int.TryParse(positionInfo[y], out int n))
+                                if (int.TryParse(killsInfo[y], out int n))
                                 {
                                     //check if try parse was succesfull
                                     if (n != 0)
                                     {
-                                        positionData.Add(new PositionData(int.Parse(positionInfo[0]), int.Parse(positionInfo[1]), int.Parse(positionInfo[2])));
-                                        PositionOut(positionData[y]);
+                                        KillList.Add(new KillData(int.Parse(killsInfo[0]), int.Parse(killsInfo[1]), int.Parse(killsInfo[2])));
+                                        KillsOut(KillList[y]);
                                     }
-                                } 
+                                }
                             }
                         }
-                         
+
                     }
                 }
-            } 
+            }
         }
     }
 }
