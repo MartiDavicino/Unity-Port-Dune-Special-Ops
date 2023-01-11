@@ -321,8 +321,8 @@ public class CharacterBaseBehavior : MonoBehaviour
             frames = 0;
             lastInterval = timeNow;
 
-            if (playerHealth != 0)
-                UploadController.instance.OnMovement((int)playerAgent.transform.position.x, (int)playerAgent.transform.position.z);
+            //if (playerHealth != 0)
+               // UploadController.instance.OnMovement((int)playerAgent.transform.position.x, (int)playerAgent.transform.position.z);
         }
     }
     void OnGUI()
