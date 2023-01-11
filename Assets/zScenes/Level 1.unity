@@ -1058,9 +1058,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1575981305}
+      - m_Target: {fileID: 1575981302}
         m_TargetAssemblyTypeName: DownloadController, Assembly-CSharp
-        m_MethodName: GetPositionsData
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3406,7 +3406,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 498889763}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1205006808}
+        m_TargetAssemblyTypeName: HeatMapDrawer, Assembly-CSharp
+        m_MethodName: DrawFromController
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &498889763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10114,7 +10126,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1575981302}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a5af2b57bfbcc54d9633a01a3255900, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b9881de0f50dd44aa80e3c06cf9a46b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!65 &1597234122
@@ -10809,7 +10821,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Get Data
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
