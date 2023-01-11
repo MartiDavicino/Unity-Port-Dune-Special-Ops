@@ -33,13 +33,25 @@ public class KillData
         z = _z;
     }
 }
+
+public class DeathsData
+{
+    public int deathID = 0;
+    public float x = 0f;
+    public float z = 0f;
+    public DeathsData(int _deathID, float _x, float _z)
+    {
+        deathID = _deathID;
+        x = _x;
+        z = _z;
+    }
+}
+
 public class DownloadController : MonoBehaviour
 {
-    private string dbName = "URI=file:Positions.db";
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     public void GetPositionsData()
@@ -54,21 +66,26 @@ public class DownloadController : MonoBehaviour
 
     public void GetDeathsData()
     {
-        // StartCoroutine(GetDeaths());
+        StartCoroutine(GetDeaths());
     }
 
+    public void PositionOut(PositionData _posData)
+    {
+        Debug.Log(_posData.PosID);
+        Debug.Log(_posData.x);
+        Debug.Log(_posData.z);
+    }
     public void KillsOut(KillData _killData)
     {
         Debug.Log(_killData.killID);
         Debug.Log(_killData.x);
         Debug.Log(_killData.z);
     }
-
-    public void PositionOut(PositionData _posData)
+    public void DeathsOut(DeathsData _deathsData)
     {
-        //Debug.Log(_posData.PosID);
-        //Debug.Log(_posData.x);
-        //Debug.Log(_posData.z);
+        Debug.Log(_deathsData.deathID);
+        Debug.Log(_deathsData.x);
+        Debug.Log(_deathsData.z);
     }
 
     IEnumerator GetPositions()
@@ -195,37 +212,38 @@ public class DownloadController : MonoBehaviour
             }
             else
             {
-                List<KillData> KillList = new List<KillData>();
+                List<DeathsData> DeathsList = new List<DeathsData>();
 
                 // Show results as text
                 //Debug.Log(www.downloadHandler.text);
 
                 // Or retrieve results as binary data
                 string rawResponse = www.downloadHandler.text;
+                Debug.Log(rawResponse);
 
                 //split the raw response with "*"
-                string[] kills = rawResponse.Split('*');
+                string[] deaths = rawResponse.Split('*');
 
-                for (int i = 0; i < kills.Length; i++)
+                for (int i = 0; i < deaths.Length; i++)
                 {
-                    if (kills[i] != "")
+                    if (deaths[i] != "")
                     {
-                        string[] killsInfo = kills[i].Split(",");
+                        string[] deathsInfo = deaths[i].Split(",");
                         //correct all the format errors of positionInfo
 
-                        for (int y = 0; y < killsInfo.Length; y++)
+                        for (int y = 0; y < deathsInfo.Length; y++)
                         {
                             //check that positionInfo[y] is not empty or in the end of the string
-                            if (killsInfo[y] != "" && killsInfo[y] != " ")
+                            if (deathsInfo[y] != "" && deathsInfo[y] != " ")
                             {
                                 //check if the positionInfo[y] is a number
-                                if (int.TryParse(killsInfo[y], out int n))
+                                if (int.TryParse(deathsInfo[y], out int n))
                                 {
                                     //check if try parse was succesfull
                                     if (n != 0)
                                     {
-                                        KillList.Add(new KillData(int.Parse(killsInfo[0]), int.Parse(killsInfo[1]), int.Parse(killsInfo[2])));
-                                        KillsOut(KillList[y]);
+                                        DeathsList.Add(new DeathsData(int.Parse(deathsInfo[0]), int.Parse(deathsInfo[1]), int.Parse(deathsInfo[2])));
+                                        // DeathsOut(DeathsList[y]);
                                     }
                                 }
                             }
