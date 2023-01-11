@@ -61,7 +61,7 @@ public class HeatMapDrawer : MonoBehaviour
             int[,] timesOcupied = new int[(int)gridSize.x, (int)gridSize.y];
             
 
-            Debug.Log("Draw from controller");
+            Debug.Log("Draw from controller from list with "+downloadInstance.positionList.Count+" positions");
 
             //Set to Zero
             for (int i = 0; i < (int)gridSize.x; i++)
@@ -71,14 +71,23 @@ public class HeatMapDrawer : MonoBehaviour
                     timesOcupied[i, j] = 0;
                 }
             }
+
             //Add all the visited times to each tile
             for (int i = 0; i < downloadInstance.positionList.Count; i++)
             {
-                timesOcupied[RoundBy(downloadInstance.positionList[i].x, round), RoundBy(downloadInstance.positionList[i].z, round)]++;
+                //timesOcupied[RoundBy(downloadInstance.positionList[i].x, round), RoundBy(downloadInstance.positionList[i].z, round)]++;
+                //Debug.Log("Pillao");
 
-                Debug.Log("TElmo"+timesOcupied[i, i].ToString());
-                Debug.Log("MArti"+timesOcupied[RoundBy(downloadInstance.positionList[i].x, round), RoundBy(downloadInstance.positionList[i].z, round)].ToString());
+
+                float x = RoundBy(downloadInstance.positionList[i].x, round);
+                float z = RoundBy(downloadInstance.positionList[i].z, round);
+
+                timesOcupied[(int)x, (int)z] = timesOcupied[(int)x, (int)z] + 1;
+
+                Debug.Log("Pillao");
             }
+            Debug.Log("Mas y masHasta aqui");
+
             //int mostVisited = 0;
             ////Count the most visited tile
             //for (int i = 0; i < (int)gridSize.x; i++)
@@ -105,7 +114,7 @@ public class HeatMapDrawer : MonoBehaviour
             }
         }
         else
-            Debug.Log("Poistions list is null");
+            Debug.Log("Positions list still not loaded");
         
     }
     int RoundBy(float number,int r)
