@@ -5,16 +5,16 @@ using UnityEngine.AI;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UIElements;
-using System.Security.Cryptography;
+using System;
 
 public class PositionData
 {
-    public int posCount = 0;
-    public float x = 0f;
-    public float z = 0f;
-    public PositionData( float _x, float _z, int count)
+    public int PosID = 0;
+    public int x = 0;
+    public int z = 0;
+    public PositionData(int _id, int _x, int _z)
     {
-        posCount = count;
+        PosID = _id;
         x = _x;
         z = _z;
     }
@@ -24,12 +24,12 @@ public class PositionData
 
 public class KillData
 {
-    public int killCount = 0;
+    public int killID = 0;
     public float x = 0f;
     public float z = 0f;
-    public KillData(float _x, float _z, int _killCount)
+    public KillData(int _killID, float _x, float _z)
     {
-        killCount = _killCount;
+        killID = _killID;
         x = _x;
         z = _z;
     }
@@ -37,12 +37,12 @@ public class KillData
 
 public class DeathsData
 {
-    public int deathCount = 0;
+    public int deathID = 0;
     public float x = 0f;
     public float z = 0f;
-    public DeathsData(float _x, float _z,int _deathCount)
+    public DeathsData(int _deathID, float _x, float _z)
     {
-        deathCount = _deathCount;
+        deathID = _deathID;
         x = _x;
         z = _z;
     }
@@ -51,7 +51,7 @@ public class DeathsData
 public class DownloadController : MonoBehaviour
 {
 
-   
+
 
     public List<PositionData> positionList = new List<PositionData>();
     public List<KillData> killList = new List<KillData>();
@@ -94,16 +94,16 @@ public class DownloadController : MonoBehaviour
 
     public void PositionOut(PositionData _posData)
     {
-        Debug.Log(_posData.posCount);
-        Debug.Log(_posData.x);
-        Debug.Log(_posData.z);
+        // Debug.Log(_posData.PosID);
+        // Debug.Log(_posData.x);
+        // Debug.Log(_posData.z);
 
         if (!positionList.Contains(_posData))
             positionList.Add(_posData);
     }
     public void KillsOut(KillData _killData)
     {
-        Debug.Log(_killData.killCount);
+        Debug.Log(_killData.killID);
         Debug.Log(_killData.x);
         Debug.Log(_killData.z);
 
@@ -112,9 +112,18 @@ public class DownloadController : MonoBehaviour
     }
     public void DeathsOut(DeathsData _deathsData)
     {
-        Debug.Log(_deathsData.deathCount);
+        Debug.Log(_deathsData.deathID);
         Debug.Log(_deathsData.x);
         Debug.Log(_deathsData.z);
+    }
+
+    int RoundBy(float number, int r)
+    {
+        int myNumber = (int)number;
+        myNumber = myNumber / r;
+        myNumber = myNumber * r;
+
+        return myNumber;
     }
 
     IEnumerator GetPositions()
@@ -163,8 +172,17 @@ public class DownloadController : MonoBehaviour
                                     //check if try parse was succesfull
                                     if (n != 0)
                                     {
-                                        positionList.Add(new PositionData(int.Parse(positionInfo[2]), int.Parse(positionInfo[0]), int.Parse(positionInfo[1])));
-                                        PositionOut(positionList[y]);
+                                        int count = int.Parse(positionInfo[0]);
+                                        int x = int.Parse(positionInfo[1]);
+                                        int z = int.Parse(positionInfo[2]);
+
+                                        //TODO: Avoid Duplicates!
+                                        if (!positionList.Contains(new PositionData(count, x, z)))
+                                        {
+                                            Debug.Log("COunt" + count.ToString());
+                                            positionList.Add(new PositionData(count, x, z));
+                                            PositionOut(positionList[y]);
+                                        }
                                     }
                                 }
                             }
@@ -215,7 +233,7 @@ public class DownloadController : MonoBehaviour
                                     //check if try parse was succesfull
                                     if (n != 0)
                                     {
-                                        killList.Add(new KillData(int.Parse(killsInfo[2]), int.Parse(killsInfo[0]), int.Parse(killsInfo[1])));
+                                        killList.Add(new KillData(int.Parse(killsInfo[0]), int.Parse(killsInfo[1]), int.Parse(killsInfo[2])));
                                         KillsOut(killList[y]);
                                     }
                                 }
@@ -269,7 +287,7 @@ public class DownloadController : MonoBehaviour
                                     //check if try parse was succesfull
                                     if (n != 0)
                                     {
-                                        DeathsList.Add(new DeathsData(int.Parse(deathsInfo[2]), int.Parse(deathsInfo[0]), int.Parse(deathsInfo[1])));
+                                        DeathsList.Add(new DeathsData(int.Parse(deathsInfo[0]), int.Parse(deathsInfo[1]), int.Parse(deathsInfo[2])));
                                         // DeathsOut(DeathsList[y]);
                                     }
                                 }

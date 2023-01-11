@@ -25,7 +25,7 @@ public class HeatMapDrawer : MonoBehaviour
     public Color defaultColor;
 
     public PrimitiveType primitiveType;
-    public bool drawByHeight,drawByWidth,drawByColor,drawByTransparency;
+    public bool drawByHeight, drawByWidth, drawByColor, drawByTransparency;
     [Range(0f, 1f)]
     public float thresholdDraw;
 
@@ -51,62 +51,32 @@ public class HeatMapDrawer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
 
-
-    public class FinalInfo
-    {
-        public int x;
-        public int z;
-        public int times;
-        public FinalInfo(int _x, int _z, int _times)
-        {
-            x = _x;
-            z = _z;
-            times = _times;
-        }
     }
 
     public void DrawPositionsFromData()
     {
         if (downloadInstance.positionList.Count > 0)
         {
-            int round = 10;
-
-            List<FinalInfo> finalList = new List<FinalInfo>();
-
-            Debug.Log("Draw from controller from list with "+downloadInstance.positionList.Count+" positions");
+            Debug.Log("Draw from controller from list with " + downloadInstance.positionList.Count + " positions");
 
             //Add all the visited times to each tile
-            for (int i = 0; i < downloadInstance.positionList.Count; i++)
+            foreach (PositionData element in downloadInstance.positionList)
             {
-                int x = RoundBy(downloadInstance.positionList[i].x, round);
-                int z = RoundBy(downloadInstance.positionList[i].z, round);
+                DrawSimpleCube(element.x, element.z, element.PosID);
 
-                FinalInfo temporal = new FinalInfo(x, z, downloadInstance.positionList[i].posCount);
-
-                finalList.Add(temporal);
             }
-
-            for (int i = 0; i < finalList.Count; i++)
-            {
-                Debug.Log("Drawing pos");
-                DrawSimpleCube(finalList[i].x, finalList[i].z, finalList[i].times);
-            }
+            // for (int i = 0; i < downloadInstance.positionList.Count; i++)
+            // {
+            //     Debug.Log("Drawing pos");
+            //     DrawSimpleCube(downloadInstance.positionList.ElementAt(i).x, downloadInstance.positionList.ElementAt(i).x, downloadInstance.positionList.ElementAt(i).PosID);
+            // }
         }
         else
             Debug.Log("Positions list still not loaded");
-        
-    }
-    int RoundBy(float number,int r)
-    {
-        int myNumber=(int)number;
-        myNumber=myNumber / r;
-        myNumber=myNumber * r;
 
-        return myNumber;
     }
+
 
     void DrawWithoutGrid()
     {
@@ -130,14 +100,14 @@ public class HeatMapDrawer : MonoBehaviour
             for (float j = 0; j < _gridSize.y; j += gridIncrement)
             {
                 float value = Random.Range(1, 10);
-                DrawCube(initialPos.x - i, initialPos.y - j, value, drawByHeight, drawByWidth, drawByColor,drawByTransparency, thresholdDraw, primitiveType);
+                DrawCube(initialPos.x - i, initialPos.y - j, value, drawByHeight, drawByWidth, drawByColor, drawByTransparency, thresholdDraw, primitiveType);
 
             }
         }
     }
 
 
-    void DrawCube(float x,float y,float value,bool _drawByHeight,bool _drawbyWidth,bool _drawByColor,bool _drawByTransparency,float _thresholdDraw, PrimitiveType _primitiveType)
+    void DrawCube(float x, float y, float value, bool _drawByHeight, bool _drawbyWidth, bool _drawByColor, bool _drawByTransparency, float _thresholdDraw, PrimitiveType _primitiveType)
     {
         if (value > _thresholdDraw * 10)
         {
@@ -155,17 +125,17 @@ public class HeatMapDrawer : MonoBehaviour
 
             if (_drawByHeight)
             {
-                scaleMultiplier = new Vector3(scale, scale * value*0.1f, scale);
+                scaleMultiplier = new Vector3(scale, scale * value * 0.1f, scale);
                 indicator.transform.localScale = scaleMultiplier;
 
                 //offset object so is not displayed below the map
-                Vector3 offset=new Vector3(1,20,1);
-                indicator.transform.position = Vector3.Scale(indicator.transform.position,offset);
+                Vector3 offset = new Vector3(1, 20, 1);
+                indicator.transform.position = Vector3.Scale(indicator.transform.position, offset);
             }
 
             if (_drawbyWidth)
             {
-                float widthMultiplier =value/10;
+                float widthMultiplier = value / 10;
                 scaleMultiplier = new Vector3(scale * widthMultiplier, scale, scale * widthMultiplier);
                 indicator.transform.localScale = scaleMultiplier;
             }
@@ -183,13 +153,13 @@ public class HeatMapDrawer : MonoBehaviour
             if (_drawByTransparency)
             {
                 Color transparentColor = indicator.GetComponent<Renderer>().material.color;
-                transparentColor.a = value/10f;
+                transparentColor.a = value / 10f;
                 indicator.GetComponent<Renderer>().material.color = transparentColor;
             }
-            
+
 
             //material transprency
-            
+
 
             //planes are bigger than other primitives
             if (_primitiveType == PrimitiveType.Plane)
@@ -201,12 +171,12 @@ public class HeatMapDrawer : MonoBehaviour
         }
     }
 
-    void DrawSimpleCube(float _x,float _z,int times)
+    void DrawSimpleCube(float _x, float _z, int times)
     {
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         cube.transform.position = new Vector3(_x, 0.0f, _z);
         cube.transform.SetParent(transform);
-        cube.transform.localScale = new Vector3(1,times,1);
+        cube.transform.localScale = new Vector3(1, times, 1);
 
     }
 }
