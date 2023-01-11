@@ -9,6 +9,8 @@ public class HeatMapDrawer : MonoBehaviour
     Vector2 initialPos;
     [Range(1, 10)]
     public int gridDensity;
+    [HideInInspector]
+    public Vector2 gridSize;
 
     float scale;
     Vector3 scaleMultiplier;
@@ -25,6 +27,9 @@ public class HeatMapDrawer : MonoBehaviour
     [Range(0f, 1f)]
     public float thresholdDraw;
 
+    //DATA
+    private static DownloadController downloadInstance;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,21 +37,84 @@ public class HeatMapDrawer : MonoBehaviour
         //330,133
         //-13,-310
         initialPos = new Vector2(330, 133);
-        Vector2 gridSize = new Vector2(330 - (-13), 133 - (-310));
+        gridSize = new Vector2(330 - (-13), 133 - (-310));
 
+        //DrawGrid(gridSize);
 
-        //If the desity increases the scale of the primitive should decrease
-       
+        downloadInstance = DownloadController.MyDownloadInstance;
+        DrawPositionsFromData();
+    }
 
-
-        DrawGrid(gridSize);
-        
-    }   
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void DrawPositionsFromData()
+    {
+        if (downloadInstance.positionList.Count > 0)
+        {
+            int round = 10;
+            bool[,] positionOcupied = new bool[(int)gridSize.x,(int)gridSize.y];
+            int[,] timesOcupied = new int[(int)gridSize.x, (int)gridSize.y];
+            
+
+            Debug.Log("Draw from controller");
+
+            //Set to Zero
+            for (int i = 0; i < (int)gridSize.x; i++)
+            {
+                for (int j = 0; j < (int)gridSize.y; j++)
+                {
+                    timesOcupied[i, j] = 0;
+                }
+            }
+            //Add all the visited times to each tile
+            for (int i = 0; i < downloadInstance.positionList.Count; i++)
+            {
+                timesOcupied[RoundBy(downloadInstance.positionList[i].x, round), RoundBy(downloadInstance.positionList[i].z, round)]++;
+
+                Debug.Log("TElmo"+timesOcupied[i, i].ToString());
+                Debug.Log("MArti"+timesOcupied[RoundBy(downloadInstance.positionList[i].x, round), RoundBy(downloadInstance.positionList[i].z, round)].ToString());
+            }
+            //int mostVisited = 0;
+            ////Count the most visited tile
+            //for (int i = 0; i < (int)gridSize.x; i++)
+            //{
+            //    for (int j = 0; j < (int)gridSize.y; j++)
+            //    {
+            //        if(timesOcupied[i,j]>mostVisited)
+            //            mostVisited = timesOcupied[i,j];
+            //    }
+            //}
+            //Debug.Log("Most visited times: " +mostVisited);
+
+            //convert to grid
+            for (int i = 0; i < downloadInstance.positionList.Count; i++)
+            {
+                Debug.Log("Drawing pos");
+                //DrawCube(downloadInstance.posDatList[i].x, downloadInstance.posDatList[i].z, 1, drawByHeight, drawByWidth, drawByColor, drawByTransparency, thresholdDraw, primitiveType);
+
+                if(positionOcupied[RoundBy(downloadInstance.positionList[i].x, round), RoundBy(downloadInstance.positionList[i].z, round)] == false)
+                    DrawSimpleCube(downloadInstance.positionList[i].x, downloadInstance.positionList[i].z);
+
+                positionOcupied[RoundBy(downloadInstance.positionList[i].x, round), RoundBy(downloadInstance.positionList[i].z, round)] = true;
+
+            }
+        }
+        else
+            Debug.Log("Poistions list is null");
+        
+    }
+    int RoundBy(float number,int r)
+    {
+        int myNumber=(int)number;
+        myNumber=myNumber / r;
+        myNumber=myNumber * r;
+
+        return myNumber;
     }
 
     void DrawWithoutGrid()
@@ -140,5 +208,14 @@ public class HeatMapDrawer : MonoBehaviour
             else
                 indicator.transform.localScale = scaleMultiplier;
         }
+    }
+
+    void DrawSimpleCube(float _x,float _z)
+    {
+        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        cube.transform.position = new Vector3(_x, 0.0f, _z);
+        cube.transform.SetParent(transform);
+        cube.transform.localScale = new Vector3(1,100,1);
+
     }
 }

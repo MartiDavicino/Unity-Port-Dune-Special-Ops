@@ -1058,9 +1058,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1575981302}
+      - m_Target: {fileID: 1575981305}
         m_TargetAssemblyTypeName: DownloadController, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: GetPositionsData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3409,7 +3409,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1205006808}
         m_TargetAssemblyTypeName: HeatMapDrawer, Assembly-CSharp
-        m_MethodName: DrawFromController
+        m_MethodName: DrawPositionsFromData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
