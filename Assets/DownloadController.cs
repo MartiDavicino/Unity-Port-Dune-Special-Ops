@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UIElements;
 
+
 public class PositionData
 {
     public int PosID = 0;
@@ -36,6 +37,9 @@ public class KillData
 public class DownloadController : MonoBehaviour
 {
     private string dbName = "URI=file:Positions.db";
+
+    public List<KillData> killDataList = new List<KillData>();
+    public List<PositionData> posDatList = new List<PositionData>();
     // Start is called before the first frame update
     void Start()
     {
@@ -50,13 +54,17 @@ public class DownloadController : MonoBehaviour
 
     public void KillsOut(KillData _killData)
     {
-        Debug.Log(_killData.killID);
-        Debug.Log(_killData.x);
-        Debug.Log(_killData.z);
+        if (!killDataList.Contains(_killData))
+            killDataList.Add(_killData);
+        //Debug.Log(_killData.killID);
+        //Debug.Log(_killData.x);
+        //Debug.Log(_killData.z);
     }
 
     public void PositionOut(PositionData _posData)
     {
+        if (!posDatList.Contains(_posData))
+            posDatList.Add(_posData);
         //Debug.Log(_posData.PosID);
         //Debug.Log(_posData.x);
         //Debug.Log(_posData.z);
