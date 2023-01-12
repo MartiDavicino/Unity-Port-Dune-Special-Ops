@@ -70,26 +70,34 @@ public class HeatMapDrawer : MonoBehaviour
             Debug.Log("Draw from controller from list with " + downloadInstance.positionList.Count + " positions");
 
             //Look for max
-            int maxTimes = 0;
-            for (int i = 0;i<downloadInstance.positionList.Count;i++)
-            {
+            int maxTimes = 10;
+            //for (int i = 0;i<downloadInstance.positionList.Count;i++)
+            //{
 
-                if (downloadInstance.positionList[i].PosID > maxTimes)
-                {
-                    maxTimes = downloadInstance.positionList[i].PosID;
-                }
+            //    if (downloadInstance.positionList[i].PosID > maxTimes)
+            ////    {
+            //        maxTimes = downloadInstance.positionList[i].PosID;
+            //    }
                 
-            }
+            //}
 
             //Add all the visited times to each tile
 
             foreach (PositionData element in downloadInstance.positionList)
             {
                 //DrawSimpleCube(element.x, element.z, element.PosID);
-                float normalized = element.PosID / maxTimes; 
+                int value = 0;
+                if (element.PosID > 10)
+                {
+                    value = 10;
+                }
+                else
+                    value = element.PosID;
+
+                float normalized = (float)value / (float)maxTimes; 
                 Debug.Log("norm"+normalized);
 
-                DrawCube(element.x, element.z, element.PosID, drawByHeight, drawByWidth, drawByColor, drawByTransparency, thresholdDraw, primitiveType);
+                DrawCube(element.x, element.z, normalized*10.0f, drawByHeight, drawByWidth, drawByColor, drawByTransparency, thresholdDraw, primitiveType);
 
                 
             }
