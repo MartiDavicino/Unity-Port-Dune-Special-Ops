@@ -55,7 +55,7 @@ public class DownloadController : MonoBehaviour
 
     public List<PositionData> positionList = new List<PositionData>();
     public List<KillData> killList = new List<KillData>();
-
+    public List<DeathsData> deathList = new List<DeathsData>();
 
     private static DownloadController downloadInstance;
 
@@ -77,18 +77,27 @@ public class DownloadController : MonoBehaviour
     {
     }
 
+    public void ClearLists(){
+        positionList.Clear();
+        killList.Clear();
+        deathList.Clear();
+    }
+
     public void GetPositionsData()
     {
+        ClearLists();
         StartCoroutine(GetPositions());
     }
 
     public void GetKillsData()
     {
+        ClearLists();
         StartCoroutine(GetKills());
     }
 
     public void GetDeathsData()
     {
+        ClearLists();
         StartCoroutine(GetDeaths());
     }
 
@@ -181,7 +190,7 @@ public class DownloadController : MonoBehaviour
                                         {
                                             Debug.Log("COunt" + count.ToString());
                                             positionList.Add(new PositionData(count, x, z));
-                                            PositionOut(positionList[y]);
+                                            // PositionOut(positionList[y]);
                                         }
                                     }
                                 }
@@ -233,8 +242,11 @@ public class DownloadController : MonoBehaviour
                                     //check if try parse was succesfull
                                     if (n != 0)
                                     {
-                                        killList.Add(new KillData(int.Parse(killsInfo[0]), int.Parse(killsInfo[1]), int.Parse(killsInfo[2])));
-                                        KillsOut(killList[y]);
+                                        int count = int.Parse(killsInfo[0]);
+                                        int x = int.Parse(killsInfo[1]);
+                                        int z = int.Parse(killsInfo[2]);
+                                        killList.Add(new KillData(count, x, z));
+                                        // KillsOut(killList[y]);
                                     }
                                 }
                             }
@@ -257,8 +269,6 @@ public class DownloadController : MonoBehaviour
             }
             else
             {
-                List<DeathsData> DeathsList = new List<DeathsData>();
-
                 // Show results as text
                 //Debug.Log(www.downloadHandler.text);
 
@@ -287,8 +297,11 @@ public class DownloadController : MonoBehaviour
                                     //check if try parse was succesfull
                                     if (n != 0)
                                     {
-                                        DeathsList.Add(new DeathsData(int.Parse(deathsInfo[0]), int.Parse(deathsInfo[1]), int.Parse(deathsInfo[2])));
-                                        // DeathsOut(DeathsList[y]);
+                                        int count = int.Parse(deathsInfo[0]);
+                                        int x = int.Parse(deathsInfo[1]);
+                                        int z = int.Parse(deathsInfo[2]);
+                                        deathList.Add(new DeathsData(count, x, z));
+                                        //  DeathsOut(DeathsList[y]);
                                     }
                                 }
                             }

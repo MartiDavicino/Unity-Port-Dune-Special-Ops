@@ -34,6 +34,8 @@ public class HeatMapDrawer : MonoBehaviour
     //DATA
     private static DownloadController downloadInstance;
 
+    private List<GameObject> cubes = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,7 +48,6 @@ public class HeatMapDrawer : MonoBehaviour
         //scale
         gridIncrement = (1f / gridDensity) * 10;
         scale = gridIncrement * 0.9f;
-        scale = scale * 0.2f;
         scaleMultiplier = new Vector3(scale, scale, scale);
 
         //DrawGrid(gridSize);
@@ -63,23 +64,55 @@ public class HeatMapDrawer : MonoBehaviour
 
     }
 
+    public void ClearMap()
+    {
+        foreach (GameObject el in cubes)
+        {
+            Destroy(el);
+        }
+    }
+
+
+    public void GenerateMap()
+    {
+        ClearMap();
+
+        if (downloadInstance.positionList.Count != 0)
+        {
+            DrawPositionsFromData();
+        }
+        else if (downloadInstance.killList.Count != 0)
+        {
+            DrawKillsFromData();
+        }
+        else if (downloadInstance.deathList.Count != 0)
+        {
+            DrawDeathsFromData();
+        }
+    }
+
     public void DrawPositionsFromData()
     {
         if (downloadInstance.positionList.Count > 0)
         {
             Debug.Log("Draw from controller from list with " + downloadInstance.positionList.Count + " positions");
 
-            //Look for max
-            int maxTimes = 10;
-            //for (int i = 0;i<downloadInstance.positionList.Count;i++)
-            //{
 
-            //    if (downloadInstance.positionList[i].PosID > maxTimes)
-            ////    {
-            //        maxTimes = downloadInstance.positionList[i].PosID;
-            //    }
-                
-            //}
+            int maxTimes = 10;
+
+
+            for (int i = 0; i < downloadInstance.positionList.Count; i++)
+            {
+                Debug.Log("Max times" + downloadInstance.positionList[i].PosID);
+
+                if (downloadInstance.positionList[0].PosID > maxTimes)
+                {
+                    maxTimes = downloadInstance.positionList[0].PosID;
+                }
+
+            }
+
+
 
             //Add all the visited times to each tile
 
@@ -97,19 +130,133 @@ public class HeatMapDrawer : MonoBehaviour
                 float normalized = (float)value / (float)maxTimes; 
                 Debug.Log("norm"+normalized);
 
+
                 DrawCube(element.x, element.z, normalized*10.0f, drawByHeight, drawByWidth, drawByColor, drawByTransparency, thresholdDraw, primitiveType);
 
-                
+               
             }
-            //for(int i = 0; i< 1000; i++)
-            //{
-            //    int index = Random.Range(0, downloadInstance.positionList.Count());
+            for (int i = 0; i < 1000; i++)
+            {
+                int index = Random.Range(0, downloadInstance.positionList.Count());
 
-            //    DrawSimpleCube(downloadInstance.positionList[index].x, downloadInstance.positionList[index].z, downloadInstance.positionList[index].PosID);
+                DrawSimpleCube(downloadInstance.positionList[index].x, downloadInstance.positionList[index].z, downloadInstance.positionList[index].PosID);
+
+            }
+       
+        }
+        else
+            Debug.Log("Positions list still not loaded");
+
+    }
+
+    public void DrawKillsFromData()
+    {
+        if (downloadInstance.killList.Count > 0)
+        {
+            Debug.Log("Draw from controller from list with " + downloadInstance.killList.Count + " positions");
+
+            int maxTimes = 0;
+            //Look for max
+
+            for (int i = 0; i < downloadInstance.killList.Count; i++)
+            {
+                Debug.Log("Max times" + downloadInstance.killList[i].killID);
+
+                if (downloadInstance.killList[0].killID > maxTimes)
+                {
+                    maxTimes = downloadInstance.killList[0].killID;
+                }
+
+            }
 
 
-            //}
-            
+            //Add all the visited times to each tile
+
+            foreach (KillData element in downloadInstance.killList)
+            {
+                //DrawSimpleCube(element.x, element.z, element.PosID);
+
+                DrawCube(element.x, element.z, element.killID, drawByHeight, drawByWidth, drawByColor, drawByTransparency, thresholdDraw, primitiveType);
+
+                //foreach (PositionData element in downloadInstance.positionList)
+                //{
+
+
+                //    int index = Random.Range(0, downloadInstance.positionList.Count());
+
+                //    DrawSimpleCube(element.x, element.z, element.PosID);
+
+                //}
+            }
+            for (int i = 0; i < 1000; i++)
+            {
+                int index = Random.Range(0, downloadInstance.positionList.Count());
+
+                DrawSimpleCube(downloadInstance.killList[index].x, downloadInstance.killList[index].z, downloadInstance.killList[index].killID);
+
+            }
+            // for (int i = 0; i < downloadInstance.positionList.Count; i++)
+            // {
+            //     Debug.Log("Drawing pos");
+            //     DrawSimpleCube(downloadInstance.positionList.ElementAt(i).x, downloadInstance.positionList.ElementAt(i).x, downloadInstance.positionList.ElementAt(i).PosID);
+            // }
+        }
+        else
+            Debug.Log("Positions list still not loaded");
+
+    }
+
+    public void DrawDeathsFromData()
+    {
+        if (downloadInstance.deathList.Count > 0)
+        {
+            Debug.Log("Draw from controller from list with " + downloadInstance.deathList.Count + " positions");
+
+            int maxTimes = 0;
+            //Look for max
+
+            for (int i = 0; i < downloadInstance.deathList.Count; i++)
+            {
+                Debug.Log("Max times" + downloadInstance.deathList[i].deathID);
+
+                if (downloadInstance.deathList[0].deathID > maxTimes)
+                {
+                    maxTimes = downloadInstance.deathList[0].deathID;
+                }
+
+            }
+
+
+            //Add all the visited times to each tile
+
+            foreach (DeathsData element in downloadInstance.deathList)
+            {
+                //DrawSimpleCube(element.x, element.z, element.PosID);
+
+                DrawCube(element.x, element.z, element.deathID, drawByHeight, drawByWidth, drawByColor, drawByTransparency, thresholdDraw, primitiveType);
+
+                //foreach (PositionData element in downloadInstance.positionList)
+                //{
+
+
+                //    int index = Random.Range(0, downloadInstance.positionList.Count());
+
+                //    DrawSimpleCube(element.x, element.z, element.PosID);
+
+                //}
+            }
+            for (int i = 0; i < 1000; i++)
+            {
+                int index = Random.Range(0, downloadInstance.deathList.Count());
+
+                DrawSimpleCube(downloadInstance.deathList[index].x, downloadInstance.deathList[index].z, downloadInstance.deathList[index].deathID);
+
+            }
+            // for (int i = 0; i < downloadInstance.positionList.Count; i++)
+            // {
+            //     Debug.Log("Drawing pos");
+            //     DrawSimpleCube(downloadInstance.positionList.ElementAt(i).x, downloadInstance.positionList.ElementAt(i).x, downloadInstance.positionList.ElementAt(i).PosID);
+            // }
         }
         else
             Debug.Log("Positions list still not loaded");
@@ -129,7 +276,7 @@ public class HeatMapDrawer : MonoBehaviour
 
     void DrawGrid(Vector2 _gridSize)
     {
-        
+
 
         for (float i = 0; i < _gridSize.x; i += gridIncrement)
         {
@@ -204,6 +351,8 @@ public class HeatMapDrawer : MonoBehaviour
             }
             else
                 indicator.transform.localScale = scaleMultiplier;
+
+            cubes.Add(indicator);
         }
     }
 
@@ -213,6 +362,9 @@ public class HeatMapDrawer : MonoBehaviour
         cube.transform.position = new Vector3(_x, 0.0f, _z);
         cube.transform.SetParent(transform);
         cube.transform.localScale = new Vector3(1, times, 1);
+        cubes.Add(cube);
 
     }
+
+
 }
